@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miyagi</title>
+  <meta name="description" content="Miyagi turns any tutorial into a graded lab. The video waits at each step until your own code, terminal or training run passes that step's check.">
+  <meta property="og:title" content="Miyagi">
+  <meta property="og:description" content="Tutorials that check your work.">
+  <meta property="og:url" content="https://miyagi.study/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Ctext x='32' y='44' font-family='Helvetica,Arial,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23fff'%3EM%3C/text%3E%3C/svg%3E">
+  <style>
+    /* Neutral palette on purpose: swap these tokens for the team's colors. */
+    :root {
+      --bg: #fbfbfa;
+      --surface: #ffffff;
+      --text: #141414;
+      --muted: #5f5f5c;
+      --line: #e6e5e1;
+      --accent: #141414;
+      --accent-text: #ffffff;
+      --pass: #1f8a4c;
+      --fail: #c4372d;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f0f;
+        --surface: #181818;
+        --text: #f2f2f0;
+        --muted: #a3a3a0;
+        --line: #2a2a2a;
+        --accent: #f2f2f0;
+        --accent-text: #0f0f0f;
+        --pass: #4cc781;
+        --fail: #f0675c;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+    .mark { font-weight: 700; font-size: 20px; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+    .tag { font-size: 14px; color: var(--muted); }
+    .hero { padding: 72px 0 56px; }
+    h1 { font-size: clamp(40px, 7vw, 68px); line-height: 1.04; letter-spacing: -0.035em; margin: 0 0 20px; }
+    .lede { font-size: clamp(18px, 2.4vw, 21px); color: var(--muted); max-width: 640px; margin: 0; }
+    .status {
+      margin-top: 36px; display: inline-flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 15px;
+    }
+    .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .dot.red { background: var(--fail); }
+    .dot.green { background: var(--pass); }
+    .arrow { color: var(--muted); }
+    section { padding: 48px 0; border-top: 1px solid var(--line); }
+    h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 24px; font-weight: 600; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 0; counter-reset: s; }
+    .steps li {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;
+      counter-increment: s;
+    }
+    .steps li::before { content: counter(s); display: block; font-weight: 700; font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .steps b { display: block; margin-bottom: 6px; }
+    .steps span { color: var(--muted); font-size: 15px; }
+    .demo { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .demo li { display: flex; gap: 12px; align-items: baseline; }
+    .demo .t { flex: 0 0 auto; font-variant-numeric: tabular-nums; font-size: 14px; color: var(--muted); min-width: 22px; }
+    .checks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    code {
+      font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px;
+    }
+    footer { padding: 40px 0 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="mark" href="/">Miyagi</a>
+      <span class="tag">SanD Hacks 2026 · UC San Diego</span>
+    </header>
+
+    <main>
+      <div class="hero">
+        <h1>Tutorials that check your work.</h1>
+        <p class="lede">Miyagi turns any tutorial into a graded lab that runs beside your code. The video waits at each step until your own code, terminal or training run passes that step's check.</p>
+        <div class="status" aria-label="A step going from failing to passing">
+          <span class="dot red" aria-hidden="true"></span> Step 4: loss stuck at 0.31
+          <span class="arrow" aria-hidden="true">→</span>
+          <span class="dot green" aria-hidden="true"></span> Passed, video resumes
+        </div>
+      </div>
+
+      <section aria-labelledby="how">
+        <h2 id="how">How it works</h2>
+        <ol class="steps">
+          <li><b>Ask</b><span>Say what you want to learn.</span></li>
+          <li><b>Find</b><span>Miyagi picks a strong tutorial and splits it into steps.</span></li>
+          <li><b>Build</b><span>You follow along in your own editor and terminal. Each step has a real check.</span></li>
+          <li><b>Pass</b><span>Off track? A coach card shows what went wrong and where to look. Pass, and the video moves on.</span></li>
+        </ol>
+        <div class="checks" aria-label="Kinds of checks">
+          <code>file_contains</code>
+          <code>command_exit_ok</code>
+          <code>metric_threshold</code>
+          <code>file_exists</code>
+        </div>
+      </section>
+
+      <section aria-labelledby="demo">
+        <h2 id="demo">The demo</h2>
+        <p>Train a physics-informed neural network on the convection equation.</p>
+        <ol class="demo">
+          <li><span class="t">1</span><span>At β = 30 the loss flattens, and the step turns red.</span></li>
+          <li><span class="t">2</span><span>Miyagi names the known failure mode (Krishnapriyan et al., NeurIPS 2021).</span></li>
+          <li><span class="t">3</span><span>You add a curriculum on β. The loss drops.</span></li>
+          <li><span class="t">4</span><span>The step turns green and the video picks up where it left off.</span></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      Built in 24 hours at SanD Hacks 2026, UC San Diego.
+    </footer>
+  </div>
+</body>
+</html>
