@@ -11,9 +11,12 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 
 The final screen has a "Watch the demo" button that plays the video in a pop-up. Set `DEMO_URL` in `index.html` (search for `var DEMO_URL`) to a YouTube, Loom or Vimeo link, or an `.mp4` file in this repo. While it's empty, the button says the demo is coming soon.
 
-## Download button
+## Download buttons
 
-The button finds the newest GitHub release in this repo and links to its first `.dmg`, `.zip` or `.pkg` asset. To ship a build, publish a release here and attach the Mac build. Until a release exists, the button says the build isn't posted yet.
+The big button matches the visitor's OS (Windows or Mac); a small link under it offers the other one. Both link straight to fixed release assets in this repo, no API call:
+
+- Windows: release `windows`, asset `Miyagi-Windows-Setup.exe`, rebuilt and re-uploaded by the Windows sync agent when the app changes.
+- Mac: release `mac`, asset `Miyagi-Mac.zip`, from CI's `mac-zip` artifact. Until it's posted, `MAC_READY` in `index.html` is `false` and the Mac button says the build isn't posted yet.
 
 ## DNS (at Porkbun, the registrar)
 

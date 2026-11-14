@@ -142,6 +142,8 @@
     .btn:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 3px; }
     .btn svg { width: 17px; height: 17px; }
     .note { font-size: 13px; color: var(--m-ink-faint); min-height: 1.5em; }
+    .note .alt { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+    .note .alt:hover { color: var(--m-ink); }
 
     /* 3D mode: the hero waits until the tree has grown. */
     html.gl .hero { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .7s var(--settle); visibility: hidden; }
@@ -219,14 +221,14 @@
           <div class="cta-row">
             <a class="btn" href="#" data-download>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
-              Download for Mac
+              <span data-label>Download for Mac</span>
             </a>
             <a class="btn btn-ghost" href="#" data-demo>
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>
               Watch the demo
             </a>
           </div>
-          <span class="note" data-note>macOS</span>
+          <span class="note"><span data-note>macOS</span> · <a class="alt" href="https://github.com/adrian-erlikhman/miyagi/releases/download/windows/Miyagi-Windows-Setup.exe" data-alt>Also on Windows</a></span>
         </div>
       </div>
       <div class="hint">Scroll to grow it<i aria-hidden="true"></i></div>
@@ -245,24 +247,33 @@
   </div>
 
   <script>
-    // The download button points at the newest GitHub release with a .dmg, .zip or .pkg, once one is published.
+    // Downloads: the visitor's OS gets the button, the other OS a small link under it.
+    // Fixed release assets in this repo (tags "windows" and "mac"), linked directly: no API call, no rate limit.
+    // The Windows sync agent flips MAC_READY to true once the Mac zip is published.
+    var MAC_READY = false;
     (function () {
-      var repo = 'adrian-erlikhman/miyagi';
-      var btn = document.querySelector('[data-download]'), note = document.querySelector('[data-note]'), ready = false;
-      btn.addEventListener('click', function (e) {
-        if (ready) return;
-        e.preventDefault();
-        note.textContent = "The Mac build isn't posted yet.";
-      });
-      if (!window.fetch) return;
-      fetch('https://api.github.com/repos/' + repo + '/releases/latest')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (rel) {
-          var a = rel && (rel.assets || []).filter(function (x) { return /\.(dmg|zip|pkg)$/i.test(x.name); })[0];
-          if (!a) return;
-          ready = true; btn.href = a.browser_download_url; note.textContent = 'macOS · ' + rel.tag_name;
-        })
-        .catch(function () {});
+      var base = 'https://github.com/adrian-erlikhman/miyagi/releases/download/';
+      var builds = {
+        win: { label: 'Download for Windows', note: 'Windows 10 and 11', alt: 'Also on Windows', url: base + 'windows/Miyagi-Windows-Setup.exe', ready: true },
+        mac: { label: 'Download for Mac', note: 'macOS', alt: 'Also on Mac', url: base + 'mac/Miyagi-Mac.zip', ready: MAC_READY }
+      };
+      var ua = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent || '';
+      var mine = /win/i.test(ua) ? 'win' : 'mac', other = mine === 'win' ? 'mac' : 'win';
+      var btn = document.querySelector('[data-download]'), label = btn.querySelector('[data-label]');
+      var note = document.querySelector('[data-note]'), alt = document.querySelector('[data-alt]');
+      function wire(el, b) {
+        el.href = b.ready ? b.url : '#';
+        el.addEventListener('click', function (e) {
+          if (b.ready) return;
+          e.preventDefault();
+          note.textContent = "The Mac build isn't posted yet.";
+        });
+      }
+      label.textContent = builds[mine].label;
+      note.textContent = builds[mine].note;
+      alt.textContent = builds[other].alt;
+      wire(btn, builds[mine]);
+      wire(alt, builds[other]);
     })();
 
     // The how-it-works pills light up when they scroll into view.
