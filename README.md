@@ -4,7 +4,7 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 
 - Live at https://miyagi.study, served by GitHub Pages from `main` (root).
 - `CNAME` holds the custom domain. Don't delete it, or Pages drops the domain.
-- One static page, `index.html`. The bonsai (`tree-full.svg`) and wordmark (`wordmark.svg`) from the Miyagi brand kit are inlined so the load animation can grow the tree part by part. Favicons, `og-image.png` and `fonts/GoogleSansFlex.woff2` (SIL OFL, see `fonts/OFL.txt`) come from the same kit.
+- One static page, `index.html`. The bonsai (`tree-full.svg`) and wordmark (`wordmark.svg`) from the Miyagi brand kit are inlined. With WebGL, a three.js scene (loaded from jsDelivr, pinned to three@0.160.0) builds a 3D bonsai from that SVG's shapes, and scrolling grows it. Without WebGL, or with reduced motion on, the flat logo page shows instead. Favicons, `og-image.png` and `fonts/GoogleSansFlex.woff2` (SIL OFL, see `fonts/OFL.txt`) come from the same kit.
 - Follow the kit's `BRAND.md`: paper background, ink buttons, green only means passed, no gradients or glows.
 
 ## Download button
