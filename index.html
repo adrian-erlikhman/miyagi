@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Miyagi</title>
-  <meta name="description" content="Miyagi pauses the video at every step and won't move on until your code works.">
+  <meta name="description" content="Miyagi pauses the video at every step and waits until your code works.">
   <meta name="theme-color" content="#f6f6f3">
   <meta property="og:title" content="Miyagi">
   <meta property="og:description" content="Wax on, wax off.">
@@ -53,6 +53,8 @@
     }
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; background: var(--m-paper); }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
     body { margin: 0; color: var(--m-ink); font: 17px/1.5 var(--m-font-brand); -webkit-font-smoothing: antialiased; }
     /* A still dot grid behind everything. */
     .dots {
@@ -72,7 +74,7 @@
       position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column;
       align-items: center; justify-content: center; text-align: center; padding: 28px 16px 24px;
     }
-    html.gl .frame { position: sticky; top: 0; height: 100vh; height: 100svh; justify-content: flex-end; padding-bottom: 7vh; pointer-events: none; }
+    html.gl .frame { position: sticky; top: 0; height: 100vh; height: 100svh; justify-content: flex-end; padding-bottom: 9vh; pointer-events: none; }
     html.gl .frame a { pointer-events: auto; }
     html.gl .frame .tree { display: none; }
 
@@ -81,9 +83,8 @@
     .hero { display: flex; flex-direction: column; align-items: center; }
     .hero .wordmark { margin-top: 14px; }
     html.gl .hero .wordmark { margin-top: 0; }
-    h1 { margin: 18px 0 0; font-weight: 600; font-size: clamp(34px, 5vw, 56px); line-height: 1.02; letter-spacing: -.04em; text-wrap: balance; }
-    .sub { margin: 12px 0 0; color: var(--m-ink-muted); max-width: 27em; text-wrap: balance; }
-    .cta { margin-top: 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    h1 { margin: 16px 0 0; font-weight: 600; font-size: clamp(36px, 5.4vw, 60px); line-height: 1.02; letter-spacing: -.04em; text-wrap: balance; }
+    .cta { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .btn {
       display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 22px; border-radius: 14px;
       background: var(--m-ink); color: var(--m-paper); text-decoration: none; font: 600 15px/1 var(--m-font-brand);
@@ -95,18 +96,19 @@
     .btn svg { width: 17px; height: 17px; }
     .note { font-size: 13px; color: var(--m-ink-faint); min-height: 1.5em; }
 
-    /* 3D mode: the hero waits until the tree has grown; captions mark the way. */
+    /* 3D mode: the hero waits until the tree has grown. */
     html.gl .hero { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .7s var(--settle); visibility: hidden; }
     html.gl.grown .hero { opacity: 1; transform: none; visibility: visible; }
     .hero .wordmark circle { transform-box: fill-box; transform-origin: 50% 50%; }
     html.gl .hero .wordmark circle { transform: scale(0); transition: transform .5s var(--spring) .45s; }
     html.gl.grown .hero .wordmark circle { transform: none; }
-    /* Scroll captions: each line's words light up as you scroll through it. */
+
+    /* Two scroll lines; each word lights up as you pass it. */
     .caps, .hint { display: none; }
-    html.gl .caps { display: block; position: absolute; left: clamp(16px, 8vw, 120px); top: 50%; width: min(12.5ch, 34vw); font-size: clamp(32px, 4.4vw, 60px); text-align: left; }
+    html.gl .caps { display: block; position: absolute; left: clamp(16px, 8vw, 120px); top: 50%; width: min(11ch, 34vw); font-size: clamp(34px, 4.6vw, 64px); text-align: left; }
     .cap {
       position: absolute; top: 0; left: 0; width: 100%; transform: translateY(-50%); opacity: 0; transition: opacity .35s ease;
-      font-weight: 600; font-size: 1em; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance;
+      margin: 0; font-weight: 600; font-size: 1em; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance;
     }
     .cap.on { opacity: 1; }
     .cap .w { opacity: .13; transition: opacity .25s ease; }
@@ -114,7 +116,7 @@
     html.gl .hint { display: block; position: absolute; left: 0; right: 0; bottom: 4vh; font-size: 13px; color: var(--m-ink-faint); transition: opacity .3s; }
     html.gl.started .hint { opacity: 0; }
     @media (max-width: 700px) {
-      html.gl .caps { left: 16px; right: 16px; width: auto; top: auto; bottom: 16vh; font-size: clamp(28px, 8vw, 36px); text-align: center; }
+      html.gl .caps { left: 16px; right: 16px; width: auto; top: auto; bottom: 16vh; font-size: clamp(30px, 8.5vw, 38px); text-align: center; }
       .cap { transform: translateY(-100%); }
     }
 
@@ -146,16 +148,13 @@
     <path d="M28.5 87.4H37.5V89C37.5 90.6 36.2 91.6 34.8 91.6H31.2C29.8 91.6 28.5 90.6 28.5 89Z"></path><path d="M62.5 87.4H71.5V89C71.5 90.6 70.2 91.6 68.8 91.6H65.2C63.8 91.6 62.5 90.6 62.5 89Z"></path>
     <path d="M21 75.3H79" stroke="#f6f6f3" stroke-opacity=".16" stroke-width=".6"></path><path d="M23.4 80.6H76.6" stroke="#f6f6f3" stroke-opacity=".1" stroke-width=".6"></path><rect x="68.4" y="82" width="3" height="3" rx=".4" fill="none" stroke="#f6f6f3" stroke-opacity=".35" stroke-width=".5"></rect></g></svg>
       <div class="caps" aria-hidden="true">
-        <p class="cap">You watched the whole tutorial.</p>
-        <p class="cap">You still can't build it.</p>
-        <p class="cap">Miyagi pauses the video at every step</p>
-        <p class="cap">and won't move on until your code works.</p>
+        <p class="cap">Watching isn't learning.</p>
+        <p class="cap">Miyagi waits until your code works.</p>
       </div>
       <div class="hero">
         <div class="after" style="animation-delay:1.2s"><svg xmlns="http://www.w3.org/2000/svg" viewBox="82.7 -1612.3 5814.7 2118.3" class="wordmark" role="img" aria-label="miyagi"><path fill="#141414" d="M122.66656494140625 0.0Q122.66656494140625 0.0 122.66656494140625 0.0Q122.66656494140625 0.0 122.66656494140625 0.0V-1025.33349609375Q122.66656494140625 -1025.33349609375 122.66656494140625 -1025.33349609375Q122.66656494140625 -1025.33349609375 122.66656494140625 -1025.33349609375H376.002685546875Q376.002685546875 -1025.33349609375 376.002685546875 -1025.33349609375Q376.002685546875 -1025.33349609375 376.002685546875 -1025.33349609375V-845.9998779296875L353.00250244140625 -876.0001831054688H382.66937255859375Q426.002685546875 -956.6668701171875 516.002685546875 -1008.0002136230469Q606.002685546875 -1059.3335571289062 708.6695556640625 -1059.3335571289062Q817.336181640625 -1059.3335571289062 901.0028686523438 -1008.6669616699219Q984.6695556640625 -958.0003662109375 1022.0028686523438 -868.6671142578125Q1082.0029907226562 -964.6671142578125 1173.3363342285156 -1012.0003356933594Q1264.669677734375 -1059.3335571289062 1373.3362426757812 -1059.3335571289062Q1554.6698608398438 -1059.3335571289062 1648.0032653808594 -953.6668395996094Q1741.336669921875 -848.0001220703125 1741.336669921875 -656.666748046875V0.0Q1741.336669921875 0.0 1741.336669921875 0.0Q1741.336669921875 0.0 1741.336669921875 0.0H1478.0004272460938Q1478.0004272460938 0.0 1478.0004272460938 0.0Q1478.0004272460938 0.0 1478.0004272460938 0.0V-610.6661376953125Q1478.0004272460938 -725.3320922851562 1430.3340148925781 -781.331787109375Q1382.6676025390625 -837.3314819335938 1285.0130510001347 -837.3314819335938Q1190.6688232421875 -837.3314819335938 1127.6692810058594 -761.6653747558594Q1064.6697387695312 -685.999267578125 1064.6697387695312 -573.9999389648438V0.0Q1064.6697387695312 0.0 1064.6697387695312 0.0Q1064.6697387695312 0.0 1064.6697387695312 0.0H799.33349609375Q799.33349609375 0.0 799.33349609375 0.0Q799.33349609375 0.0 799.33349609375 0.0V-609.3328247070312Q799.33349609375 -723.998779296875 751.6670837402344 -780.9984741210938Q704.0006713867188 -837.9981689453125 607.8389579441236 -837.9981689453125Q513.335205078125 -837.9981689453125 450.66900634765625 -760.6654052734375Q388.0028076171875 -683.3326416015625 388.0028076171875 -571.3333129882812V0.0Q388.0028076171875 0.0 388.0028076171875 0.0Q388.0028076171875 0.0 388.0028076171875 0.0Z M1895.999755859375 0.0Q1895.999755859375 0.0 1895.999755859375 0.0Q1895.999755859375 0.0 1895.999755859375 0.0V-1025.33349609375Q1895.999755859375 -1025.33349609375 1895.999755859375 -1025.33349609375Q1895.999755859375 -1025.33349609375 1895.999755859375 -1025.33349609375H2160.6693115234375Q2160.6693115234375 -1025.33349609375 2160.6693115234375 -1025.33349609375Q2160.6693115234375 -1025.33349609375 2160.6693115234375 -1025.33349609375V0.0Q2160.6693115234375 0.0 2160.6693115234375 0.0Q2160.6693115234375 0.0 2160.6693115234375 0.0Z M2393.6661376953125 434.00006103515625Q2393.6661376953125 434.00006103515625 2393.6661376953125 434.00006103515625Q2393.6661376953125 434.00006103515625 2393.6661376953125 434.00006103515625L2655.3329467773438 -132.66680908203125L2659.3328857421875 0.0L2207.6663818359375 -1025.33349609375Q2207.6663818359375 -1025.33349609375 2207.6663818359375 -1025.33349609375Q2207.6663818359375 -1025.33349609375 2207.6663818359375 -1025.33349609375H2483.0025024414062Q2483.0025024414062 -1025.33349609375 2483.0025024414062 -1025.33349609375Q2483.0025024414062 -1025.33349609375 2483.0025024414062 -1025.33349609375L2727.0009155273438 -432.66973876953125L2755.764471238659 -341.33575439453125H2762.667724609375L2793.6678466796875 -434.0030517578125L3024.3330688476562 -1025.33349609375Q3024.3330688476562 -1025.33349609375 3024.3330688476562 -1025.33349609375Q3024.3330688476562 -1025.33349609375 3024.3330688476562 -1025.33349609375H3293.335693359375Q3293.335693359375 -1025.33349609375 3293.335693359375 -1025.33349609375Q3293.335693359375 -1025.33349609375 3293.335693359375 -1025.33349609375L2670.0025024414062 434.00006103515625Q2670.0025024414062 434.00006103515625 2670.0025024414062 434.00006103515625Q2670.0025024414062 434.00006103515625 2670.0025024414062 434.00006103515625Z M3629.665771484375 34.00006103515625Q3465.6659545898438 34.00006103515625 3366.3328552246094 -55.83306884765625Q3266.999755859375 -145.66619873046875 3266.999755859375 -293.66607666015625Q3266.999755859375 -458.66644287109375 3386.8330688476562 -551.3330993652344Q3506.6663818359375 -643.999755859375 3698.3331298828125 -643.999755859375Q3782.9998168945312 -643.999755859375 3856.9996032714844 -630.333251953125Q3930.9993896484375 -616.666748046875 3980.99951171875 -596.0003051757812V-652.0001220703125Q3980.99951171875 -749.9996948242188 3915.6665954589844 -805.3325805664062Q3850.3336791992188 -860.6654663085938 3741.0007934570312 -860.6654663085938Q3645.3339233398438 -860.6654663085938 3571.6669006347656 -825.8320617675781Q3497.9998779296875 -790.9986572265625 3432.3330688476562 -724.66552734375Q3432.3330688476562 -724.66552734375 3432.3330688476562 -724.66552734375Q3432.3330688476562 -724.66552734375 3432.3330688476562 -724.66552734375L3301.3330078125 -868.6669921875Q3301.3330078125 -868.6669921875 3301.3330078125 -868.6669921875Q3301.3330078125 -868.6669921875 3301.3330078125 -868.6669921875Q3412.33349609375 -970.0000610351562 3522.3341369628906 -1013.6667785644531Q3632.3347778320312 -1057.33349609375 3773.0017700195312 -1057.33349609375Q3995.6689453125 -1057.33349609375 4120.335784912109 -952.0002746582031Q4245.002624511719 -846.6670532226562 4245.002624511719 -650.0001220703125V0.0Q4245.002624511719 0.0 4245.002624511719 0.0Q4245.002624511719 0.0 4245.002624511719 0.0H3980.99951171875Q3980.99951171875 0.0 3980.99951171875 0.0Q3980.99951171875 0.0 3980.99951171875 0.0V-230.33282470703125L4041.6661987304688 -150.33343505859375H3974.99951171875Q3934.3330688476562 -73.00018310546875 3842.6663513183594 -19.50006103515625Q3750.9996337890625 34.00006103515625 3629.665771484375 34.00006103515625ZM3721.0014038085938 -167.66815185546875Q3836.0008544921875 -167.66815185546875 3908.5001831054688 -242.334228515625Q3980.99951171875 -317.00030517578125 3980.99951171875 -426.66619873046875V-430.66632080078125Q3941.66650390625 -456.66607666015625 3882.6668395996094 -470.6659240722656Q3823.6671752929688 -484.665771484375 3759.0008544921875 -484.665771484375Q3655.6683349609375 -484.665771484375 3591.0020141601562 -442.6660461425781Q3526.335693359375 -400.66632080078125 3526.335693359375 -321.33367919921875Q3526.335693359375 -249.000732421875 3580.3353881835938 -208.33444213867188Q3634.3350830078125 -167.66815185546875 3721.0014038085938 -167.66815185546875Z M4865.0 466Q4687.5 466.0 4571.75 392.5Q4456.0 319 4378.5 168.5Q4378.5 168.5 4378.5 168.5Q4378.5 168.5 4378.5 168.5L4591.0 71Q4591.0 71 4591.0 71.0Q4591.0 71 4591.0 71Q4638.0 155.5 4700.5 202.0Q4763.0 248.5 4858.0 248.5Q4993.0 248.5 5068.25 169.25Q5143.5 90.0 5143.0 -58V-144.5H5135.0Q5088.0 -82.5 5006.75 -37.75Q4925.5 7.0 4819.0 7Q4601.0 7 4467.25 -135.0Q4333.5 -277.0 4333.5 -520.0Q4333.5 -760.0 4470.75 -907.75Q4608.0 -1055.5 4819.5 -1055.5Q4928.0 -1055.5 5011.0 -1012.75Q5094.0 -970 5137.0 -904H5189.5L5143.0 -866.5V-1023Q5143.0 -1023 5143.0 -1023.0Q5143.0 -1023 5143.0 -1023H5396.0Q5396.0 -1023 5396.0 -1023.0Q5396.0 -1023 5396.0 -1023V-126.5Q5396.0 164 5266.5 315.0Q5137.0 466 4865.0 466ZM4866.5 -222.0Q4988.0 -222 5065.0 -306.25Q5142.0 -390.5 5142.0 -527Q5142.0 -665 5065.5 -747.25Q4989.0 -829.5 4867.5 -829.5Q4748.5 -829.5 4671.0 -747.5Q4593.5 -665.5 4593.5 -526.0Q4593.5 -384.0 4671.25 -303.0Q4749.0 -222 4866.5 -222.0Z M5569.999755859375 0.0Q5569.999755859375 0.0 5569.999755859375 0.0Q5569.999755859375 0.0 5569.999755859375 0.0V-1025.33349609375Q5569.999755859375 -1025.33349609375 5569.999755859375 -1025.33349609375Q5569.999755859375 -1025.33349609375 5569.999755859375 -1025.33349609375H5834.6693115234375Q5834.6693115234375 -1025.33349609375 5834.6693115234375 -1025.33349609375Q5834.6693115234375 -1025.33349609375 5834.6693115234375 -1025.33349609375V0.0Q5834.6693115234375 0.0 5834.6693115234375 0.0Q5834.6693115234375 0.0 5834.6693115234375 0.0ZM5703.001220703125 -1203.3324584960938Q5638.000671386719 -1203.3324584960938 5592.6669921875 -1248.3327941894531Q5547.333312988281 -1293.3331298828125 5547.333312988281 -1358.3336791992188Q5547.333312988281 -1424.6675415039062 5592.6669921875 -1468.001220703125Q5638.000671386719 -1511.3348999023438 5703.001220703125 -1511.3348999023438Q5769.3350830078125 -1511.3348999023438 5813.33544921875 -1468.001220703125Q5857.3358154296875 -1424.6675415039062 5857.3358154296875 -1358.3336791992188Q5857.3358154296875 -1293.3331298828125 5813.33544921875 -1248.3327941894531Q5769.3350830078125 -1203.3324584960938 5703.001220703125 -1203.3324584960938Z"/><circle cx="2028.3" cy="-1357.3" r="215.0" fill="#30d158"/></svg></div>
         <h1 class="after" style="animation-delay:1.45s">Wax on, wax off.</h1>
-        <p class="sub after" style="animation-delay:1.55s">The tutorial waits. You do the work.</p>
-        <div class="cta after" style="animation-delay:1.65s">
+        <div class="cta after" style="animation-delay:1.6s">
           <a class="btn" href="#" data-download>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
             Download for Mac
@@ -210,45 +209,22 @@
       const tree = new THREE.Group();
       scene.add(tree);
 
-      // ---- Two-tone light: each surface is either its lit brand color or its shade color. No gradients. ----
-      const LIGHT = new THREE.Vector3(-0.45, 0.85, 0.55).normalize();
-      const toonCache = new Map();
-      function toon(lit, shade, { clip = null, side = THREE.FrontSide, th = 0.12, opacity = 1 } = {}) {
-        const key = [lit, shade, side, th, opacity].join('|');
-        if (!clip && toonCache.has(key)) return toonCache.get(key);
-        const m = new THREE.ShaderMaterial({
-          uniforms: {
-            uLit: { value: new THREE.Color(lit) }, uShade: { value: new THREE.Color(shade) },
-            uL: { value: LIGHT }, uTh: { value: th }, uA: { value: opacity },
-          },
-          vertexShader: `
-            #include <common>
-            #include <clipping_planes_pars_vertex>
-            varying vec3 vN;
-            void main() {
-              vN = normalize(mat3(modelMatrix) * normal);
-              #include <begin_vertex>
-              #include <project_vertex>
-              #include <clipping_planes_vertex>
-            }`,
-          fragmentShader: `
-            #include <common>
-            #include <clipping_planes_pars_fragment>
-            uniform vec3 uLit; uniform vec3 uShade; uniform vec3 uL; uniform float uTh; uniform float uA;
-            varying vec3 vN;
-            void main() {
-              #include <clipping_planes_fragment>
-              float d = gl_FrontFacing ? dot(normalize(vN), uL) : -1.0;
-              gl_FragColor = vec4(d > uTh ? uLit : uShade, uA);
-              #include <colorspace_fragment>
-            }`,
-          clipping: true, clippingPlanes: clip, side, transparent: opacity < 1, depthWrite: opacity >= 1,
-        });
-        if (!clip) toonCache.set(key, m);
+      // Soft daylight: a sky/ground fill, a key from the upper left, a weak fill from the right.
+      scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d4c8, 1.6));
+      const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(-70, 120, 90); scene.add(key);
+      const fill = new THREE.DirectionalLight(0xffffff, 0.6); fill.position.set(90, 20, 60); scene.add(fill);
+
+      const matCache = new Map();
+      function std(color, { rough = 0.85, clip = null, side = THREE.FrontSide } = {}) {
+        const k = [color, rough, side].join('|');
+        if (!clip && matCache.has(k)) return matCache.get(k);
+        const m = new THREE.MeshStandardMaterial({ color, roughness: rough, metalness: 0, side, clippingPlanes: clip });
+        if (!clip) matCache.set(k, m);
         return m;
       }
-      const INK = ['#141414', '#000000'];
-      const W = (x, y) => new THREE.Vector2(x - 50, 50 - y);     // SVG units to world, y up
+      const WOOD = std('#2a2623', { rough: 0.9, side: THREE.DoubleSide });   // ink, warmed slightly so the form reads
+      const POT = std('#171717', { rough: 0.42 });                          // glazed ceramic
+      const W = (x, y) => new THREE.Vector2(x - 50, 50 - y);                // SVG units to world, y up
       const num = (el, a) => +el.getAttribute(a);
       const ptsOf = d => { const n = d.match(/-?\d*\.?\d+(?:e-?\d+)?/g).map(Number), out = []; for (let i = 0; i + 1 < n.length; i += 2) out.push({ x: n[i], y: n[i + 1] }); return out; };
       const loader = new SVGLoader();
@@ -263,7 +239,7 @@
         return out;
       }
       function slab(shapes, zMid, depth, mat, bevel = 0.4) {
-        const g = new THREE.ExtrudeGeometry(shapes, { depth, bevelEnabled: bevel > 0, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3, curveSegments: 12 });
+        const g = new THREE.ExtrudeGeometry(shapes, { depth, bevelEnabled: bevel > 0, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4, curveSegments: 14 });
         g.translate(0, 0, zMid - depth / 2);
         return new THREE.Mesh(g, mat);
       }
@@ -274,10 +250,13 @@
         }
         return Infinity;
       }
+      let seed = 7;
+      const rand = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
 
-      // ---- Foliage pads: the logo's circles become round clumps with the same flat bottom. ----
-      const padGroups = [...svg.querySelectorAll('[data-part="pads"], [data-part="depth"]')];
-      const pads = padGroups.map((g, gi) => {
+      // ---- Foliage pads: each of the logo's circles becomes a clump of leaf tufts, flat bottom kept. ----
+      const LIGHT_GREEN = new THREE.Color('#30d158'), DEEP_GREEN = new THREE.Color('#1f9b45');
+      const tuft = new THREE.IcosahedronGeometry(1, 1);     // faceted, so clumps read as leaves
+      const pads = [...svg.querySelectorAll('[data-part="pads"], [data-part="depth"]')].map(g => {
         const back = g.getAttribute('data-part') === 'depth';
         const seen = new Set(), circles = [];
         let bottom = -Infinity;
@@ -286,36 +265,45 @@
           const k = c.getAttribute('cx') + ',' + c.getAttribute('cy');
           if (!seen.has(k)) { seen.add(k); circles.push({ x: num(c, 'cx'), y: num(c, 'cy'), r: num(c, 'r') }); }
         });
-        const cx = circles.reduce((s, c) => s + c.x, 0) / circles.length;
-        return { back, circles, bottom, cx, z: 0, pivot: null, start: 1, idx: gi };
+        return { back, circles, bottom, cx: circles.reduce((s, c) => s + c.x, 0) / circles.length, z: 0 };
       });
       const front = pads.filter(p => !p.back), backs = pads.filter(p => p.back);
       [5, 2.5, -0.5].forEach((z, i) => { if (front[i]) front[i].z = z; });
       [-7, -6].forEach((z, i) => { if (backs[i]) backs[i].z = z; });
+      const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), s = new THREE.Vector3();
       pads.forEach(p => {
-        const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -(50 - p.bottom));   // keeps y >= pad bottom
-        const mat = p.back ? toon('#1f9b45', '#1c8a3c', { clip: [plane], side: THREE.DoubleSide })
-                           : toon('#30d158', '#1f9b45', { clip: [plane], side: THREE.DoubleSide });
+        const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -(50 - p.bottom));     // keeps y >= pad bottom
+        const items = [];
+        p.circles.forEach(c => {
+          items.push({ x: c.x, y: c.y, z: 0, r: c.r * 0.92, deep: true });            // the core of the clump
+          const n = Math.round(5 + c.r * 1.3);
+          for (let i = 0; i < n; i++) {
+            const th = rand() * Math.PI * 2, cy = 1 - rand() * 1.15, sy = Math.sqrt(Math.max(0, 1 - cy * cy));
+            const rr = c.r * (0.62 + rand() * 0.2);
+            const dx = sy * Math.cos(th), dz = sy * Math.sin(th);
+            items.push({ x: c.x + dx * rr, y: c.y - cy * rr * 0.85, z: dz * rr * 1.05, r: 2 + rand() * 1.6, deep: p.back || cy < 0.05 || rand() < 0.18 });
+          }
+        });
+        const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.78, metalness: 0, flatShading: true, clippingPlanes: [plane], side: THREE.DoubleSide });
+        const mesh = new THREE.InstancedMesh(tuft, mat, items.length);
+        items.forEach((it, i) => {
+          v.set(it.x - p.cx, p.bottom - it.y, it.z); s.set(it.r, it.r, it.r * 1.05);
+          m4.compose(v, q, s); mesh.setMatrixAt(i, m4);
+          mesh.setColorAt(i, it.deep ? DEEP_GREEN : LIGHT_GREEN);
+        });
         const pivot = new THREE.Group();
         pivot.position.set(p.cx - 50, 50 - p.bottom, p.z);
-        p.circles.forEach((c, i) => {
-          const m = new THREE.Mesh(new THREE.SphereGeometry(c.r, 28, 18), mat);
-          const jitter = ((i * 37) % 7 - 3) * 0.55;
-          m.position.set(c.x - p.cx, p.bottom - c.y, jitter);
-          m.scale.set(1, 1, 0.82);
-          pivot.add(m);
-        });
-        pivot.scale.setScalar(0.001);
+        pivot.add(mesh); pivot.scale.setScalar(0.001);
         tree.add(pivot);
         p.pivot = pivot;
       });
       const padNear = (x, y) => pads.reduce((best, p) => {
-        const px = p.cx, py = p.bottom - 3, dd = (px - x) ** 2 + (py - y) ** 2;
+        const dd = (p.cx - x) ** 2 + (p.bottom - 3 - y) ** 2;
         return dd < best.d ? { d: dd, p } : best;
       }, { d: Infinity, p: null }).p;
 
       // ---- Trunk and branches: each outline becomes a round tapered limb that grows along its length. ----
-      function limbGeo(P, R, radial = 14) {
+      function limbGeo(P, R, radial = 16) {
         const pos = [], nor = [], idx = [], m = P.length;
         for (let i = 0; i < m; i++) {
           const t = new THREE.Vector3().subVectors(P[Math.min(m - 1, i + 1)], P[Math.max(0, i - 1)]).normalize();
@@ -339,90 +327,85 @@
         g.userData = { per: radial * 6, rings: m - 1 };
         return g;
       }
-      function limbFrom(pathEl, tipEl, mat, zTipOverride) {
+      // Centerline and radius of a limb outline (it runs up one edge and back down the other).
+      function centerline(pathEl) {
         const pts = ptsOf(pathEl.getAttribute('d')), n = pts.length, half = Math.floor(n / 2);
-        let C = [], Wd = [];
-        for (let i = 0; i < half; i++) { const a = pts[i], b = pts[n - 1 - i]; C.push({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }); Wd.push(Math.hypot(a.x - b.x, a.y - b.y) / 2); }
-        if (Wd[0] < Wd[Wd.length - 1]) { C.reverse(); Wd.reverse(); }          // base first
+        const C = [], Rd = [];
+        for (let i = 0; i < half; i++) { const a = pts[i], b = pts[n - 1 - i]; C.push({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }); Rd.push(Math.hypot(a.x - b.x, a.y - b.y) / 2); }
+        return { C, Rd };
+      }
+      function limbFrom({ C, Rd }, tipEl, mat, zTipOverride) {
         const tip = C[C.length - 1];
         const pad = padNear(tip.x, tip.y);
         const zTip = zTipOverride ?? (pad ? pad.z * 0.8 : 0);
-        const P = C.map((c, i) => { const t = i / (C.length - 1); return new THREE.Vector3(c.x - 50, 50 - c.y, zTip * Math.pow(t, 1.6)); });
-        const mesh = new THREE.Mesh(limbGeo(P, Wd), mat);
+        const P = C.map((c, i) => new THREE.Vector3(c.x - 50, 50 - c.y, zTip * Math.pow(i / (C.length - 1), 1.6)));
+        const mesh = new THREE.Mesh(limbGeo(P, Rd), mat);
         mesh.geometry.setDrawRange(0, 0);
         tree.add(mesh);
-        let cap = null;
-        if (tipEl) {
-          cap = new THREE.Mesh(new THREE.SphereGeometry(num(tipEl, 'r'), 16, 12), mat);
-          cap.position.copy(P[P.length - 1]); cap.scale.setScalar(0.001);
-          tree.add(cap);
-        }
-        return { mesh, cap, base: C[0], tip, pad, P, R: Wd, start: 0, dur: 0 };
+        // A rounded tip that rides on the growing end, so a limb never shows an open end.
+        const capR = tipEl ? num(tipEl, 'r') : Rd[Rd.length - 1];
+        const cap = new THREE.Mesh(new THREE.SphereGeometry(capR, 16, 12), mat);
+        cap.scale.setScalar(0.001);
+        tree.add(cap);
+        return { mesh, cap, capR, base: C[0], tip, pad, P, R: Rd, start: 0, dur: 0 };
       }
-      const limbs = [];
+      // Read every limb, find the trunk (the thickest), then orient each branch from the end that touches the trunk.
+      const raw = [];
       const trunkEls = [...svg.querySelectorAll('[data-part="trunk"] > *')];
       for (let i = 0; i < trunkEls.length; i++) {
         if (trunkEls[i].tagName !== 'path') continue;
         const tip = trunkEls[i + 1] && trunkEls[i + 1].tagName === 'circle' ? trunkEls[i + 1] : null;
-        limbs.push(limbFrom(trunkEls[i], tip, toon(...INK, { side: THREE.DoubleSide })));   // open end reads solid while growing
+        raw.push({ cl: centerline(trunkEls[i]), tip, mat: WOOD });
       }
-      const main = limbs.reduce((a, b) => (b.R[0] > a.R[0] ? b : a));
+      const jinPath = svg.querySelector('[data-part="jin"] path');
+      if (jinPath) raw.push({ cl: centerline(jinPath), tip: svg.querySelector('[data-part="jin"] circle'), mat: std('#e7e2d6', { side: THREE.DoubleSide }), jin: true });
+      const trunkRaw = raw.filter(r => !r.jin).reduce((a, b) => (Math.max(...b.cl.Rd) > Math.max(...a.cl.Rd) ? b : a));
+      const tc = trunkRaw.cl;
+      if (tc.Rd[0] < tc.Rd[tc.Rd.length - 1]) { tc.C.reverse(); tc.Rd.reverse(); }   // trunk: wide end (the pot) first
+      const nearTrunk = pt => { let bi = 0, bd = Infinity; tc.C.forEach((c, i) => { const d = (c.x - pt.x) ** 2 + (c.y - pt.y) ** 2; if (d < bd) { bd = d; bi = i; } }); return { i: bi, d: bd }; };
+      raw.forEach(r => {
+        if (r === trunkRaw) return;
+        const a = nearTrunk(r.cl.C[0]), b = nearTrunk(r.cl.C[r.cl.C.length - 1]);
+        if (b.d < a.d) { r.cl.C.reverse(); r.cl.Rd.reverse(); }
+        r.joint = Math.min(a.d, b.d) === a.d ? a.i : b.i;                // where on the trunk it starts
+      });
+      const limbs = raw.map(r => Object.assign(limbFrom(r.cl, r.tip, r.mat, r.jin ? 3 : undefined), { jin: !!r.jin, joint: r.joint }));
+      const main = limbs[raw.indexOf(trunkRaw)];
       main.P.forEach((p, i) => { p.z = 1.2 * Math.sin(Math.PI * i / (main.P.length - 1)); });
       main.mesh.geometry.dispose(); main.mesh.geometry = limbGeo(main.P, main.R); main.mesh.geometry.setDrawRange(0, 0);
-      if (main.cap) main.cap.position.copy(main.P[main.P.length - 1]);
-      const jinPath = svg.querySelector('[data-part="jin"] path');
-      if (jinPath) limbs.push(Object.assign(limbFrom(jinPath, svg.querySelector('[data-part="jin"] circle'), toon('#e7e2d6', '#c9c4b8', { side: THREE.DoubleSide }), 3), { jin: true }));
 
-      // When each limb grows (as a share of the grow phase): trunk first, then each branch once the trunk passes it.
-      const yTop = Math.min(...main.P.map(p => 50 - p.y)), yBase = Math.max(...main.P.map(p => 50 - p.y));
+      // When each limb grows (as a share of the grow phase): trunk first, each branch the moment the trunk reaches it.
       main.start = 0; main.dur = 0.55;
       limbs.forEach(l => {
         if (l === main) return;
-        const reach = (yBase - l.base.y) / (yBase - yTop);       // how far up the trunk it starts
-        l.start = Math.min(0.75, main.dur * reach + 0.02); l.dur = l.jin ? 0.18 : 0.26;
+        l.start = Math.min(0.75, main.dur * (l.joint / (main.P.length - 1)) + 0.01); l.dur = l.jin ? 0.16 : 0.26;
       });
       pads.forEach(p => {
         const feeder = limbs.find(l => l.pad === p && !l.jin);
-        p.start = feeder ? feeder.start + feeder.dur * 0.75 : main.dur * 0.9;
+        p.start = feeder ? feeder.start + feeder.dur * 0.94 : main.dur * 0.95;
       });
-
-      // Roots and bark grain.
-      svg.querySelectorAll('[data-part="roots"] path').forEach(el => tree.add(slab(pathShapes(el.getAttribute('d')), 0, 3, toon(...INK), 0.3)));
-      const barkMat = new THREE.MeshBasicMaterial({ color: '#f6f6f3', transparent: true, opacity: 0.32, depthWrite: false });
-      const bark = [];
-      svg.querySelectorAll('[data-part="bark"] path').forEach(el => {
-        const pts = ptsOf(el.getAttribute('d'));
-        const V = pts.map(p => {
-          let best = 0, bd = Infinity;
-          main.P.forEach((q, i) => { const dd = (q.x - (p.x - 50)) ** 2 + (q.y - (50 - p.y)) ** 2; if (dd < bd) { bd = dd; best = i; } });
-          const q = main.P[best], r = main.R[best], dx = (p.x - 50) - q.x;
-          return new THREE.Vector3(p.x - 50, 50 - p.y, q.z + Math.sqrt(Math.max(0.01, r * r - dx * dx)) + 0.05);
-        });
-        if (V.length < 2) return;
-        const m = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(V), 40, 0.08, 5), barkMat);
-        m.visible = false; tree.add(m); bark.push(m);
-      });
+      svg.querySelectorAll('[data-part="roots"] path').forEach(el => tree.add(slab(pathShapes(el.getAttribute('d')), 0, 3, WOOD, 0.3)));
 
       // ---- Pot, soil and moss. ----
       const potGroup = new THREE.Group();
       const potEl = svg.querySelector('[data-part="pot"]');
       const potFills = [...potEl.querySelectorAll('path, rect')].filter(e => !e.getAttribute('stroke'));
-      let body = null, bodyY = [78.5, 87.5];
+      let bodyY = [78.5, 87.5];
       potFills.forEach(el => {
         if (el.tagName === 'rect') {
           const x = num(el, 'x'), y = num(el, 'y'), w = num(el, 'width'), h = num(el, 'height'), r = num(el, 'rx') || 0;
-          const s = new THREE.Shape(), X = x - 50, Y = 50 - y;
-          s.moveTo(X + r, Y); s.lineTo(X + w - r, Y); s.quadraticCurveTo(X + w, Y, X + w, Y - r); s.lineTo(X + w, Y - h + r);
-          s.quadraticCurveTo(X + w, Y - h, X + w - r, Y - h); s.lineTo(X + r, Y - h); s.quadraticCurveTo(X, Y - h, X, Y - h + r);
-          s.lineTo(X, Y - r); s.quadraticCurveTo(X, Y, X + r, Y);
-          potGroup.add(slab([s], 0, 21, toon(...INK), 0.5));
+          const sh = new THREE.Shape(), X = x - 50, Y = 50 - y;
+          sh.moveTo(X + r, Y); sh.lineTo(X + w - r, Y); sh.quadraticCurveTo(X + w, Y, X + w, Y - r); sh.lineTo(X + w, Y - h + r);
+          sh.quadraticCurveTo(X + w, Y - h, X + w - r, Y - h); sh.lineTo(X + r, Y - h); sh.quadraticCurveTo(X, Y - h, X, Y - h + r);
+          sh.lineTo(X, Y - r); sh.quadraticCurveTo(X, Y, X + r, Y);
+          potGroup.add(slab([sh], 0, 21, POT, 0.7));
           return;
         }
         const pts = ptsOf(el.getAttribute('d')), ys = pts.map(p => p.y), span = Math.max(...ys) - Math.min(...ys);
-        const isBody = !body && span > 6;
-        const mesh = slab(pathShapes(el.getAttribute('d')), 0, isBody ? 19 : 3, toon(...INK), 0.35);
+        const isBody = span > 6;
+        const mesh = slab(pathShapes(el.getAttribute('d')), 0, isBody ? 19 : 3, POT, isBody ? 0.6 : 0.4);
         if (isBody) {
-          body = mesh; bodyY = [Math.min(...ys), Math.max(...ys)];
+          bodyY = [Math.min(...ys), Math.max(...ys)];
           const pa = mesh.geometry.attributes.position;
           for (let i = 0; i < pa.count; i++) { const t = ((50 - pa.getY(i)) - bodyY[0]) / (bodyY[1] - bodyY[0]); pa.setZ(i, pa.getZ(i) * (1 - 0.14 * Math.max(0, Math.min(1, t)))); }
           pa.needsUpdate = true; mesh.geometry.computeVertexNormals();
@@ -431,71 +414,64 @@
           [-6.5, 6.5].forEach(z => { const f = mesh.clone(); f.position.z = z; potGroup.add(f); });   // four feet
         }
       });
-      const bodyFrontZ = y => 9.85 * (1 - 0.14 * Math.max(0, Math.min(1, (y - bodyY[0]) / (bodyY[1] - bodyY[0])))) + 0.08;
-      potEl.querySelectorAll('[stroke]').forEach(el => {
-        const op = +(el.getAttribute('stroke-opacity') || 1);
-        const lineMat = new THREE.LineBasicMaterial({ color: '#f6f6f3', transparent: true, opacity: op });
-        let pts;
-        if (el.tagName === 'rect') { const x = num(el, 'x'), y = num(el, 'y'), w = num(el, 'width'), h = num(el, 'height'); pts = [{ x, y }, { x: x + w, y }, { x: x + w, y: y + h }, { x, y: y + h }, { x, y }]; }
-        else { const d = el.getAttribute('d'), m = d.match(/M([\d.]+) ([\d.]+)H([\d.]+)/); if (!m) return; pts = [{ x: +m[1], y: +m[2] }, { x: +m[3], y: +m[2] }]; }
-        const z = pts[0].y < bodyY[0] ? 11.08 : bodyFrontZ(pts[0].y);
-        potGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts.map(p => new THREE.Vector3(p.x - 50, 50 - p.y, z))), lineMat));
-      });
       const potBox = new THREE.Box3().setFromObject(potGroup);
+      const soilEl = svg.querySelector('[data-part="soil"] path');
+      const soilY = soilEl ? Math.max(...ptsOf(soilEl.getAttribute('d')).map(p => p.y)) : 74.3;
+      const soil = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2), std('#6b5643', { rough: 1 }));
+      soil.scale.set(27.5, 1.8, 9.4); soil.position.set(0, 50 - soilY, 0); potGroup.add(soil);
+      svg.querySelectorAll('[data-part="soil"] circle').forEach((c, i) => {
+        const m = new THREE.Mesh(new THREE.IcosahedronGeometry(num(c, 'r'), 2), std('#1f9b45'));
+        m.position.set(num(c, 'cx') - 50, 50 - soilY + 0.7, [5, -3, 4, -5][i % 4]);
+        m.scale.set(1, 0.65, 1); potGroup.add(m);
+      });
       const pot = new THREE.Group(); pot.position.set(0, potBox.min.y, 0); potGroup.position.y = -potBox.min.y; pot.add(potGroup); tree.add(pot);
 
-      const soilEl = svg.querySelector('[data-part="soil"] path');
-      const soilPts = soilEl ? ptsOf(soilEl.getAttribute('d')) : [{ x: 23, y: 74.3 }, { x: 77, y: 74.3 }];
-      const soilY = Math.max(...soilPts.map(p => p.y));
-      const soil = new THREE.Mesh(new THREE.SphereGeometry(1, 40, 16, 0, Math.PI * 2, 0, Math.PI / 2), toon('#6b5643', '#5a4838'));
-      soil.scale.set(27, 1.6, 9.2); soil.position.set(0, 50 - soilY, 0); potGroup.add(soil);
-      svg.querySelectorAll('[data-part="soil"] circle').forEach((c, i) => {
-        const m = new THREE.Mesh(new THREE.SphereGeometry(num(c, 'r'), 14, 10), toon('#1f9b45', '#1c8a3c'));
-        m.position.set(num(c, 'cx') - 50, 50 - soilY + 0.6, [5, -3, 4, -5][i % 4]);
-        m.scale.set(1, 0.7, 1); potGroup.add(m);
-      });
+      // A soft contact shadow so the pot sits on the page.
+      const sc = document.createElement('canvas'); sc.width = sc.height = 128;
+      const sx = sc.getContext('2d'), grd = sx.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grd.addColorStop(0, 'rgba(20,20,20,0.28)'); grd.addColorStop(0.55, 'rgba(20,20,20,0.12)'); grd.addColorStop(1, 'rgba(20,20,20,0)');
+      sx.fillStyle = grd; sx.fillRect(0, 0, 128, 128);
+      const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+      shadow.rotation.x = -Math.PI / 2; shadow.scale.set(96, 40, 1); shadow.position.y = potBox.min.y - 0.1;
+      tree.add(shadow);
 
-      // ---- Scroll: grow the tree, then frame it above the hero. ----
+      // ---- Scroll: one continuous move. The camera pulls back and swings round as the tree grows. ----
       const track = document.querySelector('.track'), frameEl = document.querySelector('.frame');
-      // Split each caption into words so they can light up one by one.
       const caps = [...document.querySelectorAll('.cap')].map(el => {
         const words = el.textContent.trim().split(/\s+/);
         el.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
         return { el, words: [...el.querySelectorAll('.w')], lit: -1, on: false };
       });
-      const CAP_AT = [[0.02, 0.27], [0.27, 0.5], [0.5, 0.74], [0.74, 0.98]];   // share of the grow phase per line
+      const CAP_AT = [[0.03, 0.46], [0.5, 0.98]];     // share of the grow phase per line
       const fov = camera.fov * Math.PI / 180, K = 1 / (2 * Math.tan(fov / 2));
-      let KEYS = [];
-      function keys() {
+      let L = {};
+      function layout() {
         const vh = innerHeight, asp = innerWidth / vh, narrow = asp < 0.8;
         const mark = frameEl.querySelector('.hero .wordmark');
         const textTop = mark ? mark.getBoundingClientRect().top - frameEl.getBoundingClientRect().top : vh * 0.5;
-        const top = 22, bottom = Math.max(top + vh * 0.24, textTop - 40);
+        const top = 24, bottom = Math.max(top + vh * 0.26, textTop - 36);
         const f = (bottom - top) / vh, c = (top + bottom) / 2 / vh;
-        const H = Math.max(84 / f, (84 / 0.86) / asp), D = H * K;
-        const far = narrow ? Math.min(1.9, 1 / (asp * 0.85)) : 1;
-        const lean = narrow ? 0 : 1;
-        // shift: how far the picture is slid up (share of the screen) so the tree clears the text.
-        return [
-          { p: [30 * far, -4, 128 * far], t: [-26 * lean, -21, 0], shift: 0 },       // the empty pot, right of the words
-          { p: [-30 * far, 8, 152 * far], t: [-24 * lean, -2, 0], shift: 0 },         // the trunk rising
-          { p: [0, -1 + D * 0.2, D], t: [0, -1, 0], shift: 0.5 - c },                  // the whole tree over the hero
-        ];
+        const DF = Math.max(84 / f, (88 / 0.86) / asp) * K;
+        const D0 = Math.max(150, (84 / 0.8) / asp * K);     // the pot fills ~60% of a phone's width
+        L = { DF, D0, shift: 0.5 - c, lean: narrow ? 0 : 1, narrow };
       }
       const smooth = x => x * x * (3 - 2 * x);
       const clamp01 = x => Math.max(0, Math.min(1, x));
       const lerp = (a, b, k) => a + (b - a) * k;
-      const lerp3 = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
       function camGoal(p) {
-        const s = p * 2, i = Math.min(1, Math.floor(s)), f = smooth(s - i);
-        return { p: lerp3(KEYS[i].p, KEYS[i + 1].p, f), t: lerp3(KEYS[i].t, KEYS[i + 1].t, f), shift: lerp(KEYS[i].shift, KEYS[i + 1].shift, f) };
+        const e = smooth(p);
+        const dist = lerp(L.D0, L.DF, e);
+        const tx = lerp(-22 * L.lean, 0, smooth(clamp01((p - 0.35) / 0.65)));
+        const ty = lerp(L.narrow ? -12 : -18, -1, e);
+        const elev = lerp(0.1, 0.2, e);
+        return { p: [tx, ty + dist * elev, dist], t: [tx, ty, 0], shift: L.shift * smooth(clamp01((p - 0.72) / 0.28)) };
       }
       const progress = () => clamp01(scrollY / Math.max(1, track.offsetHeight - innerHeight));
 
       // ---- Input: lean toward the pointer, drag to turn (within ±40°). ----
-      let mx = 0, my = 0, dragYaw = 0, vel = 0, dragging = false, lastX = 0;
+      let mx = 0, dragYaw = 0, vel = 0, dragging = false, lastX = 0;
       addEventListener('pointermove', e => {
-        mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1;
+        mx = e.clientX / innerWidth * 2 - 1;
         if (dragging) { const dx = e.clientX - lastX; lastX = e.clientX; vel = dx * 0.004; dragYaw = Math.max(-0.7, Math.min(0.7, dragYaw + vel)); }
       }, { passive: true });
       canvas.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; vel = 0; canvas.classList.add('drag'); });
@@ -505,61 +481,69 @@
       function resize() {
         renderer.setSize(innerWidth, innerHeight, false);
         camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
-        KEYS = keys();
+        layout();
       }
       addEventListener('resize', resize);
       resize();
 
+      // Smooth scrolling (Lenis). If it can't load, native scrolling still works.
+      let lenis = null;
+      import('https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.mjs')
+        .then(({ default: Lenis }) => { lenis = new Lenis({ lerp: 0.09, smoothWheel: true }); })
+        .catch(() => {});
+
       let P = progress();
       const g0 = camGoal(P);
       const camPos = new THREE.Vector3(...g0.p), look = new THREE.Vector3(...g0.t);
-      let yaw = -0.5, shift = g0.shift;
+      let yaw = -0.6, shift = g0.shift;
       const outBack = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
       const outCubic = x => 1 - Math.pow(1 - x, 3);
       const t0 = performance.now();
       const GROW = 0.82;     // share of the scroll spent growing; the rest settles the camera
-
       let last = t0;
+
       function frame(now) {
+        if (lenis) lenis.raf(now);
         const T = (now - t0) / 1000;
         const dt = Math.min(0.1, (now - last) / 1000); last = now;
-        const ease = rate => 1 - Math.exp(-rate * dt);      // same feel at any frame rate
+        const ease = rate => 1 - Math.exp(-rate * dt);
         const raw = progress();
-        P += (raw - P) * ease(7);
+        P += (raw - P) * ease(lenis ? 20 : 9);
         root.classList.toggle('started', raw > 0.02);
         root.classList.toggle('grown', raw > 0.9);
-        const gp = clamp01(P / GROW);                       // grow phase 0..1
+        const gp = clamp01(P / GROW);
 
         // The pot settles in on load; everything else follows the scroll.
         pot.scale.set(1, Math.max(0.001, outCubic(clamp01(T / 0.55))), 1);
+        shadow.material.opacity = clamp01(T / 0.55);
         limbs.forEach(l => {
           const k = clamp01((gp - l.start) / l.dur);
-          const g = l.mesh.geometry;
-          g.setDrawRange(0, Math.round(k * g.userData.rings) * g.userData.per);
-          if (l.cap) l.cap.scale.setScalar(Math.max(0.001, outCubic(clamp01((k - 0.9) / 0.1))));
+          const g = l.mesh.geometry, idx = Math.round(k * g.userData.rings);
+          g.setDrawRange(0, idx * g.userData.per);
+          if (idx > 0) { l.cap.position.copy(l.P[idx]); l.cap.scale.setScalar(Math.max(1, l.R[idx] / l.capR)); }
+          else l.cap.scale.setScalar(0.001);
         });
-        bark.forEach(m => { m.visible = gp > main.dur * 0.9; });
         pads.forEach(p => p.pivot.scale.setScalar(Math.max(0.001, outBack(clamp01((gp - p.start) / 0.14)))));
         caps.forEach((c, i) => {
           const [a, b] = CAP_AT[i], lp = (gp - a) / (b - a);
           const on = lp >= 0 && lp < 1;
           if (on !== c.on) { c.on = on; c.el.classList.toggle('on', on); }
-          const lit = Math.min(c.words.length, Math.ceil(clamp01(lp / 0.6) * c.words.length));   // all lit by 60% of its stretch
+          const lit = Math.min(c.words.length, Math.ceil(clamp01(lp / 0.55) * c.words.length));
           if (lit !== c.lit) { c.lit = lit; c.words.forEach((w, k) => w.classList.toggle('lit', k < lit)); }
         });
 
         // Camera.
         const g = camGoal(P);
-        camPos.lerp(new THREE.Vector3(...g.p), ease(5));
-        look.lerp(new THREE.Vector3(...g.t), ease(5));
-        shift += (g.shift - shift) * ease(5);
+        camPos.lerp(new THREE.Vector3(...g.p), ease(7));
+        look.lerp(new THREE.Vector3(...g.t), ease(7));
+        shift += (g.shift - shift) * ease(7);
         camera.position.copy(camPos); camera.lookAt(look);
         camera.setViewOffset(innerWidth, innerHeight, 0, shift * innerHeight, innerWidth, innerHeight);
 
-        // The tree turns to face you as it grows; drag and pointer add a little.
+        // The tree swings round to face you as it grows; drag and pointer add a little.
         if (!dragging) { dragYaw = Math.max(-0.7, Math.min(0.7, dragYaw + vel)); vel *= Math.pow(0.9, dt * 60); dragYaw *= Math.pow(0.97, dt * 60); }
-        const goalYaw = lerp(-0.55, 0, smooth(clamp01(P))) + dragYaw + mx * 0.22;
-        yaw += (goalYaw - yaw) * ease(5);
+        const goalYaw = lerp(-0.6, 0, smooth(clamp01(P))) + dragYaw + mx * 0.2;
+        yaw += (goalYaw - yaw) * ease(6);
         tree.rotation.set(0, yaw, 0);      // yaw only, so the pads' flat bottoms stay level
 
         renderer.render(scene, camera);
