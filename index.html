@@ -32,11 +32,12 @@
       } catch (e) {}
       if (ok && !reduce && 'noModule' in HTMLScriptElement.prototype) {
         d.classList.add('gl');
-        // The way in: a board to break, once per visit (?board shows it again). Scrolling waits for it.
-        var seenBoard = false;
-        try { seenBoard = sessionStorage.getItem('miyagi-board') === '1'; } catch (e) {}
-        if (/[?&]board\b/.test(location.search)) seenBoard = false;
-        if (!seenBoard) d.classList.add('board-on');
+        // The way in: a board to break, every time the page opens at the top. Scrolling waits for it.
+        // A reload starts at the top too, so the board is always there (a #link still lands where it points).
+        if (!location.hash) {
+          try { history.scrollRestoration = 'manual'; } catch (e) {}
+          d.classList.add('board-on');
+        }
         setTimeout(function () { if (!d.classList.contains('gl-ready')) d.classList.remove('gl', 'board-on'); }, 6000);
       }
     })();
@@ -720,7 +721,7 @@
         .then(({ default: Lenis }) => { lenis = new Lenis({ lerp: 0.09, smoothWheel: true }); window.miyagiLenis = lenis; })
         .catch(() => {});
 
-      // ---- The way in: a blank page and a board. Breaking it reveals the tree behind it. Once per visit; a scroll or swipe breaks it too. ----
+      // ---- The way in: a blank page and a board. Breaking it reveals the tree behind it. Every visit; a scroll or swipe breaks it too. ----
       const board = { state: 'gone', t: 0, group: null, mat: null, halves: [], bits: [], lenisStopped: false };
       let revealAt = null;                                   // when the tree starts to grow in (performance.now() time)
       let my = 0;
@@ -812,7 +813,6 @@
         if (board.mat.map) board.mat.map.dispose(); board.mat.dispose();
         Object.assign(board, { state: 'gone', group: null, halves: [], bits: [] });
         root.classList.remove('board-on', 'board-broken');
-        try { sessionStorage.setItem('miyagi-board', '1'); } catch (e) {}
         if (lenis) lenis.start();
       }
       function updateBoard(dt, T, ease) {

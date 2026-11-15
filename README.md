@@ -13,7 +13,7 @@ With 3D on, the page opens blank: just the dots and a wooden board ("Break the b
 
 Then scrolling tells the story: the tree steps right while "Watching isn't learning." and "miyagi waits until your code works." light up on the left (centered under the tree on phones), then it rises over the wordmark, "Wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
 
-The board shows once per tab (`sessionStorage` key `miyagi-board`); add `?board` to the URL to see it again. Without the board, the tree grows in on load. Browsers without WebGL, or with reduced motion on, never get the board.
+The board shows every time the page opens, including a plain visit to https://miyagi.study/ and a reload (the page always starts at the top, `history.scrollRestoration = 'manual'`). Only a link with a `#hash` skips it; then the tree grows in on load. Browsers without WebGL, or with reduced motion on, never get the board.
 
 ## See it work
 
