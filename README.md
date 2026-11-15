@@ -7,6 +7,10 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 - One static page, `index.html`. The bonsai (`tree-full.svg`) and wordmark (`wordmark.svg`) from the Miyagi brand kit are inlined. With WebGL, a three.js scene (loaded from jsDelivr, pinned to three@0.160.0) builds a 3D bonsai from that SVG's shapes, and scrolling grows it. Without WebGL, or with reduced motion on, the flat logo page shows instead. Favicons, `og-image.png` and `fonts/GoogleSansFlex.woff2` (SIL OFL, see `fonts/OFL.txt`) come from the same kit.
 - Follow the kit's `BRAND.md`: paper background, ink buttons, green only means passed, no gradients or glows.
 
+## See it work
+
+Under the ending, a five-step player shows the real app: `demo/01-ask.webp` … `demo/05-passed.webp` (1600×1000). They were made from the app's own screenshots in the team repo (`app/agents/shots/`: `launcher-03-results`, `drawer-08-stage`, `cards-offtrack-stage`, `diagrams-heatmap`, `cards-success`). To refresh one, replace its file at the same size. Each `<img>` sets where its slow zoom lands (`--ox`, `--oy`, `--z`).
+
 ## Demo video
 
 The final screen has a "Watch the demo" button that plays the video in a pop-up. Set `DEMO_URL` in `index.html` (search for `var DEMO_URL`) to a YouTube, Loom or Vimeo link, or an `.mp4` file in this repo. While it's empty, the button says the demo is coming soon.

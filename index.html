@@ -100,27 +100,44 @@
     .btn.btn-ghost { background: transparent; color: var(--m-ink); box-shadow: inset 0 0 0 1.5px var(--m-ink); }
     .btn.btn-ghost svg { width: 14px; height: 14px; }
 
-    /* How it works: the app's notch pill in its three states. */
-    .how { position: relative; z-index: 1; padding: 16vh 16px 18vh; }
-    .how ol { list-style: none; margin: 0 auto; padding: 0; max-width: 1080px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 28px; }
-    .how li { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .8s var(--settle); }
-    .how li:nth-child(2) { transition-delay: .12s; } .how li:nth-child(3) { transition-delay: .24s; }
-    .how.in li { opacity: 1; transform: none; }
-    .how p { margin: 22px 0 0; max-width: 17em; font-weight: 600; font-size: 20px; line-height: 1.25; letter-spacing: -.02em; text-wrap: balance; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 13px 0 9px; border-radius: 17px;
-      background: #000; color: #f4f4f5; box-shadow: 0 10px 24px rgba(0, 0, 0, .22); white-space: nowrap;
-      font: 500 13px/1 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    /* See it work: the real app, step by step, playing like a video. */
+    .how { position: relative; z-index: 1; padding: 14vh 16px 16vh; }
+    .how h2 { margin: 0 0 28px; text-align: center; font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.035em; }
+    .player { max-width: min(1040px, calc((100vh - 240px) * 1.6)); min-width: min(100%, 560px); margin: 0 auto; opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .9s var(--settle); }
+    .how.in .player, html.no-io .player { opacity: 1; transform: none; }
+    .screen { position: relative; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; background: #000; box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .45); }
+    /* Each shot starts on the whole screen, then eases in on the part that matters (--ox/--oy, --z). */
+    .screen img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
+      transform-origin: var(--ox, 50%) var(--oy, 50%); transform: scale(1);
+      transition: opacity .6s ease, transform .6s ease;
     }
-    .pill svg { width: 22px; height: 22px; flex: none; }
-    .pill .st { width: 8px; height: 8px; border-radius: 50%; flex: none; transform: scale(0); transition: transform .5s var(--spring); }
-    .how.in .pill .st { transform: none; }
-    .how li:nth-child(1) .st { background: #8e8e93; transition-delay: .5s; }
-    .how li:nth-child(2) .st { background: #ffb020; transition-delay: .65s; }
-    .how li:nth-child(3) .st { background: #30d158; transition-delay: .8s; }
-    html:not(.gl) .how li, html.no-io .how li { opacity: 1; transform: none; }
-    html:not(.gl) .how .pill .st, html.no-io .how .pill .st { transform: none; }
-    @media (max-width: 760px) { .how ol { grid-template-columns: 1fr; } .how { padding-top: 10vh; } }
+    .screen img.on { opacity: 1; transform: scale(var(--z, 1.04)); transition: opacity .6s ease, transform 3.2s cubic-bezier(.45, 0, .2, 1) .7s; }
+    .player { container-type: inline-size; }
+    .tabs { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .tab {
+      width: 100%; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; color: var(--m-ink);
+      font: 500 15px/1.35 var(--m-font-brand); opacity: .45; transition: opacity .3s;
+    }
+    .tab:hover, .tab[aria-selected="true"] { opacity: 1; }
+    .tab:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 4px; border-radius: 4px; }
+    .tab .bar { display: block; height: 2px; margin-bottom: 12px; background: rgba(20, 20, 20, .12); border-radius: 1px; overflow: hidden; }
+    .tab .bar i { display: block; height: 100%; width: 0; background: var(--m-ink); }
+    .tab[aria-selected="true"] .bar i { animation: fill var(--dur, 5s) linear forwards; }
+    .player.paused .tab .bar i { animation-play-state: paused; }
+    .tab.done .bar i { width: 100%; }
+    @keyframes fill { to { width: 100%; } }
+    .tab b { display: block; font-weight: 600; }
+    .tab span:last-child { display: block; margin-top: 2px; color: var(--m-ink-muted); font-size: 14px; }
+    .caption { display: none; }
+    @container (max-width: 860px) {
+      .tabs { gap: 10px; }
+      .tab span:last-child { display: none; }
+      .tab b { font-size: 14px; }
+      .caption { display: block; margin: 14px 0 0; min-height: 1.5em; color: var(--m-ink-muted); font-size: 15px; }
+    }
+    @media (max-width: 760px) { .how { padding-top: 10vh; } .tab b { font-size: 13px; } }
+    @media (prefers-reduced-motion: reduce) { .screen img { transition: opacity .2s; } .screen img.on { transform: none; } }
 
     /* Demo video pop-up. */
     .demo { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(20, 20, 20, .6); }
@@ -234,12 +251,25 @@
       <div class="hint">Scroll to grow it<i aria-hidden="true"></i></div>
     </div>
   </main>
-  <section class="how" aria-label="How Miyagi works">
-    <ol>
-      <li><span class="pill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="#f4f4f5"><rect x="18" y="73" width="64" height="6" rx="2"></rect><path d="M22 79H78L74 89H26Z"></path><path d="M53.6 69.2L52.99 68.84L52.49 68.5L52.08 68.18L51.74 67.89L51.48 67.64L51.26 67.4L51.09 67.19L50.94 66.99L50.82 66.78L50.71 66.56L50.63 66.31L50.56 66.02L50.52 65.68L50.51 65.3L50.53 64.86L50.58 64.38L50.68 63.86L50.81 63.29L50.98 62.69L51.18 62.05L51.41 61.38L51.68 60.68L51.97 59.96L52.29 59.21L52.63 58.44L52.98 57.64L53.35 56.83L53.73 55.99L54.11 55.14L54.49 54.26L54.87 53.37L55.25 52.45L55.61 51.52L55.96 50.57L56.3 49.6L56.6 48.61L56.89 47.59L57.14 46.56L57.35 45.51L57.52 44.44L57.64 43.35L57.72 42.24L57.73 41.12L57.69 39.98L57.58 38.83L57.4 37.67L57.15 36.5L56.82 35.33L56.42 34.16L55.93 33L55.37 31.83L54.72 30.67L53.99 29.51L53.18 28.35L52.27 27.2L51.29 26.06L46.71 29.94L47.45 30.93L48.1 31.89L48.66 32.82L49.14 33.72L49.53 34.6L49.86 35.46L50.12 36.29L50.32 37.1L50.46 37.89L50.55 38.66L50.58 39.41L50.58 40.16L50.53 40.9L50.44 41.63L50.31 42.37L50.15 43.09L49.95 43.82L49.72 44.56L49.45 45.29L49.16 46.02L48.84 46.76L48.5 47.5L48.13 48.25L47.74 48.99L47.33 49.74L46.91 50.49L46.47 51.25L46.02 52.01L45.57 52.77L45.11 53.54L44.65 54.32L44.19 55.1L43.74 55.89L43.29 56.7L42.86 57.51L42.43 58.34L42.03 59.19L41.65 60.06L41.29 60.95L40.97 61.88L40.69 62.84L40.46 63.83L40.29 64.86L40.18 65.92L40.16 67.03L40.22 68.15L40.39 69.3L40.66 70.46L41.04 71.6L41.52 72.73L42.11 73.83L42.8 74.9L43.58 75.93L44.44 76.91L45.38 77.87L46.4 78.8Z"></path><circle cx="49" cy="28" r="3"></circle></g><g fill="#30d158"><clipPath id="t12s1x0"><rect x="-10" y="-10" width="120" height="60"></rect></clipPath><g clip-path="url(#t12s1x0)"><circle cx="23" cy="46" r="7"></circle><circle cx="32" cy="42" r="9"></circle><circle cx="40" cy="46" r="6.5"></circle><rect x="23" y="43.5" width="17" height="6.5"></rect></g><clipPath id="t12s1x1"><rect x="-10" y="-10" width="120" height="50"></rect></clipPath><g clip-path="url(#t12s1x1)"><circle cx="61" cy="36" r="6.5"></circle><circle cx="70" cy="32" r="9"></circle><circle cx="78" cy="36" r="6.5"></circle><rect x="61" y="33.5" width="17" height="6.5"></rect></g><clipPath id="t12s1x2"><rect x="-10" y="-10" width="120" height="38"></rect></clipPath><g clip-path="url(#t12s1x2)"><circle cx="43" cy="24" r="6.5"></circle><circle cx="50" cy="20" r="8.5"></circle><circle cx="57" cy="24" r="6.5"></circle><rect x="43" y="21.5" width="14" height="6.5"></rect></g></g></svg>Step 4 of 7 · Watching your run<i class="st"></i></span><p>Pick any tutorial. Miyagi splits it into steps.</p></li>
-      <li><span class="pill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="#f4f4f5"><rect x="18" y="73" width="64" height="6" rx="2"></rect><path d="M22 79H78L74 89H26Z"></path><path d="M53.6 69.2L52.99 68.84L52.49 68.5L52.08 68.18L51.74 67.89L51.48 67.64L51.26 67.4L51.09 67.19L50.94 66.99L50.82 66.78L50.71 66.56L50.63 66.31L50.56 66.02L50.52 65.68L50.51 65.3L50.53 64.86L50.58 64.38L50.68 63.86L50.81 63.29L50.98 62.69L51.18 62.05L51.41 61.38L51.68 60.68L51.97 59.96L52.29 59.21L52.63 58.44L52.98 57.64L53.35 56.83L53.73 55.99L54.11 55.14L54.49 54.26L54.87 53.37L55.25 52.45L55.61 51.52L55.96 50.57L56.3 49.6L56.6 48.61L56.89 47.59L57.14 46.56L57.35 45.51L57.52 44.44L57.64 43.35L57.72 42.24L57.73 41.12L57.69 39.98L57.58 38.83L57.4 37.67L57.15 36.5L56.82 35.33L56.42 34.16L55.93 33L55.37 31.83L54.72 30.67L53.99 29.51L53.18 28.35L52.27 27.2L51.29 26.06L46.71 29.94L47.45 30.93L48.1 31.89L48.66 32.82L49.14 33.72L49.53 34.6L49.86 35.46L50.12 36.29L50.32 37.1L50.46 37.89L50.55 38.66L50.58 39.41L50.58 40.16L50.53 40.9L50.44 41.63L50.31 42.37L50.15 43.09L49.95 43.82L49.72 44.56L49.45 45.29L49.16 46.02L48.84 46.76L48.5 47.5L48.13 48.25L47.74 48.99L47.33 49.74L46.91 50.49L46.47 51.25L46.02 52.01L45.57 52.77L45.11 53.54L44.65 54.32L44.19 55.1L43.74 55.89L43.29 56.7L42.86 57.51L42.43 58.34L42.03 59.19L41.65 60.06L41.29 60.95L40.97 61.88L40.69 62.84L40.46 63.83L40.29 64.86L40.18 65.92L40.16 67.03L40.22 68.15L40.39 69.3L40.66 70.46L41.04 71.6L41.52 72.73L42.11 73.83L42.8 74.9L43.58 75.93L44.44 76.91L45.38 77.87L46.4 78.8Z"></path><circle cx="49" cy="28" r="3"></circle></g><g fill="#30d158"><clipPath id="t12s2x0"><rect x="-10" y="-10" width="120" height="60"></rect></clipPath><g clip-path="url(#t12s2x0)"><circle cx="23" cy="46" r="7"></circle><circle cx="32" cy="42" r="9"></circle><circle cx="40" cy="46" r="6.5"></circle><rect x="23" y="43.5" width="17" height="6.5"></rect></g><clipPath id="t12s2x1"><rect x="-10" y="-10" width="120" height="50"></rect></clipPath><g clip-path="url(#t12s2x1)"><circle cx="61" cy="36" r="6.5"></circle><circle cx="70" cy="32" r="9"></circle><circle cx="78" cy="36" r="6.5"></circle><rect x="61" y="33.5" width="17" height="6.5"></rect></g><clipPath id="t12s2x2"><rect x="-10" y="-10" width="120" height="38"></rect></clipPath><g clip-path="url(#t12s2x2)"><circle cx="43" cy="24" r="6.5"></circle><circle cx="50" cy="20" r="8.5"></circle><circle cx="57" cy="24" r="6.5"></circle><rect x="43" y="21.5" width="14" height="6.5"></rect></g></g></svg>Loss is flat at 0.25<i class="st"></i></span><p>Off track? It shows you where, and why.</p></li>
-      <li><span class="pill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="#f4f4f5"><rect x="18" y="73" width="64" height="6" rx="2"></rect><path d="M22 79H78L74 89H26Z"></path><path d="M53.6 69.2L52.99 68.84L52.49 68.5L52.08 68.18L51.74 67.89L51.48 67.64L51.26 67.4L51.09 67.19L50.94 66.99L50.82 66.78L50.71 66.56L50.63 66.31L50.56 66.02L50.52 65.68L50.51 65.3L50.53 64.86L50.58 64.38L50.68 63.86L50.81 63.29L50.98 62.69L51.18 62.05L51.41 61.38L51.68 60.68L51.97 59.96L52.29 59.21L52.63 58.44L52.98 57.64L53.35 56.83L53.73 55.99L54.11 55.14L54.49 54.26L54.87 53.37L55.25 52.45L55.61 51.52L55.96 50.57L56.3 49.6L56.6 48.61L56.89 47.59L57.14 46.56L57.35 45.51L57.52 44.44L57.64 43.35L57.72 42.24L57.73 41.12L57.69 39.98L57.58 38.83L57.4 37.67L57.15 36.5L56.82 35.33L56.42 34.16L55.93 33L55.37 31.83L54.72 30.67L53.99 29.51L53.18 28.35L52.27 27.2L51.29 26.06L46.71 29.94L47.45 30.93L48.1 31.89L48.66 32.82L49.14 33.72L49.53 34.6L49.86 35.46L50.12 36.29L50.32 37.1L50.46 37.89L50.55 38.66L50.58 39.41L50.58 40.16L50.53 40.9L50.44 41.63L50.31 42.37L50.15 43.09L49.95 43.82L49.72 44.56L49.45 45.29L49.16 46.02L48.84 46.76L48.5 47.5L48.13 48.25L47.74 48.99L47.33 49.74L46.91 50.49L46.47 51.25L46.02 52.01L45.57 52.77L45.11 53.54L44.65 54.32L44.19 55.1L43.74 55.89L43.29 56.7L42.86 57.51L42.43 58.34L42.03 59.19L41.65 60.06L41.29 60.95L40.97 61.88L40.69 62.84L40.46 63.83L40.29 64.86L40.18 65.92L40.16 67.03L40.22 68.15L40.39 69.3L40.66 70.46L41.04 71.6L41.52 72.73L42.11 73.83L42.8 74.9L43.58 75.93L44.44 76.91L45.38 77.87L46.4 78.8Z"></path><circle cx="49" cy="28" r="3"></circle></g><g fill="#30d158"><clipPath id="t12s3x0"><rect x="-10" y="-10" width="120" height="60"></rect></clipPath><g clip-path="url(#t12s3x0)"><circle cx="23" cy="46" r="7"></circle><circle cx="32" cy="42" r="9"></circle><circle cx="40" cy="46" r="6.5"></circle><rect x="23" y="43.5" width="17" height="6.5"></rect></g><clipPath id="t12s3x1"><rect x="-10" y="-10" width="120" height="50"></rect></clipPath><g clip-path="url(#t12s3x1)"><circle cx="61" cy="36" r="6.5"></circle><circle cx="70" cy="32" r="9"></circle><circle cx="78" cy="36" r="6.5"></circle><rect x="61" y="33.5" width="17" height="6.5"></rect></g><clipPath id="t12s3x2"><rect x="-10" y="-10" width="120" height="38"></rect></clipPath><g clip-path="url(#t12s3x2)"><circle cx="43" cy="24" r="6.5"></circle><circle cx="50" cy="20" r="8.5"></circle><circle cx="57" cy="24" r="6.5"></circle><rect x="43" y="21.5" width="14" height="6.5"></rect></g></g></svg>Good. Now the next one.<i class="st"></i></span><p>Pass the check. The video plays on.</p></li>
-    </ol>
+  <section class="how" aria-labelledby="see-it">
+    <h2 id="see-it">See it work.</h2>
+    <div class="player" data-player>
+      <div class="screen">
+        <img class="on" style="--ox:50%;--oy:4%;--z:1.55" src="/demo/01-ask.webp" alt="The Miyagi launcher: a search for 'train a PINN on the convection equation' lists checked tutorials, the best one marked Best." loading="lazy" decoding="async">
+        <img style="--ox:97%;--oy:30%;--z:1.45" src="/demo/02-steps.webp" alt="A lesson built from a video: steps with timestamps, the current step's checks, and the sources Miyagi used." loading="lazy" decoding="async">
+        <img style="--ox:11%;--oy:5%;--z:1.55" src="/demo/03-off-track.webp" alt="An amber off-track card: loss is flat at 0.25, with the line BETA = 30.0 spotlighted in the editor." loading="lazy" decoding="async">
+        <img src="/demo/04-why.webp" alt="A diagram comparing the predicted solution, which fades out, with the exact moving wave." loading="lazy" decoding="async">
+        <img src="/demo/05-passed.webp" alt="A green card: step 6 done, good, now the next one, with the loss curve dropping after the fix." loading="lazy" decoding="async">
+      </div>
+      <ol class="tabs" role="tablist" aria-label="Steps">
+        <li><button class="tab" role="tab" aria-selected="true"><span class="bar"><i></i></span><b>Ask</b><span>It finds and checks the best tutorial.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Steps</b><span>Any video becomes steps with real checks.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Off track</b><span>It points at the line and says why.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Why</b><span>See what your model is really doing.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Passed</b><span>Pass the check. The video plays on.</span></button></li>
+      </ol>
+      <p class="caption" aria-live="polite"></p>
+    </div>
   </section>
   <div class="demo" role="dialog" aria-modal="true" aria-label="Miyagi demo video">
     <button class="demo-close" type="button" aria-label="Close">×</button>
@@ -276,11 +306,38 @@
       wire(alt, builds[other]);
     })();
 
-    // The how-it-works pills light up when they scroll into view.
+    // "See it work": steps play like a video while the player is on screen; hover or focus pauses, tabs jump.
     (function () {
-      var how = document.querySelector('.how');
-      if (!('IntersectionObserver' in window)) { document.documentElement.classList.add('no-io'); return; }
-      new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) how.classList.add('in'); }); }, { threshold: 0.35 }).observe(how);
+      var how = document.querySelector('.how'), player = how.querySelector('[data-player]');
+      var imgs = [].slice.call(player.querySelectorAll('.screen img')), tabs = [].slice.call(player.querySelectorAll('.tab'));
+      var caption = player.querySelector('.caption');
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var DUR = 5000, i = 0, visible = false, hover = false;
+      player.style.setProperty('--dur', DUR + 'ms');
+      function show(n) {
+        i = (n + tabs.length) % tabs.length;
+        imgs.forEach(function (im, k) { im.classList.toggle('on', k === i); });
+        tabs.forEach(function (t, k) {
+          t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+          t.classList.toggle('done', k < i);
+          var bar = t.querySelector('.bar i'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+        });
+        caption.textContent = tabs[i].querySelector('span:last-child').textContent;
+      }
+      function sync() { player.classList.toggle('paused', reduce || !visible || hover); }
+      tabs.forEach(function (t, k) {
+        t.addEventListener('click', function () { show(k); });
+        t.querySelector('.bar i').addEventListener('animationend', function () { if (k === i) show(i + 1); });
+      });
+      player.addEventListener('mouseenter', function () { hover = true; sync(); });
+      player.addEventListener('mouseleave', function () { hover = false; sync(); });
+      player.addEventListener('focusin', function () { hover = true; sync(); });
+      player.addEventListener('focusout', function () { hover = false; sync(); });
+      show(0); sync();
+      if (!('IntersectionObserver' in window)) { document.documentElement.classList.add('no-io'); visible = true; sync(); return; }
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { visible = e.isIntersecting; if (visible) how.classList.add('in'); sync(); });
+      }, { threshold: 0.35 }).observe(player);
     })();
 
     // "Watch the demo": put the video link here (YouTube, Loom, Vimeo or an .mp4). Empty means not posted yet.
@@ -623,6 +680,7 @@
       addEventListener('pointerup', up); addEventListener('pointercancel', up);
 
       function resize() {
+        if (innerWidth < 2 || innerHeight < 2) return;      // hidden or collapsed window: keep the last good layout
         renderer.setSize(innerWidth, innerHeight, false);
         camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
         layout();
@@ -683,8 +741,10 @@
           if (lit !== c.lit) { c.lit = lit; c.words.forEach((w, k) => w.classList.toggle('lit', k < lit)); }
         });
 
-        // Camera.
+        // Camera. A zero-size window would make the framing math divide by zero (NaN), so skip those frames.
         const g = camGoal(P);
+        if (innerHeight < 2 || ![...g.p, ...g.t, g.shift].every(Number.isFinite)) { requestAnimationFrame(frame); return; }
+        if (![camPos.x, camPos.y, camPos.z, look.x, look.y, look.z, shift].every(Number.isFinite)) { camPos.set(...g.p); look.set(...g.t); shift = g.shift; }
         camPos.lerp(new THREE.Vector3(...g.p), ease(7));
         look.lerp(new THREE.Vector3(...g.t), ease(7));
         shift += (g.shift - shift) * ease(7);
