@@ -9,7 +9,7 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 
 ## The way in: break the board
 
-With 3D on, the page opens blank: just the dots and a wooden board ("Break the board."). The tree is hidden behind it. A click, tap, space, or the first scroll or swipe breaks it. It cracks along a jagged line, the halves and splinters fly, and there's a short synthesized crack sound. As it breaks, the whole bonsai grows in where the board was (about 1 s: pot, trunk, branches, then the pads pop), turning to face you. Scrolling stays locked until the break is done (1.35 s, timed by the clock).
+With 3D on, the page opens blank: just the dots and a wooden board ("Break the board."). The tree is hidden behind it. A click, tap, space, or the first scroll or swipe breaks it. It cracks along a jagged line, the halves and splinters fly, and there's a short synthesized crack sound. As it breaks, the pot lands where the board was and the bonsai grows in front of you: the trunk rises, each branch reaches out when the trunk gets to it, then the pads pop, while the camera rises and pulls back and the tree turns to face you. It takes about 2.7 s from the hit (`GROW_AT`, `GROW_S` in `index.html`). Scrolling stays locked until the tree has fully grown, timed by the clock.
 
 Then scrolling tells the story: the tree steps right while "Watching isn't learning." and "miyagi waits until your code works." light up on the left (centered under the tree on phones), then it rises over the wordmark, "Wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
 

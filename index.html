@@ -145,6 +145,47 @@
     @media (max-width: 760px) { .how { padding-top: 10vh; } .tab b { font-size: 13px; } }
     @media (prefers-reduced-motion: reduce) { .screen img { transition: opacity .2s; } .screen img.on { transform: none; } }
 
+    /* See it work, live: the real app (built into /live/) in an iframe at 1600x1000, scaled to fit, with a guided tour.
+       Desktop only; phones, reduced motion and a failed load keep the screenshot player above. */
+    .live { display: none; max-width: 1400px; margin: 0 auto; gap: 28px; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
+    .how.live-on .live { display: grid; }
+    .how.live-on .player { display: none; }
+    .live-sub { display: none; margin: -16px 0 26px; text-align: center; color: var(--m-ink-muted); font-size: 16px; }
+    .how.live-on .live-sub { display: block; }
+    .stage { position: relative; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; background: #08080b; box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .45); }
+    .stage iframe { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; border: 0; transform-origin: 0 0; transform: scale(var(--s, .6)); opacity: 0; transition: opacity .5s ease; }
+    .stage.ready iframe { opacity: 1; }
+    .stage .veil {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;
+      background: #08080b; color: rgba(255, 255, 255, .6); font-size: 14px; opacity: 1; transition: opacity .35s ease;
+    }
+    .stage.ready .veil { opacity: 0; }
+    .stage.ready.busy .veil { opacity: .92; pointer-events: auto; }
+    .tour { display: flex; flex-direction: column; gap: 14px; }
+    .tour-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .tour .btn { height: 40px; padding: 0 16px; font-size: 14px; gap: 8px; border: 0; cursor: pointer; }
+    .tour .btn svg { width: 12px; height: 12px; }
+    .try { margin: 0; color: var(--m-ink-muted); font-size: 14px; line-height: 1.45; }
+    kbd { font: 600 12px/1 var(--m-font-brand); padding: 3px 6px; border-radius: 6px; background: rgba(20, 20, 20, .08); color: var(--m-ink); white-space: nowrap; }
+    .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+    .step {
+      position: relative; width: 100%; display: grid; grid-template-columns: 22px 1fr; gap: 8px; padding: 8px 0 9px; border: 0; background: none;
+      cursor: pointer; text-align: left; color: var(--m-ink); font: 500 15px/1.35 var(--m-font-brand); opacity: .42; transition: opacity .25s;
+    }
+    .step:hover, .step.on { opacity: 1; }
+    .step:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 4px; }
+    .step .n { font-variant-numeric: tabular-nums; color: var(--m-ink-faint); font-weight: 600; }
+    .step.on .n { color: var(--m-ink); }
+    .step .k { transition: font-weight .2s; }
+    .step .k.on { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    .step .bar { position: absolute; left: 30px; right: 0; bottom: 0; height: 2px; background: rgba(20, 20, 20, .1); border-radius: 1px; overflow: hidden; opacity: 0; }
+    .step.on .bar { opacity: 1; }
+    .step .bar i { display: block; height: 100%; width: 0; background: var(--m-ink); transition: width .4s linear; }
+    @media (max-width: 1180px) {
+      .live { grid-template-columns: 1fr; max-width: 1000px; }
+      .steps { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 24px; }
+    }
+
     /* Demo video pop-up. */
     .demo { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(20, 20, 20, .6); }
     .demo.open { display: flex; }
@@ -289,6 +330,17 @@
   </main>
   <section class="how" aria-labelledby="see-it">
     <h2 id="see-it">See it work.</h2>
+    <p class="live-sub">The real app, running in your browser.</p>
+    <div class="live" data-live>
+      <div class="stage" data-stage><div class="veil" data-veil>Loading the app</div></div>
+      <div class="tour">
+        <div class="tour-top">
+          <button class="btn" type="button" data-tour-play><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg><span>Play the tour</span></button>
+        </div>
+        <p class="try">Or try it: click the screen, then press <kbd data-key="launcher">Ctrl K</kbd>.</p>
+        <ol class="steps" data-steps aria-label="Tour steps"></ol>
+      </div>
+    </div>
     <div class="player" data-player>
       <div class="screen">
         <img class="on" style="--ox:50%;--oy:4%;--z:1.55" src="/demo/01-ask.webp" alt="The miyagi launcher: a search for 'train a PINN on the convection equation' lists checked tutorials, the best one marked Best." loading="lazy" decoding="async">
@@ -363,6 +415,297 @@
       new IntersectionObserver(function (es) {
         es.forEach(function (e) { visible = e.isIntersecting; if (visible) how.classList.add('in'); sync(); });
       }, { threshold: 0.35 }).observe(player);
+    })();
+
+    // "See it work", live: the real app's browser stage (built into /live/, see README) in a same-origin iframe.
+    // The tour drives it the way a person would: real key events (Ctrl+K, Alt+E…), typing, clicking its buttons.
+    // The app's own scripted mock engine answers. To jump to a step, the stage reloads and replays up to it,
+    // fast: the iframe's setTimeout runs on a clock this page controls (speed), so the mock's timeline compresses.
+    (function () {
+      var how = document.querySelector('.how'), live = how.querySelector('[data-live]'), stage = live.querySelector('[data-stage]');
+      var veil = stage.querySelector('[data-veil]'), playBtn = live.querySelector('[data-tour-play]'), list = live.querySelector('[data-steps]');
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var wide = window.matchMedia ? matchMedia('(min-width: 761px)') : { matches: true };
+      if (reduce || !('IntersectionObserver' in window)) return;     // the screenshot player stays
+
+      var ua = navigator.userAgentData && navigator.userAgentData.platform || navigator.platform || '';
+      var mac = /Mac|iPhone|iPad/i.test(ua);
+      var K = mac ? { launcher: '⌘K', alt: '⌥' } : { launcher: 'Ctrl K', alt: 'Alt ' };
+      [].forEach.call(live.querySelectorAll('[data-key="launcher"]'), function (k) { k.textContent = K.launcher; });
+      var SRC = '/live/?scenario=full&clean' + (mac ? '' : '&os=win');
+      var QUERY = 'PINNs for the convection equation';
+
+      // ---- the stage -------------------------------------------------------------------------------
+      var frame = null, w = null, ready = false, dirty = false, onReady = [];
+      var speed = 1, clockTimer = 0;
+
+      function fit() { stage.style.setProperty('--s', stage.clientWidth / 1600); }
+      if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage); else addEventListener('resize', fit);
+
+      // The iframe's timers run on a virtual clock: at speed 1 it's real time, at speed 10 the mock's script is 10x.
+      function installClock(win) {
+        var nativeST = win.setTimeout.bind(win), nativeCT = win.clearTimeout.bind(win), q = new Map(), seq = 1e9, V = 0, last = performance.now();
+        win.setTimeout = function (fn, ms) {
+          if (typeof fn !== 'function') return nativeST(fn, ms);
+          var args = [].slice.call(arguments, 2), id = ++seq;
+          q.set(id, { at: V + Math.max(0, +ms || 0), fn: fn, args: args });
+          return id;
+        };
+        win.clearTimeout = function (id) { if (q.has(id)) q.delete(id); else nativeCT(id); };
+        clearInterval(clockTimer);
+        clockTimer = setInterval(function () {
+          var now = performance.now(); V += (now - last) * speed; last = now;
+          var due = [];
+          q.forEach(function (t, id) { if (t.at <= V) due.push([t.at, id, t]); });
+          due.sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
+          due.forEach(function (d) {
+            if (!q.has(d[1])) return;
+            q.delete(d[1]);
+            try { d[2].fn.apply(win, d[2].args); } catch (e) { nativeST(function () { throw e; }); }
+          });
+        }, 15);
+      }
+
+      // Wheel over the stage scrolls the page (the stage itself never scrolls), unless it's over a list that can.
+      function forwardWheel(e) {
+        for (var el = e.target; el && el.nodeType === 1; el = el.parentElement) {
+          var oy = w.getComputedStyle(el).overflowY;
+          if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1) {
+            if (e.deltaY < 0 ? el.scrollTop > 0 : el.scrollTop + el.clientHeight < el.scrollHeight - 1) return;
+          }
+        }
+        var dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1), l = window.miyagiLenis;
+        if (l && typeof l.targetScroll === 'number') l.scrollTo(l.targetScroll + dy); else window.scrollBy(0, dy);
+      }
+
+      function onLoad() {
+        try {
+          w = frame.contentWindow;
+          installClock(w);
+          w.document.addEventListener('wheel', forwardWheel, { passive: true });
+          // A real click or key in the stage hands it over to the visitor: the tour stops.
+          ['pointerdown', 'keydown'].forEach(function (t) {
+            w.document.addEventListener(t, function (e) { if (e.isTrusted) { dirty = true; stopTour(); } }, true);
+          });
+        } catch (e) { return fail(); }
+        waitFor(function () { return /ask miyagi/i.test(w.document.body.innerText); }, 8000, null).then(function () {
+          ready = true; stage.classList.add('ready');
+          onReady.splice(0).forEach(function (f) { f(); });
+        }, fail);
+      }
+
+      function load() {
+        if (frame) return;
+        frame = document.createElement('iframe');
+        frame.title = 'miyagi, running live';
+        frame.setAttribute('tabindex', '0');
+        frame.addEventListener('load', onLoad);
+        frame.src = SRC;
+        stage.insertBefore(frame, veil);
+        fit();
+        setTimeout(function () { if (!ready && !stage.classList.contains('ready')) fail(); }, 20000);
+      }
+
+      function fail() {
+        stopTour();
+        how.classList.remove('live-on');                 // back to the screenshots
+        failed = true;
+      }
+
+      function whenReady() { return new Promise(function (r) { if (ready) r(); else onReady.push(r); }); }
+
+      function reset() {
+        ready = false; dirty = false; speed = 1;
+        stage.classList.remove('ready');
+        return new Promise(function (r) { onReady.push(r); w.location.reload(); }).then(function () { stage.classList.add('ready'); });
+      }
+
+      // ---- driving it ------------------------------------------------------------------------------
+      var run = 0;                                         // bumps on stop: every pending step checks it
+      function alive(id) { if (id !== run) throw 'stopped'; }
+      function sleep(ms, id) { return new Promise(function (r) { setTimeout(r, ms); }).then(function () { alive(id); }); }
+      function waitFor(test, ms, id) {
+        var t0 = performance.now();
+        return new Promise(function (res, rej) {
+          (function poll() {
+            if (id != null && id !== run) return rej('stopped');
+            var ok = false; try { ok = test(); } catch (e) {}
+            if (ok) return res();
+            if (performance.now() - t0 > ms) return rej('timeout');
+            setTimeout(poll, 100);
+          })();
+        });
+      }
+      function text() { return w.document.body.innerText; }
+      function waitText(re, id, ms) { return waitFor(function () { return re.test(text()); }, ms || 20000, id); }
+      function key(code, opts) {
+        var d = w.document, el = d.activeElement && d.activeElement !== d.body ? d.activeElement : d.body;
+        opts = opts || {};
+        var k = code.indexOf('Key') === 0 ? code.slice(3).toLowerCase() : code;
+        el.dispatchEvent(new w.KeyboardEvent('keydown', { key: opts.key || k, code: code, ctrlKey: !!opts.ctrl, metaKey: !!opts.meta, altKey: !!opts.alt, bubbles: true, cancelable: true }));
+        dirty = true;
+      }
+      function input() { return w.document.querySelector('input[aria-label]'); }
+      function setValue(v) {
+        var el = input(); if (!el) return;
+        Object.getOwnPropertyDescriptor(w.HTMLInputElement.prototype, 'value').set.call(el, v);
+        el.dispatchEvent(new w.Event('input', { bubbles: true }));
+      }
+      function button(label) {
+        return [].filter.call(w.document.querySelectorAll('button'), function (b) { return b.innerText.trim() === label; })[0];
+      }
+      function busy(on, msg) { stage.classList.toggle('busy', on); if (msg) veil.textContent = msg; }
+
+      // One line each. `act(id, fast)` does the step; in fast mode (jumping) it skips the pauses.
+      var HELP = [['Explain', 'KeyE'], ['Diagram', 'KeyD'], ['Hint', 'KeyH'], ['Show me', 'KeyS']];
+      var STEPS = [
+        { line: 'Ask for what you want to learn.', act: function (id, fast) {
+          key('KeyK', { ctrl: true });
+          return waitFor(function () { return input(); }, 4000, id).then(function () { return sleep(fast ? 50 : 500, id); }).then(function () {
+            if (fast) return setValue(QUERY);
+            var i = 0;
+            return (function next() {
+              setValue(QUERY.slice(0, ++i));
+              return i < QUERY.length ? sleep(45, id).then(next) : sleep(900, id);
+            })();
+          });
+        } },
+        { line: 'It checks the tutorials and picks the best one.', act: function (id, fast) {
+          key('Enter');
+          return waitText(/full course/, id).then(function () { return sleep(fast ? 150 : 3000, id); });
+        } },
+        { line: 'The video becomes steps, each with a check.', act: function (id, fast) {
+          key('Enter');
+          return waitText(/Step 4 of/, id).then(function () { return sleep(fast ? 0 : 3200, id); });
+        } },
+        { line: 'The video waits at each step for your code.', act: function (id, fast) {
+          return fast ? null : sleep(2600, id);
+        } },
+        { line: 'Checks run on your code as you type.', act: function (id, fast) {
+          return fast ? null : waitText(/3 of 3 pass|Step 5 of/, id).then(function () { return sleep(1200, id); });
+        } },
+        { line: 'Off track: a calm card, and the line lit up.', act: function (id, fast) {
+          if (!fast) { speed = 8; busy(true, 'Skipping ahead to step 6'); }
+          return waitText(/Loss is flat at 0\.25/, id, 30000).then(function () {
+            if (fast) return;
+            speed = 1; busy(false);
+            return sleep(4500, id);
+          });
+        } },
+        { line: 'Stuck? <span class="k">Explain</span>, <span class="k">Diagram</span>, <span class="k">Hint</span> or <span class="k">Show me</span>.', act: function (id, fast, row) {
+          if (fast) return null;
+          var ks = row.querySelectorAll('.k'), i = 0;
+          return (function next() {
+            [].forEach.call(ks, function (k, j) { k.classList.toggle('on', j === i); });
+            if (i === HELP.length) return null;
+            var h = HELP[i];
+            key(h[1], { alt: true });
+            return sleep(h[0] === 'Show me' ? 3000 : 4200, id).then(function () {
+              if (h[0] !== 'Show me') { key('Escape'); }
+              i++;
+              return sleep(600, id).then(next);
+            });
+          })();
+        } },
+        { line: 'Fix it in one click, or fix your own code.', act: function (id, fast) {
+          var go = function () { var b = button('Fix it'); if (b) { b.click(); dirty = true; return true; } return false; };
+          if (!go()) { key('Escape'); }
+          return waitFor(function () { return button('Fix it') || /retraining/.test(text()); }, 4000, id).then(function () {
+            if (button('Fix it')) go();
+            return sleep(fast ? 0 : 1500, id);
+          });
+        } },
+        { line: 'Passed turns green: “Good. Now the next one.”', act: function (id, fast) {
+          return waitText(/Good\. Now the next one/, id).then(function () { return sleep(fast ? 0 : 3000, id); });
+        } },
+        { line: 'The video plays on and the next step begins.', act: function (id, fast) {
+          return waitText(/Step 7 of/, id).then(function () { return sleep(fast ? 0 : 5000, id); });
+        } }
+      ];
+
+      var rows = STEPS.map(function (s, i) {
+        var li = document.createElement('li');
+        li.innerHTML = '<button class="step" type="button"><span class="n">' + (i + 1) + '</span><span class="t">' + s.line + '</span><span class="bar"><i></i></span></button>';
+        list.appendChild(li);
+        var b = li.firstChild;
+        b.addEventListener('click', function () { play(i); });
+        return b;
+      });
+
+      var at = -1, playing = false, failed = false, autoplayed = false, visible = false;
+      function mark(i) {
+        at = i;
+        rows.forEach(function (r, k) {
+          r.classList.toggle('on', k === i);
+          r.setAttribute('aria-current', k === i ? 'step' : 'false');
+          r.querySelector('.bar i').style.width = k < i || (k === i && !playing) ? '100%' : '0';
+          [].forEach.call(r.querySelectorAll('.k'), function (x) { x.classList.remove('on'); });
+        });
+      }
+      function setPlayLabel() {
+        playBtn.querySelector('span').textContent = playing ? 'Pause' : at >= STEPS.length - 1 && !playing ? 'Play again' : 'Play the tour';
+        playBtn.querySelector('svg').innerHTML = playing ? '<path d="M2 1h3v10H2zM7 1h3v10H7z" fill="currentColor"/>' : '<path d="M2 1l9 5-9 5z" fill="currentColor"/>';
+      }
+      function stopTour() {
+        if (!playing) return;
+        run++; playing = false; speed = 1; busy(false); setPlayLabel();
+        if (at >= 0) rows[at].querySelector('.bar i').style.width = '0';
+      }
+
+      // Play from step `from`: a fresh stage, replayed fast up to it, then the tour runs on at normal speed.
+      function play(from) {
+        if (failed) return;
+        run++; var id = run;
+        playing = true; setPlayLabel(); load();
+        var p = whenReady().then(function () {
+          alive(id);
+          if (dirty || from > 0) { busy(true, from > 0 ? 'Jumping to step ' + (from + 1) : 'Starting over'); return reset(); }
+        }).then(function () {
+          alive(id);
+          if (from === 0) return;
+          busy(true, 'Jumping to step ' + (from + 1)); speed = 12;
+          var chain = Promise.resolve();
+          STEPS.slice(0, from).forEach(function (s, k) {
+            chain = chain.then(function () { alive(id); mark(k); return s.act(id, true, rows[k]); });
+          });
+          return chain.then(function () { speed = 1; return sleep(400, id); });
+        }).then(function () { alive(id); busy(false); speed = 1; });
+        STEPS.slice(from).forEach(function (s, k) {
+          var i = from + k;
+          p = p.then(function () {
+            alive(id); mark(i);
+            var bar = rows[i].querySelector('.bar i');
+            bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
+            bar.style.transition = 'width 3s linear'; bar.style.width = '60%';
+            return s.act(id, false, rows[i]);
+          }).then(function () { rows[i].querySelector('.bar i').style.width = '100%'; });
+        });
+        p.then(function () { playing = false; mark(STEPS.length - 1); setPlayLabel(); }, function (e) {
+          if (e !== 'stopped' && id === run) { playing = false; busy(false); speed = 1; setPlayLabel(); }
+        });
+      }
+
+      playBtn.addEventListener('click', function () {
+        if (playing) return stopTour();
+        play(at < 0 || at >= STEPS.length - 1 ? 0 : at);
+      });
+
+      // Live on wide screens; the stage loads only when the section is near, and the tour starts once it's in view.
+      function mode() {
+        var on = wide.matches && !failed;
+        how.classList.toggle('live-on', on);
+        if (!on) stopTour();
+      }
+      mode();
+      if (wide.addEventListener) wide.addEventListener('change', mode); else if (wide.addListener) wide.addListener(mode);
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting && how.classList.contains('live-on')) load();
+      }, { rootMargin: '250px 0px' }).observe(how);
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (!visible) return stopTour();
+        if (!autoplayed && how.classList.contains('live-on')) { autoplayed = true; play(0); }
+      }, { threshold: 0.45 }).observe(stage);
     })();
 
     // "Watch the demo": put the video link here (YouTube, Loom, Vimeo or an .mp4). Empty means not posted yet.
@@ -684,13 +1027,14 @@
       const smooth = x => x * x * (3 - 2 * x);
       const clamp01 = x => Math.max(0, Math.min(1, x));
       const lerp = (a, b, k) => a + (b - a) * k;
-      function camGoal(p) {
+      function camGoal(p, grow = 1) {
         const a = smooth(clamp01(p / 0.3));              // into the story: the tree steps right, the lines sit left
         const b = smooth(clamp01((p - 0.7) / 0.3));      // the end: the tree rises over the wordmark
-        const dist = lerp(lerp(L.DR, L.DR * 0.92, a), L.DF, b);
+        const gz = smooth(clamp01(grow));                // while it grows: start close on the pot, rise and pull back with the tree
+        const dist = lerp(lerp(L.DR, L.DR * 0.92, a), L.DF, b) * lerp(0.74, 1, gz);
         const side = -0.13 * (dist / K) * L.asp * L.lean;
         const tx = lerp(side * a, 0, b);
-        const ty = lerp(L.narrow ? -9 : -3, -1, b);
+        const ty = lerp(L.narrow ? -9 : -3, -1, b) - 20 * (1 - gz);
         const elev = lerp(0.12, 0.2, b);
         return { p: [tx, ty + dist * elev, dist], t: [tx, ty, 0], shift: L.shift * b };
       }
@@ -812,7 +1156,10 @@
         board.group.traverse(o => { if (o.geometry && !seen.has(o.geometry)) { seen.add(o.geometry); o.geometry.dispose(); } });
         if (board.mat.map) board.mat.map.dispose(); board.mat.dispose();
         Object.assign(board, { state: 'gone', group: null, halves: [], bits: [] });
+      }
+      function unlock() {                                      // the tree has grown: let the page scroll
         root.classList.remove('board-on', 'board-broken');
+        board.lenisStopped = false;
         if (lenis) lenis.start();
       }
       function updateBoard(dt, T, ease) {
@@ -861,13 +1208,13 @@
       addEventListener('touchmove', () => { if (board.state === 'idle') breakBoard(); }, { passive: true });
 
       let P = progress();
-      const g0 = camGoal(P);
+      const g0 = camGoal(P, 0);
       const camPos = new THREE.Vector3(...g0.p), look = new THREE.Vector3(...g0.t);
       let yaw = -1.1, shift = g0.shift;
       const outBack = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
       const outCubic = x => 1 - Math.pow(1 - x, 3);
       const t0 = performance.now();
-      const GROW_S = 1.0;    // seconds the tree takes to grow in
+      const GROW_AT = 0.3, GROW_S = 2.3;   // the pot lands first, then the tree takes ~2.3 s to grow
       let last = t0;
 
       function frame(now) {
@@ -879,12 +1226,12 @@
         P += (raw - P) * ease(lenis ? 20 : 9);
         root.classList.toggle('started', raw > 0.02);
         root.classList.toggle('grown', raw > 0.9);
-        // The whole tree grows in over about a second once the board breaks (or on load without the board).
+        // Once the board breaks (or on load without the board), the pot lands and the tree grows: trunk, branches, then the pads.
         const revealT = revealAt === null ? 0 : Math.max(0, (performance.now() - revealAt) / 1000);
         tree.visible = revealAt !== null && revealT > 0;
-        const gp = clamp01((revealT - 0.12) / GROW_S);
-        pot.scale.set(1, Math.max(0.001, outCubic(clamp01(revealT / 0.4))), 1);
-        shadow.material.opacity = clamp01(revealT / 0.4);
+        const gp = clamp01((revealT - GROW_AT) / GROW_S);
+        pot.scale.set(1, Math.max(0.001, outCubic(clamp01(revealT / 0.45))), 1);
+        shadow.material.opacity = clamp01(revealT / 0.45);
         limbs.forEach(l => {
           const k = clamp01((gp - l.start) / l.dur);
           const g = l.mesh.geometry, idx = Math.round(k * g.userData.rings);
@@ -909,7 +1256,7 @@
         });
 
         // Camera. A zero-size window would make the framing math divide by zero (NaN), so skip those frames.
-        const g = camGoal(P);
+        const g = camGoal(P, gp);
         if (innerHeight < 2 || ![...g.p, ...g.t, g.shift].every(Number.isFinite)) { requestAnimationFrame(frame); return; }
         if (![camPos.x, camPos.y, camPos.z, look.x, look.y, look.z, shift].every(Number.isFinite)) { camPos.set(...g.p); look.set(...g.t); shift = g.shift; }
         camPos.lerp(new THREE.Vector3(...g.p), ease(7));
@@ -917,9 +1264,11 @@
         shift += (g.shift - shift) * ease(7);
         camera.position.copy(camPos); camera.lookAt(look);
         camera.setViewOffset(innerWidth, innerHeight, 0, shift * innerHeight, innerWidth, innerHeight);
-        // The board: hold scrolling while it's up, play the break, and give the camera a small jolt on the hit.
+        // The board: hold scrolling until the tree has grown, play the break, and give the camera a small jolt on the hit.
+        const locked = root.classList.contains('board-on');
+        if (locked && lenis && !board.lenisStopped) { lenis.stop(); board.lenisStopped = true; }
+        if (locked && board.state === 'gone' && gp >= 1) unlock();
         if (board.state !== 'gone') {
-          if (lenis && !board.lenisStopped) { lenis.stop(); board.lenisStopped = true; }
           updateBoard(dt, T, ease);
           if (board.state === 'breaking' && board.t < 0.25) {
             const d = 1 - board.t / 0.25;
@@ -929,7 +1278,7 @@
 
         // The tree turns in as it grows, then round to face you as you scroll; drag and pointer add a little.
         if (!dragging) { dragYaw = Math.max(-0.7, Math.min(0.7, dragYaw + vel)); vel *= Math.pow(0.9, dt * 60); dragYaw *= Math.pow(0.97, dt * 60); }
-        const spin = 0.75 * (1 - outCubic(clamp01(revealT / 1.3)));
+        const spin = 0.75 * (1 - outCubic(clamp01(revealT / (GROW_AT + GROW_S))));
         const goalYaw = lerp(-0.35, 0, smooth(clamp01(P))) - spin + dragYaw + mx * 0.2;
         yaw += (goalYaw - yaw) * ease(6);
         tree.rotation.set(0, yaw, 0);      // yaw only, so the pads' flat bottoms stay level
