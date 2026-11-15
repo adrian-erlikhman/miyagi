@@ -145,10 +145,11 @@
     @media (max-width: 760px) { .how { padding-top: 10vh; } .tab b { font-size: 13px; } }
     @media (prefers-reduced-motion: reduce) { .screen img { transition: opacity .2s; } .screen img.on { transform: none; } }
 
-    /* See it work, live: the real app (built into /live/) in an iframe at 1600x1000, scaled to fit, with a guided tour.
+    /* See it work, live: the real app (built into /live/) in an iframe at 1600x1000, scaled to fit, with a guided tour
+       underneath: one step at a time, arrows, and a timer that moves on by itself. A ring marks what each step is about.
        Desktop only; phones, reduced motion and a failed load keep the screenshot player above. */
-    .live { display: none; max-width: 1400px; margin: 0 auto; gap: 28px; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
-    .how.live-on .live { display: grid; }
+    .live { display: none; width: min(1180px, 100%, calc((100vh - 290px) * 1.6)); min-width: min(100%, 720px); margin: 0 auto; }
+    .how.live-on .live { display: block; }
     .how.live-on .player { display: none; }
     .live-sub { display: none; margin: -16px 0 26px; text-align: center; color: var(--m-ink-muted); font-size: 16px; }
     .how.live-on .live-sub { display: block; }
@@ -156,35 +157,47 @@
     .stage iframe { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; border: 0; transform-origin: 0 0; transform: scale(var(--s, .6)); opacity: 0; transition: opacity .5s ease; }
     .stage.ready iframe { opacity: 1; }
     .stage .veil {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;
+      position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; pointer-events: none;
       background: #08080b; color: rgba(255, 255, 255, .6); font-size: 14px; opacity: 1; transition: opacity .35s ease;
     }
     .stage.ready .veil { opacity: 0; }
     .stage.ready.busy .veil { opacity: .92; pointer-events: auto; }
-    .tour { display: flex; flex-direction: column; gap: 14px; }
-    .tour-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .tour .btn { height: 40px; padding: 0 16px; font-size: 14px; gap: 8px; border: 0; cursor: pointer; }
-    .tour .btn svg { width: 12px; height: 12px; }
-    .try { margin: 0; color: var(--m-ink-muted); font-size: 14px; line-height: 1.45; }
-    kbd { font: 600 12px/1 var(--m-font-brand); padding: 3px 6px; border-radius: 6px; background: rgba(20, 20, 20, .08); color: var(--m-ink); white-space: nowrap; }
-    .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
-    .step {
-      position: relative; width: 100%; display: grid; grid-template-columns: 22px 1fr; gap: 8px; padding: 8px 0 9px; border: 0; background: none;
-      cursor: pointer; text-align: left; color: var(--m-ink); font: 500 15px/1.35 var(--m-font-brand); opacity: .42; transition: opacity .25s;
+    /* The ring: a white outline around the part of the app the step is about; the rest dims a little. */
+    .spot {
+      position: absolute; z-index: 1; left: 0; top: 0; width: 0; height: 0; border-radius: 16px; pointer-events: none;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 200vmax rgba(8, 8, 11, .38); opacity: 0;
+      transition: opacity .35s ease, left .45s var(--settle), top .45s var(--settle), width .45s var(--settle), height .45s var(--settle);
     }
-    .step:hover, .step.on { opacity: 1; }
-    .step:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 4px; }
-    .step .n { font-variant-numeric: tabular-nums; color: var(--m-ink-faint); font-weight: 600; }
-    .step.on .n { color: var(--m-ink); }
-    .step .k { transition: font-weight .2s; }
-    .step .k.on { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-    .step .bar { position: absolute; left: 30px; right: 0; bottom: 0; height: 2px; background: rgba(20, 20, 20, .1); border-radius: 1px; overflow: hidden; opacity: 0; }
-    .step.on .bar { opacity: 1; }
-    .step .bar i { display: block; height: 100%; width: 0; background: var(--m-ink); transition: width .4s linear; }
-    @media (max-width: 1180px) {
-      .live { grid-template-columns: 1fr; max-width: 1000px; }
-      .steps { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 24px; }
+    .spot.on { opacity: 1; }
+    .guide { margin-top: 22px; }
+    .segs { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
+    .segs li { flex: 1; }
+    .seg { display: block; width: 100%; height: 18px; padding: 8px 0; border: 0; background: none; cursor: pointer; }
+    .seg i { display: block; height: 3px; border-radius: 2px; background: rgba(20, 20, 20, .12); overflow: hidden; }
+    .seg i::after { content: ""; display: block; height: 100%; width: var(--fill, 0%); background: var(--m-ink); }
+    .seg:hover i { background: rgba(20, 20, 20, .22); }
+    .seg:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 4px; }
+    .guide-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-top: 12px; }
+    .guide-text { min-height: 112px; }
+    .guide-text.swap { animation: up .4s var(--settle) both; }
+    .guide-n { display: block; color: var(--m-ink-faint); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .guide-title { margin: 4px 0 0; font-weight: 600; font-size: clamp(24px, 2.4vw, 30px); line-height: 1.15; letter-spacing: -.03em; }
+    .guide-body { margin: 8px 0 0; max-width: 62ch; color: var(--m-ink-muted); font-size: 17px; line-height: 1.45; }
+    .guide-body .k { color: var(--m-ink); transition: color .2s; }
+    .guide-body .k.on { font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+    kbd { font: 600 13px/1 var(--m-font-brand); padding: 3px 7px; border-radius: 6px; background: rgba(20, 20, 20, .08); color: var(--m-ink); white-space: nowrap; }
+    .guide-ctrl { display: flex; gap: 10px; flex-shrink: 0; padding-top: 4px; }
+    .round {
+      width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+      background: transparent; color: var(--m-ink); box-shadow: inset 0 0 0 1.5px var(--m-ink); transition: transform .2s var(--settle), opacity .2s;
     }
+    .round:hover { transform: translateY(-1px); }
+    .round:active { transform: scale(.96); }
+    .round:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 3px; }
+    .round:disabled { opacity: .25; cursor: default; transform: none; }
+    .round svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .round svg .solid { fill: currentColor; stroke: none; }
+    @media (max-width: 900px) { .guide-row { flex-direction: column-reverse; gap: 14px; } }
 
     /* Demo video pop-up. */
     .demo { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(20, 20, 20, .6); }
@@ -231,8 +244,9 @@
       margin: 0; font-weight: 600; font-size: 1em; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance;
     }
     .cap.on { opacity: 1; }
-    .cap .w { opacity: .13; transition: opacity .25s ease; }
+    .cap .w { opacity: .13; transition: opacity .25s ease, color .45s ease; }
     .cap .w.lit { opacity: 1; }
+    .cap .w.brand.lit { color: #1f9b45; }    /* the logo's pad green */
     html.gl .hint { display: flex; flex-direction: column; align-items: center; gap: 10px; position: absolute; left: 0; right: 0; bottom: 4vh; font-size: 13px; color: var(--m-ink-faint); transition: opacity .3s; }
     html.gl.started .hint { opacity: 0; }
     /* The way in: break the board first. Scrolling and the scroll hint wait for it. */
@@ -330,15 +344,23 @@
   </main>
   <section class="how" aria-labelledby="see-it">
     <h2 id="see-it">See it work.</h2>
-    <p class="live-sub">The real app, running in your browser.</p>
+    <p class="live-sub">The real app, running in your browser. Click it to try it yourself.</p>
     <div class="live" data-live>
-      <div class="stage" data-stage><div class="veil" data-veil>Loading the app</div></div>
-      <div class="tour">
-        <div class="tour-top">
-          <button class="btn" type="button" data-tour-play><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg><span>Play the tour</span></button>
+      <div class="stage" data-stage><div class="spot" data-spot aria-hidden="true"></div><div class="veil" data-veil>Loading the app</div></div>
+      <div class="guide">
+        <ol class="segs" data-segs aria-label="Steps"></ol>
+        <div class="guide-row">
+          <div class="guide-text" data-text aria-live="polite">
+            <span class="guide-n" data-n>Step 1 of 8</span>
+            <h3 class="guide-title" data-title>Ask for anything.</h3>
+            <p class="guide-body" data-body></p>
+          </div>
+          <div class="guide-ctrl">
+            <button class="round" type="button" data-prev aria-label="Previous step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="round" type="button" data-toggle aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button>
+            <button class="round" type="button" data-next aria-label="Next step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
         </div>
-        <p class="try">Or try it: click the screen, then press <kbd data-key="launcher">Ctrl K</kbd>.</p>
-        <ol class="steps" data-steps aria-label="Tour steps"></ol>
       </div>
     </div>
     <div class="player" data-player>
@@ -418,28 +440,32 @@
     })();
 
     // "See it work", live: the real app's browser stage (built into /live/, see README) in a same-origin iframe.
-    // The tour drives it the way a person would: real key events (Ctrl+K, Alt+E…), typing, clicking its buttons.
-    // The app's own scripted mock engine answers. To jump to a step, the stage reloads and replays up to it,
-    // fast: the iframe's setTimeout runs on a clock this page controls (speed), so the mock's timeline compresses.
+    // A guided tour drives it the way a person would: real key events (Ctrl+K, Alt+E…), typing, clicking its buttons,
+    // and the app's own scripted mock engine answers. One step at a time: each step acts, then holds with a ring
+    // around what it's about while its bar fills; then the next one starts. Arrows and the bars jump; a click in the
+    // app hands it to the visitor. To jump, the stage reloads and replays up to that step fast: the iframe's
+    // setTimeout runs on a clock this page controls (speed), so the mock's timeline compresses.
     (function () {
       var how = document.querySelector('.how'), live = how.querySelector('[data-live]'), stage = live.querySelector('[data-stage]');
-      var veil = stage.querySelector('[data-veil]'), playBtn = live.querySelector('[data-tour-play]'), list = live.querySelector('[data-steps]');
+      var veil = stage.querySelector('[data-veil]'), spot = stage.querySelector('[data-spot]');
+      var segsEl = live.querySelector('[data-segs]'), textEl = live.querySelector('[data-text]');
+      var nEl = live.querySelector('[data-n]'), titleEl = live.querySelector('[data-title]'), bodyEl = live.querySelector('[data-body]');
+      var prevBtn = live.querySelector('[data-prev]'), nextBtn = live.querySelector('[data-next]'), toggleBtn = live.querySelector('[data-toggle]');
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       var wide = window.matchMedia ? matchMedia('(min-width: 761px)') : { matches: true };
       if (reduce || !('IntersectionObserver' in window)) return;     // the screenshot player stays
 
       var ua = navigator.userAgentData && navigator.userAgentData.platform || navigator.platform || '';
       var mac = /Mac|iPhone|iPad/i.test(ua);
-      var K = mac ? { launcher: '⌘K', alt: '⌥' } : { launcher: 'Ctrl K', alt: 'Alt ' };
-      [].forEach.call(live.querySelectorAll('[data-key="launcher"]'), function (k) { k.textContent = K.launcher; });
+      var LAUNCHER = mac ? '⌘K' : 'Ctrl K';
       var SRC = '/live/?scenario=full&clean' + (mac ? '' : '&os=win');
       var QUERY = 'PINNs for the convection equation';
 
       // ---- the stage -------------------------------------------------------------------------------
-      var frame = null, w = null, ready = false, dirty = false, onReady = [];
-      var speed = 1, clockTimer = 0;
+      var frame = null, w = null, ready = false, onReady = [];
+      var speed = 1, clockTimer = 0, scale = 0.6;
 
-      function fit() { stage.style.setProperty('--s', stage.clientWidth / 1600); }
+      function fit() { scale = stage.clientWidth / 1600; stage.style.setProperty('--s', scale); }
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage); else addEventListener('resize', fit);
 
       // The iframe's timers run on a virtual clock: at speed 1 it's real time, at speed 10 the mock's script is 10x.
@@ -488,9 +514,9 @@
             var t = e.target, tag = t && t.tagName;
             if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'BUTTON' && !(t && t.isContentEditable) && /^( |ArrowUp|ArrowDown|PageUp|PageDown|Home|End)$/.test(e.key)) e.preventDefault();
           });
-          // A real click or key in the stage hands it over to the visitor: the tour stops.
+          // A real click or key in the stage hands it over to the visitor: the tour steps back.
           ['pointerdown', 'keydown'].forEach(function (t) {
-            w.document.addEventListener(t, function (e) { if (e.isTrusted) { dirty = true; stopTour(); } }, true);
+            w.document.addEventListener(t, function (e) { if (e.isTrusted) takeOver(); }, true);
           });
         } catch (e) { return fail(); }
         waitFor(function () { return /ask miyagi/i.test(w.document.body.innerText); }, 8000, null).then(function () {
@@ -506,27 +532,27 @@
         frame.setAttribute('tabindex', '0');
         frame.addEventListener('load', onLoad);
         frame.src = SRC;
-        stage.insertBefore(frame, veil);
+        stage.insertBefore(frame, spot);
         fit();
         setTimeout(function () { if (!ready && !stage.classList.contains('ready')) fail(); }, 20000);
       }
 
+      var failed = false;
       function fail() {
-        stopTour();
+        run++; failed = true;
         how.classList.remove('live-on');                 // back to the screenshots
-        failed = true;
       }
 
       function whenReady() { return new Promise(function (r) { if (ready) r(); else onReady.push(r); }); }
 
       function reset() {
-        ready = false; dirty = false; speed = 1;
+        ready = false; speed = 1; touched = false; through = -1;
         stage.classList.remove('ready');
         return new Promise(function (r) { onReady.push(r); w.location.reload(); }).then(function () { stage.classList.add('ready'); });
       }
 
       // ---- driving it ------------------------------------------------------------------------------
-      var run = 0;                                         // bumps on stop: every pending step checks it
+      var run = 0;                                         // bumps on every jump or hand-over: pending steps check it
       function alive(id) { if (id !== run) throw 'stopped'; }
       function sleep(ms, id) { return new Promise(function (r) { setTimeout(r, ms); }).then(function () { alive(id); }); }
       function waitFor(test, ms, id) {
@@ -548,7 +574,6 @@
         opts = opts || {};
         var k = code.indexOf('Key') === 0 ? code.slice(3).toLowerCase() : code;
         el.dispatchEvent(new w.KeyboardEvent('keydown', { key: opts.key || k, code: code, ctrlKey: !!opts.ctrl, metaKey: !!opts.meta, altKey: !!opts.alt, bubbles: true, cancelable: true }));
-        dirty = true;
       }
       function input() { return w.document.querySelector('input[aria-label]'); }
       function setValue(v) {
@@ -561,156 +586,276 @@
       }
       function busy(on, msg) { stage.classList.toggle('busy', on); if (msg) veil.textContent = msg; }
 
-      // One line each. `act(id, fast)` does the step; in fast mode (jumping) it skips the pauses.
+      // ---- what the ring goes around ---------------------------------------------------------------
+      function shown(el) { var r = el.getBoundingClientRect(); return r.width > 4 && r.height > 4 && r.bottom > 0 && r.top < 1000; }
+      // The deepest visible elements whose text matches.
+      function byText(re) {
+        return [].filter.call(w.document.querySelectorAll('body *'), function (e) {
+          return re.test(e.textContent) && ![].some.call(e.children, function (c) { return re.test(c.textContent); }) && shown(e);
+        });
+      }
+      // Climb to the nearest card or panel: rounded, filled, and no bigger than max (in stage pixels).
+      function card(el, maxW, maxH) {
+        for (var n = el; n && n !== w.document.body; n = n.parentElement) {
+          var cs = w.getComputedStyle(n), r = n.getBoundingClientRect();
+          if (r.width > (maxW || 1600) || r.height > (maxH || 1000)) break;
+          if (parseFloat(cs.borderTopLeftRadius) >= 10 && cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== 'transparent') return n;
+        }
+        return el;
+      }
+      // The last match is the top layer (the overlay draws after the desktop behind it).
+      function last(re) { var h = byText(re); return h[h.length - 1] || null; }
+      // The outermost card or panel around el that still fits in max.
+      function outer(el, maxW, maxH) {
+        var best = el;
+        for (var n = el; n && n !== w.document.body; n = n.parentElement) {
+          var cs = w.getComputedStyle(n), r = n.getBoundingClientRect();
+          if (r.width > maxW || r.height > maxH) break;
+          if (parseFloat(cs.borderTopLeftRadius) >= 10 && cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== 'transparent') best = n;
+        }
+        return best;
+      }
+      function first(re, maxW, maxH) { var h = last(re); return h ? [card(h, maxW, maxH)] : []; }
+      function around(re, up) { var h = last(re); while (h && up-- > 0) h = h.parentElement; return h ? [h] : []; }
+      function buttons(labels) { return labels.map(button).filter(Boolean); }
+      function video() { var v = [].filter.call(w.document.querySelectorAll('[class*="aspect-video"]'), shown); return v.slice(-1); }
+
+      // ---- the steps -------------------------------------------------------------------------------
+      // title + body (what you're looking at, in plain words), act (drives the app; fast = jumping, no pauses),
+      // focus (what the ring goes around), hold (ms to read before moving on).
       var HELP = [['Explain', 'KeyE'], ['Diagram', 'KeyD'], ['Hint', 'KeyH'], ['Show me', 'KeyS']];
       var STEPS = [
-        { line: 'Ask for what you want to learn.', act: function (id, fast) {
-          key('KeyK', { ctrl: true });
-          return waitFor(function () { return input(); }, 4000, id).then(function () { return sleep(fast ? 50 : 500, id); }).then(function () {
-            if (fast) return setValue(QUERY);
-            var i = 0;
-            return (function next() {
-              setValue(QUERY.slice(0, ++i));
-              return i < QUERY.length ? sleep(45, id).then(next) : sleep(900, id);
-            })();
-          });
-        } },
-        { line: 'It checks the tutorials and picks the best one.', act: function (id, fast) {
-          key('Enter');
-          return waitText(/full course/, id).then(function () { return sleep(fast ? 150 : 3000, id); });
-        } },
-        { line: 'The video becomes steps, each with a check.', act: function (id, fast) {
-          key('Enter');
-          return waitText(/Step 4 of/, id).then(function () { return sleep(fast ? 0 : 3200, id); });
-        } },
-        { line: 'The video waits at each step for your code.', act: function (id, fast) {
-          return fast ? null : sleep(2600, id);
-        } },
-        { line: 'Checks run on your code as you type.', act: function (id, fast) {
-          return fast ? null : waitText(/3 of 3 pass|Step 5 of/, id).then(function () { return sleep(1200, id); });
-        } },
-        { line: 'Off track: a calm card, and the line lit up.', act: function (id, fast) {
-          if (!fast) { speed = 8; busy(true, 'Skipping ahead to step 6'); }
-          return waitText(/Loss is flat at 0\.25/, id, 30000).then(function () {
-            if (fast) return;
-            speed = 1; busy(false);
-            return sleep(4500, id);
-          });
-        } },
-        { line: 'Stuck? <span class="k">Explain</span>, <span class="k">Diagram</span>, <span class="k">Hint</span> or <span class="k">Show me</span>.', act: function (id, fast, row) {
-          if (fast) return null;
-          var ks = row.querySelectorAll('.k'), i = 0;
-          return (function next() {
-            [].forEach.call(ks, function (k, j) { k.classList.toggle('on', j === i); });
-            if (i === HELP.length) return null;
-            var h = HELP[i];
-            key(h[1], { alt: true });
-            return sleep(h[0] === 'Show me' ? 3000 : 4200, id).then(function () {
-              if (h[0] !== 'Show me') { key('Escape'); }
-              i++;
-              return sleep(600, id).then(next);
+        { title: 'Ask for anything.', body: 'Press <kbd>' + LAUNCHER + '</kbd> and type what you want to learn.',
+          act: function (id, fast) {
+            key('KeyK', { ctrl: true });
+            return waitFor(function () { return input(); }, 4000, id).then(function () { return sleep(fast ? 50 : 500, id); }).then(function () {
+              if (fast) return setValue(QUERY);
+              var i = 0;
+              return (function next() {
+                setValue(QUERY.slice(0, ++i));
+                return i < QUERY.length ? sleep(45, id).then(next) : null;
+              })();
             });
-          })();
-        } },
-        { line: 'Fix it in one click, or fix your own code.', act: function (id, fast) {
-          var go = function () { var b = button('Fix it'); if (b) { b.click(); dirty = true; return true; } return false; };
-          if (!go()) { key('Escape'); }
-          return waitFor(function () { return button('Fix it') || /retraining/.test(text()); }, 4000, id).then(function () {
-            if (button('Fix it')) go();
-            return sleep(fast ? 0 : 1500, id);
-          });
-        } },
-        { line: 'Passed turns green: “Good. Now the next one.”', act: function (id, fast) {
-          return waitText(/Good\. Now the next one/, id).then(function () { return sleep(fast ? 0 : 3000, id); });
-        } },
-        { line: 'The video plays on and the next step begins.', act: function (id, fast) {
-          return waitText(/Step 7 of/, id).then(function () { return sleep(fast ? 0 : 5000, id); });
-        } }
+          },
+          focus: function () { var i = input(); return i ? [outer(i, 1000, 700)] : []; }, hold: 3500 },
+        { title: 'It picks the best tutorial.', body: 'miyagi checks each video against your goal and marks the best one.',
+          act: function (id, fast) { key('Enter'); return waitText(/full course/, id).then(function () { return fast ? sleep(150, id) : null; }); },
+          focus: function () { var h = last(/full course/); return h ? [outer(h, 1000, 800)] : []; }, hold: 5000 },
+        { title: 'The video becomes steps.', body: 'Each step has a time in the video and a check for your code.',
+          act: function (id) { key('Enter'); return waitText(/Step 4 of/, id); },
+          focus: function () { return around(/^Chapters$/, 1); }, hold: 4000 },
+        { title: 'The video waits for your code.', body: 'It pauses at the end of each step and checks your code as you type. When the checks pass, it plays on.',
+          act: function (id, fast) { return fast ? waitText(/Step 5 of/, id, 30000) : waitText(/Step 5 of/, id, 30000).then(function () { return sleep(1200, id); }); },
+          focus: function () { return video(); }, during: true, hold: 2500 },
+        { title: 'Off track? It says why.', body: 'The loss is flat at 0.25, so the step stays open. The card says why and lights up the line to change.',
+          act: function (id, fast) {
+            if (!fast) { speed = 8; busy(true, 'Skipping ahead to step 6 of the lesson'); }
+            return waitText(/Loss is flat at 0\.25/, id, 30000).then(function () { if (!fast) { speed = 1; busy(false); } });
+          },
+          focus: function () { return first(/Loss is flat at 0\.25/, 900, 600); }, hold: 6500 },
+        { title: 'Get unstuck your way.', body: '<span class="k">Explain</span>, <span class="k">Diagram</span>, <span class="k">Hint</span> or <span class="k">Show me</span>. Each one opens right where you are.',
+          act: function (id, fast) {
+            if (fast) return null;
+            var ks = bodyEl.querySelectorAll('.k'), i = 0;
+            return (function next() {
+              [].forEach.call(ks, function (k, j) { k.classList.toggle('on', j === i); });
+              if (i === HELP.length) return null;
+              var h = HELP[i];
+              key(h[1], { alt: true });
+              return sleep(h[0] === 'Show me' ? 2600 : 3400, id).then(function () {
+                if (h[0] !== 'Show me') key('Escape');
+                i++;
+                return sleep(500, id).then(next);
+              });
+            })();
+          },
+          focus: function () { return buttons(['Explain', 'Diagram', 'Show me', 'Hint']); }, during: true, hold: 1500 },
+        { title: 'Fix it.', body: 'One click fixes the line, or you change the code yourself.',
+          act: function (id, fast) {
+            // A help panel may still be open: close it so the card's Fix it button shows, point at it, then click it.
+            if (!button('Fix it')) key('Escape');
+            return waitFor(function () { return button('Fix it') || /retraining/.test(text()); }, 4000, id)
+              .then(function () { return fast ? null : sleep(1800, id); })
+              .then(function () { var b = button('Fix it'); if (b) b.click(); });
+          },
+          focus: function () { var b = button('Fix it'); return b ? [b] : first(/retraining/, 700, 400); }, during: true, hold: 2500 },
+        { title: 'Pass, and the video plays on.', body: 'The step turns green, and the next one begins.',
+          act: function (id) { return waitText(/Good\. Now the next one/, id); },
+          focus: function () { return first(/Good\. Now the next one/, 900, 600); }, hold: 6000 }
       ];
 
-      var rows = STEPS.map(function (s, i) {
+      // ---- the guide: segments, text, arrows -------------------------------------------------------
+      var segs = STEPS.map(function (s, i) {
         var li = document.createElement('li');
-        li.innerHTML = '<button class="step" type="button"><span class="n">' + (i + 1) + '</span><span class="t">' + s.line + '</span><span class="bar"><i></i></span></button>';
-        list.appendChild(li);
-        var b = li.firstChild;
-        b.addEventListener('click', function () { play(i); });
-        return b;
+        li.innerHTML = '<button class="seg" type="button" aria-label="Step ' + (i + 1) + ': ' + s.title.replace(/"/g, '') + '"><i></i></button>';
+        segsEl.appendChild(li);
+        li.firstChild.addEventListener('click', function () { go(i); });
+        return li.firstChild;
       });
+      var ICON = {
+        pause: '<path class="solid" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>',
+        play: '<path class="solid" d="M8 5.5v13l11-6.5z"/>',
+        again: '<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/>'
+      };
 
-      var at = -1, playing = false, failed = false, autoplayed = false, visible = false;
-      function mark(i) {
-        at = i;
-        rows.forEach(function (r, k) {
-          r.classList.toggle('on', k === i);
-          r.setAttribute('aria-current', k === i ? 'step' : 'false');
-          r.querySelector('.bar i').style.width = k < i || (k === i && !playing) ? '100%' : '0';
-          [].forEach.call(r.querySelectorAll('.k'), function (x) { x.classList.remove('on'); });
+      var at = 0, through = -1, touched = false;        // through: last step the stage has played on its current load
+      var phase = 'idle';                                // idle | act | hold | done | yours (the visitor took over)
+      var paused = false, visible = false, started = false, fill = 0;
+
+      function setFill(i, f) { segs[i].style.setProperty('--fill', Math.round(f * 1000) / 10 + '%'); if (i === at) fill = f; }
+      function render() {
+        segs.forEach(function (s, k) {
+          s.setAttribute('aria-current', k === at ? 'step' : 'false');
+          if (k < at) setFill(k, 1); else if (k > at) setFill(k, 0);
+        });
+        prevBtn.disabled = at === 0;
+        nextBtn.disabled = at === STEPS.length - 1;
+        var end = at === STEPS.length - 1 && phase === 'done';
+        var icon = phase === 'yours' || paused ? 'play' : end ? 'again' : 'pause';
+        toggleBtn.querySelector('svg').innerHTML = ICON[icon];
+        toggleBtn.setAttribute('aria-label', icon === 'pause' ? 'Pause' : icon === 'again' ? 'Play again' : 'Play');
+      }
+      function show(i) {
+        var s = STEPS[i];
+        nEl.textContent = 'Step ' + (i + 1) + ' of ' + STEPS.length;
+        titleEl.textContent = s.title;
+        bodyEl.innerHTML = s.body;
+        textEl.classList.remove('swap'); void textEl.offsetWidth; textEl.classList.add('swap');
+      }
+
+      // The ring follows its target every frame (cards slide and grow); the target is looked up again now and then.
+      var spotFn = null, spotEls = [], spotSeen = 0, spotRaf = 0;
+      function ring(fn) { spotFn = fn; spotSeen = 0; spotEls = []; if (!spotRaf) spotRaf = requestAnimationFrame(trackSpot); }
+      function unring() { spotFn = null; spotEls = []; spot.classList.remove('on'); }
+      function trackSpot(now) {
+        spotRaf = 0;
+        if (!spotFn || !w) return unring();
+        if (now - spotSeen > 400 || spotEls.some(function (e) { return !e.isConnected; })) {
+          spotSeen = now;
+          try { spotEls = (spotFn() || []).filter(function (e) { return e && shown(e); }); } catch (e) { spotEls = []; }
+        }
+        var L = Infinity, T = Infinity, R = -Infinity, B = -Infinity;
+        spotEls.forEach(function (e) { var r = e.getBoundingClientRect(); L = Math.min(L, r.left); T = Math.min(T, r.top); R = Math.max(R, r.right); B = Math.max(B, r.bottom); });
+        if (R > L) {
+          var pad = 6, x = Math.max(4, L * scale - pad), y = Math.max(4, T * scale - pad);
+          var x2 = Math.min(stage.clientWidth - 4, R * scale + pad), y2 = Math.min(stage.clientHeight - 4, B * scale + pad);
+          spot.style.left = x + 'px'; spot.style.top = y + 'px'; spot.style.width = (x2 - x) + 'px'; spot.style.height = (y2 - y) + 'px';
+          spot.classList.add('on');
+        } else spot.classList.remove('on');
+        spotRaf = requestAnimationFrame(trackSpot);
+      }
+
+      // On screen: at least 40% of the stage is in the window.
+      function onScreen() { var b = stage.getBoundingClientRect(); return b.height > 0 && Math.min(b.bottom, innerHeight) - Math.max(b.top, 0) >= b.height * 0.4; }
+      // Hold: the step's bar fills while the tour is playing and on screen.
+      function hold(i, id) {
+        var ms = STEPS[i].hold, from = fill, done = 0, last = performance.now();
+        return new Promise(function (res, rej) {
+          (function tick() {
+            if (id !== run) return rej('stopped');
+            var now = performance.now();
+            if (!paused && onScreen()) done += now - last;
+            last = now;
+            setFill(i, from + (1 - from) * Math.min(1, done / ms));
+            if (done >= ms) { setFill(i, 1); return res(); }
+            setTimeout(tick, 50);
+          })();
         });
       }
-      function setPlayLabel() {
-        playBtn.querySelector('span').textContent = playing ? 'Pause' : at >= STEPS.length - 1 && !playing ? 'Play again' : 'Play the tour';
-        playBtn.querySelector('svg').innerHTML = playing ? '<path d="M2 1h3v10H2zM7 1h3v10H7z" fill="currentColor"/>' : '<path d="M2 1l9 5-9 5z" fill="currentColor"/>';
-      }
-      function stopTour() {
-        if (!playing) return;
-        run++; playing = false; speed = 1; busy(false); setPlayLabel();
-        if (at >= 0) rows[at].querySelector('.bar i').style.width = '0';
-      }
 
-      // Play from step `from`: a fresh stage, replayed fast up to it, then the tour runs on at normal speed.
-      function play(from) {
+      // Show step i. If the stage is exactly one step behind, it just acts; otherwise it reloads and replays fast.
+      function go(i) {
         if (failed) return;
+        i = Math.max(0, Math.min(STEPS.length - 1, i));
         run++; var id = run;
-        playing = true; setPlayLabel(); load();
-        var p = whenReady().then(function () {
+        started = true; at = i; phase = 'act'; fill = 0; speed = 1;
+        show(i); unring(); setFill(i, 0); render();
+        load();
+        var s = STEPS[i];
+        whenReady().then(function () {
           alive(id);
-          if (dirty || from > 0) { busy(true, from > 0 ? 'Jumping to step ' + (from + 1) : 'Starting over'); return reset(); }
+          if (!touched && through === i - 1) return;
+          busy(true, i ? 'Going to step ' + (i + 1) : 'Starting over');
+          return reset().then(function () {
+            alive(id);
+            if (!i) return;
+            speed = 12;
+            var chain = Promise.resolve();
+            STEPS.slice(0, i).forEach(function (t, k) { chain = chain.then(function () { alive(id); return t.act(id, true); }).then(function () { through = k; }); });
+            return chain.then(function () { speed = 1; return sleep(400, id); });
+          });
+        }).then(function () {
+          alive(id); busy(false); speed = 1;
+          if (s.during) ring(s.focus);
+          setFill(i, 0.08);
+          return s.act(id, false);
+        }).then(function () {
+          alive(id); through = i; phase = 'hold'; render();
+          ring(s.focus);
+          return hold(i, id);
         }).then(function () {
           alive(id);
-          if (from === 0) return;
-          busy(true, 'Jumping to step ' + (from + 1)); speed = 12;
-          var chain = Promise.resolve();
-          STEPS.slice(0, from).forEach(function (s, k) {
-            chain = chain.then(function () { alive(id); mark(k); return s.act(id, true, rows[k]); });
-          });
-          return chain.then(function () { speed = 1; return sleep(400, id); });
-        }).then(function () { alive(id); busy(false); speed = 1; });
-        STEPS.slice(from).forEach(function (s, k) {
-          var i = from + k;
-          p = p.then(function () {
-            alive(id); mark(i);
-            var bar = rows[i].querySelector('.bar i');
-            bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
-            bar.style.transition = 'width 3s linear'; bar.style.width = '60%';
-            return s.act(id, false, rows[i]);
-          }).then(function () { rows[i].querySelector('.bar i').style.width = '100%'; });
-        });
-        p.then(function () { playing = false; mark(STEPS.length - 1); setPlayLabel(); }, function (e) {
-          if (e !== 'stopped' && id === run) { playing = false; busy(false); speed = 1; setPlayLabel(); }
+          if (i < STEPS.length - 1) return go(i + 1);
+          phase = 'done'; render();
+        }).catch(function (e) {
+          if (e === 'stopped' || id !== run) return;
+          busy(false); speed = 1; phase = 'done'; render();      // the app didn't answer in time: stay put
         });
       }
 
-      playBtn.addEventListener('click', function () {
-        if (playing) return stopTour();
-        play(at < 0 || at >= STEPS.length - 1 ? 0 : at);
+      // The visitor clicked or typed in the app: the tour stops and steps back until they press play.
+      function takeOver() {
+        touched = true;
+        if (phase === 'yours') return;
+        run++; phase = 'yours'; speed = 1; busy(false); unring(); render();
+      }
+
+      prevBtn.addEventListener('click', function () { if (at > 0) go(at - 1); });
+      nextBtn.addEventListener('click', function () { if (at < STEPS.length - 1) go(at + 1); });
+      toggleBtn.addEventListener('click', function () {
+        if (phase === 'yours') { paused = false; return go(at); }
+        if (phase === 'done' && at === STEPS.length - 1) { paused = false; return go(0); }
+        if (!started) { paused = false; return go(0); }
+        paused = !paused; render();
+      });
+      // Left and right arrows step through while the section is on screen (not while the visitor is typing in the app).
+      addEventListener('keydown', function (e) {
+        if (!how.classList.contains('live-on') || e.altKey || e.ctrlKey || e.metaKey || !onScreen()) return;
+        var t = document.activeElement;
+        if (t && (t === frame || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); nextBtn.click(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevBtn.click(); }
       });
 
+      show(0); render();
+
       // Live on wide screens; the stage loads only when the section is near, and the tour starts once it's in view.
+      var near = false;
+      function kick() {
+        if (!how.classList.contains('live-on')) return;
+        if (near) load();
+        if (visible && !started) go(0);
+      }
       function mode() {
         var on = wide.matches && !failed;
         how.classList.toggle('live-on', on);
-        if (!on) stopTour();
+        if (!on) { run++; started = false; phase = 'idle'; unring(); busy(false); speed = 1; render(); }
+        else kick();
       }
+      new IntersectionObserver(function (es) { near = es[0].isIntersecting; kick(); }, { rootMargin: '250px 0px' }).observe(how);
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; kick(); }, { threshold: 0.45 }).observe(stage);
+      // Backup for the observers: measure on load and on scroll.
+      function measure() {
+        var a = how.getBoundingClientRect(), b = stage.getBoundingClientRect();
+        near = a.top < innerHeight + 250 && a.bottom > -250;
+        visible = b.height > 0 && Math.min(b.bottom, innerHeight) - Math.max(b.top, 0) >= b.height * 0.45;
+        kick();
+      }
+      addEventListener('scroll', measure, { passive: true });
+      addEventListener('load', measure);
       mode();
       if (wide.addEventListener) wide.addEventListener('change', mode); else if (wide.addListener) wide.addListener(mode);
-      new IntersectionObserver(function (es) {
-        if (es[0].isIntersecting && how.classList.contains('live-on')) load();
-      }, { rootMargin: '250px 0px' }).observe(how);
-      new IntersectionObserver(function (es) {
-        visible = es[0].isIntersecting;
-        if (!visible) return stopTour();
-        if (!autoplayed && how.classList.contains('live-on')) { autoplayed = true; play(0); }
-      }, { threshold: 0.45 }).observe(stage);
+      window.miyagiTour = { go: go, state: function () { return { at: at, phase: phase, paused: paused }; } };   // for checking the tour from the console
     })();
 
     // "Watch the demo": put the video link here (YouTube, Loom, Vimeo or an .mp4). Empty means not posted yet.
@@ -821,10 +966,44 @@
       }
       let seed = 7;
       const rand = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      // Bark: vertical fissures and ridges on a canvas that tiles both ways, used as color and bump on every limb.
+      function barkTexture() {
+        const c = document.createElement('canvas'); c.width = 128; c.height = 256;
+        const x = c.getContext('2d');
+        x.fillStyle = '#5a4433'; x.fillRect(0, 0, 128, 256);
+        const line = (x0, amp, waves, ph, color, wid) => {
+          x.strokeStyle = color; x.lineWidth = wid; x.lineCap = 'round';
+          for (const dx of [-128, 0, 128]) {
+            x.beginPath();
+            for (let y = 0; y <= 256; y += 4) { const px = x0 + dx + Math.sin((y / 256) * Math.PI * 2 * waves + ph) * amp; if (y) x.lineTo(px, y); else x.moveTo(px, y); }
+            x.stroke();
+          }
+        };
+        for (let i = 0; i < 9; i++) line(i * 14.2 + rand() * 6, 2 + rand() * 4, 1 + Math.floor(rand() * 3), rand() * 6.28, 'rgba(120, 94, 72, 0.55)', 4 + rand() * 4);   // ridges
+        for (let i = 0; i < 11; i++) line(rand() * 128, 1.5 + rand() * 3.5, 1 + Math.floor(rand() * 3), rand() * 6.28, 'rgba(34, 24, 17, 0.75)', 1.2 + rand() * 1.8);   // fissures
+        for (let i = 0; i < 260; i++) { x.fillStyle = rand() < 0.5 ? 'rgba(30, 20, 14, 0.35)' : 'rgba(140, 112, 88, 0.3)'; x.fillRect(rand() * 128, rand() * 256, 1 + rand() * 2, 1 + rand() * 3); }
+        const t = new THREE.CanvasTexture(c);
+        t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+        return t;
+      }
+      const barkTex = barkTexture();
+      const BARK = new THREE.MeshStandardMaterial({ color: '#c9b8a8', map: barkTex, bumpMap: barkTex, bumpScale: 1.6, roughness: 0.92, metalness: 0, side: THREE.DoubleSide });
+      // Clay: fine speckle and a little unevenness on the pot.
+      {
+        const c = document.createElement('canvas'); c.width = c.height = 256;
+        const x = c.getContext('2d');
+        x.fillStyle = '#ffffff'; x.fillRect(0, 0, 256, 256);
+        for (let i = 0; i < 46; i++) { x.fillStyle = `rgba(150, 90, 60, ${0.02 + rand() * 0.03})`; x.beginPath(); x.arc(rand() * 256, rand() * 256, 10 + rand() * 30, 0, 7); x.fill(); }
+        for (let i = 0; i < 1400; i++) { x.fillStyle = rand() < 0.6 ? 'rgba(90, 50, 30, 0.35)' : 'rgba(255, 236, 220, 0.55)'; x.fillRect(rand() * 256, rand() * 256, 1 + rand() * 1.6, 1 + rand() * 1.6); }
+        const t = new THREE.CanvasTexture(c);
+        t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(0.07, 0.07); t.colorSpace = THREE.SRGBColorSpace;
+        POT.map = t; POT.needsUpdate = true;
+      }
 
       // ---- Foliage pads: each of the logo's circles becomes a clump of leaf tufts, flat bottom kept. ----
       const LIGHT_GREEN = new THREE.Color('#2fbf55'), DEEP_GREEN = new THREE.Color('#1a8a3d');   // brand greens, a shade deeper for a lit 3D tree
       const MID_GREEN = LIGHT_GREEN.clone().lerp(DEEP_GREEN, 0.5);
+      const TIP_GREEN = LIGHT_GREEN.clone().lerp(new THREE.Color('#d8f5c8'), 0.13);
       const tuft = new THREE.IcosahedronGeometry(1, 1);     // faceted, so clumps read as leaves
       const pads = [...svg.querySelectorAll('[data-part="pads"], [data-part="depth"]')].map(g => {
         const back = g.getAttribute('data-part') === 'depth';
@@ -846,22 +1025,29 @@
         const items = [];
         p.circles.forEach(c => {
           items.push({ x: c.x, y: c.y, z: 0, r: c.r * 0.92, deep: true });            // the core of the clump
-          const n = Math.round(5 + c.r * 1.3);
+          const n = Math.round(8 + c.r * 2);
           for (let i = 0; i < n; i++) {
             const th = rand() * Math.PI * 2, cy = 1 - rand() * 1.15, sy = Math.sqrt(Math.max(0, 1 - cy * cy));
             const rr = c.r * (0.62 + rand() * 0.2);
             const dx = sy * Math.cos(th), dz = sy * Math.sin(th);
             const deep = p.back || cy < 0.05 || rand() < 0.15;
-            items.push({ x: c.x + dx * rr, y: c.y - cy * rr * 0.85, z: dz * rr * 1.05, r: 2 + rand() * 1.6, deep, mid: !deep && rand() < 0.45 });
+            items.push({ x: c.x + dx * rr, y: c.y - cy * rr * 0.85, z: dz * rr * 1.05, r: 1.6 + rand() * 1.5, deep, mid: !deep && rand() < 0.45 });
+          }
+          if (!p.back) for (let i = 0; i < Math.round(2 + c.r * 0.7); i++) {      // new growth: small light tips on top
+            const th = rand() * Math.PI * 2, rr = c.r * (0.2 + rand() * 0.55);
+            items.push({ x: c.x + Math.cos(th) * rr, y: c.y - c.r * (0.72 + rand() * 0.18), z: Math.sin(th) * rr, r: 0.8 + rand() * 0.5, tip: true });
           }
         });
         const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.78, metalness: 0, flatShading: true, clippingPlanes: [plane], clipShadows: true, side: THREE.DoubleSide });
         const mesh = new THREE.InstancedMesh(tuft, mat, items.length);
         items.forEach((it, i) => {
           v.set(it.x - p.cx, p.bottom - it.y, it.z); s.set(it.r, it.r, it.r * 1.05);
+          q.setFromEuler(new THREE.Euler(rand() * 6.28, rand() * 6.28, rand() * 6.28));
           m4.compose(v, q, s); mesh.setMatrixAt(i, m4);
-          mesh.setColorAt(i, it.deep ? DEEP_GREEN : it.mid ? MID_GREEN : LIGHT_GREEN);
+          const base = it.tip ? TIP_GREEN : it.deep ? DEEP_GREEN : it.mid ? MID_GREEN : LIGHT_GREEN;
+          mesh.setColorAt(i, base.clone().offsetHSL((rand() - 0.5) * 0.025, (rand() - 0.5) * 0.08, (rand() - 0.5) * 0.06));
         });
+        q.identity();
         const pivot = new THREE.Group();
         pivot.position.set(p.cx - 50, 50 - p.bottom, p.z);
         pivot.add(mesh); pivot.scale.setScalar(0.001);
@@ -891,9 +1077,16 @@
           const a = i * (radial + 1) + j, b2 = a + radial + 1;
           idx.push(a, a + 1, b2, a + 1, b2 + 1, b2);
         }
+        const uv = [], avgR = R.reduce((s, r) => s + r, 0) / m;
+        let along = 0;
+        for (let i = 0; i < m; i++) {
+          if (i) along += P[i].distanceTo(P[i - 1]);
+          for (let j = 0; j <= radial; j++) uv.push(j / radial, along / (4 * Math.PI * Math.max(0.3, avgR)));
+        }
         const g = new THREE.BufferGeometry();
         g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
         g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
+        g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
         g.setIndex(idx);
         g.userData = { per: radial * 6, rings: m - 1 };
         return g;
@@ -926,7 +1119,7 @@
       for (let i = 0; i < trunkEls.length; i++) {
         if (trunkEls[i].tagName !== 'path') continue;
         const tip = trunkEls[i + 1] && trunkEls[i + 1].tagName === 'circle' ? trunkEls[i + 1] : null;
-        raw.push({ cl: centerline(trunkEls[i]), tip, mat: WOOD });
+        raw.push({ cl: centerline(trunkEls[i]), tip, mat: BARK });
       }
       const jinPath = svg.querySelector('[data-part="jin"] path');
       if (jinPath) raw.push({ cl: centerline(jinPath), tip: svg.querySelector('[data-part="jin"] circle'), mat: std('#e7e2d6', { side: THREE.DoubleSide }), jin: true });
@@ -954,6 +1147,43 @@
       pads.forEach(p => {
         const feeder = limbs.find(l => l.pad === p && !l.jin);
         p.start = feeder ? feeder.start + feeder.dur * 0.94 : main.dur * 0.95;
+      });
+      // Thin limbs that grow by draw range like the others, without caps: surface roots and the twigs under the pads.
+      const extras = [];
+      function sprig(points, r0, r1, start, dur, radial = 10) {
+        const curve = new THREE.CatmullRomCurve3(points), P = curve.getPoints(14);
+        const R = P.map((_, i) => r0 + (r1 - r0) * Math.pow(i / (P.length - 1), 0.8));
+        const mesh = new THREE.Mesh(limbGeo(P, R, radial), BARK);
+        mesh.geometry.setDrawRange(0, 0);
+        tree.add(mesh);
+        extras.push({ mesh, start, dur });
+      }
+      const soilTop = 50 - (svg.querySelector('[data-part="soil"] path') ? Math.max(...ptsOf(svg.querySelector('[data-part="soil"] path').getAttribute('d')).map(p => p.y)) : 74.3);
+      {
+        const b = main.P[0], R0 = main.R[0];
+        const n = 7;
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2 + rand() * 0.5, dx = Math.cos(a), dz = Math.sin(a) * 0.75;
+          const len = 5 + rand() * 6;
+          sprig([
+            new THREE.Vector3(b.x + dx * R0 * 0.35, soilTop + 2.6, b.z + dz * R0 * 0.35),
+            new THREE.Vector3(b.x + dx * (R0 + 1.2), soilTop + 0.9, b.z + dz * (R0 + 1.2)),
+            new THREE.Vector3(b.x + dx * (R0 + len * 0.6), soilTop + 0.35, b.z + dz * (R0 + len * 0.6)),
+            new THREE.Vector3(b.x + dx * (R0 + len), soilTop - 0.6, b.z + dz * (R0 + len)),
+          ], R0 * (0.42 + rand() * 0.12), 0.25, 0.02 + rand() * 0.04, 0.16);
+        }
+      }
+      pads.forEach(p => {
+        const feeder = limbs.find(l => l.pad === p && !l.jin);
+        if (!feeder) return;
+        const T = feeder.P[feeder.P.length - 1], rT = feeder.R[feeder.R.length - 1];
+        const y = 50 - p.bottom + 0.25;
+        p.circles.forEach((c, k) => {
+          if (k % 2 && p.circles.length > 3) return;
+          const end = new THREE.Vector3(c.x - 50 + (rand() - 0.5) * c.r * 0.6, y, p.z + (rand() - 0.5) * c.r * 1.2);
+          const mid = T.clone().lerp(end, 0.5); mid.y = Math.max(T.y, end.y) + 0.4;
+          sprig([T.clone(), mid, end], Math.min(rT * 0.6, 0.75), 0.16, p.start - 0.05, 0.1, 8);
+        });
       });
       const roots = new THREE.Group(); roots.visible = false; tree.add(roots);     // shown once the trunk starts
       svg.querySelectorAll('[data-part="roots"] path').forEach(el => roots.add(slab(pathShapes(el.getAttribute('d')), 0, 3, WOOD, 0.3)));
@@ -996,6 +1226,40 @@
         m.position.set(num(c, 'cx') - 50, 50 - soilY + 0.7, [5, -3, 4, -5][i % 4]);
         m.scale.set(1, 0.65, 1); potGroup.add(m);
       });
+      {
+        const soilH = (x, z) => 1.8 * Math.sqrt(Math.max(0, 1 - (x / 27.5) ** 2 - (z / 9.4) ** 2));
+        const bx = main.P[0].x, keep = (x, z) => ((x - bx) / 7) ** 2 + (z / 5) ** 2 > 1;   // clear of the trunk
+        // Gravel: small grey and sand stones.
+        const stones = [], STONE = ['#8d877b', '#a59e90', '#6f6a61', '#b9b1a1', '#7d6f5f'].map(c => new THREE.Color(c));
+        for (let tries = 0; stones.length < 190 && tries < 2000; tries++) {
+          const x = (rand() * 2 - 1) * 26, z = (rand() * 2 - 1) * 8.6;
+          if ((x / 26) ** 2 + (z / 8.6) ** 2 > 1 || !keep(x, z)) continue;
+          stones.push({ x, z, y: 50 - soilY + soilH(x, z) - 0.05, r: 0.28 + rand() * 0.32 });
+        }
+        const gm = new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.95, flatShading: true }), stones.length);
+        stones.forEach((st, i) => {
+          q.setFromEuler(new THREE.Euler(rand() * 6.28, rand() * 6.28, rand() * 6.28));
+          m4.compose(v.set(st.x, st.y, st.z), q, s.set(st.r, st.r * 0.7, st.r)); gm.setMatrixAt(i, m4);
+          gm.setColorAt(i, STONE[Math.floor(rand() * STONE.length)].clone().offsetHSL(0, 0, (rand() - 0.5) * 0.06));
+        });
+        potGroup.add(gm);
+        // Moss: a few low cushions of tiny round tufts.
+        const tufts = [], MOSS = ['#2f8f45', '#3fa356', '#24733a', '#4caf5a'].map(c => new THREE.Color(c));
+        [[-16, 3], [-9, -5], [6, 5.5], [14, -3], [20, 3], [-21, -1]].forEach(([cx, cz]) => {
+          for (let i = 0; i < 12; i++) {
+            const a = rand() * 6.28, d = Math.sqrt(rand()) * 2.6, x = cx + Math.cos(a) * d, z = cz + Math.sin(a) * d * 0.7;
+            if ((x / 26) ** 2 + (z / 8.6) ** 2 > 1 || !keep(x, z)) continue;
+            tufts.push({ x, z, y: 50 - soilY + soilH(x, z) + 0.05, r: 0.55 + rand() * 0.6 * (1 - d / 3) });
+          }
+        });
+        const mm = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, flatShading: true }), tufts.length);
+        tufts.forEach((t, i) => {
+          q.identity(); m4.compose(v.set(t.x, t.y, t.z), q, s.set(t.r, t.r * 0.55, t.r)); mm.setMatrixAt(i, m4);
+          mm.setColorAt(i, MOSS[Math.floor(rand() * MOSS.length)]);
+        });
+        potGroup.add(mm);
+        q.identity();
+      }
       const pot = new THREE.Group(); pot.position.set(0, potBox.min.y, 0); potGroup.position.y = -potBox.min.y; pot.add(potGroup); tree.add(pot);
 
       // A soft contact shadow so the pot sits on the page.
@@ -1013,7 +1277,7 @@
       const track = document.querySelector('.track'), frameEl = document.querySelector('.frame');
       const caps = [...document.querySelectorAll('.cap')].map(el => {
         const words = el.textContent.trim().split(/\s+/);
-        el.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
+        el.innerHTML = words.map(w => `<span class="w${/^miyagi$/i.test(w) ? ' brand' : ''}">${w}</span>`).join(' ');   // the name lights up green
         return { el, words: [...el.querySelectorAll('.w')], lit: -1, on: false };
       });
       const CAP_AT = [[0.04, 0.38], [0.42, 0.74]];     // share of the scroll per line
@@ -1246,6 +1510,10 @@
         });
         pads.forEach(p => p.pivot.scale.setScalar(Math.max(0.001, outBack(clamp01((gp - p.start) / 0.14)))));
         roots.visible = gp > 0.01;
+        extras.forEach(e => {
+          const g = e.mesh.geometry, k = clamp01((gp - e.start) / e.dur);
+          g.setDrawRange(0, Math.round(k * g.userData.rings) * g.userData.per);
+        });
         // Once grown, the pads sway a little, like a tree on a windowsill.
         const settled = clamp01((gp - 0.97) / 0.03);
         pads.forEach((p, i) => {
