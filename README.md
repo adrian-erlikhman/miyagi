@@ -17,7 +17,23 @@ The board shows every time the page opens, including a plain visit to https://mi
 
 ## See it work
 
-Under the ending, a five-step player shows the real app: `demo/01-ask.webp` … `demo/05-passed.webp` (1600×1000). They were made from the app's own screenshots in the team repo (`app/agents/shots/`: `launcher-03-results`, `drawer-08-stage`, `cards-offtrack-stage`, `diagrams-heatmap`, `cards-success`). To refresh one, replace its file at the same size. Each `<img>` sets where its slow zoom lands (`--ox`, `--oy`, `--z`).
+On desktop (wider than 760px) the section runs the **real app** live: `live/` is the overlay's browser stage, built from the team repo (michae6345-crypto/sandhacks-tutor, `app/`), shown in a same-origin iframe of `/live/?scenario=full&clean` at its native 1600×1000 and scaled to the column with a CSS transform. Windows visitors get `&os=win` so the app shows Windows keys. The iframe is only created when the section is within 250px of the viewport, so the page doesn't load it up front.
+
+Next to it, a ten-step tour (ask → pick the tutorial → steps → the video waits → checks → off track → Explain / Diagram / Hint / Show me → fix → passed → next step). It starts once when the stage scrolls into view, and visitors can pause it, click any step to jump there, or click the stage and use the app themselves (Ctrl K / ⌘K). The tour drives the app the way a person would: real key events, typing into its launcher, clicking its own buttons; the app's scripted mock engine answers. To jump, the stage reloads and replays up to that step quickly: the page runs the iframe's `setTimeout` on its own clock (`speed`). A real click or key in the stage stops the tour. All of it is the `"See it work", live` script in `index.html`; the step lines are `STEPS`.
+
+The current build is from `origin/main` 7c41376 (Sat Nov 14, 8:34 PM). To refresh it with a newer app:
+
+```bash
+git -C repo fetch origin
+git -C repo worktree add ../stage-src origin/main --detach
+cd ../stage-src/app && npm ci --ignore-scripts
+npx vite build --config vite.web.config.ts --outDir "<path to miyagi-site>/live" --emptyOutDir --base ./
+git -C <repo> worktree remove ../stage-src --force
+```
+
+If the app's flow or wording changes, check that the tour still finds what it waits for (`waitText(...)` in `STEPS`: "full course", "Step 4 of", "Loss is flat at 0.25", the "Fix it" button, "Good. Now the next one.", "Step 7 of").
+
+On phones, with reduced motion, or if the iframe fails to load, a five-step player of screenshots shows instead: `demo/01-ask.webp` … `demo/05-passed.webp` (1600×1000, under 150 KB each), captured from the same build in headless Chrome. To refresh one, replace its file at the same size. Each `<img>` sets where its slow zoom lands (`--ox`, `--oy`, `--z`).
 
 ## Demo video
 

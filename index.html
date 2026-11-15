@@ -345,15 +345,15 @@
       <div class="screen">
         <img class="on" style="--ox:50%;--oy:4%;--z:1.55" src="/demo/01-ask.webp" alt="The miyagi launcher: a search for 'train a PINN on the convection equation' lists checked tutorials, the best one marked Best." loading="lazy" decoding="async">
         <img style="--ox:97%;--oy:30%;--z:1.45" src="/demo/02-steps.webp" alt="A lesson built from a video: steps with timestamps, the current step's checks, and the sources miyagi used." loading="lazy" decoding="async">
-        <img style="--ox:11%;--oy:5%;--z:1.55" src="/demo/03-off-track.webp" alt="An amber off-track card: loss is flat at 0.25, with the line BETA = 30.0 spotlighted in the editor." loading="lazy" decoding="async">
-        <img src="/demo/04-why.webp" alt="A diagram comparing the predicted solution, which fades out, with the exact moving wave." loading="lazy" decoding="async">
-        <img src="/demo/05-passed.webp" alt="A green card: step 6 done, good, now the next one, with the loss curve dropping after the fix." loading="lazy" decoding="async">
+        <img style="--ox:30%;--oy:5%;--z:1.5" src="/demo/03-off-track.webp" alt="An off-track card, Not yet: loss is flat at 0.25, with Show me, Explain, Hint and Fix it, and the line BETA = 30.0 lit up in the editor." loading="lazy" decoding="async">
+        <img style="--ox:50%;--oy:5%;--z:1.45" src="/demo/04-why.webp" alt="A diagram of gradient flow: at beta 30 the early layers stop learning." loading="lazy" decoding="async">
+        <img style="--ox:50%;--oy:5%;--z:1.5" src="/demo/05-passed.webp" alt="A green card: step 6 done, good, now the next one, with the loss curve after the fix. The video plays on." loading="lazy" decoding="async">
       </div>
       <ol class="tabs" role="tablist" aria-label="Steps">
         <li><button class="tab" role="tab" aria-selected="true"><span class="bar"><i></i></span><b>Ask</b><span>It finds and checks the best tutorial.</span></button></li>
         <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Steps</b><span>Any video becomes steps with real checks.</span></button></li>
         <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Off track</b><span>It points at the line and says why.</span></button></li>
-        <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Why</b><span>See what your model is really doing.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Why</b><span>Explain, Diagram, Hint or Show me.</span></button></li>
         <li><button class="tab" role="tab" aria-selected="false"><span class="bar"><i></i></span><b>Passed</b><span>Pass the check. The video plays on.</span></button></li>
       </ol>
       <p class="caption" aria-live="polite"></p>
@@ -483,6 +483,11 @@
           w = frame.contentWindow;
           installClock(w);
           w.document.addEventListener('wheel', forwardWheel, { passive: true });
+          // Keys pressed in the stage outside a text field mustn't scroll the page behind it.
+          w.document.addEventListener('keydown', function (e) {
+            var t = e.target, tag = t && t.tagName;
+            if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'BUTTON' && !(t && t.isContentEditable) && /^( |ArrowUp|ArrowDown|PageUp|PageDown|Home|End)$/.test(e.key)) e.preventDefault();
+          });
           // A real click or key in the stage hands it over to the visitor: the tour stops.
           ['pointerdown', 'keydown'].forEach(function (t) {
             w.document.addEventListener(t, function (e) { if (e.isTrusted) { dirty = true; stopTour(); } }, true);
