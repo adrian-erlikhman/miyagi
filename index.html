@@ -204,6 +204,7 @@
     .board-hint b { font-weight: 600; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -.03em; }
     .board-hint span { font-size: 13px; color: var(--m-ink-faint); }
     html.board-broken .board-hint { opacity: 0; }
+    html.gl.board-on .top { opacity: 0; pointer-events: none; }
     .hint i { position: relative; width: 1.5px; height: 30px; overflow: hidden; background: rgba(20, 20, 20, .12); border-radius: 1px; }
     .hint i::after { content: ""; position: absolute; left: 0; top: -12px; width: 100%; height: 12px; background: var(--m-ink); border-radius: 1px; animation: drip 1.6s cubic-bezier(.6, 0, .3, 1) infinite; }
     @keyframes drip { to { transform: translateY(42px); } }
@@ -282,7 +283,7 @@
         </div>
       </div>
       <div class="board-hint" aria-hidden="true"><b>Break the board.</b><span data-board-how>Click, or press space</span></div>
-      <div class="hint">Scroll to grow it<i aria-hidden="true"></i></div>
+      <div class="hint">Scroll<i aria-hidden="true"></i></div>
     </div>
   </main>
   <section class="how" aria-labelledby="see-it">
@@ -659,14 +660,14 @@
       tree.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
       tree.add(shadow);
 
-      // ---- Scroll: one continuous move. The camera pulls back and swings round as the tree grows. ----
+      // ---- Scroll: the tree steps aside for two lines, then rises over the wordmark. ----
       const track = document.querySelector('.track'), frameEl = document.querySelector('.frame');
       const caps = [...document.querySelectorAll('.cap')].map(el => {
         const words = el.textContent.trim().split(/\s+/);
         el.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
         return { el, words: [...el.querySelectorAll('.w')], lit: -1, on: false };
       });
-      const CAP_AT = [[0.03, 0.46], [0.5, 0.98]];     // share of the grow phase per line
+      const CAP_AT = [[0.04, 0.38], [0.42, 0.74]];     // share of the scroll per line
       const fov = camera.fov * Math.PI / 180, K = 1 / (2 * Math.tan(fov / 2));
       let L = {};
       function layout() {
@@ -676,19 +677,21 @@
         const top = 24, bottom = Math.max(top + vh * 0.26, textTop - 36);
         const f = (bottom - top) / vh, c = (top + bottom) / 2 / vh;
         const DF = Math.max(84 / f, (88 / 0.86) / asp) * K;
-        const D0 = Math.max(150, (84 / 0.8) / asp * K);     // the pot fills ~60% of a phone's width
-        L = { DF, D0, shift: 0.5 - c, lean: narrow ? 0 : 1, narrow };
+        const DR = Math.max(84 / 0.64, (80 / 0.8) / asp) * K;   // first view: the whole tree, about where the board was
+        L = { DF, DR, shift: 0.5 - c, lean: narrow ? 0 : 1, narrow, asp };
       }
       const smooth = x => x * x * (3 - 2 * x);
       const clamp01 = x => Math.max(0, Math.min(1, x));
       const lerp = (a, b, k) => a + (b - a) * k;
       function camGoal(p) {
-        const e = smooth(p);
-        const dist = lerp(L.D0, L.DF, e);
-        const tx = lerp(-22 * L.lean, 0, smooth(clamp01((p - 0.35) / 0.65)));
-        const ty = lerp(L.narrow ? -12 : -18, -1, e);
-        const elev = lerp(0.1, 0.2, e);
-        return { p: [tx, ty + dist * elev, dist], t: [tx, ty, 0], shift: L.shift * smooth(clamp01((p - 0.72) / 0.28)) };
+        const a = smooth(clamp01(p / 0.3));              // into the story: the tree steps right, the lines sit left
+        const b = smooth(clamp01((p - 0.7) / 0.3));      // the end: the tree rises over the wordmark
+        const dist = lerp(lerp(L.DR, L.DR * 0.92, a), L.DF, b);
+        const side = -0.13 * (dist / K) * L.asp * L.lean;
+        const tx = lerp(side * a, 0, b);
+        const ty = lerp(L.narrow ? -9 : -3, -1, b);
+        const elev = lerp(0.12, 0.2, b);
+        return { p: [tx, ty + dist * elev, dist], t: [tx, ty, 0], shift: L.shift * b };
       }
       const progress = () => clamp01(scrollY / Math.max(1, track.offsetHeight - innerHeight));
 
@@ -717,8 +720,9 @@
         .then(({ default: Lenis }) => { lenis = new Lenis({ lerp: 0.09, smoothWheel: true }); window.miyagiLenis = lenis; })
         .catch(() => {});
 
-      // ---- The way in: break the board, then grow the tree. Once per visit; a scroll or swipe breaks it too. ----
+      // ---- The way in: a blank page and a board. Breaking it reveals the tree behind it. Once per visit; a scroll or swipe breaks it too. ----
       const board = { state: 'gone', t: 0, group: null, mat: null, halves: [], bits: [], lenisStopped: false };
+      let revealAt = null;                                   // when the tree starts to grow in (performance.now() time)
       let my = 0;
       addEventListener('pointermove', e => { my = e.clientY / innerHeight * 2 - 1; }, { passive: true });
       const BW = 60, BH = 22, BD = 2.6, BZ = -78;            // board size and its distance in front of the camera
@@ -760,6 +764,7 @@
         group.position.set(0, 2.5, BZ);
         camera.add(group);
         Object.assign(board, { group, mat, state: 'idle' });
+        tree.visible = false;                                  // nothing behind the board until it breaks
         const how = document.querySelector('[data-board-how]');
         if (how && matchMedia('(pointer: coarse)').matches) how.textContent = 'Tap to break it';
       }
@@ -782,6 +787,7 @@
       function breakBoard() {
         if (board.state !== 'idle') return;
         board.state = 'breaking'; board.t = 0; board.start = performance.now();
+        revealAt = board.start + 60;                           // the tree grows in as the halves fly apart
         root.classList.add('board-broken');
         crack();
         board.halves.forEach(h => {
@@ -846,6 +852,7 @@
         if (progress() > 0.02) root.classList.remove('board-on');   // arrived mid-page: skip the board
         else buildBoard();
       }
+      if (board.state !== 'idle') revealAt = performance.now() + 150;   // no board: the tree grows in on load
       addEventListener('pointerdown', e => { if (board.state === 'idle' && !e.target.closest('a, button')) breakBoard(); });
       addEventListener('keydown', e => {
         if (board.state === 'idle' && [' ', 'Spacebar', 'Enter', 'ArrowDown', 'PageDown'].includes(e.key) && !e.target.closest('a, button')) { e.preventDefault(); breakBoard(); }
@@ -856,11 +863,11 @@
       let P = progress();
       const g0 = camGoal(P);
       const camPos = new THREE.Vector3(...g0.p), look = new THREE.Vector3(...g0.t);
-      let yaw = -0.6, shift = g0.shift;
+      let yaw = -1.1, shift = g0.shift;
       const outBack = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
       const outCubic = x => 1 - Math.pow(1 - x, 3);
       const t0 = performance.now();
-      const GROW = 0.82;     // share of the scroll spent growing; the rest settles the camera
+      const GROW_S = 1.0;    // seconds the tree takes to grow in
       let last = t0;
 
       function frame(now) {
@@ -872,11 +879,12 @@
         P += (raw - P) * ease(lenis ? 20 : 9);
         root.classList.toggle('started', raw > 0.02);
         root.classList.toggle('grown', raw > 0.9);
-        const gp = clamp01(P / GROW);
-
-        // The pot settles in on load; everything else follows the scroll.
-        pot.scale.set(1, Math.max(0.001, outCubic(clamp01(T / 0.55))), 1);
-        shadow.material.opacity = clamp01(T / 0.55);
+        // The whole tree grows in over about a second once the board breaks (or on load without the board).
+        const revealT = revealAt === null ? 0 : Math.max(0, (performance.now() - revealAt) / 1000);
+        tree.visible = revealAt !== null && revealT > 0;
+        const gp = clamp01((revealT - 0.12) / GROW_S);
+        pot.scale.set(1, Math.max(0.001, outCubic(clamp01(revealT / 0.4))), 1);
+        shadow.material.opacity = clamp01(revealT / 0.4);
         limbs.forEach(l => {
           const k = clamp01((gp - l.start) / l.dur);
           const g = l.mesh.geometry, idx = Math.round(k * g.userData.rings);
@@ -893,7 +901,7 @@
           p.pivot.rotation.x = Math.sin(T * 0.8 + i * 2.3) * 0.012 * settled;
         });
         caps.forEach((c, i) => {
-          const [a, b] = CAP_AT[i], lp = (gp - a) / (b - a);
+          const [a, b] = CAP_AT[i], lp = (P - a) / (b - a);
           const on = lp >= 0 && lp < 1;
           if (on !== c.on) { c.on = on; c.el.classList.toggle('on', on); }
           const lit = Math.min(c.words.length, Math.ceil(clamp01(lp / 0.55) * c.words.length));
@@ -919,9 +927,10 @@
           }
         }
 
-        // The tree swings round to face you as it grows; drag and pointer add a little.
+        // The tree turns in as it grows, then round to face you as you scroll; drag and pointer add a little.
         if (!dragging) { dragYaw = Math.max(-0.7, Math.min(0.7, dragYaw + vel)); vel *= Math.pow(0.9, dt * 60); dragYaw *= Math.pow(0.97, dt * 60); }
-        const goalYaw = lerp(-0.6, 0, smooth(clamp01(P))) + dragYaw + mx * 0.2;
+        const spin = 0.75 * (1 - outCubic(clamp01(revealT / 1.3)));
+        const goalYaw = lerp(-0.35, 0, smooth(clamp01(P))) - spin + dragYaw + mx * 0.2;
         yaw += (goalYaw - yaw) * ease(6);
         tree.rotation.set(0, yaw, 0);      // yaw only, so the pads' flat bottoms stay level
 

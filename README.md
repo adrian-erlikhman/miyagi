@@ -4,12 +4,16 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 
 - Live at https://miyagi.study, served by GitHub Pages from `main` (root).
 - `CNAME` holds the custom domain. Don't delete it, or Pages drops the domain.
-- One static page, `index.html`. The bonsai (`tree-full.svg`) and wordmark (`wordmark.svg`) from the Miyagi brand kit are inlined. With WebGL, a three.js scene (loaded from jsDelivr, pinned to three@0.160.0) builds a 3D bonsai from that SVG's shapes, and scrolling grows it. Without WebGL, or with reduced motion on, the flat logo page shows instead. Favicons, `og-image.png` and `fonts/GoogleSansFlex.woff2` (SIL OFL, see `fonts/OFL.txt`) come from the same kit.
+- One static page, `index.html`. The bonsai (`tree-full.svg`) and wordmark (`wordmark.svg`) from the Miyagi brand kit are inlined. With WebGL, a three.js scene (loaded from jsDelivr, pinned to three@0.160.0) builds a 3D bonsai from that SVG's shapes. Without WebGL, or with reduced motion on, the flat logo page shows instead. Favicons, `og-image.png` and `fonts/GoogleSansFlex.woff2` (SIL OFL, see `fonts/OFL.txt`) come from the same kit.
 - Follow the kit's `BRAND.md`: paper background, ink buttons, green only means passed, no gradients or glows.
 
 ## The way in: break the board
 
-With 3D on, the page opens on a wooden board floating over the empty pot ("Break the board."). A click, tap, space, or the first scroll or swipe breaks it. It cracks along a jagged line, the halves and splinters fly, and there's a short synthesized crack sound. Scrolling stays locked until it's done (1.35 s, timed by the clock). It shows once per tab (`sessionStorage` key `miyagi-board`); add `?board` to the URL to see it again. Browsers without WebGL, or with reduced motion on, never get the board.
+With 3D on, the page opens blank: just the dots and a wooden board ("Break the board."). The tree is hidden behind it. A click, tap, space, or the first scroll or swipe breaks it. It cracks along a jagged line, the halves and splinters fly, and there's a short synthesized crack sound. As it breaks, the whole bonsai grows in where the board was (about 1 s: pot, trunk, branches, then the pads pop), turning to face you. Scrolling stays locked until the break is done (1.35 s, timed by the clock).
+
+Then scrolling tells the story: the tree steps right while "Watching isn't learning." and "miyagi waits until your code works." light up on the left (centered under the tree on phones), then it rises over the wordmark, "Wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
+
+The board shows once per tab (`sessionStorage` key `miyagi-board`); add `?board` to the URL to see it again. Without the board, the tree grows in on load. Browsers without WebGL, or with reduced motion on, never get the board.
 
 ## See it work
 
