@@ -17,10 +17,10 @@ The final screen has a "Watch the demo" button that plays the video in a pop-up.
 
 ## Download buttons
 
-The big button matches the visitor's OS (Windows or Mac); a small link under it offers the other one. Both link straight to fixed release assets in this repo, no API call:
+Mac and Windows are two equal buttons side by side (`a[data-dl="mac"]` and `a[data-dl="win"]`, each with a note in `[data-dl-note]`). There's no OS detection and no "also on" link (Adrian, Sat 7:30 PM). Both link straight to fixed release assets in this repo, with no API call. After a click, the button's note shows its first-open tip (right-click › Open on Mac; More info › Run anyway on Windows).
 
-- Windows: release `windows`, asset `Miyagi-Windows-Setup.exe`, rebuilt and re-uploaded by the Windows sync agent when the app changes.
-- Mac: release `mac`, asset `Miyagi-Mac.zip`, from CI's `mac-zip` artifact. Until it's posted, `MAC_READY` in `index.html` is `false` and the Mac button says the build isn't posted yet.
+- Mac: release `mac`, asset `Miyagi-Mac.zip` (Apple silicon, macOS 13+), from CI's `mac-zip` artifact, posted by the Windows sync agent. `var MAC_READY = true` keeps the button on; set it to `false` only to pull the Mac build.
+- Windows: release `windows`, asset `Miyagi-Windows-Setup.exe` (Windows 10 and 11), rebuilt and re-uploaded by the Windows sync agent when the app changes.
 
 ## DNS (at Porkbun, the registrar)
 
