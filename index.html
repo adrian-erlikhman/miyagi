@@ -32,7 +32,12 @@
       } catch (e) {}
       if (ok && !reduce && 'noModule' in HTMLScriptElement.prototype) {
         d.classList.add('gl');
-        setTimeout(function () { if (!d.classList.contains('gl-ready')) d.classList.remove('gl'); }, 6000);
+        // The way in: a board to break, once per visit (?board shows it again). Scrolling waits for it.
+        var seenBoard = false;
+        try { seenBoard = sessionStorage.getItem('miyagi-board') === '1'; } catch (e) {}
+        if (/[?&]board\b/.test(location.search)) seenBoard = false;
+        if (!seenBoard) d.classList.add('board-on');
+        setTimeout(function () { if (!d.classList.contains('gl-ready')) d.classList.remove('gl', 'board-on'); }, 6000);
       }
     })();
   </script>
@@ -188,6 +193,17 @@
     .cap .w.lit { opacity: 1; }
     html.gl .hint { display: flex; flex-direction: column; align-items: center; gap: 10px; position: absolute; left: 0; right: 0; bottom: 4vh; font-size: 13px; color: var(--m-ink-faint); transition: opacity .3s; }
     html.gl.started .hint { opacity: 0; }
+    /* The way in: break the board first. Scrolling and the scroll hint wait for it. */
+    html.board-on, html.board-on body { overflow: hidden; }
+    html.gl.board-on .hint { opacity: 0; }
+    .board-hint { display: none; }
+    html.gl.board-on .board-hint {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      position: absolute; left: 0; right: 0; bottom: 7vh; transition: opacity .25s ease;
+    }
+    .board-hint b { font-weight: 600; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -.03em; }
+    .board-hint span { font-size: 13px; color: var(--m-ink-faint); }
+    html.board-broken .board-hint { opacity: 0; }
     .hint i { position: relative; width: 1.5px; height: 30px; overflow: hidden; background: rgba(20, 20, 20, .12); border-radius: 1px; }
     .hint i::after { content: ""; position: absolute; left: 0; top: -12px; width: 100%; height: 12px; background: var(--m-ink); border-radius: 1px; animation: drip 1.6s cubic-bezier(.6, 0, .3, 1) infinite; }
     @keyframes drip { to { transform: translateY(42px); } }
@@ -265,6 +281,7 @@
           <span class="note" data-demo-note></span>
         </div>
       </div>
+      <div class="board-hint" aria-hidden="true"><b>Break the board.</b><span data-board-how>Click, or press space</span></div>
       <div class="hint">Scroll to grow it<i aria-hidden="true"></i></div>
     </div>
   </main>
@@ -700,6 +717,142 @@
         .then(({ default: Lenis }) => { lenis = new Lenis({ lerp: 0.09, smoothWheel: true }); window.miyagiLenis = lenis; })
         .catch(() => {});
 
+      // ---- The way in: break the board, then grow the tree. Once per visit; a scroll or swipe breaks it too. ----
+      const board = { state: 'gone', t: 0, group: null, mat: null, halves: [], bits: [], lenisStopped: false };
+      let my = 0;
+      addEventListener('pointermove', e => { my = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+      const BW = 60, BH = 22, BD = 2.6, BZ = -78;            // board size and its distance in front of the camera
+      function buildBoard() {
+        scene.add(camera);
+        // Pale pine with grain, drawn once to a canvas.
+        const wc = document.createElement('canvas'); wc.width = 1024; wc.height = 384;
+        const wx = wc.getContext('2d');
+        wx.fillStyle = '#dcb98f'; wx.fillRect(0, 0, wc.width, wc.height);
+        for (let i = 0; i < 90; i++) {
+          const y0 = rand() * wc.height, amp = 2 + rand() * 7, f = 0.003 + rand() * 0.008, ph = rand() * 6.28;
+          wx.strokeStyle = rand() < 0.55 ? 'rgba(140, 94, 52, 0.20)' : 'rgba(255, 244, 222, 0.28)';
+          wx.lineWidth = 0.6 + rand() * 2;
+          wx.beginPath();
+          for (let x = 0; x <= wc.width; x += 12) { const y = y0 + Math.sin(x * f + ph) * amp; if (x) wx.lineTo(x, y); else wx.moveTo(x, y); }
+          wx.stroke();
+        }
+        const kx = 760, ky = 120;                             // one small knot
+        for (let r = 22; r > 2; r -= 3) { wx.strokeStyle = `rgba(120, 78, 40, ${0.08 + (22 - r) / 120})`; wx.lineWidth = 1.4; wx.beginPath(); wx.ellipse(kx, ky, r * 1.8, r, 0, 0, Math.PI * 2); wx.stroke(); }
+        const tex = new THREE.CanvasTexture(wc);
+        tex.colorSpace = THREE.SRGBColorSpace; tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(1 / BW, 1 / BH); tex.offset.set(0.5, 0.5);
+        // Two halves that meet along a jagged grain line.
+        const split = [];
+        for (let i = 0; i <= 8; i++) split.push(new THREE.Vector2((i % 2 ? 1 : -1) * (0.6 + rand() * 1.4), -BH / 2 + i * BH / 8));
+        const left = new THREE.Shape(), right = new THREE.Shape();
+        left.moveTo(-BW / 2, -BH / 2); split.forEach(p => left.lineTo(p.x, p.y)); left.lineTo(-BW / 2, BH / 2); left.closePath();
+        right.moveTo(BW / 2, -BH / 2); right.lineTo(BW / 2, BH / 2); [...split].reverse().forEach(p => right.lineTo(p.x, p.y)); right.closePath();
+        const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.72, metalness: 0, transparent: true, opacity: 0 });
+        const group = new THREE.Group();
+        [left, right].forEach((shape, i) => {
+          const geo = new THREE.ExtrudeGeometry(shape, { depth: BD, bevelEnabled: true, bevelThickness: 0.22, bevelSize: 0.22, bevelSegments: 2, curveSegments: 4 });
+          geo.translate(0, 0, -BD / 2);
+          const pivot = new THREE.Group();
+          pivot.add(new THREE.Mesh(geo, mat));
+          group.add(pivot);
+          board.halves.push({ pivot, side: i ? 1 : -1, v: new THREE.Vector3(), w: new THREE.Vector3() });
+        });
+        group.position.set(0, 2.5, BZ);
+        camera.add(group);
+        Object.assign(board, { group, mat, state: 'idle' });
+        const how = document.querySelector('[data-board-how]');
+        if (how && matchMedia('(pointer: coarse)').matches) how.textContent = 'Tap to break it';
+      }
+      function crack() {                                       // a short wood crack and a low thump, made on the spot
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+          const ac = new AC(), t = ac.currentTime;
+          const len = Math.floor(ac.sampleRate * 0.18), buf = ac.createBuffer(1, len, ac.sampleRate), data = buf.getChannelData(0);
+          for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+          const src = ac.createBufferSource(); src.buffer = buf;
+          const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1700; bp.Q.value = 0.8;
+          const g = ac.createGain(); g.gain.setValueAtTime(0.32, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+          src.connect(bp).connect(g).connect(ac.destination); src.start(t);
+          const o = ac.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(55, t + 0.12);
+          const og = ac.createGain(); og.gain.setValueAtTime(0.25, t); og.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+          o.connect(og).connect(ac.destination); o.start(t); o.stop(t + 0.2);
+          setTimeout(() => ac.close(), 700);
+        } catch (e) {}
+      }
+      function breakBoard() {
+        if (board.state !== 'idle') return;
+        board.state = 'breaking'; board.t = 0; board.start = performance.now();
+        root.classList.add('board-broken');
+        crack();
+        board.halves.forEach(h => {
+          h.v.set(h.side * (12 + rand() * 4), 7 + rand() * 3, -4 - rand() * 4);
+          h.w.set(0.4 + rand() * 0.5, h.side * (1.8 + rand()), -h.side * (1.2 + rand()));
+        });
+        const bitGeo = new THREE.BoxGeometry(0.28, 0.28, 1);
+        for (let i = 0; i < 42; i++) {                         // splinters from the break line
+          const m = new THREE.Mesh(bitGeo, board.mat);
+          m.position.set((rand() - 0.5) * 2.4, (rand() - 0.5) * BH, (rand() - 0.5) * BD);
+          m.scale.set(1, 1, 0.6 + rand() * 2.6);
+          m.rotation.set(rand() * 6, rand() * 6, rand() * 6);
+          const side = rand() < 0.5 ? -1 : 1;
+          board.bits.push({ m, v: new THREE.Vector3(side * (6 + rand() * 16), 4 + rand() * 14, 2 + rand() * 12), w: new THREE.Vector3(rand() * 14 - 7, rand() * 14 - 7, rand() * 14 - 7) });
+          board.group.add(m);
+        }
+      }
+      function endBoard() {
+        camera.remove(board.group);
+        const seen = new Set();
+        board.group.traverse(o => { if (o.geometry && !seen.has(o.geometry)) { seen.add(o.geometry); o.geometry.dispose(); } });
+        if (board.mat.map) board.mat.map.dispose(); board.mat.dispose();
+        Object.assign(board, { state: 'gone', group: null, halves: [], bits: [] });
+        root.classList.remove('board-on', 'board-broken');
+        try { sessionStorage.setItem('miyagi-board', '1'); } catch (e) {}
+        if (lenis) lenis.start();
+      }
+      function updateBoard(dt, T, ease) {
+        const g = board.group; if (!g) return;
+        const visibleW = (-BZ / K) * camera.aspect;            // how wide the view is at the board's distance
+        g.scale.setScalar(Math.min(0.62, (visibleW * 0.7) / BW));
+        if (board.state === 'idle') {
+          // A slight resting tilt shows the board's thickness; it leans toward the pointer.
+          g.rotation.y += (-0.22 + mx * 0.25 - g.rotation.y) * ease(5);
+          g.rotation.x += (0.1 + my * 0.14 + Math.sin(T * 1.4) * 0.03 - g.rotation.x) * ease(5);
+          g.rotation.z = -0.03;
+          g.position.y = 2.5 + Math.sin(T * 1.6) * 0.35;
+          board.mat.opacity = clamp01(T / 0.5);
+          return;
+        }
+        const t = (board.t = (performance.now() - board.start) / 1000);   // wall clock, so a slow tab can't stretch the lock
+        if (t < 0.08) {                                        // the hit: the board flexes back at the middle
+          const k = t / 0.08;
+          g.position.z = BZ - 2.2 * Math.sin(k * Math.PI);
+          board.halves.forEach(h => { h.pivot.rotation.y = -h.side * 0.18 * k; });
+        } else {                                               // then both halves fly apart and fall
+          g.position.z = BZ;
+          board.halves.forEach(h => {
+            h.v.y -= 60 * dt;
+            h.pivot.position.addScaledVector(h.v, dt);
+            h.pivot.rotation.x += h.w.x * dt; h.pivot.rotation.y += h.w.y * dt; h.pivot.rotation.z += h.w.z * dt;
+          });
+        }
+        board.bits.forEach(b => {
+          b.v.y -= 50 * dt; b.m.position.addScaledVector(b.v, dt);
+          b.m.rotation.x += b.w.x * dt; b.m.rotation.y += b.w.y * dt; b.m.rotation.z += b.w.z * dt;
+        });
+        board.mat.opacity = 1 - clamp01((t - 0.7) / 0.6);
+        if (t > 1.35) endBoard();
+      }
+      if (root.classList.contains('board-on')) {
+        if (progress() > 0.02) root.classList.remove('board-on');   // arrived mid-page: skip the board
+        else buildBoard();
+      }
+      addEventListener('pointerdown', e => { if (board.state === 'idle' && !e.target.closest('a, button')) breakBoard(); });
+      addEventListener('keydown', e => {
+        if (board.state === 'idle' && [' ', 'Spacebar', 'Enter', 'ArrowDown', 'PageDown'].includes(e.key) && !e.target.closest('a, button')) { e.preventDefault(); breakBoard(); }
+      });
+      addEventListener('wheel', () => { if (board.state === 'idle') breakBoard(); }, { passive: true });
+      addEventListener('touchmove', () => { if (board.state === 'idle') breakBoard(); }, { passive: true });
+
       let P = progress();
       const g0 = camGoal(P);
       const camPos = new THREE.Vector3(...g0.p), look = new THREE.Vector3(...g0.t);
@@ -756,6 +909,15 @@
         shift += (g.shift - shift) * ease(7);
         camera.position.copy(camPos); camera.lookAt(look);
         camera.setViewOffset(innerWidth, innerHeight, 0, shift * innerHeight, innerWidth, innerHeight);
+        // The board: hold scrolling while it's up, play the break, and give the camera a small jolt on the hit.
+        if (board.state !== 'gone') {
+          if (lenis && !board.lenisStopped) { lenis.stop(); board.lenisStopped = true; }
+          updateBoard(dt, T, ease);
+          if (board.state === 'breaking' && board.t < 0.25) {
+            const d = 1 - board.t / 0.25;
+            camera.position.x += Math.sin(board.t * 95) * 0.5 * d; camera.position.y += Math.cos(board.t * 80) * 0.35 * d;
+          }
+        }
 
         // The tree swings round to face you as it grows; drag and pointer add a little.
         if (!dragging) { dragYaw = Math.max(-0.7, Math.min(0.7, dragYaw + vel)); vel *= Math.pow(0.9, dt * 60); dragYaw *= Math.pow(0.97, dt * 60); }
