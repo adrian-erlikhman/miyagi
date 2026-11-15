@@ -139,6 +139,16 @@
     html.no-story .cards { display: block; }
     html.no-story .how { padding: 12vh 0 6vh; }
 
+    /* Contact: the two of us, at the very end. */
+    .foot { position: relative; z-index: 1; padding: 12vh 16px 56px; text-align: center; }
+    .foot h2 { margin: 0 0 24px; font-weight: 600; font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -.03em; }
+    .people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 72px; }
+    .person { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 15px; line-height: 1.45; }
+    .person b { font-weight: 600; font-size: 17px; letter-spacing: -.01em; margin-bottom: 2px; }
+    .person a { color: var(--m-ink-muted); text-decoration: none; overflow-wrap: anywhere; }
+    .person a:hover { color: var(--m-ink); text-decoration: underline; text-underline-offset: 3px; }
+    .person a:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 4px; }
+
     /* The desktop inside the story, drawn at 1600x1000 and scaled to fit. Dark, like the app's own stage. */
     .d-bar { position: absolute; left: 0; top: 0; right: 0; height: 30px; display: flex; align-items: center; gap: 18px; padding: 0 16px; background: rgba(36, 36, 40, .92); font-size: 13px; color: rgba(255, 255, 255, .82); }
     .d-bar b { font-weight: 700; }
@@ -376,6 +386,21 @@
     </div>
     <ol class="cards" data-cards></ol>
   </section>
+  <footer class="foot" aria-labelledby="contact">
+    <h2 id="contact">contact</h2>
+    <ul class="people">
+      <li class="person">
+        <b>Adrian Erlikhman</b>
+        <a href="mailto:erlikhman.adrian@gmail.com">erlikhman.adrian@gmail.com</a>
+        <a href="https://github.com/adrian-erlikhman">github.com/adrian-erlikhman</a>
+      </li>
+      <li class="person">
+        <b>Michael Tarekegn</b>
+        <a href="mailto:michae6345@gmail.com">michae6345@gmail.com</a>
+        <a href="https://github.com/michae6345-crypto">github.com/michae6345-crypto</a>
+      </li>
+    </ul>
+  </footer>
   <div class="demo" role="dialog" aria-modal="true" aria-label="miyagi demo video">
     <button class="demo-close" type="button" aria-label="Close">×</button>
     <div class="demo-box"></div>
