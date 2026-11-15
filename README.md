@@ -7,33 +7,21 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 - One static page, `index.html`. The bonsai (`tree-full.svg`) and wordmark (`wordmark.svg`) from the Miyagi brand kit are inlined. With WebGL, a three.js scene (loaded from jsDelivr, pinned to three@0.160.0) builds a 3D bonsai from that SVG's shapes. On top of the SVG's shapes it adds detail made in code: a tiling bark texture (color and bump) on every limb, surface roots at the base and twigs under each pad that grow in with the tree, leaf tufts that are each turned and tinted a little differently with lighter new growth on top, gravel and moss on the soil, and a clay speckle on the pot. Without WebGL, or with reduced motion on, the flat logo page shows instead. Favicons, `og-image.png` and `fonts/GoogleSansFlex.woff2` (SIL OFL, see `fonts/OFL.txt`) come from the same kit.
 - Follow the kit's `BRAND.md`: paper background, ink buttons, green only means passed, no gradients or glows.
 
-## The way in: break the board
+## The opening
 
-With 3D on, the page opens blank: just the dots and a wooden board ("Break the board."). The tree is hidden behind it. A click, tap, space, or the first scroll or swipe breaks it. It cracks along a jagged line, the halves and splinters fly, and there's a short synthesized crack sound. As it breaks, the pot lands where the board was and the bonsai grows in front of you: the trunk rises, each branch reaches out when the trunk gets to it, then the pads pop, while the camera rises and pulls back and the tree turns to face you. It takes about 2.7 s from the hit (`GROW_AT`, `GROW_S` in `index.html`). Scrolling stays locked until the tree has fully grown, timed by the clock.
+With 3D on, the page opens on the bonsai growing in: the pot lands, the trunk rises, each branch reaches out when the trunk gets to it, then the pads pop, while the camera rises and pulls back and the tree turns to face you (about 2.5 s, `GROW_AT` and `GROW_S` in `index.html`). Browsers without WebGL, or with reduced motion on, get the flat logo page instead.
 
-Then scrolling tells the story: the tree steps right while "Watching isn't learning." and "miyagi waits until your code works." light up on the left (the word "miyagi" turns the logo's pad green, `#1f9b45`, as it lights) (centered under the tree on phones), then it rises over the wordmark, "Wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
+Then scrolling tells the story: the tree steps right while "watching isn't learning." and "miyagi waits until your code works." light up on the left (the word "miyagi" turns the logo's pad green, `#1f9b45`, as it lights; centered under the tree on phones), then it rises over the wordmark, "wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
 
-The board shows every time the page opens, including a plain visit to https://miyagi.study/ and a reload (the page always starts at the top, `history.scrollRestoration = 'manual'`). Only a link with a `#hash` skips it; then the tree grows in on load. Browsers without WebGL, or with reduced motion on, never get the board.
+Site copy is lowercase, like the wordmark.
 
 ## See it work
 
-On desktop (wider than 760px) the section runs the **real app** live: `live/` is the overlay's browser stage, built from the team repo (michae6345-crypto/sandhacks-tutor, `app/`), shown in a same-origin iframe of `/live/?scenario=full&clean` at its native 1600×1000 and scaled to the column with a CSS transform. Windows visitors get `&os=win` so the app shows Windows keys. The iframe is only created when the section is within 250px of the viewport, so the page doesn't load it up front.
+A pinned scroll story, the way the Hivemind site tells its steps. The section is 720vh tall and its frame sticks while you scroll; `p` (0 to 1) is how far through it you are, eased a little, and the whole desktop is drawn from `p`, so it scrubs forward and back with the scroll. On the left, six steps (ask → it builds the lesson → where to type → not yet → a hint → watch it learn) light up in turn; clicking one scrolls there. On the right, a macOS desktop drawn in HTML at 1600×1000 and scaled to fit: VS Code with `nn.py`, the miyagi island, launcher, drawer with the plan and checks, the Not yet and hint cards, the live network panel and the terminal.
 
-Under it, an eight-step tour, one step at a time: ask → it picks the best tutorial → the video becomes steps → the video waits for your code → off track → Explain / Diagram / Hint / Show me → fix it → pass and play on. Each step drives the app, then holds while its bar fills (`hold` in `STEPS`) and a white ring marks the part of the app it's about (`focus`, found by text in the app's DOM; the rest of the stage dims a little). Then the next step starts by itself. Visitors can use ‹ › (or the arrow keys), click any bar to jump, pause, or click the stage and use the app themselves (Ctrl K / ⌘K); a real click or key in the stage stops the tour and Play picks it up again. The tour drives the app the way a person would: real key events, typing into its launcher, clicking its own buttons; the app's scripted mock engine answers. Going back, or jumping ahead, reloads the stage and replays up to that step quickly: the page runs the iframe's `setTimeout` on its own clock (`speed`). All of it is the `"See it work", live` script in `index.html`; the step text is `STEPS`.
+The lesson is the neural net from the demo (a 1-4-4-1 net learning sin(x) in NumPy). Its numbers come from really running that code: with zero weights the loss stays at 0.4900; with `np.random.randn` weights (seed 0) it falls from 0.8187 to 0.0009 by epoch 18,000, and the network panel draws the weights that run learned (blue positive, brown negative). Everything is in the `"See it work"` script in `index.html`: the step text is `STEPS`, the code is `HEAD`/`NET`/`FIX`/`REST`, and `draw(p)` holds the timeline.
 
-The current build is from `origin/main` 7c41376 (Sat Nov 14, 8:34 PM). To refresh it with a newer app:
-
-```bash
-git -C repo fetch origin
-git -C repo worktree add ../stage-src origin/main --detach
-cd ../stage-src/app && npm ci --ignore-scripts
-npx vite build --config vite.web.config.ts --outDir "<path to miyagi-site>/live" --emptyOutDir --base ./
-git -C <repo> worktree remove ../stage-src --force
-```
-
-If the app's flow or wording changes, check that the tour still finds what it waits for and rings (`waitText(...)` and `focus` in `STEPS`: "full course", "Step 4 of", "Step 5 of", "Chapters", the `aspect-video` player, "Loss is flat at 0.25", the Explain / Diagram / Hint / Show me buttons, the "Fix it" button, "Good. Now the next one.").
-
-On phones, with reduced motion, or if the iframe fails to load, a five-step player of screenshots shows instead: `demo/01-ask.webp` … `demo/05-passed.webp` (1600×1000, under 150 KB each), captured from the same build in headless Chrome. To refresh one, replace its file at the same size. Each `<img>` sets where its slow zoom lands (`--ox`, `--oy`, `--z`).
+Phones (under 1024px) and reduced motion get the same six steps as cards with real frames from the Mac app: `walk/1-ask.webp` … `walk/6-learns.webp` (1200×800), made from the Devpost gallery images.
 
 ## Demo video
 
