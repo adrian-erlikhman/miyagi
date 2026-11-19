@@ -100,28 +100,42 @@
     .btn.btn-ghost { background: transparent; color: var(--m-ink); box-shadow: inset 0 0 0 1.5px var(--m-ink); }
     .btn.btn-ghost svg { width: 14px; height: 14px; }
 
-    /* See it work: a pinned scroll story. The section is tall; its inner frame sticks while you scroll through it, and
-       everything on the desktop is a function of how far you are, so scrolling back plays it in reverse.
-       Phones and reduced motion get the same six steps as cards with real frames from the Mac app. */
+    /* See it work: a pinned scroll story in six scenes. The section is tall and its frame sticks while you scroll. Each
+       scene frames the desktop on what matters (zoomed in, like a screen recording), notes on the page point at the
+       important parts, and between scenes the window changes. All of it is drawn from scroll progress, so it scrubs
+       forward and back. Phones and reduced motion get the same six steps as cards with real frames from the Mac app. */
     .how { position: relative; z-index: 1; }
     .how h2 { margin: 0; text-align: center; font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.035em; }
-    .story { position: relative; height: 720vh; }
-    .story-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; gap: 22px; padding: 44px 24px 28px; }
-    .story-grid { flex: 1; min-height: 0; width: 100%; max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 44px; align-items: center; }
-    .story-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-    .st { position: relative; display: block; width: 100%; padding: 10px 0 12px 34px; border: 0; background: none; text-align: left; cursor: pointer; color: var(--m-ink); font: inherit; opacity: .34; transition: opacity .3s ease; }
+    .story { position: relative; height: 900vh; }
+    .story-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; gap: 12px; padding: 30px 24px 18px; }
+    .scene-head { min-height: 74px; text-align: center; }
+    .scene-head .n { font-size: 13px; font-weight: 600; color: var(--m-ink-faint); }
+    .scene-head b { display: block; margin-top: 2px; font-weight: 600; font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -.02em; }
+    .scene-head p { margin: 4px auto 0; max-width: 800px; font-size: 15px; line-height: 1.45; color: var(--m-ink-muted); }
+    .stage { position: relative; flex: 1; min-height: 0; }
+    .stage-in { position: absolute; inset: 0; }
+    .desk { position: absolute; left: 0; top: 0; border-radius: 18px; overflow: hidden; background: #08080b; box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .45); }
+    .desk-in { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; transform-origin: 0 0; color: #fff; font: 14px/1.4 var(--m-font-brand); -webkit-font-smoothing: antialiased; }
+    /* Notes: ink on the page, a grey leader into the window, a dot on the thing itself. */
+    .ann-lines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .ann-lines line { stroke: #8e8e88; stroke-width: 1.25; }
+    .ann-lines circle { fill: #141414; stroke: #f6f6f3; stroke-width: 2; }
+    .an { position: absolute; left: 0; top: 0; font-size: 15px; line-height: 1.3; font-weight: 600; letter-spacing: -.01em; color: var(--m-ink); opacity: 0; visibility: hidden; pointer-events: none; }
+    .an.l { text-align: right; }
+    .story-foot { position: relative; display: flex; justify-content: center; align-items: center; min-height: 34px; }
+    .story-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; }
+    .st { position: relative; display: block; padding: 6px 0 9px; border: 0; background: none; cursor: pointer; color: var(--m-ink); font: 600 13.5px/1.2 var(--m-font-brand); opacity: .38; transition: opacity .3s ease; }
     .st:hover, .st.on { opacity: 1; }
     .st:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 6px; }
-    .st .n { position: absolute; left: 0; top: 11px; font-size: 14px; font-weight: 600; color: var(--m-ink-faint); font-variant-numeric: tabular-nums; }
+    .st .n { margin-right: 6px; color: var(--m-ink-faint); font-variant-numeric: tabular-nums; }
     .st.on .n { color: var(--m-ink); }
-    .st b { display: block; font-weight: 600; font-size: 18px; line-height: 1.25; letter-spacing: -.02em; }
-    .st span { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--m-ink-muted); max-height: 0; overflow: hidden; opacity: 0; transition: max-height .4s var(--settle), opacity .3s ease; }
-    .st.on span { max-height: 90px; opacity: 1; }
-    .st i { position: absolute; left: 34px; right: 0; bottom: 0; height: 2px; border-radius: 1px; background: rgba(20, 20, 20, .1); overflow: hidden; opacity: 0; transition: opacity .3s; }
-    .st.on i { opacity: 1; }
+    .st i { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 1px; background: rgba(20, 20, 20, .1); overflow: hidden; }
     .st i::after { content: ""; display: block; height: 100%; width: var(--f, 0%); background: var(--m-ink); }
-    .desk { position: relative; justify-self: center; width: min(100%, calc((100vh - 140px) * 1.6)); width: min(100%, calc((100svh - 140px) * 1.6)); aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; background: #08080b; box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .45); }
-    .desk-in { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; transform-origin: 0 0; transform: scale(var(--s, .6)); color: #fff; font: 14px/1.4 var(--m-font-brand); -webkit-font-smoothing: antialiased; }
+    .snd { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 13px 0 11px; border: 0; border-radius: 999px; background: rgba(20, 20, 20, .06); color: var(--m-ink); font: 600 13px/1 var(--m-font-brand); cursor: pointer; transition: background .2s, color .2s; }
+    .snd:hover { background: rgba(20, 20, 20, .1); }
+    .snd[aria-pressed="true"] { background: var(--m-ink); color: var(--m-paper); }
+    .snd:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; }
+    .snd svg { width: 15px; height: 15px; }
     kbd { font: 600 .88em/1 var(--m-font-brand); padding: 2px 6px; border-radius: 6px; background: rgba(20, 20, 20, .08); color: var(--m-ink); white-space: nowrap; }
     .cards { display: none; list-style: none; margin: 0 auto; padding: 0 16px; max-width: 720px; }
     .card { margin: 0 0 56px; }
@@ -153,7 +167,7 @@
     .d-bar { position: absolute; left: 0; top: 0; right: 0; height: 30px; display: flex; align-items: center; gap: 18px; padding: 0 16px; background: rgba(36, 36, 40, .92); font-size: 13px; color: rgba(255, 255, 255, .82); }
     .d-bar b { font-weight: 700; }
     .d-bar .r { margin-left: auto; color: rgba(255, 255, 255, .7); }
-    .d-island { position: absolute; top: 3px; left: 50%; transform: translateX(-50%); height: 24px; display: flex; align-items: center; gap: 8px; padding: 0 12px 0 10px; border-radius: 12px; background: #000; font-size: 12.5px; white-space: nowrap; box-shadow: 0 0 0 1px rgba(255, 255, 255, .1); }
+    .d-island { position: absolute; z-index: 3; top: 3px; left: 50%; transform: translateX(-50%); height: 24px; display: flex; align-items: center; gap: 8px; padding: 0 12px 0 10px; border-radius: 12px; background: #000; font-size: 12.5px; white-space: nowrap; box-shadow: 0 0 0 1px rgba(255, 255, 255, .1); }
     .d-island svg { width: 14px; height: 14px; }
     .d-island .k { padding: 1px 6px; border-radius: 5px; background: rgba(255, 255, 255, .14); font-size: 11px; color: rgba(255, 255, 255, .8); }
     .d-island .c { color: rgba(255, 255, 255, .55); font-variant-numeric: tabular-nums; }
@@ -216,7 +230,10 @@
     .d-stats span { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
     .d-stats svg { width: 100%; height: 34px; }
     .d-card { position: absolute; padding: 18px 20px; border-radius: 22px; background: #0b0b0d; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 24px 60px rgba(0, 0, 0, .55); opacity: 0; transform-origin: 50% 0; }
-    .d-launch { left: 480px; top: 64px; width: 640px; padding: 14px; }
+    /* The launcher grows down out of the pill (like the app's), so it's one black shape that morphs; its content is fixed
+       at 640 wide and centered, and the shape clips it while it grows. */
+    .d-shell { position: absolute; z-index: 2; top: 3px; left: 50%; transform: translateX(-50%); overflow: hidden; background: #000; visibility: hidden; }
+    .d-launch { position: absolute; top: 0; left: 50%; width: 640px; margin-left: -320px; padding: 14px; opacity: 0; }
     .d-in { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; border-radius: 14px; background: rgba(255, 255, 255, .06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); font-size: 17px; }
     .d-in svg { width: 18px; height: 18px; flex-shrink: 0; }
     .d-in .ph { color: rgba(255, 255, 255, .4); }
@@ -224,7 +241,8 @@
     .d-chips span { padding: 6px 12px; border-radius: 999px; font-size: 13px; background: rgba(255, 255, 255, .06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); color: rgba(255, 255, 255, .8); transition: background .2s, color .2s; }
     .d-chips span.on { background: #fff; color: #141414; box-shadow: none; }
     .d-foot { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 14px; font-size: 12.5px; color: rgba(255, 255, 255, .5); }
-    .d-foot b { padding: 6px 12px; border-radius: 999px; background: #fff; color: #141414; font-weight: 600; }
+    .d-foot b { padding: 6px 12px; border-radius: 999px; background: #fff; color: #141414; font-weight: 600; transition: transform .12s, background .12s; }
+    .d-foot b.dn { transform: scale(.94); background: rgba(255, 255, 255, .78); }
     .d-label { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: rgba(255, 255, 255, .7); }
     .d-label i { width: 9px; height: 9px; border-radius: 50%; box-shadow: inset 0 0 0 1.6px #fff; }
     .d-label i.g { background: #30d158; box-shadow: none; }
@@ -241,6 +259,16 @@
     .d-hint { left: 380px; top: 52px; width: 540px; }
     .d-pass { left: 300px; top: 52px; width: 600px; }
     .d-pass svg { width: 100%; height: 90px; margin-top: 10px; }
+    .d-pills span { transition: transform .12s; }
+    .d-tb .run { transition: background .12s; }
+    .d-tb .run.dn { background: rgba(255, 255, 255, .22); }
+    .d-island { transition: transform .12s; }
+    /* The cursor (it clicks things) and the ring a click leaves. */
+    .d-cur { position: absolute; left: 0; top: 0; z-index: 6; width: 20px; height: 29px; transform-origin: 2px 2px; opacity: 0; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .45)); }
+    .d-cur svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .d-rip { position: absolute; left: 0; top: 0; z-index: 5; border-radius: 50%; box-shadow: 0 0 0 2.5px #fff; opacity: 0; pointer-events: none; }
+    .d-rip.go { animation: ripple .5s cubic-bezier(.2, .7, .3, 1) both; }
+    @keyframes ripple { from { opacity: .95; transform: scale(.2); } to { opacity: 0; transform: scale(1); } }
 
     /* Demo video pop-up. */
     .demo { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(20, 20, 20, .6); }
@@ -376,11 +404,19 @@
     <div class="story" data-story>
       <div class="story-pin">
         <h2 id="see-it">see it work.</h2>
-        <div class="story-grid">
-          <ol class="story-steps" data-steps></ol>
-          <div class="desk" data-desk role="img" aria-label="miyagi teaching a neural net from scratch: ask, the lesson, where to type, not yet, a hint, then the loss falls and the step passes.">
-            <div class="desk-in" data-desk-in></div>
+        <div class="scene-head" data-head><span class="n" data-head-n></span><b data-head-t></b><p data-head-b></p></div>
+        <div class="stage" data-stage>
+          <div class="stage-in" data-stage-in>
+            <div class="desk" data-desk role="img" aria-label="miyagi teaching a neural net from scratch: ask, the lesson, where to type, not yet, a hint, then the loss falls and the step passes.">
+              <div class="desk-in" data-desk-in></div>
+            </div>
+            <svg class="ann-lines" data-ann-lines aria-hidden="true"></svg>
+            <div data-ann aria-hidden="true"></div>
           </div>
+        </div>
+        <div class="story-foot">
+          <ol class="story-steps" data-steps></ol>
+          <button class="snd" type="button" data-snd aria-pressed="false"></button>
         </div>
       </div>
     </div>
@@ -425,32 +461,73 @@
       });
     })();
 
-    // "See it work": a pinned scroll story (the way the Hivemind site tells its steps). The section is 720vh tall and its
-    // frame sticks; p (0..1) is how far through it you are, eased a little, and the whole desktop is drawn from p, so it
-    // scrubs forward and back with the scroll. The lesson is the neural net from the demo; its numbers come from running
-    // that code (zero weights: loss stays 0.4900; random weights: 0.8187 down to 0.0009 by epoch 18,000).
-    // The step list on the left jumps there on click. Phones and reduced motion get the same steps as cards.
+    // "See it work": a pinned scroll story in six scenes. The section is 900vh tall and its frame sticks; p (0..1) is how
+    // far through it you are, eased a little. p maps to a scene and to q, the lesson's own clock (0..1), with a short
+    // hold between scenes while the window changes (the old one leaves upward, the next comes up from below). Each scene
+    // has a camera (zoom and focus on the 1600x1000 desktop) and notes on the page that point at what matters. A cursor
+    // clicks, keys type, and with sound on each beat makes a sound (Web Audio, synthesized here: no files). Everything is
+    // drawn from p, so it scrubs forward and back. The lesson is the neural net from the demo; its numbers come from
+    // running that code (zero weights: loss stays 0.4900; random weights: 0.8187 down to 0.0009 by epoch 18,000).
+    // Phones and reduced motion get the same steps as cards.
     (function () {
-      var how = document.querySelector('.how'), story = how.querySelector('[data-story]'), desk = how.querySelector('[data-desk]');
+      var how = document.querySelector('.how'), story = how.querySelector('[data-story]');
+      var stage = how.querySelector('[data-stage]'), stageIn = how.querySelector('[data-stage-in]'), desk = how.querySelector('[data-desk]');
       var D = how.querySelector('[data-desk-in]'), stepsEl = how.querySelector('[data-steps]'), cardsEl = how.querySelector('[data-cards]');
+      var annEl = how.querySelector('[data-ann]'), annSvg = how.querySelector('[data-ann-lines]'), sndBtn = how.querySelector('[data-snd]');
+      var head = how.querySelector('[data-head]'), headN = how.querySelector('[data-head-n]'), headT = how.querySelector('[data-head-t]'), headB = how.querySelector('[data-head-b]');
       var ua = navigator.userAgentData && navigator.userAgentData.platform || navigator.platform || '';
       var KEY = /Mac|iPhone|iPad/i.test(ua) ? '⌥ space' : 'ctrl shift space';
+      var SVGNS = 'http://www.w3.org/2000/svg';
 
+      // The six scenes. from/to: their stretch of the lesson clock q. cam: [q, zoom, focus x, focus y] on the desktop
+      // (eased between keys; the view never leaves the screen). notes: [from q, to q, what it points at, side, words].
       var STEPS = [
-        { t: 'ask for anything.', b: 'press <kbd>' + KEY + '</kbd> and type what you want to learn. pick a youtube tutorial, or just teach me.', from: 0, to: 0.17, at: 0.135, img: '1-ask' },
-        { t: 'it builds the lesson.', b: 'steps, checks and a project in vs code, made for what you asked.', from: 0.17, to: 0.3, at: 0.27, img: '2-lesson' },
-        { t: 'it shows you where to type.', b: 'a box marks the exact line. as you type, the step’s checks turn green.', from: 0.3, to: 0.48, at: 0.45, img: '3-type' },
-        { t: 'not yet? it says why.', b: 'you run it and the loss is stuck at 0.49, so the step stays open. the card says why.', from: 0.48, to: 0.65, at: 0.635, img: '4-not-yet' },
-        { t: 'a hint, not the answer.', b: 'the first hint is a question, and it boxes the lines to look at. you fix them yourself.', from: 0.65, to: 0.8, at: 0.75, img: '5-hint' },
-        { t: 'watch it learn.', b: 'run it again: the loss falls from 0.82 to 0.0009 while the network trains, and the step turns green.', from: 0.8, to: 1, at: 0.975, img: '6-learns' }
+        { t: 'ask for anything.', s: 'ask', b: 'click the pill, or press <kbd>' + KEY + '</kbd>, and say what you want to learn.', from: 0, to: 0.17, at: 0.122, img: '1-ask',
+          cam: [[0, 3, 800, 160], [0.019, 3, 800, 160], [0.05, 2.2, 800, 200], [0.14, 2.2, 800, 200], [0.168, 2.8, 800, 150]],
+          notes: [[0.003, 0.03, 'pillL', 'l', 'miyagi lives in this pill'], [0.06, 0.138, 'field', 'l', 'say what you want to learn'], [0.09, 0.138, 'teach', 'r', 'no video? it teaches you itself']] },
+        { t: 'it builds the lesson.', s: 'the lesson', b: 'steps, checks and a project in vs code, made for what you asked.', from: 0.17, to: 0.3, at: 0.28, img: '2-lesson',
+          cam: [[0.17, 1, 800, 500]],
+          notes: [[0.172, 0.212, 'pillR', 'r', 'it builds a lesson for you'], [0.216, 0.3, 'editor', 'l', 'a real project, open in vs code'], [0.236, 0.3, 'plan', 'r', 'the plan, step by step'], [0.25, 0.3, 'pillR', 'r', 'where you are, always in the pill']] },
+        { t: 'it shows you where to type.', s: 'where to type', b: 'a box marks the exact lines. as you type, the step’s checks turn green.', from: 0.3, to: 0.48, at: 0.45, img: '3-type',
+          cam: [[0.3, 1.6, 500, 300], [0.398, 1.6, 500, 300], [0.414, 1.6, 1190, 330]],
+          notes: [[0.318, 0.398, 'box', 'l', 'a box marks where to type'], [0.416, 0.48, 'checks', 'r', 'each check goes green as it passes']] },
+        { t: 'not yet? it says why.', s: 'not yet', b: 'you run it and the loss is stuck at 0.49, so the step stays open. the card says why.', from: 0.48, to: 0.65, at: 0.632, img: '4-not-yet',
+          cam: [[0.48, 1.7, 860, 240], [0.543, 1.7, 860, 240], [0.558, 1.6, 500, 780], [0.594, 1.6, 500, 780], [0.608, 1.5, 610, 240]],
+          notes: [[0.502, 0.538, 'run', 'r', 'it shows you where to click'], [0.565, 0.596, 'term', 'r', 'the loss is stuck at 0.49'], [0.612, 0.65, 'nyp', 'l', 'what’s wrong, in plain words'], [0.618, 0.65, 'nycmp', 'r', 'yours vs. what’s expected']] },
+        { t: 'a hint, not the answer.', s: 'a hint', b: 'the first hint is a question, and it boxes the lines to look at. you fix them yourself.', from: 0.65, to: 0.8, at: 0.765, img: '5-hint',
+          cam: [[0.65, 1.5, 560, 220]],
+          notes: [[0.684, 0.795, 'hbox', 'l', 'the lines to look at'], [0.692, 0.795, 'hint', 'r', 'a question first, not the answer'], [0.738, 0.795, 'fixed', 'r', 'you fix it yourself']] },
+        { t: 'watch it learn.', s: 'it learns', b: 'run it again: the loss falls from 0.82 to 0.0009 while the network trains, and the step turns green.', from: 0.8, to: 1, at: 0.98, img: '6-learns',
+          cam: [[0.8, 1.7, 860, 240], [0.815, 1.7, 860, 240], [0.836, 1.45, 1230, 680], [0.93, 1.45, 1230, 680], [0.956, 1, 800, 500]],
+          notes: [[0.842, 0.935, 'net', 'r', 'the network trains, live'], [0.86, 0.935, 'loss', 'r', 'loss: 0.82 → 0.0009'], [0.958, 1.01, 'pass', 'l', 'step done. on to the next.']] }
       ];
 
-      // ---- the step list and the phone cards ----
+      // Scroll → scene: each scene's stretch of q, then a hold of CUT while the window changes.
+      var CUT = 0.035, SEGS = [], U = 0;
+      STEPS.forEach(function (s, i) {
+        SEGS.push({ k: i, a: U, b: (U += s.to - s.from), q0: s.from, q1: s.to });
+        if (i < STEPS.length - 1) SEGS.push({ k: i, cut: true, a: U, b: (U += CUT), q0: s.to });
+      });
+      function where(p) {                             // → { k: the scene on screen, q: the lesson clock, t: 0..1 during a change, else -1 }
+        var u = p * U;
+        for (var i = 0; i < SEGS.length; i++) {
+          var g = SEGS[i];
+          if (u > g.b && i < SEGS.length - 1) continue;
+          var f = Math.max(0, Math.min(1, (u - g.a) / (g.b - g.a)));
+          return g.cut ? { k: f < 0.5 ? g.k : g.k + 1, q: g.q0, t: f } : { k: g.k, q: g.q0 + (g.q1 - g.q0) * f, t: -1 };
+        }
+      }
+      function pOf(k, q) {
+        for (var i = 0; i < SEGS.length; i++) if (!SEGS[i].cut && SEGS[i].k === k) return (SEGS[i].a + q - SEGS[i].q0) / U;
+        return 0;
+      }
+
+      // ---- the step list (under the window) and the phone cards ----
       var rows = STEPS.map(function (s, i) {
         var li = document.createElement('li');
-        li.innerHTML = '<button class="st" type="button"><span class="n">' + (i + 1) + '</span><b>' + s.t + '</b><span>' + s.b + '</span><i></i></button>';
+        li.innerHTML = '<button class="st" type="button" aria-label="' + s.t + '"><span class="n">' + (i + 1) + '</span>' + s.s + '<i></i></button>';
         stepsEl.appendChild(li);
-        li.firstChild.addEventListener('click', function () { goTo(s.at); });
+        li.firstChild.addEventListener('click', function () { goTo(pOf(i, s.at)); });
         var c = document.createElement('li');
         c.className = 'card';
         c.innerHTML = '<img src="/walk/' + s.img + '.webp" alt="" loading="lazy" decoding="async" width="1200" height="800"><span class="n">step ' + (i + 1) + '</span><b>' + s.t + '</b><p>' + s.b + '</p>';
@@ -465,9 +542,11 @@
       // ---- the desktop ----
       var LOGO = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#fff"><rect x="18" y="73" width="64" height="6" rx="2"/><path d="M22 79H78L74 89H26Z"/><path d="M47 72C45 60 52 52 50 40C49 34 46 30 44 27L50 24C54 30 57 36 57 43C58 54 51 61 54 72Z"/></g><g fill="#30d158"><circle cx="48" cy="22" r="11"/><circle cx="30" cy="40" r="9"/><circle cx="70" cy="34" r="10"/></g></svg>';
       D.innerHTML =
-        '<div class="d-bar"><b></b><b>Code</b><span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Go</span><span>Run</span><span>Terminal</span><span>Window</span><span>Help</span><span class="r">Sun Nov 15&nbsp;&nbsp;9:41 AM</span></div>' +
+        '<div class="d-bar" data-bar><b></b><b>Code</b><span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Go</span><span>Run</span><span>Terminal</span><span>Window</span><span>Help</span><span class="r">Sun Nov 15&nbsp;&nbsp;9:41 AM</span></div>' +
+        '<div class="d-shell" data-shell><div class="d-launch" data-launch><div class="d-in" data-field>' + LOGO + '<span data-q></span></div>' +
+        '<div class="d-chips"><span>▷ Watch a video</span><span data-teach>Just teach me</span></div><div class="d-foot">Switch ⇥ <b data-go>Just teach me ↵</b></div></div></div>' +
         '<div class="d-island" data-island></div>' +
-        '<div class="d-win"><div class="d-tb"><span class="dots"><i></i><i></i><i></i></span><span class="t">nn.py — nn-from-scratch</span><span class="run" data-run><svg viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span></div>' +
+        '<div class="d-win" data-win><div class="d-tb"><span class="dots"><i></i><i></i><i></i></span><span class="t">nn.py — nn-from-scratch</span><span class="run" data-run><svg viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span></div>' +
         '<div class="d-tabs"><span>nn.py</span></div><div class="d-ed" data-ed></div>' +
         '<div class="d-term"><div class="h"><span>PROBLEMS</span><span>OUTPUT</span><span>DEBUG CONSOLE</span><span class="on">TERMINAL</span><span>PORTS</span></div><pre data-term></pre></div></div>' +
         '<div class="d-box" data-box></div><div class="d-tag" data-tag></div><div class="d-loupe" data-loupe></div><div class="d-tag" data-ltag>Click ▷ to run nn.py</div>' +
@@ -475,21 +554,20 @@
         '<div class="d-prog"><span data-prog-t></span><i data-prog></i></div><div class="d-kick d-plan">THE PLAN</div><div data-plan></div>' +
         '<div class="d-net" data-net><div class="hd"><span>Network · <span data-net-s></span></span><span>1 → 4 → 4 → 1</span></div><svg class="g" viewBox="0 0 500 180" data-graph></svg>' +
         '<div class="d-stats"><div><small>EPOCH</small><span data-ep>0</span></div><div><small>LOSS</small><span data-loss>—</span></div><div><small>LOSS OVER TRAINING</small><svg viewBox="0 0 200 34" preserveAspectRatio="none"><path data-spark fill="none" stroke="#fff" stroke-width="1.6"/></svg></div></div></div></div>' +
-        '<div class="d-card d-launch" data-launch><div class="d-in">' + LOGO + '<span data-q></span></div>' +
-        '<div class="d-chips"><span>▷ Watch a video</span><span data-teach>Just teach me</span></div><div class="d-foot">Switch ⇥ <b>Just teach me ↵</b></div></div>' +
         '<div class="d-card d-notyet" data-notyet><div><div class="d-label"><i></i>Not yet</div><h5>Loss is stuck at 0.49</h5>' +
-        '<p>Every hidden neuron starts the same, so each one gets the same update and they never become different.</p>' +
-        '<div class="d-pills"><span style="background:#C5E4F9">Explain<small>⌥E</small></span><span style="background:#D9D2FF">Show me<small>⌥S</small></span><span style="background:#F9C5D5">Hint<small>⌥H</small></span></div></div>' +
-        '<div class="d-cmp"><div class="row"><small>yours</small><small>expected</small><span>0.4900</span><span>&lt; 0.01</span></div><small>loss</small>' +
+        '<p data-nyp>Every hidden neuron starts the same, so each one gets the same update and they never become different.</p>' +
+        '<div class="d-pills"><span style="background:#C5E4F9">Explain<small>⌥E</small></span><span style="background:#D9D2FF">Show me<small>⌥S</small></span><span style="background:#F9C5D5" data-hintp>Hint<small>⌥H</small></span></div></div>' +
+        '<div class="d-cmp" data-nycmp><div class="row"><small>yours</small><small>expected</small><span>0.4900</span><span>&lt; 0.01</span></div><small>loss</small>' +
         '<svg viewBox="0 0 200 52" preserveAspectRatio="none"><path d="M0 14H200" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M0 50H200" stroke="rgba(255,255,255,.25)" stroke-dasharray="4 4" fill="none"/></svg></div></div>' +
         '<div class="d-card d-hint" data-hint><div class="d-label"><i></i>Hint 1 of 2</div><h5>Look at how W1, W2 and W3 start.</h5><p>What does every hidden neuron compute when all its weights are 0?</p></div>' +
         '<div class="d-card d-pass" data-pass><div class="d-label"><i class="g"></i>Step 4 done</div><h5>Loss 0.82 to 0.0009</h5>' +
         '<svg viewBox="0 0 560 90" preserveAspectRatio="none"><path data-pass-curve fill="none" stroke="#30d158" stroke-width="2.2"/><path d="M0 55H560" stroke="rgba(255,255,255,.25)" stroke-dasharray="5 5" fill="none"/></svg>' +
-        '<p>Good. Now test it on new points.</p></div>';
+        '<p>Good. Now test it on new points.</p></div>' +
+        '<div class="d-rip" data-rip></div><div class="d-cur" data-cur><svg viewBox="0 0 18 26"><path d="M1.5 1.5V20.6l4.6-4.3 3.3 7.6 3.1-1.4-3.2-7.4h6.4z" fill="#000" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>';
       var $ = function (k) { return D.querySelector('[data-' + k + ']'); };
       var el = { island: $('island'), ed: $('ed'), term: $('term'), box: $('box'), tag: $('tag'), loupe: $('loupe'), ltag: $('ltag'), run: $('run'),
         drawer: $('drawer'), progT: $('prog-t'), prog: $('prog'), plan: $('plan'), net: $('net'), netS: $('net-s'), graph: $('graph'), ep: $('ep'), loss: $('loss'), spark: $('spark'),
-        launch: $('launch'), q: $('q'), teach: $('teach'), notyet: $('notyet'), hint: $('hint'), pass: $('pass'), passCurve: $('pass-curve') };
+        bar: $('bar'), win: $('win'), shell: $('shell'), launch: $('launch'), q: $('q'), teach: $('teach'), go: $('go'), field: $('field'), nyp: $('nyp'), nycmp: $('nycmp'), hintp: $('hintp'), cur: $('cur'), rip: $('rip'), notyet: $('notyet'), hint: $('hint'), pass: $('pass'), passCurve: $('pass-curve') };
 
       // ---- the code: typed, then filled in, then fixed ----
       var HEAD = ['# A neural net from scratch: learn sin(x)', 'import numpy as np', '', '# The network'];
@@ -589,34 +667,98 @@
       }
       function card(node, o, dy) { set(node, 'opacity', o.toFixed(3)); set(node, 'transform', 'translateY(' + ((1 - ease(o)) * (dy || -14)).toFixed(1) + 'px) scale(' + (0.97 + 0.03 * ease(o)).toFixed(4) + ')'); set(node, 'visibility', o > 0.001 ? 'visible' : 'hidden'); }
 
-      // ---- one frame of the desktop at progress p ----
-      function draw(p) {
-        // Island
+      // ---- where things are on the desktop (1600x1000), for the cursor and the notes ----
+      var GOAL = 'i want to learn to build a neural net from scratch';
+      function at(node, fx, fy, stop) {               // a point on a node, in desktop px (layout only, so fades don't move it)
+        var x = 0, y = 0, n = node;
+        stop = stop || D;
+        while (n && n !== stop) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+        return [x + node.offsetWidth * fx, y + node.offsetHeight * fy];
+      }
+      function inLaunch(node, fx, fy) { var r = at(node, fx, fy, el.launch); return [480 + r[0], 3 + r[1]]; }   // the launcher sits at 480, 3
+      var PT = null;
+      function spot(name) {
+        if (!PT) {
+          var go = inLaunch(el.go, 0.55, 0.62);
+          PT = { rest: [930, 250], pill: [812, 17], go: go, goA: [go[0] - 150, go[1] + 70], field: inLaunch(el.field, 0.03, 0.5), teach: inLaunch(el.teach, 0.96, 0.5),
+            editor: [ED_X - 7, ED_TOP + 9], plan: at(el.plan, 1, 0.2), box: [ED_X - 7, ED_TOP + 4 * LH + 9], run: [979, 63], runA: [760, 380], mid: [760, 420],
+            term: [232, 830], nyp: at(el.nyp, 0, 0.4), nycmp: at(el.nycmp, 1, 0.3), hintp: at(el.hintp, 0.5, 0.6), hint: at(el.hint, 1, 0.45),
+            hbox: [ED_X - 7, ED_TOP + 8 * LH + 9], fixed: [ED_X + 445, ED_TOP + 8 * LH + 9], line: [ED_X + 470, ED_TOP + 7 * LH + 10], lineA: [ED_X + 620, ED_TOP + 7 * LH + 90],
+            net: at(el.net, 0.985, 0.42), loss: at(el.loss.parentNode, 0.92, 0.72), pass: at(el.pass, 0, 0.35), away: [1300, 960] };
+        }
+        if (name === 'pillL' || name === 'pillR') { var w = el.island.offsetWidth / 2 - 4; return [800 + (name === 'pillL' ? -w : w), 15]; }
+        if (name === 'checks') { var d = el.plan.querySelector('.d-det'); return d ? at(d, 0.97, 0.62) : null; }
+        return PT[name];
+      }
+      // The cursor's path (q, where) and when it shows; the clicks.
+      var CUR = [[0, 'rest'], [0.004, 'rest'], [0.017, 'pill'], [0.05, 'pill'], [0.112, 'goA'], [0.127, 'go'], [0.15, 'go'], [0.49, 'runA'], [0.522, 'run'], [0.538, 'run'],
+        [0.6, 'mid'], [0.638, 'hintp'], [0.655, 'hintp'], [0.698, 'line'], [0.782, 'lineA'], [0.804, 'run'], [0.82, 'run'], [0.87, 'away']];
+      var CUR_O = [[0, 1], [0.046, 1], [0.052, 0], [0.112, 0], [0.118, 1], [0.143, 1], [0.15, 0], [0.49, 0], [0.497, 1], [0.707, 1], [0.713, 0], [0.782, 0], [0.788, 1], [0.85, 1], [0.87, 0]];
+      var CLICKS = [0.019, 0.131, 0.53, 0.646, 0.705, 0.81];
+      function curKeys() { return CUR.map(function (c) { return [c[0]].concat(spot(c[1])); }); }
+      function keyed(K, q) {                          // eased (smoothstep) between keys [q, values...]
+        if (q <= K[0][0]) return K[0].slice(1);
+        for (var i = 1; i < K.length; i++) if (q <= K[i][0]) {
+          var a = K[i - 1], b = K[i], t = (q - a[0]) / (b[0] - a[0]);
+          t = t * t * (3 - 2 * t);
+          return a.slice(1).map(function (v, j) { return v + (b[j + 1] - v) * t; });
+        }
+        return K[K.length - 1].slice(1);
+      }
+      function lin(K, q) {                            // linear between keys [q, value]
+        if (q <= K[0][0]) return K[0][1];
+        for (var i = 1; i < K.length; i++) if (q <= K[i][0]) return K[i - 1][1] + (K[i][1] - K[i - 1][1]) * (q - K[i - 1][0]) / (K[i][0] - K[i - 1][0]);
+        return K[K.length - 1][1];
+      }
+
+      // ---- one frame of the desktop at lesson clock q (z: the camera zoom, so the cursor keeps a steady size) ----
+      function drawDesk(q, z) {
+        // Island. The story opens on a blank screen with only the pill on it; the cursor clicks it and it opens.
         var island;
-        if (p < 0.17) island = LOGO + '<span>ask miyagi</span><span class="k">⌥Space</span>';
-        else if (p < 0.21) island = '<span class="sp"></span><span>Building your lesson</span>';
-        else if (p < 0.47) island = LOGO + '<span>Step 1 · Build the network</span><span class="c">1/5</span>';
-        else if (p < 0.955) island = LOGO + '<span>Step 4 · Train it</span><span class="c">4/5</span>';
+        if (q < 0.14) island = LOGO + '<span>ask miyagi</span><span class="k">⌥Space</span>';
+        else if (q < 0.21) island = '<span class="sp"></span><span>Building your lesson</span>';
+        else if (q < 0.47) island = LOGO + '<span>Step 1 · Build the network</span><span class="c">1/5</span>';
+        else if (q < 0.955) island = LOGO + '<span>Step 4 · Train it</span><span class="c">4/5</span>';
         else island = LOGO + '<span>Step 5 · Test it</span><span class="c">5/5</span>';
         set(el.island, 'html', island);
+        set(el.island, 'transform', 'translateX(-50%)' + (q >= 0.0165 && q < 0.0215 ? ' scale(.93)' : ''));
 
-        // Launcher: opens, the goal types in, Just teach me, then it closes.
-        card(el.launch, shown(p, 0.015, 0.045, 0.15, 0.17));
-        var q = 'build a neural network', nq = Math.round(span(p, 0.05, 0.12) * q.length);
-        set(el.q, 'html', nq ? esc(q.slice(0, nq)) + (p < 0.15 ? '<span class="caret" style="display:inline-block;width:2px;height:18px;vertical-align:-3px;background:#fff;margin-left:1px"></span>' : '') : '<span class="ph">What do you want to learn?</span>');
-        set(el.teach, 'cls', p >= 0.125 ? 'on' : '');
+        // Launcher. Like the app's, it grows down out of the pill: one black shape that morphs from the pill's size to
+        // 640 wide while the pill's words fade and the launcher's come in. The goal types in, "Just teach me" lights up
+        // once it reads like building something (the app's rule), Enter, and it folds back into the pill, which builds.
+        var m = ease(span(q, 0.02, 0.05)) * (1 - ease(span(q, 0.14, 0.165)));      // 0 = the pill, 1 = the launcher
+        set(el.island, 'opacity', (1 - Math.min(span(q, 0.02, 0.027), 1 - span(q, 0.157, 0.165))).toFixed(3));
+        if (m > 0) {
+          var iw = el.island.offsetWidth, lh = el.launch.offsetHeight;
+          set(el.shell, 'width', (iw + (640 - iw) * m).toFixed(1) + 'px'); set(el.shell, 'height', (24 + (lh - 24) * m).toFixed(1) + 'px');
+          set(el.shell, 'borderRadius', (12 + 12 * m).toFixed(1) + 'px');
+          set(el.shell, 'background', 'rgb(' + Math.round(11 * m) + ',' + Math.round(11 * m) + ',' + Math.round(13 * m) + ')');
+          set(el.shell, 'boxShadow', '0 0 0 1px rgba(255,255,255,' + (0.1 + 0.04 * m).toFixed(3) + '), 0 24px 60px rgba(0,0,0,' + (0.55 * m).toFixed(3) + ')');
+        }
+        set(el.shell, 'visibility', m > 0 ? 'visible' : 'hidden');
+        set(el.launch, 'opacity', shown(q, 0.032, 0.05, 0.136, 0.145).toFixed(3));
+        var typedQ = GOAL.slice(0, Math.round(span(q, 0.055, 0.118) * GOAL.length));
+        var tcaret = q < 0.14 ? '<span class="caret" style="display:inline-block;width:2px;height:18px;vertical-align:-3px;background:#fff;margin:0 1px"></span>' : '';
+        set(el.q, 'html', typedQ ? esc(typedQ) + tcaret : tcaret + '<span class="ph">ask miyagi anything</span>');
+        set(el.teach, 'cls', /build/.test(typedQ) ? 'on' : '');
+        set(el.go, 'cls', q >= 0.128 && q < 0.14 ? 'dn' : '');
+
+        // The lesson is built: VS Code opens on its project (the menu bar comes with it).
+        var wO = span(q, 0.175, 0.215);
+        set(el.bar, 'opacity', wO.toFixed(3));
+        set(el.win, 'opacity', wO.toFixed(3)); set(el.win, 'transform', 'translateY(' + ((1 - ease(wO)) * 16).toFixed(1) + 'px)'); set(el.win, 'visibility', wO > 0 ? 'visible' : 'hidden');
 
         // Code
         var code, caret = -1;
-        if (p < 0.34) code = HEAD.concat([''], SKEL);
-        else if (p < 0.485) {
-          var typed = NET_TEXT.slice(0, Math.round(span(p, 0.34, 0.43) * NET_TEXT.length)).split('\n');
+        if (q < 0.34) code = HEAD.concat([''], SKEL);
+        else if (q < 0.485) {
+          var typed = NET_TEXT.slice(0, Math.round(span(q, 0.34, 0.4) * NET_TEXT.length)).split('\n');
           code = HEAD.concat(typed, SKEL);
-          if (p < 0.43) caret = HEAD.length + typed.length - 1;
+          if (q < 0.4) caret = HEAD.length + typed.length - 1;
         } else {
           var net = NET.slice();
           for (var i = 0; i < 3; i++) {
-            var f = span(p, 0.715 + i * 0.022, 0.735 + i * 0.022);
+            var f = span(q, 0.715 + i * 0.022, 0.735 + i * 0.022);
             if (f > 0) { net[3 + i] = FIX[i].slice(0, Math.max(1, Math.round(f * FIX[i].length))); if (f < 1) caret = HEAD.length + 3 + i; }
           }
           code = HEAD.concat(net, REST);
@@ -624,8 +766,8 @@
         drawCode(code, caret);
 
         // The box that marks where to type (it grows with what you type), and the hint's box around the weights.
-        var typing = p >= 0.34 && p < 0.485, tl = typing ? Math.max(1, Math.min(NET.length, code.length - HEAD.length - SKEL.length)) : 1;
-        var boxO = shown(p, 0.31, 0.33, 0.465, 0.48), hintO = shown(p, 0.675, 0.695, 0.785, 0.8);
+        var typing = q >= 0.34 && q < 0.485, tl = typing ? Math.max(1, Math.min(NET.length, code.length - HEAD.length - SKEL.length)) : 1;
+        var boxO = shown(q, 0.31, 0.33, 0.465, 0.48), hintO = shown(q, 0.675, 0.695, 0.785, 0.8);
         if (hintO > 0) {
           set(el.box, 'left', ED_X - 7 + 'px'); set(el.box, 'top', ED_TOP + 7 * LH - 1 + 'px'); set(el.box, 'width', '540px'); set(el.box, 'height', 3 * LH + 3 + 'px');
           set(el.box, 'opacity', hintO.toFixed(3));
@@ -637,64 +779,234 @@
         }
 
         // Run: a ring on VS Code's own Run button, then the terminal prints the run.
-        var lo = Math.max(shown(p, 0.5, 0.515, 0.535, 0.55), shown(p, 0.795, 0.805, 0.815, 0.825));
+        var lo = Math.max(shown(q, 0.5, 0.515, 0.535, 0.55), shown(q, 0.795, 0.805, 0.815, 0.825));
         var rb = { x: 14 + 990 - 14 - 13, y: 44 + 17 };
         set(el.loupe, 'left', rb.x + 'px'); set(el.loupe, 'top', rb.y + 'px'); set(el.loupe, 'opacity', lo.toFixed(3));
+        set(el.run, 'cls', 'run' + ((q >= 0.527 && q < 0.536) || (q >= 0.807 && q < 0.816) ? ' dn' : ''));
         set(el.ltag, 'left', rb.x - 190 + 'px'); set(el.ltag, 'top', rb.y + 34 + 'px'); set(el.ltag, 'opacity', lo.toFixed(3));
         var term = PROMPT;
-        if (p >= 0.54 && p < 0.81) {
-          var n1 = Math.round(span(p, 0.545, 0.595) * ZERO.length);
+        if (q >= 0.54 && q < 0.81) {
+          var n1 = Math.round(span(q, 0.545, 0.595) * ZERO.length);
           term = PROMPT + 'python3 nn.py\n' + ZERO.slice(0, n1).map(epochLine).join('\n') + (n1 === ZERO.length ? '\n' + PROMPT : '');
-        } else if (p >= 0.81) {
-          var n2 = Math.round(span(p, 0.825, 0.93) * FIXED.length);
+        } else if (q >= 0.81) {
+          var n2 = Math.round(span(q, 0.825, 0.93) * FIXED.length);
           term = PROMPT + 'python3 nn.py\n' + FIXED.slice(0, n2).map(epochLine).join('\n') + (n2 === FIXED.length ? '\n' + PROMPT : '');
         }
         var tlines = term.split('\n');
         set(el.term, 'html', tlines.slice(-9).join('\n'));
 
         // Drawer: slides in with the plan; the current step opens with its checks.
-        var dO = span(p, 0.19, 0.235);
+        var dO = span(q, 0.19, 0.235);
         set(el.drawer, 'opacity', dO.toFixed(3)); set(el.drawer, 'transform', 'translateX(' + ((1 - ease(dO)) * 40).toFixed(1) + 'px)'); set(el.drawer, 'visibility', dO > 0 ? 'visible' : 'hidden');
-        var cur = p < 0.47 ? 0 : p < 0.955 ? 3 : 4, done = p < 0.47 ? 0 : p < 0.955 ? 3 : 4;
+        var cur = q < 0.47 ? 0 : q < 0.955 ? 3 : 4, done = q < 0.47 ? 0 : q < 0.955 ? 3 : 4;
         set(el.progT, 'text', 'Step ' + (cur + 1) + ' of 5');
         el.prog.style.setProperty('--w', done * 20 + '%');
         var plan = PLAN.map(function (t, k) {
-          var o = span(p, 0.215 + k * 0.012, 0.228 + k * 0.012);
+          var o = span(q, 0.215 + k * 0.012, 0.228 + k * 0.012);
           var cls = k < done ? 'done' : k === cur ? 'cur' : '';
           var row = '<div class="d-row ' + cls + '" style="opacity:' + o.toFixed(2) + '"><span class="o"></span><span>' + t + '</span></div>';
-          if (k === cur && cur === 0 && p >= 0.3) {
+          if (k === cur && cur === 0 && q >= 0.3) {
             row += '<div class="d-det"><div class="ins">In nn.py, under # The network</div>' + CHECKS1.map(function (c, j) {
-              var ok = p >= 0.405 + j * 0.02;
+              var ok = q >= 0.418 + j * 0.012;
               return '<div class="d-chk' + (ok ? ' ok' : '') + '"><span class="o"></span>' + c + '<span class="s">' + (ok ? '' : 'Watching') + '</span></div>';
             }).join('') + '</div>';
           }
           if (k === cur && cur === 3) {
-            var ran = p >= 0.595, passed = p >= 0.93;
+            var ran = q >= 0.595, passed = q >= 0.93;
             row += '<div class="d-det"><div class="ins">Run nn.py and watch the loss</div>' +
               '<div class="d-chk' + (ran ? ' ok' : '') + '"><span class="o"></span>It runs<span class="s">' + (ran ? '' : 'Watching') + '</span></div>' +
-              '<div class="d-chk' + (passed ? ' ok' : ran ? ' no' : '') + '"><span class="o"></span>Loss falls below 0.01<span class="s">' + (passed ? '' : ran && p < 0.81 ? 'Not yet · 0.4900' : 'Watching') + '</span></div></div>';
+              '<div class="d-chk' + (passed ? ' ok' : ran ? ' no' : '') + '"><span class="o"></span>Loss falls below 0.01<span class="s">' + (passed ? '' : ran && q < 0.81 ? 'Not yet · 0.4900' : 'Watching') + '</span></div></div>';
           }
           return row;
         }).join('');
         set(el.plan, 'html', plan);
 
         // Network panel: four identical neurons while the weights are zero; with the fix, the real weights grow in.
-        var nO = span(p, 0.455, 0.48);
+        var nO = span(q, 0.455, 0.48);
         set(el.net, 'opacity', nO.toFixed(3));
-        var t2 = span(p, 0.825, 0.93);
-        drawNet(p < 0.825 ? -1 : t2);
-        var ep = p >= 0.545 && p < 0.81 ? Math.round(span(p, 0.545, 0.595) * 20000) : p >= 0.81 ? Math.round(t2 * 20000) : 0;
+        var t2 = span(q, 0.825, 0.93);
+        drawNet(q < 0.825 ? -1 : t2);
+        var ep = q >= 0.545 && q < 0.81 ? Math.round(span(q, 0.545, 0.595) * 20000) : q >= 0.81 ? Math.round(t2 * 20000) : 0;
         set(el.ep, 'text', ep.toLocaleString('en-US'));
-        var loss = p < 0.545 ? null : p < 0.81 ? 0.49 : lossAt(FIXED, t2 * 20000);
+        var loss = q < 0.545 ? null : q < 0.81 ? 0.49 : lossAt(FIXED, t2 * 20000);
         set(el.loss, 'text', loss === null ? '—' : loss.toFixed(4));
-        set(el.netS, 'text', p < 0.545 ? 'preview' : p < 0.6 || (p >= 0.825 && p < 0.93) ? 'training' : p < 0.81 ? 'loss stuck' : p < 0.825 ? 'ready' : 'trained');
-        var sp = p < 0.545 ? '' : p < 0.81 ? 'M0 5L' + (200 * span(p, 0.545, 0.595)).toFixed(1) + ' 5' : sparkPath(FIXED, t2 * 20000, 200, 34, 0.0006, 1);
+        set(el.netS, 'text', q < 0.545 ? 'preview' : q < 0.6 || (q >= 0.825 && q < 0.93) ? 'training' : q < 0.81 ? 'loss stuck' : q < 0.825 ? 'ready' : 'trained');
+        var sp = q < 0.545 ? '' : q < 0.81 ? 'M0 5L' + (200 * span(q, 0.545, 0.595)).toFixed(1) + ' 5' : sparkPath(FIXED, t2 * 20000, 200, 34, 0.0006, 1);
         if (el.spark.getAttribute('d') !== sp) el.spark.setAttribute('d', sp);
 
         // Cards: Not yet, then the hint, then passed.
-        card(el.notyet, shown(p, 0.6, 0.625, 0.655, 0.67));
-        card(el.hint, shown(p, 0.665, 0.69, 0.785, 0.8));
-        card(el.pass, span(p, 0.935, 0.955));
+        card(el.notyet, shown(q, 0.6, 0.625, 0.655, 0.67));
+        card(el.hint, shown(q, 0.665, 0.69, 0.785, 0.8));
+        card(el.pass, span(q, 0.935, 0.955));
+        set(el.hintp, 'transform', q >= 0.643 && q < 0.65 ? 'scale(.92)' : 'none');
+
+        // The cursor: it glides between the things it clicks, presses on each click, and hides while you type.
+        var cp = keyed(curKeys(), q), press = CLICKS.some(function (c) { return q >= c - 0.0025 && q <= c + 0.003; });
+        var ck = Math.max(0.45, Math.min(1, 1.4 / z)) * (press ? 0.84 : 1), co = lin(CUR_O, q);
+        set(el.cur, 'opacity', co.toFixed(3)); set(el.cur, 'visibility', co > 0 ? 'visible' : 'hidden');
+        set(el.cur, 'transform', 'translate(' + (cp[0] - 2).toFixed(1) + 'px,' + (cp[1] - 2).toFixed(1) + 'px) scale(' + ck.toFixed(3) + ')');
+      }
+
+      // ---- the camera: zoom and focus for scene k at q, kept inside the screen ----
+      var S0 = 0.6, DX = 0, DY = 0, DW = 0, DH = 0, MARGIN = 220, GAP = 26, Z = 1;
+      function camAt(k, q) {
+        var c = keyed(STEPS[k].cam, q), S = S0 * c[0], W = 1600 * S0, H = 1000 * S0;
+        return { z: c[0], S: S, tx: Math.min(0, Math.max(W - 1600 * S, W / 2 - c[1] * S)), ty: Math.min(0, Math.max(H - 1000 * S, H / 2 - c[2] * S)) };
+      }
+
+      // ---- the notes: words beside the window, a line to the thing, a dot on it ----
+      var NOTES = [];
+      STEPS.forEach(function (s, k) {
+        s.notes.forEach(function (d) {
+          var lab = document.createElement('div'), ln = document.createElementNS(SVGNS, 'line'), dot = document.createElementNS(SVGNS, 'circle');
+          lab.className = 'an ' + d[3]; lab.textContent = d[4]; annEl.appendChild(lab);
+          dot.setAttribute('r', '4.5'); annSvg.appendChild(ln); annSvg.appendChild(dot);
+          ln.style.visibility = dot.style.visibility = 'hidden';
+          NOTES.push({ k: k, a: d[0], b: d[1], at: d[2], side: d[3], el: lab, ln: ln, dot: dot, w: 0, h: 0 });
+        });
+      });
+      function drawNotes(k, q, cam) {
+        var sides = { l: [], r: [] };
+        NOTES.forEach(function (n) {
+          var o = n.k === k ? Math.min(span(q, n.a, n.a + 0.008), 1 - span(q, n.b - 0.006, n.b)) : 0, pt = o > 0 ? spot(n.at) : null;
+          if (pt) {
+            n.sx = DX + cam.tx + pt[0] * cam.S; n.sy = DY + cam.ty + pt[1] * cam.S;
+            if (n.sx < DX + 6 || n.sx > DX + DW - 6 || n.sy < DY + 6 || n.sy > DY + DH - 6) pt = null;     // not in this shot
+          }
+          n.o = pt ? o : 0;
+          if (n.o > 0) sides[n.side].push(n);
+          else { set(n.el, 'visibility', 'hidden'); set(n.ln, 'visibility', 'hidden'); set(n.dot, 'visibility', 'hidden'); }
+        });
+        ['l', 'r'].forEach(function (side) {
+          var floor = -1e9;
+          sides[side].sort(function (a, b) { return a.sy - b.sy; }).forEach(function (n) {
+            if (!n.w) { n.w = n.el.offsetWidth; n.h = n.el.offsetHeight; }
+            var cy = Math.max(n.sy, floor + n.h / 2 + 12), e = ease(n.o), left = side === 'l';
+            floor = cy + n.h / 2;
+            var x = left ? DX - GAP - n.w : DX + DW + GAP, ax = left ? DX - GAP + 8 : DX + DW + GAP - 8;
+            set(n.el, 'visibility', 'visible'); set(n.el, 'opacity', n.o.toFixed(3));
+            set(n.el, 'transform', 'translate(' + (x + (left ? -10 : 10) * (1 - e)).toFixed(1) + 'px,' + (cy - n.h / 2).toFixed(1) + 'px)');
+            var len = Math.hypot(n.sx - ax, n.sy - cy);
+            n.ln.setAttribute('x1', ax.toFixed(1)); n.ln.setAttribute('y1', cy.toFixed(1)); n.ln.setAttribute('x2', n.sx.toFixed(1)); n.ln.setAttribute('y2', n.sy.toFixed(1));
+            n.ln.style.strokeDasharray = len.toFixed(1); n.ln.style.strokeDashoffset = (len * (1 - e)).toFixed(1);
+            n.dot.setAttribute('cx', n.sx.toFixed(1)); n.dot.setAttribute('cy', n.sy.toFixed(1));
+            set(n.ln, 'visibility', 'visible'); set(n.dot, 'visibility', 'visible'); set(n.dot, 'opacity', clamp01((e - 0.6) / 0.4).toFixed(3));
+          });
+        });
+      }
+
+      // ---- sound: off until the visitor turns it on (browsers only allow audio after a click) ----
+      function makeSynth(ctx, out) {
+        var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.6), ctx.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        // Each sound has its own level (measured: so a key press, a tick and the chime sit at about the same loudness).
+        var VOL = { key: 2.8, click: 1.1, open: 3.4, close: 2.7, swish: 3.1, pop: 3.6, note: 6, tink: 3.8, done: 1.9, nope: 1.6, line: 5.6, chime: 1.6 }, bus = {}, dest = out;
+        Object.keys(VOL).forEach(function (k) { bus[k] = ctx.createGain(); bus[k].gain.value = VOL[k]; bus[k].connect(out); });
+        function env(t, peak, attack, dur) {
+          var g = ctx.createGain();
+          g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + attack); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          g.connect(dest); return g;
+        }
+        function noise(t, dur, type, f0, f1, q, peak, attack) {
+          var src = ctx.createBufferSource(), f = ctx.createBiquadFilter();
+          src.buffer = buf; f.type = type; f.Q.value = q; f.frequency.setValueAtTime(f0, t);
+          if (f1) f.frequency.exponentialRampToValueAtTime(f1, t + dur);
+          src.connect(f); f.connect(env(t, peak, attack || 0.002, dur)); src.start(t, Math.random() * 0.3); src.stop(t + dur + 0.05);
+        }
+        function tone(t, f0, f1, dur, peak, type, attack) {
+          var o = ctx.createOscillator();
+          o.type = type || 'sine'; o.frequency.setValueAtTime(f0, t);
+          if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+          o.connect(env(t, peak, attack || 0.004, dur)); o.start(t); o.stop(t + dur + 0.05);
+        }
+        var SFX = {
+          key: function (t) { var r = Math.random(); noise(t, 0.04, 'bandpass', 3000 + r * 1800, 0, 1.4, 0.3, 0.001); tone(t, 150 + r * 50, 70, 0.05, 0.16, 'sine', 0.002); },
+          click: function (t) { noise(t, 0.016, 'highpass', 2600, 0, 0.8, 0.4, 0.0008); tone(t, 900, 500, 0.03, 0.08, 'triangle', 0.001); noise(t + 0.085, 0.012, 'highpass', 3600, 0, 0.8, 0.22, 0.0008); },
+          open: function (t) { noise(t, 0.38, 'bandpass', 450, 2600, 1.1, 0.12, 0.09); tone(t + 0.02, 520, 780, 0.22, 0.035, 'sine', 0.03); },
+          close: function (t) { noise(t, 0.3, 'bandpass', 2200, 420, 1.1, 0.1, 0.05); },
+          swish: function (t) { noise(t, 0.34, 'bandpass', 900, 3200, 0.9, 0.06, 0.12); },
+          pop: function (t) { tone(t, 620, 330, 0.12, 0.12, 'sine', 0.003); },
+          note: function (t) { tone(t, 1320, 0, 0.09, 0.035, 'sine', 0.003); },
+          tink: function (t) { tone(t, 1976, 0, 0.22, 0.07, 'sine', 0.002); tone(t, 2960, 0, 0.12, 0.025, 'sine', 0.002); },
+          done: function (t) { tone(t, 1318.5, 0, 0.25, 0.07); tone(t + 0.08, 1975.5, 0, 0.35, 0.07); },
+          nope: function (t) { tone(t, 330, 0, 0.18, 0.1, 'triangle'); tone(t + 0.13, 247, 0, 0.3, 0.1, 'triangle'); },
+          line: function (t, k) { tone(t, 587 * Math.pow(2, (k || 0) / 12), 0, 0.07, 0.05, 'sine', 0.002); },
+          chime: function (t) { [1046.5, 1318.5, 1568, 2093].forEach(function (f, i) { tone(t + i * 0.075, f, 0, 1.1, 0.075); tone(t + i * 0.075, f * 2, 0, 0.4, 0.015); }); }
+        };
+        var play = {};
+        Object.keys(SFX).forEach(function (k) { play[k] = function (t, a) { dest = bus[k] || out; try { SFX[k](t, a); } finally { dest = out; } }; });
+        return play;
+      }
+      var ac = null, sfx = null, soundOn = false;
+      var SPK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/>';
+      function soundLabel() {
+        sndBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+        sndBtn.innerHTML = SPK + (soundOn ? '<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>' : '<path d="m16 9 5 6"/><path d="m21 9-5 6"/>') + '</svg><span>' + (soundOn ? 'sound on' : 'sound off') + '</span>';
+      }
+      function setSound(on) {
+        soundOn = on;
+        if (on && !ac) {
+          var C = window.AudioContext || window.webkitAudioContext;
+          if (C) { ac = new C(); var out = ac.createGain(), lim = ac.createDynamicsCompressor(); lim.threshold.value = -6; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = 0.001; lim.release.value = 0.08; out.connect(lim); lim.connect(ac.destination); sfx = makeSynth(ac, out); }
+          else soundOn = false;
+        }
+        if (ac) { if (soundOn) ac.resume().then(function () { play('tink'); }); else ac.suspend(); }
+        soundLabel();
+      }
+      function play(name, arg) { if (soundOn && ac && ac.state === 'running') try { sfx[name](ac.currentTime + 0.012, arg); } catch (err) { } }
+      sndBtn.addEventListener('click', function () { setSound(!soundOn); });
+      soundLabel();
+
+      // What happens on the lesson clock: sounds, and the ring each click leaves (that shows with sound off too).
+      var EV = [[0.019, 'click'], [0.022, 'open'], [0.131, 'click'], [0.142, 'close'], [0.2, 'pop'], [0.312, 'pop'], [0.418, 'tink'], [0.43, 'tink'], [0.442, 'tink'],
+        [0.47, 'done'], [0.501, 'pop'], [0.53, 'click'], [0.6, 'nope'], [0.646, 'click'], [0.668, 'pop'], [0.705, 'click'], [0.81, 'click'], [0.935, 'chime'], [0.955, 'tink']];
+      function typedAt(q) {                           // keys pressed so far: the goal, the network, the fix
+        var n = Math.round(span(q, 0.055, 0.118) * GOAL.length) + Math.round(span(q, 0.34, 0.4) * NET_TEXT.length);
+        for (var i = 0; i < 3; i++) n += Math.round(span(q, 0.715 + i * 0.022, 0.735 + i * 0.022) * FIX[i].length);
+        return n;
+      }
+      function linesAt(q) { return [q < 0.81 ? Math.round(span(q, 0.545, 0.595) * ZERO.length) : 0, Math.round(span(q, 0.825, 0.93) * FIXED.length)]; }
+      function ripple(q) {
+        var c = keyed(curKeys(), q), size = 58 * Math.max(0.45, Math.min(1, 1.4 / Z)), r = el.rip.style;
+        r.left = c[0] + 'px'; r.top = c[1] + 'px'; r.width = r.height = size + 'px'; r.margin = (-size / 2) + 'px 0 0 ' + (-size / 2) + 'px';
+        el.rip.classList.remove('go'); void el.rip.offsetWidth; el.rip.classList.add('go');
+      }
+      var lastKey = 0;
+      function fx(p0, p1) {                           // only going forward, at a normal speed (a jump stays quiet)
+        if (!(p1 > p0) || p1 - p0 > 0.012) return;
+        var a = where(p0), b = where(p1);
+        if (b.k > a.k) play('swish');
+        if (!(b.q > a.q)) return;
+        EV.forEach(function (e) { if (a.q < e[0] && e[0] <= b.q) { if (e[1] === 'click') ripple(e[0]); play(e[1]); } });
+        NOTES.forEach(function (n) { if (a.q < n.a && n.a <= b.q) play('note'); });
+        var now = performance.now();
+        if (typedAt(b.q) > typedAt(a.q) && now - lastKey > 30) { lastKey = now; play('key'); }
+        var l0 = linesAt(a.q), l1 = linesAt(b.q);
+        if (l1[0] > l0[0]) play('line', 0);
+        if (l1[1] > l0[1]) play('line', l1[1] * 1.6);
+      }
+
+      // ---- one frame of the whole story at scroll progress p ----
+      var lastK = -1;
+      function draw(p) {
+        var w = where(p), k = w.k, q = w.q, cam = camAt(k, q);
+        Z = cam.z;
+        set(D, 'transform', 'translate(' + cam.tx.toFixed(2) + 'px,' + cam.ty.toFixed(2) + 'px) scale(' + cam.S.toFixed(5) + ')');
+        drawDesk(q, cam.z);
+        drawNotes(k, q, cam);
+        // Between scenes the window changes: this one leaves upward, the next comes up from below.
+        var o = 1, dy = 0;
+        if (w.t >= 0) {
+          if (w.t < 0.5) { var f = ease(w.t * 2); o = 1 - f; dy = -36 * f; }
+          else { var g = ease(w.t * 2 - 1); o = g; dy = 36 * (1 - g); }
+        }
+        set(stageIn, 'opacity', o.toFixed(3)); set(stageIn, 'transform', dy ? 'translateY(' + dy.toFixed(1) + 'px)' : 'none');
+        set(head, 'opacity', o.toFixed(3)); set(head, 'transform', dy ? 'translateY(' + (dy * 0.35).toFixed(1) + 'px)' : 'none');
+        if (k !== lastK) { lastK = k; headN.textContent = 'step ' + (k + 1) + ' of ' + STEPS.length; headT.textContent = STEPS[k].t; headB.innerHTML = STEPS[k].b; }
+        rows.forEach(function (r, i) {
+          set(r, 'cls', 'st' + (i === k ? ' on' : ''));
+          r.querySelector('i').style.setProperty('--f', ((i < k ? 1 : i > k ? 0 : span(q, STEPS[i].from, STEPS[i].to)) * 100).toFixed(1) + '%');
+        });
       }
 
       // ---- scroll → p, eased; draw only while it moves ----
@@ -705,24 +1017,33 @@
       }
       function tick(now) {
         raf = 0;
-        var dt = Math.min(0.1, (now - (last || now)) / 1000); last = now;
+        var dt = Math.min(0.1, (now - (last || now)) / 1000), prev = P;
+        last = now;
         if (P < 0) P = target; else P += (target - P) * (1 - Math.exp(-dt * 11));
         if (Math.abs(target - P) < 0.0004) P = target;
         draw(P);
-        rows.forEach(function (r, i) {
-          var s = STEPS[i], on = P >= s.from && (P < s.to || (i === STEPS.length - 1));
-          r.classList.toggle('on', on);
-          r.querySelector('i').style.setProperty('--f', (span(P, s.from, s.to) * 100).toFixed(1) + '%');
-        });
+        if (prev >= 0) fx(prev, P);
         if (P !== target) raf = requestAnimationFrame(tick); else last = 0;
       }
       function kick() { measure(); if (!raf) raf = requestAnimationFrame(tick); }
-      function fit() { desk.style.setProperty('--s', (desk.clientWidth / 1600).toFixed(5)); }
+      function fit() {                                // the window: as big as the stage allows, with room for notes on both sides
+        var W = stage.clientWidth, H = stage.clientHeight;
+        if (!W || !H) return;
+        MARGIN = Math.max(170, Math.min(280, W * 0.19));
+        DW = Math.max(240, Math.min(W - 2 * MARGIN, H * 1.6)); DH = DW / 1.6;
+        DX = Math.round((W - DW) / 2); DY = Math.round((H - DH) / 2);
+        desk.style.left = DX + 'px'; desk.style.top = DY + 'px'; desk.style.width = DW + 'px'; desk.style.height = DH + 'px';
+        S0 = DW / 1600;
+        NOTES.forEach(function (n) { n.el.style.maxWidth = (MARGIN - GAP - 14) + 'px'; n.w = 0; });
+        PT = null;
+        if (P >= 0) draw(P);
+      }
       addEventListener('scroll', kick, { passive: true });
       addEventListener('resize', function () { fit(); kick(); });
-      if ('ResizeObserver' in window) new ResizeObserver(fit).observe(desk);
+      if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { PT = null; NOTES.forEach(function (n) { n.w = 0; }); if (P >= 0) draw(P); });
       fit(); kick();
-      window.miyagiStory = { draw: draw, goTo: goTo, get p() { return P; } };   // for checking it from the console
+      window.miyagiStory = { draw: draw, fx: fx, goTo: goTo, where: where, pOf: pOf, makeSynth: makeSynth, get p() { return P; } };   // for checking it from the console
     })();
 
     // "Watch the demo": put the video link here (YouTube, Loom, Vimeo or an .mp4). Empty means not posted yet.
