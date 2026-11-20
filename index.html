@@ -102,7 +102,7 @@
 
     /* See it work: a pinned scroll story, like a screen recording. The section is tall and its frame sticks while you
        scroll; the computer's screen fills it (desktop, menu bar, the miyagi pill). One continuous take: the camera zooms
-       to where the action is, and clay callouts point at the parts that matter. All of it is drawn from scroll progress,
+       to where the action is, and callouts point at the parts that matter. All of it is drawn from scroll progress,
        so it scrubs forward and back. Phones and reduced motion get the same steps as cards with real frames from the Mac app. */
     .how { position: relative; z-index: 1; }
     .how h2 { margin: 0; padding: 14vh 16px 7vh; text-align: center; font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.035em; }
@@ -111,12 +111,13 @@
     .stage, .stage-in { position: absolute; inset: 0; }
     .desk { position: absolute; left: 0; top: 0; overflow: hidden; background: linear-gradient(160deg, #2b3343 0%, #1b2029 48%, #121418 100%); }
     .desk-in { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; transform-origin: 0 0; color: #fff; font: 14px/1.4 var(--m-font-brand); -webkit-font-smoothing: antialiased; }
-    /* Callouts: a clay label beside the thing (the logo's pot color, so they read as the guide, not the app), a line, and a ring on the spot. */
+    /* Callouts: a dark label with a white outline beside the thing (nothing in miyagi looks like it, so they read as the guide, not the app),
+       a line, and a ring on the spot. */
     .ann-lines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-    .ann-lines line { stroke: #d98463; stroke-width: 2px; }
-    .ann-lines circle { fill: rgba(194, 105, 74, .24); stroke: #d98463; stroke-width: 2.5px; }
-    .an { position: absolute; left: 0; top: 0; padding: 8px 13px; border-radius: 10px; background: #c2694a; color: #fff; font-size: 17px; font-weight: 600; line-height: 1.25;
-      letter-spacing: -.01em; box-shadow: 0 0 0 1px rgba(255, 255, 255, .16), 0 10px 28px rgba(0, 0, 0, .45); opacity: 0; visibility: hidden; pointer-events: none; }
+    .ann-lines line { stroke: #f6f6f3; stroke-width: 2px; }
+    .ann-lines circle { fill: rgba(246, 246, 243, .14); stroke: #f6f6f3; stroke-width: 2.5px; }
+    .an { position: absolute; left: 0; top: 0; padding: 8px 13px; border-radius: 10px; background: #141414; color: #fff; font-size: 17px; font-weight: 600; line-height: 1.25;
+      letter-spacing: -.01em; box-shadow: 0 0 0 2px #f6f6f3, 0 10px 28px rgba(0, 0, 0, .45); opacity: 0; visibility: hidden; pointer-events: none; }
     .snd { position: absolute; right: 18px; bottom: 18px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px 0 12px; border: 0; border-radius: 999px;
       background: rgba(12, 12, 14, .72); color: #fff; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14); font: 600 13px/1 var(--m-font-brand); cursor: pointer; transition: background .2s, color .2s; }
     .snd:hover { background: rgba(12, 12, 14, .88); }
@@ -282,7 +283,19 @@
     .d-cmp small { font-family: var(--m-font-brand); font-size: 10.5px; color: rgba(255, 255, 255, .45); }
     .d-cmp svg { width: 100%; height: 52px; margin-top: 8px; }
     .d-hint { left: 380px; top: 52px; width: 540px; }
+    .d-setup { left: 520px; top: 60px; width: 560px; }
+    .d-setup .su { margin-top: 12px; }
+    .su-r { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 14px; color: rgba(255, 255, 255, .45); }
+    .su-r .o { display: grid; place-items: center; width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .25); }
+    .su-r .s { margin-left: auto; font-size: 13px; color: rgba(255, 255, 255, .5); }
+    .su-r.go { color: #fff; }
+    .su-r.go .o { box-shadow: inset 0 0 0 2px #fff; }
+    .su-r.ok { color: rgba(255, 255, 255, .85); }
+    .su-r.ok .o { background: #30d158; box-shadow: none; }
+    .su-r.ok .o::after { content: ""; width: 7px; height: 3.5px; margin-top: -2px; border: solid #08240f; border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+    .su-r.ok .s { color: #30d158; }
     .d-notyet p.more { max-height: 0; overflow: hidden; opacity: 0; color: rgba(255, 255, 255, .6); }
+    .d-notyet p.ask { margin-top: 10px; color: #fff; font-weight: 600; }
     .d-show { left: 250px; top: 340px; width: 720px; }
     .d-show svg { display: block; width: 100%; height: 200px; margin-top: 8px; overflow: visible; }
     .d-show line { stroke: rgba(255, 255, 255, .3); stroke-width: 1.4; stroke-dasharray: 4 5; }
@@ -491,7 +504,7 @@
     // it into steps; the video plays a part, then waits until your code passes. The section is 1500vh tall and its frame
     // sticks; p (0..1) is how far through it you are, eased a little. p maps to a scene and to q, the lesson's own clock
     // (0..1), in one continuous take. The computer's screen fills the frame; one camera (zoom and focus on the 1600x1000
-    // desktop, keyed on q) follows the action, and each scene's clay callouts point at what matters. A cursor clicks, keys type, and with sound on each beat makes a sound (Web Audio, synthesized here:
+    // desktop, keyed on q) follows the action, and each scene's callouts point at what matters. A cursor clicks, keys type, and with sound on each beat makes a sound (Web Audio, synthesized here:
     // no files). Everything is drawn from p, so it scrubs forward and back. The lesson is the neural net from the demo;
     // its numbers come from running that code (zero weights: loss stays 0.4900; random weights: 0.8187 down to 0.0009 by
     // epoch 18,000). The tutorials are real ones on YouTube (titles, channels, lengths and views as YouTube lists them);
@@ -508,18 +521,19 @@
       // its label sits on (the other side if there's no room), words, and (optional) how far the label sits from it].
       var STEPS = [
         { t: 'ask for anything.', s: 'ask', b: 'click the pill and say what you want to learn. it finds real tutorials for it.', from: 0, to: 0.2, at: 0.17, img: '1-ask',
-          notes: [[0.006, 0.034, 'pillL', 'l', 'miyagi lives in this pill'], [0.068, 0.134, 'field', 'l', 'say what you want to learn'], [0.158, 0.18, 'bestN', 'r', 'real tutorials, found for you']] },
+          notes: [[0.004, 0.03, 'pillL', 'l', 'miyagi runs on your computer. click the pill.'], [0.058, 0.128, 'field', 'l', 'type what you want to learn'], [0.142, 0.182, 'bestN', 'r', 'it finds real tutorials. pick one.']] },
         { t: 'it turns the video into steps.', s: 'video → steps', b: 'each part of the tutorial becomes a step with checks, next to a project in vs code.', from: 0.2, to: 0.4, at: 0.37, img: '2-lesson',
-          notes: [[0.202, 0.232, 'pillR', 'r', 'it watches the tutorial for you'], [0.238, 0.268, 'edEnd', 'r', 'a project for it, in vs code'], [0.272, 0.4, 'chapsL', 'l', 'the tutorial, split into steps'],
-            [0.292, 0.332, 'vid', 'l', 'it plays the part to learn'], [0.34, 0.4, 'gate', 'l', 'then it waits for you']] },
+          notes: [[0.2, 0.218, 'pillR', 'r', 'it watches the video and writes the steps'], [0.222, 0.256, 'setup', 'l', 'it sets up what you need, right on your computer'],
+            [0.258, 0.276, 'edEnd', 'r', 'your project opens in vs code'], [0.278, 0.296, 'chapsL', 'l', 'each part of the video becomes a step'],
+            [0.298, 0.338, 'vid', 'l', 'the video plays the first part'], [0.342, 0.4, 'gate', 'l', 'then it stops and waits for your code']] },
         { t: 'your turn.', s: 'your turn', b: 'the video waits while you code. once your checks pass, it keeps going.', from: 0.4, to: 0.58, at: 0.5, img: '3-type',
-          notes: [[0.41, 0.462, 'boxR', 'r', 'a box marks where to type'], [0.476, 0.524, 'gdots', 'l', 'the step’s checks go green'], [0.53, 0.58, 'vid', 'l', 'all pass: the video keeps going']] },
+          notes: [[0.408, 0.464, 'boxR', 'r', 'a box shows exactly where to type'], [0.476, 0.524, 'gdots', 'l', 'it checks your work as you type'], [0.53, 0.58, 'vid', 'l', 'only when it works does the video move on']] },
         { t: 'not yet? it helps you find why.', s: 'not yet', b: 'a few steps later you train it, and the loss won’t move. it can explain more, draw it, or hint.', from: 0.58, to: 0.85, at: 0.728, img: '4-not-yet',
-          notes: [[0.59, 0.612, 'run', 'l', 'it points at the real Run button'], [0.625, 0.648, 'term', 'r', 'the loss is stuck at 0.49'], [0.66, 0.678, 'nyp', 'l', 'it says why, in plain words'],
-            [0.684, 0.705, 'more', 'l', 'stuck? it explains more'], [0.718, 0.748, 'showL', 'l', 'or draws it for you'],
-            [0.77, 0.845, 'hboxR', 'r', 'the lines to look at'], [0.772, 0.845, 'hintL', 'l', 'a hint is a question, not the answer'], [0.812, 0.845, 'fixed', 'r', 'you fix it yourself']] },
+          notes: [[0.584, 0.614, 'run', 'l', 'a few steps later, you run the training'], [0.622, 0.65, 'term', 'r', 'it watches every run. the loss is stuck.'], [0.652, 0.676, 'nyp', 'l', 'off track? it pops up and offers help'],
+            [0.68, 0.706, 'more', 'l', 'explain: the why, in more detail'], [0.712, 0.75, 'showL', 'l', 'show me: a diagram of the problem'], [0.758, 0.777, 'hintL', 'l', 'hint: a question, not the answer'],
+            [0.778, 0.803, 'hboxR', 'r', 'it points at the lines to look at'], [0.806, 0.846, 'fixed', 'r', 'you fix it yourself']] },
         { t: 'watch it learn.', s: 'it learns', b: 'run it again: the network trains, the loss falls to 0.0009, and the video moves on.', from: 0.85, to: 1, at: 0.985, img: '6-learns',
-          notes: [[0.888, 0.952, 'netL', 'l', 'the network trains, live'], [0.902, 0.952, 'lossL', 'l', 'loss: 0.82 → 0.0009', 190], [0.97, 1.01, 'vid', 'l', 'checks pass. the video moves on.']] }
+          notes: [[0.852, 0.876, 'run', 'l', 'run it again'], [0.884, 0.952, 'netL', 'l', 'it learns: loss 0.82 → 0.0009'], [0.96, 1.01, 'vid', 'l', 'step passed. the video moves on.']] }
       ];
 
       // Scroll → scene: each scene's stretch of q, end to end (CUT > 0 would add a hold between scenes).
@@ -593,11 +607,13 @@
         '<div class="d-card d-notyet" data-notyet><div><div class="d-label"><i></i>Not yet</div><h5>Loss is stuck at 0.49</h5>' +
         '<p data-nyp>Every hidden neuron starts the same, so each one gets the same update and they never become different.</p>' +
         '<p class="more" data-more>Each weight moves by its own gradient. Start them all at 0 and every gradient is equal, so the four neurons stay copies of one, and the network can’t bend to fit the sine.</p>' +
+        '<p class="ask">Want a hint?</p>' +
         '<div class="d-pills"><span style="background:#C5E4F9" data-explainp>Explain<small>⌥E</small></span><span style="background:#D9D2FF" data-showp>Show me<small>⌥S</small></span><span style="background:#F9C5D5" data-hintp>Hint<small>⌥H</small></span></div></div>' +
         '<div class="d-cmp" data-nycmp><div class="row"><small>yours</small><small>expected</small><span>0.4900</span><span>&lt; 0.01</span></div><small>loss</small>' +
         '<svg viewBox="0 0 200 52" preserveAspectRatio="none"><path d="M0 14H200" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M0 50H200" stroke="rgba(255,255,255,.25)" stroke-dasharray="4 4" fill="none"/></svg></div></div>' +
         '<div class="d-card d-show" data-show><div class="d-label"><i></i>Show me</div><h5>Why the loss is stuck</h5><svg viewBox="0 0 680 200" data-showsvg></svg>' +
         '<p>All four hidden neurons start at 0, so they compute the same thing and get the same update. They stay copies.</p></div>' +
+        '<div class="d-card d-setup" data-setup><div class="d-label"><i></i>Setting up</div><h5>Getting your computer ready</h5><div class="su" data-su></div></div>' +
         '<div class="d-card d-hint" data-hint><div class="d-label"><i></i>Hint 1 of 2</div><h5>Look at how W1, W2 and W3 start.</h5><p>What does every hidden neuron compute when all its weights are 0?</p></div>' +
         '<div class="d-rip" data-rip></div><div class="d-cur" data-cur><svg viewBox="0 0 18 26"><path d="M1.5 1.5V20.6l4.6-4.3 3.3 7.6 3.1-1.4-3.2-7.4h6.4z" fill="#000" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>';
       var $ = function (k) { return D.querySelector('[data-' + k + ']'); };
@@ -605,7 +621,7 @@
         bar: $('bar'), win: $('win'), shell: $('shell'), launch: $('launch'), field: $('field'), q: $('q'), watch: $('watch'), teach: $('teach'), res: $('res'), go: $('go'),
         r: [$('r0'), $('r1'), $('r2'), $('r3')], pl: $('pl'), plN: $('pl-n'), vid: $('vid'), slide: $('slide'), gate: $('gate'), plPlay: $('pl-play'), plT: $('pl-t'), tl: $('tl'), chaps: $('chaps'),
         net: $('net'), netS: $('net-s'), graph: $('graph'), ep: $('ep'), loss: $('loss'), spark: $('spark'),
-        notyet: $('notyet'), nyp: $('nyp'), nycmp: $('nycmp'), hintp: $('hintp'), hint: $('hint'), more: $('more'), show: $('show'), showsvg: $('showsvg'), explainp: $('explainp'), showp: $('showp'), cur: $('cur'), rip: $('rip') };
+        notyet: $('notyet'), nyp: $('nyp'), nycmp: $('nycmp'), hintp: $('hintp'), hint: $('hint'), setup: $('setup'), su: $('su'), more: $('more'), show: $('show'), showsvg: $('showsvg'), explainp: $('explainp'), showp: $('showp'), cur: $('cur'), rip: $('rip') };
       var CODE_BAR = el.bar.innerHTML, FINDER_BAR = CODE_BAR.replace(/<b>Code<\/b>.*?<span class="r">/, '<b>Finder</b><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><span>Help</span><span class="r">');
 
       // The player's chapter timeline: one segment per part, the played part filled, a ring where it holds, the playhead.
@@ -699,7 +715,7 @@
       // Where the video is (seconds) on the lesson clock: part 1 plays, holds for your checks, part 2 starts;
       // a few steps later it holds at the end of "Train it" until the run passes, then part 5 plays.
       function vt(q) {
-        if (q < 0.58) return q < 0.54 ? 370 * span(q, 0.27, 0.332) : 370 + 48 * span(q, 0.54, 0.58);
+        if (q < 0.58) return q < 0.54 ? 370 * span(q, 0.29, 0.34) : 370 + 48 * span(q, 0.54, 0.58);
         return 1530 + 50 * span(q, 0.966, 1);
       }
       function waitHTML(d, off) {                     // the player's "your turn" state: one line, the check dots, the three buttons
@@ -739,7 +755,7 @@
           var w = inLaunch(el.watch, 0.5, 0.6), res = inLaunch(el.res, 0, 0), resR = inLaunch(el.res, 1, 0);
           PT = { rest: [930, 250], pill: [812, 17], watch: w, watchA: [w[0] + 130, w[1] + 90], best: [res[0] + 220, res[1] + 84], bestN: [resR[0] + 4, res[1] + 81], field: inLaunch(el.field, 0.03, 0.5),
             editor: [ED_X - 7, ED_TOP + 9], box: [ED_X - 7, ED_TOP + 4 * LH + 9], boxIn: [ED_X + 8, ED_TOP + 4 * LH + 11], boxA: [ED_X + 140, ED_TOP + 4 * LH + 90],
-            run: [979, 63], runA: [760, 380], mid: [760, 420], term: [232, 830], nyp: at(el.nyp, 0, 0.4), hint: at(el.hint, 1, 0.45), show: at(el.show, 1, 0.42),
+            run: [979, 63], runA: [760, 380], mid: [760, 420], term: [232, 830], nyp: at(el.nyp, 0, 0.4), hint: at(el.hint, 1, 0.45), setup: at(el.setup, 0, 0.35), show: at(el.show, 1, 0.42),
             hbox: [ED_X - 7, ED_TOP + 8 * LH + 9], fixed: [ED_X + 445, ED_TOP + 8 * LH + 9], line: [ED_X + 470, ED_TOP + 7 * LH + 10], lineA: [ED_X + 620, ED_TOP + 7 * LH + 90],
             chaps: at(el.chaps, 0.985, 0.3), chapsL: at(el.chaps, 0.02, 0.3), edEnd: [ED_X + 352, ED_TOP + 9], boxR: [ED_X + 571, ED_TOP + 4 * LH + 48],
             hboxR: [ED_X + 533, ED_TOP + 8 * LH + 9], netL: at(el.net, 0, 0.42), lossL: at(el.loss.parentNode, 0, 0.72), showL: at(el.show, 0, 0.42), hintL: at(el.hint, 0, 0.45), vid: at(el.vid, 0, 0.5), vidR: at(el.vid, 1, 0.5), net: at(el.net, 0.985, 0.4), loss: at(el.loss.parentNode, 0.92, 0.72), away: [1300, 960] };
@@ -791,6 +807,7 @@
 
       // ---- one frame of the desktop at lesson clock q (z: the camera zoom, so the cursor keeps a steady size) ----
       var lastSlide = '';
+      var SETUP = [['Python 3.12', 'checking…', 'found'], ['numpy', 'installing…', 'installed'], ['nn-from-scratch/ project', 'creating…', 'created'], ['VS Code', 'opening…', 'open']];
       function drawDesk(q, z) {
         // The step you're on (0-based), shared by the pill, the player and its timeline.
         var cur = q < 0.525 ? 0 : q < 0.58 ? 1 : q < 0.952 ? 3 : 4;
@@ -798,8 +815,9 @@
         // Island: a blank screen with only the pill until the lesson is built; then what it's doing; then the step.
         var island;
         if (q < 0.18) island = LOGO + '<span>ask miyagi</span><span class="k">⌥Space</span>';
-        else if (q < 0.212) island = '<span class="sp"></span><span>Watching the video</span>';
-        else if (q < 0.262) island = '<span class="sp"></span><span>Writing the steps</span>';
+        else if (q < 0.205) island = '<span class="sp"></span><span>Watching the video</span>';
+        else if (q < 0.218) island = '<span class="sp"></span><span>Writing the steps</span>';
+        else if (q < 0.262) island = '<span class="sp"></span><span>Setting up your computer</span>';
         else { var sn = q < 0.966 ? cur + 1 : 5; island = LOGO + '<span>Step ' + sn + ' · ' + CH[sn - 1].t + '</span><span class="c">' + sn + '/5</span>'; }
         set(el.island, 'html', island);
         set(el.island, 'transform', 'translateX(-50%)' + (q >= 0.0215 && q < 0.0265 ? ' scale(.93)' : ''));
@@ -829,11 +847,18 @@
         set(el.go, 'text', picked ? 'Build lesson ↵' : 'Just teach me ↵');
 
         // The lesson is built: VS Code opens on its project (the menu bar comes with it), and the player docks right.
-        var wO = span(q, 0.222, 0.255);
-        set(el.bar, 'html', q < 0.222 ? FINDER_BAR : CODE_BAR);
+        var wO = span(q, 0.256, 0.276);
+        set(el.bar, 'html', q < 0.256 ? FINDER_BAR : CODE_BAR);
         set(el.win, 'opacity', wO.toFixed(3)); set(el.win, 'transform', 'translateY(' + ((1 - ease(wO)) * 16).toFixed(1) + 'px)'); set(el.win, 'visibility', wO > 0 ? 'visible' : 'hidden');
-        var pO = span(q, 0.232, 0.262);
+        var pO = span(q, 0.262, 0.282);
         set(el.pl, 'opacity', pO.toFixed(3)); set(el.pl, 'transform', 'translateX(' + ((1 - ease(pO)) * 40).toFixed(1) + 'px)'); set(el.pl, 'visibility', pO > 0 ? 'visible' : 'hidden');
+
+        // Setup: before the project opens, it gets the computer ready, one row at a time.
+        card(el.setup, shown(q, 0.218, 0.226, 0.252, 0.26));
+        set(el.su, 'html', SETUP.map(function (r, i) {
+          var go = q >= 0.222 + i * 0.007, ok = q >= 0.226 + i * 0.007;
+          return '<div class="su-r' + (ok ? ' ok' : go ? ' go' : '') + '"><span class="o"></span><span>' + r[0] + '</span><span class="s">' + (ok ? r[2] : go ? r[1] : '') + '</span></div>';
+        }).join(''));
 
         // Code: the project's outline, then you type the network, then (a few steps later) it's all there and you fix it.
         var code, caret = -1;
@@ -882,8 +907,8 @@
         set(el.term, 'html', term.split('\n').slice(-9).join('\n'));
 
         // The player: the tutorial plays a part, then holds at the part's end until the step's checks pass.
-        var t = vt(q), playing = (q >= 0.27 && q < 0.332) || (q >= 0.54 && q < 0.58) || q >= 0.966;
-        var held = !playing && ((q >= 0.332 && q < 0.54) || (q >= 0.58 && q < 0.966)), ci = 0;
+        var t = vt(q), playing = (q >= 0.29 && q < 0.34) || (q >= 0.54 && q < 0.58) || q >= 0.966;
+        var held = !playing && ((q >= 0.34 && q < 0.54) || (q >= 0.58 && q < 0.966)), ci = 0;
         for (var c = 0; c < CH.length; c++) if (Math.max(0, t - 0.01) >= CH[c].a) ci = c;
         var sk = t === 0 ? 'maxresdefault' : FRAMES[ci];
         if (sk !== lastSlide) { lastSlide = sk; el.slide.innerHTML = '<img src="' + YT + sk + '.jpg" alt="">'; }
@@ -897,13 +922,13 @@
         set(tlHead, 'left', (t / DUR * 100).toFixed(3) + '%');
         set(ring, 'left', (CH[cur].b / DUR * 100).toFixed(3) + '%'); set(ring, 'opacity', held ? '1' : '0');
         var gate = '', gO = 0;
-        if (q >= 0.332 && q < 0.525) { gO = span(q, 0.332, 0.338); gate = waitHTML([q >= 0.475 ? 1 : 0, q >= 0.485 ? 1 : 0, q >= 0.495 ? 1 : 0], false); }
+        if (q >= 0.34 && q < 0.525) { gO = span(q, 0.34, 0.346); gate = waitHTML([q >= 0.475 ? 1 : 0, q >= 0.485 ? 1 : 0, q >= 0.495 ? 1 : 0], false); }
         else if (q >= 0.525 && q < 0.54) { gO = 1 - span(q, 0.535, 0.54); gate = DONE; }
         else if (q >= 0.58 && q < 0.952) { var stuck = q >= 0.645 && q < 0.95; gO = 1; gate = waitHTML([q >= 0.62 ? 1 : 0, q >= 0.95 ? 1 : stuck ? -1 : 0], stuck); }
         else if (q >= 0.952 && q < 0.966) { gO = 1 - span(q, 0.962, 0.966); gate = DONE; }
         set(el.gate, 'html', gate); set(el.gate, 'opacity', gO.toFixed(3)); set(el.gate, 'visibility', gO > 0 ? 'visible' : 'hidden');
         set(el.chaps, 'html', CH.map(function (ch, i) {
-          var o = span(q, 0.25 + i * 0.004, 0.258 + i * 0.004);
+          var o = span(q, 0.27 + i * 0.004, 0.278 + i * 0.004);
           return '<div class="d-ch ' + (i < cur ? 'done' : i === cur ? 'cur' : '') + '" style="opacity:' + o.toFixed(2) + '"><span class="o"></span><span>' + ch.t + '</span><span class="tm">' + clock(ch.a) + '</span></div>';
         }).join(''));
 
@@ -943,10 +968,10 @@
       // The camera over the whole lesson clock: [q, zoom, focus x, focus y], eased between keys, never leaving the screen.
       // Zooms on the pill keep the top edge pinned (focus y 0), so the menu bar and the pill never slide out of frame.
       var CAM = [[0, 1, 800, 0], [0.008, 1, 800, 0], [0.024, 2.6, 800, 0], [0.05, 1.6, 800, 0], [0.18, 1.6, 800, 0], [0.198, 2.6, 800, 0],
-        [0.215, 2.6, 800, 0], [0.245, 1, 800, 0], [0.268, 1, 800, 0], [0.29, 1.75, 1300, 360], [0.396, 1.75, 1300, 360], [0.408, 1.6, 500, 300],
-        [0.462, 1.6, 500, 300], [0.474, 1.75, 1300, 360], [0.582, 1.75, 1300, 360], [0.596, 1.7, 860, 240], [0.61, 1.7, 860, 240], [0.62, 1.6, 500, 780],
-        [0.646, 1.6, 500, 780], [0.656, 1.5, 560, 270], [0.85, 1.5, 560, 270], [0.862, 1.7, 860, 240], [0.874, 1.7, 860, 240], [0.884, 1.6, 1300, 700],
-        [0.95, 1.6, 1300, 700], [0.972, 1, 800, 500]];
+        [0.215, 2.6, 800, 0], [0.222, 1.6, 800, 0], [0.252, 1.6, 800, 0], [0.27, 1, 800, 0], [0.282, 1, 800, 0], [0.296, 1.55, 1300, 360], [0.396, 1.55, 1300, 360], [0.408, 1.45, 500, 300],
+        [0.462, 1.45, 500, 300], [0.474, 1.55, 1300, 360], [0.582, 1.55, 1300, 360], [0.596, 1.5, 860, 240], [0.61, 1.5, 860, 240], [0.62, 1.45, 500, 780],
+        [0.646, 1.45, 500, 780], [0.656, 1.35, 560, 270], [0.85, 1.35, 560, 270], [0.862, 1.5, 860, 240], [0.874, 1.5, 860, 240], [0.884, 1.45, 1300, 700],
+        [0.95, 1.45, 1300, 700], [0.972, 1, 800, 500]];
       function camAt(k, q) {
         var c = CAMX ? CAMX(q, k) : keyed(CAM, q), S = S0 * c[0], W = 1600 * S0, H = 1000 * S0;
         return { z: c[0], S: S, tx: Math.min(0, Math.max(W - 1600 * S, W / 2 - c[1] * S)), ty: Math.min(0, Math.max(H - 1000 * S, H / 2 - c[2] * S)) };
@@ -964,7 +989,7 @@
         });
       });
       function drawNotes(k, q, cam) {
-        var sides = { l: [], r: [] };
+        var sides = { l: [], r: [] }, now = null;
         NOTES.forEach(function (n) {
           var ov = FULL && NOTEFN ? NOTEFN(n.at) : null;
           n.fside = ov && ov.side || n.side; n.fgap = ov && ov.gap || n.gap;
@@ -974,7 +999,10 @@
             if (n.sx < DX + 6 || n.sx > DX + DW - 6 || n.sy < DY + 6 || n.sy > DY + DH - 6) pt = null;     // not in this shot
           }
           n.o = pt ? o : 0;
-          if (n.o > 0) sides[n.fside].push(n);
+          if (n.o > 0 && (!now || n.a > now.a)) now = n;
+        });
+        NOTES.forEach(function (n) {                   // one at a time, so there's always one thing to look at
+          if (n === now) sides[n.fside].push(n);
           else { set(n.el, 'visibility', 'hidden'); set(n.ln, 'visibility', 'hidden'); set(n.dot, 'visibility', 'hidden'); }
         });
         ['l', 'r'].forEach(function (side) {
@@ -1006,7 +1034,7 @@
         var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.6), ctx.sampleRate), d = buf.getChannelData(0);
         for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
         // Each sound has its own level (measured: so a key press, a tick and the chime sit at about the same loudness).
-        var VOL = { key: 2.8, click: 1.1, open: 3.4, close: 2.7, swish: 3.1, pop: 3.6, note: 6, tink: 3.8, done: 1.9, nope: 1.6, line: 5.6, chime: 1.6, play: 3, hold: 3 }, bus = {}, dest = out;
+        var VOL = { key: 1.6, click: 0.88, open: 2.72, close: 2.16, swish: 2.48, pop: 2.88, note: 4.8, tink: 3.04, done: 1.52, nope: 1.28, line: 4.48, chime: 1.28, play: 2.4, hold: 2.4 }, bus = {}, dest = out;
         Object.keys(VOL).forEach(function (k) { bus[k] = ctx.createGain(); bus[k].gain.value = VOL[k]; bus[k].connect(out); });
         function env(t, peak, attack, dur) {
           var g = ctx.createGain();
@@ -1067,7 +1095,7 @@
 
       // What happens on the lesson clock: sounds, and the ring each click leaves (that shows with sound off too).
       var EV = [[0.024, 'click'], [0.027, 'open'], [0.137, 'click'], [0.142, 'line', 2], [0.148, 'line', 5], [0.154, 'line', 7], [0.16, 'line', 9], [0.176, 'click'], [0.183, 'close'],
-        [0.235, 'pop'], [0.27, 'play'], [0.332, 'hold'], [0.406, 'click'], [0.475, 'tink'], [0.485, 'tink'], [0.495, 'tink'], [0.525, 'done'], [0.54, 'play'],
+        [0.22, 'pop'], [0.226, 'tink'], [0.233, 'tink'], [0.24, 'tink'], [0.247, 'tink'], [0.26, 'pop'], [0.29, 'play'], [0.34, 'hold'], [0.406, 'click'], [0.475, 'tink'], [0.485, 'tink'], [0.495, 'tink'], [0.525, 'done'], [0.54, 'play'],
         [0.59, 'pop'], [0.605, 'click'], [0.62, 'tink'], [0.648, 'nope'], [0.675, 'click'], [0.678, 'pop'], [0.708, 'click'], [0.713, 'pop'], [0.718, 'line', 3], [0.725, 'line', 6], [0.732, 'line', 9],
         [0.75, 'click'], [0.762, 'pop'], [0.79, 'click'], [0.866, 'click'], [0.952, 'chime'], [0.968, 'play']];
       function typedAt(q) {                           // keys pressed so far: the goal, the network, the fix
