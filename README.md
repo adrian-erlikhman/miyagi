@@ -11,7 +11,7 @@ Landing page for **Miyagi**, built at SanD Hacks 2026 (UC San Diego). Miyagi tur
 
 With 3D on, the page opens on the bonsai growing in: the pot lands, the trunk rises, each branch reaches out when the trunk gets to it, then the pads pop, while the camera rises and pulls back and the tree turns to face you (about 2.5 s, `GROW_AT` and `GROW_S` in `index.html`). Browsers without WebGL, or with reduced motion on, get the flat logo page instead.
 
-Then scrolling tells the story: the tree steps right while "watching isn't learning." and "miyagi waits until your code works." light up on the left (the word "miyagi" turns the logo's pad green, `#1f9b45`, as it lights; centered under the tree on phones), then it rises over the wordmark, "wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
+Then scrolling tells the story: the tree steps right while "watching isn't learning." and "miyagi waits until you've done it." light up on the left (the word "miyagi" turns the logo's pad green, `#1f9b45`, as it lights; centered under the tree on phones), then it rises over the wordmark, "wax on, wax off." and the downloads. The caption timing is `CAP_AT` (shares of the scroll); the camera path is `camGoal()`.
 
 Site copy is lowercase, like the wordmark.
 
