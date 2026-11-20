@@ -196,6 +196,10 @@
     .d-vid { position: relative; height: 304px; margin: 0 12px; border-radius: 14px; overflow: hidden; background: #000; }
     .d-slide { position: absolute; inset: 0; background: #000; }
     .d-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    /* The real video (YouTube's embed, muted, no controls) over the stills while it plays; 64px taller top and bottom so its own chrome is clipped, like the app's player. */
+    .d-yt { position: absolute; left: 0; right: 0; top: -64px; bottom: -64px; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .d-yt.on { opacity: 1; }
+    .d-yt iframe { display: block; width: 100%; height: 100%; border: 0; }
     .d-gate { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #202023; opacity: 0; visibility: hidden; }
     .d-gate .g-t { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 600; }
     .d-gate .g-t i { width: 7px; height: 7px; border-radius: 50%; background: #8e8e93; }
@@ -598,7 +602,7 @@
         '<div class="d-term"><div class="h"><span>PROBLEMS</span><span>OUTPUT</span><span>DEBUG CONSOLE</span><span class="on">TERMINAL</span><span>PORTS</span></div><pre data-term></pre></div></div>' +
         '<div class="d-box" data-box></div><div class="d-tag" data-tag></div><div class="d-loupe" data-loupe></div><div class="d-tag" data-ltag>Click ▷ to run nn.py</div>' +
         '<div class="d-pl" data-pl><div class="d-pl-hd">' + LOGO + '<b>A neural net from scratch</b><span data-pl-n></span></div>' +
-        '<div class="d-vid" data-vid><div class="d-slide" data-slide></div><div class="d-gate" data-gate></div></div>' +
+        '<div class="d-vid" data-vid><div class="d-slide" data-slide></div><div class="d-yt" data-yt><div></div></div><div class="d-gate" data-gate></div></div>' +
         '<div class="d-ctl"><span class="i" data-pl-play></span><span class="i">' + ICON.back + '</span><span class="tm" data-pl-t></span><span class="sp">1×</span></div>' +
         '<div class="d-tl" data-tl></div><div class="d-src"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang · YouTube · 31:28</small></div>' +
         '<div class="d-chh">Steps</div><div data-chaps></div>' +
@@ -619,7 +623,7 @@
       var $ = function (k) { return D.querySelector('[data-' + k + ']'); };
       var el = { island: $('island'), ed: $('ed'), term: $('term'), box: $('box'), tag: $('tag'), loupe: $('loupe'), ltag: $('ltag'), run: $('run'),
         bar: $('bar'), win: $('win'), shell: $('shell'), launch: $('launch'), field: $('field'), q: $('q'), watch: $('watch'), teach: $('teach'), res: $('res'), go: $('go'),
-        r: [$('r0'), $('r1'), $('r2'), $('r3')], pl: $('pl'), plN: $('pl-n'), vid: $('vid'), slide: $('slide'), gate: $('gate'), plPlay: $('pl-play'), plT: $('pl-t'), tl: $('tl'), chaps: $('chaps'),
+        r: [$('r0'), $('r1'), $('r2'), $('r3')], pl: $('pl'), plN: $('pl-n'), vid: $('vid'), slide: $('slide'), yt: $('yt'), gate: $('gate'), plPlay: $('pl-play'), plT: $('pl-t'), tl: $('tl'), chaps: $('chaps'),
         net: $('net'), netS: $('net-s'), graph: $('graph'), ep: $('ep'), loss: $('loss'), spark: $('spark'),
         notyet: $('notyet'), nyp: $('nyp'), nycmp: $('nycmp'), hintp: $('hintp'), hint: $('hint'), setup: $('setup'), su: $('su'), more: $('more'), show: $('show'), showsvg: $('showsvg'), explainp: $('explainp'), showp: $('showp'), cur: $('cur'), rip: $('rip') };
       var CODE_BAR = el.bar.innerHTML, FINDER_BAR = CODE_BAR.replace(/<b>Code<\/b>.*?<span class="r">/, '<b>Finder</b><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><span>Help</span><span class="r">');
@@ -807,6 +811,31 @@
 
       // ---- one frame of the desktop at lesson clock q (z: the camera zoom, so the cursor keeps a steady size) ----
       var lastSlide = '';
+      // The real video: while a part plays, the YouTube embed plays it (muted) from the part's start, over the stills; it pauses
+      // when the story holds. It only shows once YouTube says it's playing, so if the embed can't load, the stills stay.
+      var PARTS = [0, 370, 1530], yt = null, ytReady = false, ytOn = false, ytPart = -1, NOYT = false;
+      function ytShow() { el.yt.className = 'd-yt' + (ytOn && ytPart >= 0 ? ' on' : ''); }
+      function ytStart() { if (ytReady && ytPart >= 0) { yt.mute(); yt.seekTo(PARTS[ytPart], true); yt.playVideo(); } }
+      function ytLoad() {
+        if (yt || NOYT) return;
+        yt = {};
+        function make() {
+          yt = new window.YT.Player(el.yt.firstChild, { videoId: VID, host: 'https://www.youtube-nocookie.com', width: '100%', height: '100%',
+            playerVars: { controls: 0, mute: 1, playsinline: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, cc_load_policy: 0 },
+            events: { onReady: function () { ytReady = true; ytStart(); }, onStateChange: function (e) { ytOn = e.data === 1; ytShow(); } } });
+        }
+        if (window.YT && window.YT.Player) return make();
+        var prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function () { if (prev) prev(); make(); };
+        var sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(sc);
+      }
+      function ytSync(part) {                         // part: which part is playing now (0, 1, 2), or -1 while it holds
+        if (NOYT || part === ytPart) return;
+        ytPart = part;
+        if (part < 0) { if (ytReady) yt.pauseVideo(); }
+        else { ytLoad(); ytStart(); }
+        ytShow();
+      }
       var SETUP = [['Python 3.12', 'checking…', 'found'], ['numpy', 'installing…', 'installed'], ['nn-from-scratch/ project', 'creating…', 'created'], ['VS Code', 'opening…', 'open']];
       function drawDesk(q, z) {
         // The step you're on (0-based), shared by the pill, the player and its timeline.
@@ -912,6 +941,7 @@
         for (var c = 0; c < CH.length; c++) if (Math.max(0, t - 0.01) >= CH[c].a) ci = c;
         var sk = t === 0 ? 'maxresdefault' : FRAMES[ci];
         if (sk !== lastSlide) { lastSlide = sk; el.slide.innerHTML = '<img src="' + YT + sk + '.jpg" alt="">'; }
+        ytSync(!playing ? -1 : q < 0.34 ? 0 : q < 0.58 ? 1 : 2);
         set(el.plPlay, 'html', held ? ICON.lock : playing ? ICON.pause : ICON.play);
         set(el.plT, 'text', clock(t) + ' / ' + clock(DUR));
         set(el.plN, 'text', 'Step ' + (cur + 1) + ' of 5');
@@ -1190,7 +1220,7 @@
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { PT = null; NOTES.forEach(function (n) { n.w = 0; }); if (P >= 0) draw(P); });
       fit(); kick();
-      window.miyagiStory = { film: function (o) { FULL = !!o.full; CAMX = o.camera || null; NOTEFN = o.note || null; fit(); }, draw: draw, fx: fx, beats: beats, rippleAt: rippleAt, steps: STEPS, cut: CUT, video: { id: VID, at: vt }, goTo: goTo, where: where, pOf: pOf, makeSynth: makeSynth, get p() { return P; } };   // for checking it from the console
+      window.miyagiStory = { film: function (o) { FULL = !!o.full; CAMX = o.camera || null; NOTEFN = o.note || null; NOYT = true; fit(); }, draw: draw, fx: fx, beats: beats, rippleAt: rippleAt, steps: STEPS, cut: CUT, video: { id: VID, at: vt }, goTo: goTo, where: where, pOf: pOf, makeSynth: makeSynth, get p() { return P; } };   // for checking it from the console
     })();
 
     // "Watch the demo": put the video link here (YouTube, Loom, Vimeo or an .mp4). Empty means not posted yet.
