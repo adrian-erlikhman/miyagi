@@ -17,13 +17,11 @@ Site copy is lowercase, like the wordmark.
 
 ## See it work
 
-A pinned scroll story built on real screen recordings of miyagi on a Mac (Nov 20). The section is 1500vh tall and its frame sticks while you scroll, and scrolling scrubs the footage forward and back. One camera zooms to where the action is, one callout at a time points at what matters, and clicks leave a ring. Sound is opt-in (the toggle bottom-right), synthesized with Web Audio.
+A pinned scroll story, the way the Hivemind site tells its steps. The section is 720vh tall and its frame sticks while you scroll; `p` (0 to 1) is how far through it you are, eased a little, and the whole desktop is drawn from `p`, so it scrubs forward and back with the scroll. On the left, six steps (ask → it builds the lesson → where to type → not yet → a hint → watch it learn) light up in turn; clicking one scrolls there. On the right, a macOS desktop drawn in HTML at 1600×1000 and scaled to fit: VS Code with `nn.py`, the miyagi island, launcher, drawer with the plan and checks, the Not yet and hint cards, the live network panel and the terminal.
 
-The footage is `story/miyagi.mp4` (1920×1056, 24 fps, a keyframe every second so seeking is quick), cut by `devpost/video/real/build_cut.py` in the team folder from two takes. Take A (Nov 19) is the video way: ask, pick a real tutorial, the lesson opens beside VS Code, and the video waits for your checks. Take B (Nov 15) is a lesson from scratch: the loss is stuck, miyagi says why, points at the line and hints, you fix it, and it learns (0.82 → 0.0009). In the `"See it work"` script in `index.html`, `CAM` is the camera, `NOTE_D` the callouts, `EV` the clicks and sounds, and `PACE` how much scroll each stretch of footage gets. All of them are written in each take's own seconds through `A(t)` and `B(t)`.
+The lesson is the neural net from the demo (a 1-4-4-1 net learning sin(x) in NumPy). Its numbers come from really running that code: with zero weights the loss stays at 0.4900; with `np.random.randn` weights (seed 0) it falls from 0.8187 to 0.0009 by epoch 18,000, and the network panel draws the weights that run learned (blue positive, brown negative). Everything is in the `"See it work"` script in `index.html`: the step text is `STEPS`, the code is `HEAD`/`NET`/`FIX`/`REST`, and `draw(p)` holds the timeline.
 
-Seeking needs HTTP Range, which GitHub Pages serves. Python's `http.server` doesn't, so preview locally with `devpost/video/real/serve_site.py`.
-
-Phones (under 1024px) and reduced motion get the steps as cards, with frames from the same footage: `story/1.webp` … `story/5.webp`. `story/poster.jpg` shows until the video loads.
+Phones (under 1024px) and reduced motion get the same six steps as cards with real frames from the Mac app: `walk/1-ask.webp` … `walk/6-learns.webp` (1200×800), made from the Devpost gallery images.
 
 ## See it work button
 
