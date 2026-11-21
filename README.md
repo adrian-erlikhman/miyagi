@@ -21,7 +21,7 @@ A pinned scroll story, the way the Hivemind site tells its steps. The section is
 
 The lesson is the neural net from the demo (a 1-4-4-1 net learning sin(x) in NumPy). Its numbers come from really running that code: with zero weights the loss stays at 0.4900; with `np.random.randn` weights (seed 0) it falls from 0.8187 to 0.0009 by epoch 18,000, and the network panel draws the weights that run learned (blue positive, brown negative). Everything is in the `"See it work"` script in `index.html`: the step text is `STEPS`, the code is `HEAD`/`NET`/`FIX`/`REST`, and `draw(p)` holds the timeline.
 
-Phones (under 1024px) and reduced motion get the same six steps as cards with real frames from the Mac app: `walk/1-ask.webp` … `walk/6-learns.webp` (1200×800), made from the Devpost gallery images.
+Phones get the same animated story (Nov 21). Held upright (`TALL` in the script: the frame is taller than wide), the screen runs full width between two dark bands, the camera crops it closer (`PCAM`, the same moves as `CAM` with a few shots aimed elsewhere), and each callout sits in the band above or below the screen with its line to the spot. On its side, a small screen gets smaller callouts (`.small`). Only reduced motion gets the steps as cards, with real frames from the Mac app: `walk/1-ask.webp` … `walk/6-learns.webp` (1200×800), made from the Devpost gallery images.
 
 ## See it work button
 
