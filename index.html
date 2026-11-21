@@ -317,16 +317,6 @@
     .d-rip.go { animation: ripple .5s cubic-bezier(.2, .7, .3, 1) both; }
     @keyframes ripple { from { opacity: .95; transform: scale(.2); } to { opacity: 0; transform: scale(1); } }
 
-    /* Demo video pop-up. */
-    .demo { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(20, 20, 20, .6); }
-    .demo.open { display: flex; }
-    .demo-box { position: relative; width: min(960px, 100%, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #000; box-shadow: 0 20px 60px rgba(0, 0, 0, .45); }
-    .demo-box iframe, .demo-box video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .demo-close {
-      position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 14px; border: 0; cursor: pointer;
-      background: var(--m-paper); color: var(--m-ink); font: 600 22px/1 var(--m-font-brand);
-    }
-    .demo-close:focus-visible { outline: 2px solid var(--m-paper); outline-offset: 3px; }
     .btn {
       display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 22px; border-radius: 14px;
       background: var(--m-ink); color: var(--m-paper); text-decoration: none; font: 600 15px/1 var(--m-font-brand);
@@ -346,6 +336,20 @@
     .dl .note { max-width: 240px; text-align: center; line-height: 1.4; }
     .cta .btn-ghost { height: 40px; padding: 0 16px; font-size: 14px; margin-top: 4px; }
     @media (max-width: 520px) { .dl { flex-direction: column; align-items: center; } }
+    /* The download code: on the first download click the field takes the buttons' place (same height, so the hero
+       doesn't grow into the tree), with "back" to the buttons. */
+    .code { display: flex; gap: 10px; width: min(494px, 100%, calc(100vw - 32px)); }
+    .code[hidden], .dl[hidden] { display: none; }
+    .code + .note { margin-top: -2px; }
+    html.gl .frame .code { pointer-events: auto; }
+    .code input {
+      flex: 1; min-width: 0; height: 48px; padding: 0 16px; border: 0; border-radius: 14px;
+      background: var(--m-paper); box-shadow: inset 0 0 0 1.5px var(--m-ink); color: var(--m-ink); font: 500 16px/1 var(--m-font-brand);
+    }
+    .code input::placeholder { color: var(--m-ink-faint); }
+    .code input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--m-ink); }
+    .code .btn { flex: none; border: 0; cursor: pointer; }
+    .code .btn[disabled] { opacity: .6; cursor: default; }
 
     /* 3D mode: the hero waits until the tree has grown. */
     html.gl .hero { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .7s var(--settle); visibility: hidden; }
@@ -423,25 +427,29 @@
         <div class="cta after" style="animation-delay:1.6s">
           <div class="dl">
             <div class="dl-item">
-              <a class="btn" href="https://github.com/adrian-erlikhman/miyagi/releases/download/mac/Miyagi-Mac.zip" data-dl="mac">
+              <a class="btn" href="#download" data-dl="mac">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
                 download for mac
               </a>
               <span class="note" data-dl-note="mac">apple silicon · macos 13 or later</span>
             </div>
             <div class="dl-item">
-              <a class="btn" href="https://github.com/adrian-erlikhman/miyagi/releases/download/windows/Miyagi-Windows-Setup.exe" data-dl="win">
+              <a class="btn" href="#download" data-dl="win">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
                 download for windows
               </a>
               <span class="note" data-dl-note="win">windows 10 and 11</span>
             </div>
           </div>
-          <a class="btn btn-ghost" href="#" data-demo>
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>
-            watch the demo
+          <form class="code" data-code hidden>
+            <input type="text" name="code" placeholder="code" aria-label="download code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+            <button class="btn" type="submit">download</button>
+          </form>
+          <span class="note" data-code-note hidden><span data-code-msg aria-live="polite"></span> · <a class="alt" href="#download" data-code-back>back</a></span>
+          <a class="btn btn-ghost" href="#see-it" data-see>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg>
+            see it work
           </a>
-          <span class="note" data-demo-note></span>
         </div>
       </div>
       <div class="hint">scroll<i aria-hidden="true"></i></div>
@@ -480,27 +488,96 @@
       </li>
     </ul>
   </footer>
-  <div class="demo" role="dialog" aria-modal="true" aria-label="miyagi demo video">
-    <button class="demo-close" type="button" aria-label="Close">×</button>
-    <div class="demo-box"></div>
-  </div>
 
   <script>
-    // Downloads: Mac and Windows are two equal buttons linking straight to fixed release assets in this repo
-    // (tags "mac" and "windows"): no API call, no rate limit. After a click, each note shows its first-open tip.
-    // MAC_READY: the Mac zip is posted (release "mac", CI build 8ffcc49); Adrian asked for it on (Sat 7:30 PM).
+    // Downloads: Mac and Windows are two equal buttons, behind a code (Adrian, Nov 20). The release links (tags "mac" and
+    // "windows" in this repo) aren't in the page: each one is sealed with the code (PBKDF2-SHA256 -> AES-GCM), so only the
+    // right code opens it. The first click opens the code field; a right code is kept in this browser, so later clicks
+    // download straight away. To change the code or a link, re-seal with seal.mjs (see README) and paste SEALED here.
+    // After a download starts, the button's note shows its first-open tip.
+    // MAC_READY: the Mac zip is posted (release "mac"); set it to false only to pull the Mac build.
     var MAC_READY = true;
     (function () {
+      var SEALED = {
+        salt: '/bRBxMxyrJWfK98AqR10dg==', iter: 150000,
+        mac: 'WzY3qmDiaGL/yOd9pQA89Xox8QqCFpTS75zFUK9d84XGGHQOCpz8iVLLaW8S8W5sabRgRN7ZfdVaZuztcvTfJIYrtNF9A7SkUYGbErYyJH2iMwhnN0fhnuooSq5444yf5QgXWm+5hun3tHE=',
+        win: 'HsnkMICP2hkPDDpLdoTuT8WvXe/akC/EeNU5Z/fY3VmmMjVfks3tMqdS+yDsS4d1XutYRvLvfNYKMlnBGgFPe6mfug2RgGsh8q0kNQJvBnwneAeYWtD0a4vx5bkGaMdfhRYPFSR+pfQi1cOe8/oUrYG/P7fmNoWzzw=='
+      };
       var tips = {
         mac: 'unzip, move miyagi to applications, then right-click › open the first time.',
         win: 'download stuck? press ctrl+j and choose keep. if windows warns you, click more info › run anyway.'
       };
+      var KEPT = 'miyagi-code', LABEL = { mac: 'download for mac', win: 'download for windows' };
+      var dl = document.querySelector('.dl'), form = document.querySelector('[data-code]'), input = form.querySelector('input'), go = form.querySelector('button');
+      var note = document.querySelector('[data-code-note]'), msg = note.querySelector('[data-code-msg]');
+      var want = null, busy = false;
+
+      function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+      function bytes(b64) { var s = atob(b64), u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+      function kept() { try { return localStorage.getItem(KEPT) || ''; } catch (e) { return ''; } }
+      function keep(c) { try { if (c) localStorage.setItem(KEPT, c); else localStorage.removeItem(KEPT); } catch (e) {} }
+      function say(t) { msg.textContent = t; }
+      // The link for os, if code is right; rejects if it's wrong.
+      function unseal(code, os) {
+        var S = window.crypto && crypto.subtle, box = bytes(SEALED[os]);
+        if (!S) return Promise.reject(new Error('no webcrypto'));
+        return S.importKey('raw', new TextEncoder().encode(code), 'PBKDF2', false, ['deriveKey'])
+          .then(function (k) { return S.deriveKey({ name: 'PBKDF2', salt: bytes(SEALED.salt), iterations: SEALED.iter, hash: 'SHA-256' }, k, { name: 'AES-GCM', length: 256 }, false, ['decrypt']); })
+          .then(function (key) { return S.decrypt({ name: 'AES-GCM', iv: box.slice(0, 12) }, key, box.slice(12)); })
+          .then(function (buf) { return new TextDecoder().decode(buf); });
+      }
+      function buttons() { form.hidden = true; note.hidden = true; dl.hidden = false; }
+      function start(os, url) {
+        location.href = url;
+        buttons();
+        document.querySelector('[data-dl-note="' + os + '"]').textContent = tips[os];
+      }
+      function ask(os) {
+        want = os; go.textContent = LABEL[os];
+        dl.hidden = true; form.hidden = false; note.hidden = false;
+        say('enter the code to download');
+        input.focus();
+      }
+      function back() { buttons(); var a = document.querySelector('[data-dl="' + want + '"]'); if (a) a.focus(); }
+
       [].forEach.call(document.querySelectorAll('[data-dl]'), function (a) {
-        var os = a.getAttribute('data-dl'), note = document.querySelector('[data-dl-note="' + os + '"]');
+        var os = a.getAttribute('data-dl');
         a.addEventListener('click', function (e) {
-          if (os === 'mac' && !MAC_READY) { e.preventDefault(); note.textContent = "the mac build isn't posted yet."; return; }
-          note.textContent = tips[os];
+          e.preventDefault();
+          if (os === 'mac' && !MAC_READY) { document.querySelector('[data-dl-note="mac"]').textContent = "the mac build isn't posted yet."; return; }
+          var c = kept();
+          if (!c) { ask(os); return; }
+          unseal(c, os).then(function (url) { start(os, url); }, function () { keep(''); ask(os); });
         });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var c = norm(input.value);
+        if (busy || !want) return;
+        if (!c) { input.focus(); return; }
+        busy = true; go.disabled = true;
+        unseal(c, want).then(function (url) {
+          keep(c); input.value = '';
+          start(want, url);
+        }, function (err) {
+          say(err && err.message === 'no webcrypto' ? "this browser can't open the download" : 'wrong code');
+          input.select();
+        }).then(function () { busy = false; go.disabled = false; });
+      });
+      input.addEventListener('input', function () { if (msg.textContent === 'wrong code') say('enter the code to download'); });
+      input.addEventListener('keydown', function (e) { if (e.key === 'Escape') back(); });
+      note.querySelector('[data-code-back]').addEventListener('click', function (e) { e.preventDefault(); back(); });
+    })();
+
+    // "See it work" in the hero scrolls down to the story.
+    (function () {
+      var a = document.querySelector('[data-see]'), to = document.getElementById('see-it');
+      if (!a || !to) return;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.miyagiLenis) window.miyagiLenis.scrollTo(to, { offset: -24 });
+        else to.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     })();
 
@@ -1223,41 +1300,6 @@
       window.miyagiStory = { film: function (o) { FULL = !!o.full; CAMX = o.camera || null; NOTEFN = o.note || null; NOYT = true; fit(); }, draw: draw, fx: fx, beats: beats, rippleAt: rippleAt, steps: STEPS, cut: CUT, video: { id: VID, at: vt }, goTo: goTo, where: where, pOf: pOf, makeSynth: makeSynth, get p() { return P; } };   // for checking it from the console
     })();
 
-    // "Watch the demo": put the video link here (YouTube, Loom, Vimeo or an .mp4). Empty means not posted yet.
-    var DEMO_URL = 'https://youtu.be/TXrGOwRW3OM';
-    (function () {
-      var btn = document.querySelector('[data-demo]'), note = document.querySelector('[data-demo-note]');
-      var modal = document.querySelector('.demo'), box = modal.querySelector('.demo-box'), closeBtn = modal.querySelector('.demo-close');
-      function embed(url) {
-        var m;
-        if ((m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{6,})/))) return { src: 'https://www.youtube-nocookie.com/embed/' + m[1] + '?autoplay=1&rel=0' };
-        if ((m = url.match(/loom\.com\/(?:share|embed)\/(\w+)/))) return { src: 'https://www.loom.com/embed/' + m[1] + '?autoplay=1' };
-        if ((m = url.match(/vimeo\.com\/(\d+)/))) return { src: 'https://player.vimeo.com/video/' + m[1] + '?autoplay=1' };
-        if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return { video: url };
-        return null;
-      }
-      function close() {
-        modal.classList.remove('open');
-        [].forEach.call(box.querySelectorAll('iframe, video'), function (n) { n.remove(); });
-        if (window.miyagiLenis) window.miyagiLenis.start();
-        btn.focus();
-      }
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var v = DEMO_URL && embed(DEMO_URL);
-        if (!v) { note.textContent = 'the demo video is coming soon.'; return; }
-        var el;
-        if (v.video) { el = document.createElement('video'); el.src = v.video; el.controls = true; el.autoplay = true; el.playsInline = true; }
-        else { el = document.createElement('iframe'); el.src = v.src; el.allow = 'autoplay; fullscreen; picture-in-picture'; el.allowFullscreen = true; el.title = 'miyagi demo'; }
-        box.appendChild(el);
-        modal.classList.add('open');
-        if (window.miyagiLenis) window.miyagiLenis.stop();
-        closeBtn.focus();
-      });
-      closeBtn.addEventListener('click', close);
-      modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-      addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
-    })();
   </script>
 
   <script type="module">
