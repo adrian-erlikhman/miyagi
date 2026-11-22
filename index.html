@@ -377,21 +377,6 @@
     .mw .mbar0 .ap path { fill: #1c1b19 !important; }
     .mw .mbar0 b { font-weight: 600; }
     .mw .mbar0 .rt { margin-left: auto; display: flex; align-items: center; gap: 14px; } .mw .mbar0 .rt svg { width: 15px; height: 15px; }
-    .mw .dock { position: absolute; z-index: 21; left: 0; right: 0; bottom: 8px; margin: 0 auto; width: max-content; display: flex; align-items: flex-end; gap: 7px; padding: 6px 8px;
-      border-radius: 20px; background: rgba(250, 249, 246, .42); -webkit-backdrop-filter: blur(26px) saturate(1.5); backdrop-filter: blur(26px) saturate(1.5);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, .45) inset, 0 14px 34px -16px rgba(0, 0, 0, .45); }
-    .mw .dk { position: relative; width: 50px; height: 50px; border-radius: 12px; background: #fff; display: grid; place-items: center; box-shadow: 0 4px 10px -6px rgba(0, 0, 0, .4); transition: transform .3s var(--spring); }
-    .mw .dk > span > svg, .mw .dk > span:not(.tt):not(.fd):not(.tr) { width: 30px; height: 30px; display: block; }
-    .mw .dk > span > svg { width: 30px; height: 30px; }
-    .mw .dk.on::after { content: ""; position: absolute; bottom: -5px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: rgba(20, 20, 20, .55); }
-    .mw .dk.front { transform: translateY(-4px); }
-    .mw .dk .tt { width: 50px; height: 50px; border-radius: 12px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .dk .tt .ico { width: 28px; height: 28px; }
-    .mw .dk .fd { width: 50px; height: 50px; border-radius: 12px; background: #e8f2fd; position: relative; overflow: hidden; }
-    .mw .dk .fd i { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; background: #5aa9f6; }
-    .mw .dk .fd b { position: absolute; top: 15px; left: 15px; width: 4px; height: 8px; border-radius: 2px; background: #1c3d63; } .mw .dk .fd b.r { left: auto; right: 15px; }
-    .mw .dk .mg { width: 36px; height: 36px; } .mw .dk .mg svg { width: 100%; height: 100%; display: block; }
-    .mw .dk .tr { width: 30px; height: 36px; border-radius: 4px 4px 8px 8px; background: #d6d6d6; box-shadow: inset 7px 0 0 #c9c9c9, inset -7px 0 0 #c9c9c9, inset 0 3px 0 #bdbdbd; }
-    .mw .dock .sep { width: 1px; height: 42px; margin: 4px 2px; background: rgba(20, 20, 20, .18); }
     .mw .pill { position: absolute; top: 3px; left: 50%; transform: translateX(-50%); height: 38px; padding: 0 9px; border-radius: 19px; z-index: 30;
       background: #0b0b0b; color: #fff; display: flex; align-items: center; gap: 8px; font-size: 13.5px; white-space: nowrap; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .55); }
     .mw .pill .lg { width: 22px; height: 22px; } .mw .pill .lg svg { width: 100%; height: 100%; }
@@ -534,7 +519,7 @@
     .mw .yt .vt small { color: var(--ytMu); font-size: 12.5px; }
 
     /* the shortcut bar: every action has its own pastel */
-    .mw .sbar { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; bottom: 34px; z-index: 22; display: flex; align-items: center; gap: 2px;
+    .mw .sbar { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; bottom: 22px; z-index: 22; display: flex; align-items: center; gap: 2px;
       padding: 6px; border-radius: 16px; background: var(--glass); box-shadow: var(--sh); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
     .mw .sbar:not(.on) { transform: translateY(16px); }
     .mw .sbar .ask { white-space: nowrap; display: flex; align-items: center; gap: 8px; padding: 0 12px; height: 54px; border-radius: 11px; background: var(--chip); margin-right: 6px; color: var(--mu); font-size: 13px; }
@@ -1008,18 +993,6 @@
 
         <div class="mbar0"><span class="ap" data-tool="apple"></span><b id="mbApp">miyagi</b><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><span>Help</span>
           <span class="rt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="1.3" fill="currentColor"/></svg><span>Sat 9:41 PM</span></span></div>
-        <div class="dock" id="dock">
-          <span class="dk" data-app="finder"><span class="fd"><i></i><b></b><b class="r"></b></span></span>
-          <span class="dk on" data-app="chrome"><span data-tool="googlechrome"></span></span>
-          <span class="dk on" data-app="vscode"><span data-tool="vscode"></span></span>
-          <span class="dk on" data-app="terminal"><span class="tt"><span class="ico" data-ico="term"></span></span></span>
-          <span class="dk" data-app="figma"><span data-tool="figma"></span></span>
-          <span class="dk" data-app="blender"><span data-tool="blender"></span></span>
-          <span class="dk" data-app="spotify"><span data-tool="spotify"></span></span>
-          <span class="dk on" data-app="miyagi"><span class="mg" data-logo></span></span>
-          <i class="sep"></i>
-          <span class="dk" data-app="trash"><span class="tr"></span></span>
-        </div>
         <div class="pill" id="pill">
           <span class="lg" data-logo="dark"></span>
           <span class="st" data-st="spin"><i class="spin"></i></span>
@@ -1701,7 +1674,7 @@
         skill: $('#skill'), skrev: $('#skrev'), sbar: $('#sbar'), barCheck: $('#barCheck'), barShow: $('#barShow'), barHint: $('#barHint'),
         cursor: $('#cursor'), ripple: $('#ripple'), chapters: $$('#chapters button'), capline: $('#capline'), frames: ['#f0', '#f1', '#f2', '#f3'].map(function (s) { return $(s); }) };
       var lastScene = -1;
-      var mbApp = $('#mbApp'), dockIcons = $$('#dock .dk');
+      var mbApp = $('#mbApp');
       var guide = $('#guide'), gtx = $('#guideTx'), ghd = $('#guideHd'), gring = $('#gring'), barAsk = $('#barAsk'), barAskTx = $('#barAskTx');
       function rectOf(sel) { var a = pos(sel, 0, 0), e = $(sel); return [a[0], a[1], e.offsetWidth, e.offsetHeight]; }
       function vidRing() { var r = rectOf('.vid'); return [r[0] - 4, r[1] - 4, r[2] + 8, r[3] + 8]; }
@@ -1757,7 +1730,7 @@
 
         on(el.code, t >= 13.6); on(el.yt, t >= 13.6); on(el.sbar, t >= 13.9);
         var front = t < 13.6 ? 'miyagi' : 'Code';
-        if (mbApp.textContent !== front) { mbApp.textContent = front; dockIcons.forEach(function (d) { on(d, d.getAttribute('data-app') === (front === 'Code' ? 'vscode' : 'miyagi'), 'front'); }); }
+        if (mbApp.textContent !== front) mbApp.textContent = front;
         var line = '', A = 'W1 = np.zeros((10, 784))', B = 'W1 = np.random.rand(10, 784) - 0.5', P0 = 'W1 = ';
         if (t >= 17.6 && t < 27.2) line = typed(A, 17.6, 19.6, t);
         else if (t >= 27.2 && t < 28.0) line = A.slice(0, A.length - Math.round(clamp((t - 27.2) / .7) * (A.length - P0.length)));
