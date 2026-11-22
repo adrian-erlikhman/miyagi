@@ -144,8 +144,6 @@
     .macnote .btn { height: 48px; }
     .macnote p { text-wrap: balance; margin: 0; font-size: 16px; line-height: 1.45; color: var(--m-ink); }
     .macnote .row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-    html.nodl .dl, html.nodl .code, html.nodl [data-code-note] { display: none !important; }
-    html.nodl .macnote { display: flex; }
     /* Touch screens: every control is at least 44 pt tall. */
     @media (pointer: coarse) {
       .cta .btn-ghost { height: 44px; }
@@ -237,7 +235,9 @@
     .join input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--m-ink); }
     .join .btn { flex: none; border: 0; cursor: pointer; }
     .join + .note { margin-top: -2px; }
-    html.nodl .join, html.nodl [data-join-note] { display: none !important; }
+    .soon { font-size: 15px; color: var(--m-ink-muted); letter-spacing: -.005em; }
+    .soon[hidden] { display: none; }
+    [data-code-msg]:not(:empty)::after { content: " · "; }
     html { scroll-padding-top: 70px; }
 
     /* Top bar */
@@ -293,7 +293,8 @@
     .mw .walls .paperwall { position: absolute; inset: 0; background: #efeee9; background-image: radial-gradient(rgba(20, 20, 20, .14) 1.1px, transparent 1.4px); background-size: 22px 22px; opacity: 0; transition: opacity .6s; }
     .mw.paper .walls .paperwall { opacity: 1; }
     .mw.paper .walls canvas { visibility: hidden; }
-    .mw .wstage { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; transform-origin: 0 0; font-size: 14px; line-height: 1.4; }
+    .mw .wstage { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; transform-origin: 0 0; font-size: 14px; line-height: 1.4; }
+    .mw .wapps { position: absolute; left: 80px; top: 50px; width: 1440px; height: 900px; }
     .mw .wstage.cam { transition: transform .9s var(--settle); }
     .mw .pause { position: absolute; right: 14px; bottom: 14px; width: 34px; height: 34px; border-radius: 50%; z-index: 5; background: rgba(255, 255, 255, .88); display: grid; place-items: center; box-shadow: 0 2px 10px rgba(0, 0, 0, .18); }
     .mw .pause svg { width: 14px; height: 14px; }
@@ -470,9 +471,9 @@
     .mw .yt .vt small { color: var(--ytMu); font-size: 12.5px; }
 
     /* the shortcut bar: every action has its own pastel */
-    .mw .sbar { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 2px;
+    .mw .sbar { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; bottom: 22px; z-index: 20; display: flex; align-items: center; gap: 2px;
       padding: 6px; border-radius: 16px; background: var(--glass); box-shadow: var(--sh); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
-    .mw .sbar:not(.on) { transform: translateX(-50%) translateY(16px); }
+    .mw .sbar:not(.on) { transform: translateY(16px); }
     .mw .sbar .ask { white-space: nowrap; display: flex; align-items: center; gap: 8px; padding: 0 12px; height: 54px; border-radius: 11px; background: var(--chip); margin-right: 6px; color: var(--mu); font-size: 13px; }
     .mw .sbar .ask .lg { width: 18px; height: 18px; }
     .mw .sbar .ask .kc { font-size: 11px; background: var(--surf); border-radius: 5px; padding: 2px 6px; }
@@ -497,6 +498,15 @@
     .mw .spot:not(.on) { opacity: 0; transform: scale(1.06); }
     .mw .spottag { position: absolute; z-index: 24; padding: 6px 10px; border-radius: 8px; background: var(--lilac); color: #1b1b1b; font-size: 13px; font-weight: 500; white-space: nowrap; transition: opacity .3s, transform .45s var(--spring); }
     .mw .spottag:not(.on) { opacity: 0; transform: translateY(6px); }
+    /* miyagi guiding: a short line from miyagi, and a ring on the spot it means */
+    .mw .guide { position: absolute; z-index: 25; max-width: 330px; display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px 10px 10px; border-radius: 14px;
+      background: var(--surf); color: var(--tx); font-size: 14px; line-height: 1.4; box-shadow: var(--sh); transition: opacity .3s, transform .45s var(--spring); }
+    .mw .guide:not(.on) { opacity: 0; transform: translateY(8px) scale(.98); pointer-events: none; }
+    .mw .guide .av { width: 26px; height: 26px; border-radius: 50%; background: #0b0b0b; display: grid; place-items: center; flex: none; }
+    .mw .guide .av svg { width: 18px; height: 18px; }
+    .mw .gring { position: absolute; z-index: 24; border-radius: 9px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .3); pointer-events: none; transition: opacity .3s; }
+    .mw .gring:not(.on) { opacity: 0; }
+    .mw .sbar .ask.typing { background: var(--surf); box-shadow: 0 0 0 1.5px var(--tx); color: var(--tx); }
 
     .mw .skill { position: absolute; left: 1132px; top: 604px; width: 260px; padding: 14px 14px 12px; z-index: 16; }
     .mw .skill:not(.on) { transform: translateY(16px) scale(.97); }
@@ -508,47 +518,47 @@
     .mw .skill .rev:not(.on) { opacity: 0; } .mw .skill .rev b { color: var(--tx); font-weight: 500; }
 
     /* ---------- everything it does ---------- */
-    .mw .feat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 30px; margin-top: 60px; }
+    .mw .feat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 42px 40px; max-width: 1080px; margin: 60px auto 0; }
     .mw .feat .t { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--tb); color: var(--tf); }
     .mw .feat .t svg { width: 21px; height: 21px; }
     .mw .feat b { display: block; margin-top: 14px; font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
     .mw .feat p { margin: 4px 0 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
-    @media (max-width: 900px) { .mw .feat { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 860px) { .mw .feat { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .mw .feat { grid-template-columns: 1fr; gap: 26px; } }
 
     /* ---------- any app: miyagi's card with the apps around it ---------- */
-    .mw .oframe { position: relative; width: 100%; aspect-ratio: 1200 / 700; margin-top: 30px; overflow: hidden; }
-    .mw .ostage { position: absolute; left: 0; top: 0; width: 1200px; height: 700px; transform-origin: 0 0; }
-    .mw .ologo { position: absolute; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 22px; background: #fff; display: grid; place-items: center;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 16px 34px -16px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
+    .mw .oframe { position: relative; width: 100%; max-width: 1040px; aspect-ratio: 1200 / 760; margin: 30px auto 0; overflow: hidden; }
+    .mw .ostage { position: absolute; left: 0; top: 0; width: 1200px; height: 760px; transform-origin: 0 0; }
+    .mw .ologo { position: absolute; width: 68px; height: 68px; margin: -34px 0 0 -34px; border-radius: 20px; background: #fff; display: grid; place-items: center;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 14px 30px -14px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
       transform: rotate(var(--r, 0deg)); animation: mw-bob 7s ease-in-out infinite; animation-delay: var(--d, 0s); }
     .mw .ologo.round { border-radius: 50%; }
-    .mw .ologo svg { width: 38px; height: 38px; display: block; }
-    .mw .ologo .termtile { width: 40px; height: 40px; border-radius: 10px; background: #141414; color: #fff; display: grid; place-items: center; }
-    .mw .ologo .termtile svg { width: 26px; height: 26px; }
-    @keyframes mw-bob { 0%, 100% { transform: rotate(var(--r, 0deg)) translateY(0); } 50% { transform: rotate(var(--r, 0deg)) translateY(-9px); } }
-    .mw .ocard { position: absolute; left: 340px; top: 26px; width: 520px; height: 650px; background: #fff; border-radius: 20px; overflow: hidden;
-      box-shadow: 0 34px 80px -34px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
-    .mw .ocard canvas { display: block; width: 100%; height: 170px; }
-    .mw .ohead { padding: 26px 34px 0; }
-    .mw .ohead h3 { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 40px; font-weight: 700; letter-spacing: -.035em; line-height: 1; }
-    .mw .ohead h3 svg { width: 48px; height: 48px; flex: none; }
-    .mw .ohead p { margin: 10px 0 0; color: var(--muted); font-size: 16.5px; }
-    .mw .otabs { display: flex; gap: 4px; margin: 20px 28px 6px; }
-    .mw .otabs span { display: flex; gap: 7px; align-items: center; padding: 7px 12px; border-radius: 10px; color: var(--muted); font-size: 14.5px; }
+    .mw .ologo svg { width: 34px; height: 34px; display: block; }
+    .mw .ologo .termtile { width: 36px; height: 36px; border-radius: 9px; background: #141414; color: #fff; display: grid; place-items: center; }
+    .mw .ologo .termtile svg { width: 24px; height: 24px; }
+    @keyframes mw-bob { 0%, 100% { transform: rotate(var(--r, 0deg)) translateY(0); } 50% { transform: rotate(var(--r, 0deg)) translateY(-8px); } }
+    .mw .ocard { position: absolute; left: 410px; top: 120px; width: 380px; height: 520px; background: #fff; border-radius: 18px; overflow: hidden;
+      box-shadow: 0 30px 70px -30px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
+    .mw .ocard canvas { display: block; width: 100%; height: 124px; }
+    .mw .ohead { padding: 22px 28px 0; }
+    .mw .ohead h3 { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -.035em; line-height: 1; }
+    .mw .ohead h3 svg { width: 40px; height: 40px; flex: none; }
+    .mw .ohead p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+    .mw .otabs { display: flex; gap: 2px; margin: 16px 22px 4px; }
+    .mw .otabs span { display: flex; gap: 6px; align-items: center; padding: 6px 10px; border-radius: 9px; color: var(--muted); font-size: 13.5px; }
     .mw .otabs span.on { background: #f1efe9; color: var(--ink); }
-    .mw .otabs .ico { width: 15px; height: 15px; }
-    .mw .orow { display: grid; grid-template-columns: 1fr 150px; align-items: center; margin: 0 34px; border-top: 1px solid rgba(20, 20, 20, .07); height: 50px; font-size: 15.5px; }
-    .mw .orow.hd { color: var(--faint); font-size: 13.5px; height: 38px; border-top: 0; }
-    .mw .orow .l { display: flex; gap: 11px; align-items: center; } .mw .orow .l svg { width: 18px; height: 18px; flex: none; }
-    .mw .orow .tag { font-size: 13px; padding: 5px 8px; justify-self: start; }
-    .mw .bub { position: absolute; max-width: 440px; padding: 16px 20px; border-radius: 18px; background: #efeee9; font-size: 17.5px; line-height: 1.4; color: var(--ink);
-      box-shadow: 0 18px 40px -22px rgba(20, 16, 10, .4); transition: opacity .45s, transform .55s var(--spring); }
+    .mw .otabs .ico { width: 14px; height: 14px; }
+    .mw .orow { display: grid; grid-template-columns: 1fr 120px; align-items: center; margin: 0 28px; border-top: 1px solid rgba(20, 20, 20, .07); height: 44px; font-size: 14.5px; }
+    .mw .orow.hd { color: var(--faint); font-size: 12.5px; height: 34px; border-top: 0; }
+    .mw .orow .l { display: flex; gap: 10px; align-items: center; } .mw .orow .l svg { width: 16px; height: 16px; flex: none; }
+    .mw .orow .tag { font-size: 12px; padding: 4px 7px; justify-self: start; }
+    .mw .bub { position: absolute; max-width: 360px; padding: 14px 18px; border-radius: 16px; background: #efeee9; font-size: 16px; line-height: 1.4; color: var(--ink);
+      box-shadow: 0 16px 36px -20px rgba(20, 16, 10, .4); transition: opacity .45s, transform .55s var(--spring); }
     .mw .bub:not(.on) { opacity: 0; transform: translateY(12px) scale(.98); }
-    .mw .bub.me { left: 600px; top: 452px; }
-    .mw .bub.mi { left: 300px; top: 560px; display: flex; gap: 12px; align-items: flex-start; background: #fff; box-shadow: 0 18px 40px -20px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
-    .mw .bub.mi .av { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #0b0b0b; display: grid; place-items: center; margin-top: -2px; }
-    .mw .bub.mi .av svg { width: 24px; height: 24px; }
+    .mw .bub.me { left: 640px; top: 430px; }
+    .mw .bub.mi { left: 300px; top: 540px; max-width: 420px; display: flex; gap: 12px; align-items: flex-start; background: #fff; box-shadow: 0 16px 36px -18px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
+    .mw .bub.mi .av { width: 30px; height: 30px; flex: none; border-radius: 50%; background: #0b0b0b; display: grid; place-items: center; margin-top: -2px; }
+    .mw .bub.mi .av svg { width: 21px; height: 21px; }
 
     /* ---------- your tools, one lesson ---------- */
     .mw .cframe { position: relative; width: 100%; aspect-ratio: 1200 / 520; margin-top: 50px; }
@@ -626,7 +636,7 @@
 <header class="mnav" id="mnav">
   <a class="lg" href="#top" data-go aria-label="miyagi"><svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#b5603f"><rect x="18" y="73" width="64" height="6" rx="2"/><path d="M22 79H78L74 89H26Z"/></g><g fill="#5a4433"><path d="M47 72C45 60 52 52 50 40C49 34 46 30 44 27L50 24C54 30 57 36 57 43C58 54 51 61 54 72Z"/></g><g fill="#1f9b45"><circle cx="48" cy="22" r="11"/><circle cx="30" cy="40" r="9"/><circle cx="70" cy="34" r="10"/></g></svg>miyagi</a>
   <nav aria-label="sections"><a data-go href="#see-it">see it work</a><a data-go href="#what">features</a><a data-go href="#apps">apps</a><a data-go href="#faq">faq</a></nav>
-  <a class="go" href="#get" data-go>get early access</a>
+  <a class="go" href="#get" data-go>get a code</a>
 </header>
   <main class="track" id="top">
     <div class="frame">
@@ -643,11 +653,17 @@
         <h1 class="after" style="animation-delay:1.45s">wax on, wax off.</h1>
         <p class="lede after" style="animation-delay:1.52s">tutorials that wait until you've done each step.</p>
         <div class="cta after" style="animation-delay:1.6s">
-          <form class="join" data-join id="get" novalidate>
-            <input type="email" name="email" placeholder="your email" aria-label="your email" autocomplete="email" enterkeyhint="send">
-            <button class="btn" type="submit">get early access</button>
+          <span class="soon" data-soon>coming soon for public access.</span>
+          <form class="code" data-code>
+            <input type="text" name="code" placeholder="enter your code" aria-label="access code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+            <button class="btn" type="submit">unlock</button>
           </form>
-          <span class="note" data-join-note><span data-join-msg aria-live="polite">for mac</span> · <a class="alt" href="#download" data-have-code>have a code?</a></span>
+          <span class="note" data-code-note><span data-code-msg aria-live="polite"></span><a class="alt" href="#get" data-want>want a code?</a></span>
+          <form class="join" data-join id="get" novalidate hidden>
+            <input type="email" name="email" placeholder="your email" aria-label="your email" autocomplete="email" enterkeyhint="send">
+            <button class="btn" type="submit">get a code</button>
+          </form>
+          <span class="note" data-join-note hidden><span data-join-msg aria-live="polite">we'll email you a code.</span> · <a class="alt" href="#download" data-back>back</a></span>
           <div class="dl" hidden>
             <div class="dl-item">
               <a class="btn" href="#download" data-dl="mac">
@@ -657,19 +673,6 @@
               <span class="note" data-dl-note="mac">apple silicon · macos 13 or later</span>
             </div>
           </div>
-          <div class="macnote" data-macnote>
-            <p>miyagi runs on a Mac for now. open this page on your Mac to download.</p>
-            <div class="row">
-              <button class="btn" type="button" data-copylink>copy link</button>
-              <a class="btn btn-ghost" data-maillink href="mailto:?subject=miyagi%20for%20my%20Mac&amp;body=https%3A%2F%2Fmiyagi.study%2F">email it to me</a>
-            </div>
-            <span class="note" data-copymsg aria-live="polite"></span>
-          </div>
-          <form class="code" data-code hidden>
-            <input type="text" name="code" placeholder="code" aria-label="download code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
-            <button class="btn" type="submit">download</button>
-          </form>
-          <span class="note" data-code-note hidden><span data-code-msg aria-live="polite"></span> · <a class="alt" href="mailto:erlikhman.adrian@gmail.com?subject=miyagi%20download%20code">no code? ask us</a> · <a class="alt" href="#download" data-code-back>back</a></span>
           <a class="btn btn-ghost" href="#see-it" data-see>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg>
             see it work
@@ -698,6 +701,7 @@
           <span class="kc" id="pillKc"></span>
         </div>
 
+        <div class="wapps" id="wapps">
         <div class="home fx" id="home">
           <div class="side">
             <div class="tl"><i></i><i></i><i></i></div>
@@ -753,7 +757,7 @@
           <div class="tb"><div class="tl"><i></i><i></i><i></i></div><span class="ttl">nn.py — digits</span></div>
           <div class="tabs"><span class="on">nn.py</span><span>data.py</span></div>
           <div class="src" id="src"></div>
-          <div class="term"><div class="th"><span>TERMINAL</span><span>PROBLEMS</span><span>OUTPUT</span></div><pre id="term"></pre></div>
+          <div class="term" id="wterm"><div class="th"><span>TERMINAL</span><span>PROBLEMS</span><span>OUTPUT</span></div><pre id="term"></pre></div>
         </div>
         <div class="win2 yt fx" id="yt">
           <div class="tb"><div class="tl"><i></i><i></i><i></i></div><div class="url">youtube.com/watch?v=w8yWXqWQYmU</div></div>
@@ -799,8 +803,6 @@
             <div class="cmp"><small>Expected</small><code>acc above 0.80</code></div>
           </div>
         </div>
-        <div class="spot" id="spot"></div>
-        <div class="spottag" id="spottag">W1 starts at zero here</div>
 
         <div class="skill surface fx" id="skill">
           <span class="lab">Skills · Neural networks</span>
@@ -818,7 +820,7 @@
         </div>
 
         <div class="sbar fx" id="sbar">
-          <span class="ask"><span class="lg" data-logo></span>ask miyagi<span class="kc" data-kc></span></span>
+          <span class="ask" id="barAsk"><span class="lg" data-logo></span><span id="barAskTx">ask miyagi</span><span class="kc" data-kc></span></span>
           <span class="it tn-sand"><span class="ico" data-ico="back"></span>Back</span>
           <span class="it tn-sky"><span class="ico" data-ico="q"></span>Explain</span>
           <span class="it tn-mint"><span class="ico" data-ico="diagram"></span>Diagram</span>
@@ -829,6 +831,11 @@
           <span class="it"><span class="ico" data-ico="stop"></span>End lesson</span>
         </div>
 
+        </div>
+        <div class="spot" id="spot"></div>
+        <div class="spottag" id="spottag">W1 starts at zero here</div>
+        <div class="gring" id="gring"></div>
+        <div class="guide" id="guide"><span class="av" data-logo="dark"></span><span id="guideTx"></span></div>
         <div class="ripple" id="ripple"></div>
         <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5l14.5 9.2-6.3 1.3-3.4 5.7z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
       </div>
@@ -837,7 +844,7 @@
     <div class="chapters" id="chapters">
       <button type="button"><i></i><b>ask</b><span>type a goal or paste a youtube link.</span></button>
       <button type="button"><i></i><b>set up</b><span>it gets your computer ready.</span></button>
-      <button type="button"><i></i><b>your turn</b><span>the video waits for your code.</span></button>
+      <button type="button"><i></i><b>your turn</b><span>ask anything. it tells you what to do, then waits.</span></button>
       <button type="button"><i></i><b>not yet</b><span>it shows you where, then hints.</span></button>
       <button type="button"><i></i><b>passed</b><span>the video moves on. your skills grow.</span></button>
     </div>
@@ -849,14 +856,15 @@
   <div class="mw-hold">
     <h2 class="mw-h" id="what-h">everything it does.</h2>
     <div class="feat">
-      <div class="fi tn-sand"><span class="t" data-ico="search"></span><b>ask anything</b><p>type a goal or paste a youtube link. it finds the best tutorial.</p></div>
+      <div class="fi tn-sand"><span class="t" data-ico="search"></span><b>ask for anything</b><p>type a goal or paste a youtube link. it finds the best tutorial.</p></div>
       <div class="fi tn-mint"><span class="t" data-ico="wrench"></span><b>sets up your computer</b><p>installs what the lesson needs and opens the project.</p></div>
       <div class="fi tn-sky"><span class="t" data-ico="lock"></span><b>waits for you</b><p>the video stops at each step until you've done it.</p></div>
+      <div class="fi tn-lilac"><span class="t" data-ico="target"></span><b>guides every step</b><p>it says what to do next and circles where to do it.</p></div>
       <div class="fi tn-peach"><span class="t" data-ico="check"></span><b>checks your work</b><p>it watches every run and tells you when a step passes.</p></div>
-      <div class="fi tn-pink"><span class="t" data-ico="bulb"></span><b>helps when you're stuck</b><p>explain, diagram or hint. small nudges, not the answer.</p></div>
-      <div class="fi tn-lilac"><span class="t" data-ico="target"></span><b>shows you where</b><p>show me circles the exact line or button on your screen.</p></div>
+      <div class="fi tn-sky"><span class="t" data-ico="q"></span><b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p></div>
+      <div class="fi tn-pink"><span class="t" data-ico="bulb"></span><b>helps when you're stuck</b><p>explain, diagram, show me or hint. nudges, not the answer.</p></div>
       <div class="fi tn-mint"><span class="t" data-ico="skills"></span><b>grows your skills</b><p>every step you pass lands on your skill tree, with reviews.</p></div>
-      <div class="fi tn-sky"><span class="t" data-ico="grid"></span><b>any app on your screen</b><p>blender, figma, sheets or vs code. if you can see it, it can teach it.</p></div>
+      <div class="fi tn-sand"><span class="t" data-ico="grid"></span><b>any app on your screen</b><p>blender, figma, sheets or vs code. if you can see it, it can teach it.</p></div>
     </div>
   </div>
 </section>
@@ -877,7 +885,6 @@
         <div class="orow"><span class="l"><span data-tool="googlesheets"></span>Make a pivot table</span><em class="tag mint">Google Sheets</em></div>
         <div class="orow"><span class="l"><span data-tool="figma"></span>Design a logo</span><em class="tag pink">Figma</em></div>
         <div class="orow"><span class="l"><span data-tool="jupyter"></span>Clean a CSV with pandas</span><em class="tag lilac">Jupyter</em></div>
-        <div class="orow"><span class="l"><span data-tool="davinciresolve"></span>Color-grade a clip</span><em class="tag sand">DaVinci Resolve</em></div>
       </div>
       <div class="bub me" id="bq"></div>
       <div class="bub mi" id="ba"><span class="av" data-logo="dark"></span><span id="baTx"></span></div>
@@ -918,7 +925,7 @@
       <details><summary>which apps does it work with?<i></i></summary><p>anything on your screen. vs code, jupyter and your terminal get deeper checks, since miyagi can run your code.</p></details>
       <details><summary>is it watching my screen all the time?<i></i></summary><p>no. it only looks during a lesson, to check your step. those screenshots go to anthropic's claude, the ai that checks your work, so close private apps first.</p></details>
       <details><summary>what do i need?<i></i></summary><p>a mac with apple silicon on macos 13 or later, for now. windows comes later.</p></details>
-      <details><summary>how do i get it?<i></i></summary><p>miyagi is in early access. <a href="#get">leave your email</a>, or enter your code to download.</p></details>
+      <details><summary>how do i get it?<i></i></summary><p>it's coming soon for public access. have a code? enter it at the top of the page. <a href="#get" data-want-link>want a code?</a> ask and we'll send you one.</p></details>
     </div>
   </div>
 </section>
@@ -940,14 +947,11 @@
   </footer>
 
   <script>
-    // Windows is off the site for launch (decision D5, Nov 21: Mac only for now); its sealed link stays below for when it
-    // comes back, with a "download for windows" button (data-dl="win") next to the Mac one.
-    // Downloads: Mac and Windows are two equal buttons, behind a code (Adrian, Nov 20). The release links (tags "mac" and
-    // "windows" in this repo) aren't in the page: each one is sealed with the code (PBKDF2-SHA256 -> AES-GCM), so only the
-    // right code opens it. The first click opens the code field; a right code is kept in this browser, so later clicks
-    // download straight away. To change the code or a link, re-seal with seal.mjs (see README) and paste SEALED here.
-    // After a download starts, the button's note shows its first-open tip.
-    // MAC_READY: the Mac zip is posted (release "mac"); set it to false only to pull the Mac build.
+    // Downloads (Nov 21, Adrian): "coming soon for public access", then a code field. A right code shows the download
+    // button and is kept in this browser, so later visits skip the field; "want a code?" asks us for one by email. The
+    // release links (tags "mac" and "windows" in this repo) aren't in the page: each one is sealed with the code
+    // (PBKDF2-SHA256 -> AES-GCM). To change the code or a link, re-seal with seal.mjs (see README) and paste SEALED here.
+    // Windows stays off the page for launch (decision D5: Mac only for now); its sealed link stays for when it comes back.
     var MAC_READY = true;
     (function () {
       var SEALED = {
@@ -959,17 +963,16 @@
         mac: 'unzip and move miyagi to applications. if macos blocks it, open system settings › privacy & security › open anyway.',
         win: 'download stuck? press ctrl+j and choose keep. if windows warns you, click more info › run anyway.'
       };
-      var KEPT = 'miyagi-code', LABEL = { mac: 'download for mac', win: 'download for windows' };
+      var KEPT = 'miyagi-code';
       var dl = document.querySelector('.dl'), form = document.querySelector('[data-code]'), input = form.querySelector('input'), go = form.querySelector('button');
-      var note = document.querySelector('[data-code-note]'), msg = note.querySelector('[data-code-msg]');
-      var want = null, busy = false, unlocked = false;
+      var note = document.querySelector('[data-code-note]'), msg = note.querySelector('[data-code-msg]'), soon = document.querySelector('[data-soon]');
       var join = document.querySelector('[data-join]'), jnote = document.querySelector('[data-join-note]'), jmsg = jnote.querySelector('[data-join-msg]');
+      var busy = false;
 
       function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
       function bytes(b64) { var s = atob(b64), u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
       function kept() { try { return localStorage.getItem(KEPT) || ''; } catch (e) { return ''; } }
       function keep(c) { try { if (c) localStorage.setItem(KEPT, c); else localStorage.removeItem(KEPT); } catch (e) {} }
-      function say(t) { msg.textContent = t; }
       // The link for os, if code is right; rejects if it's wrong.
       function unseal(code, os) {
         var S = window.crypto && crypto.subtle, box = bytes(SEALED[os]);
@@ -979,29 +982,21 @@
           .then(function (key) { return S.decrypt({ name: 'AES-GCM', iv: box.slice(0, 12) }, key, box.slice(12)); })
           .then(function (buf) { return new TextDecoder().decode(buf); });
       }
-      function buttons() { unlocked = true; form.hidden = true; note.hidden = true; join.hidden = true; jnote.hidden = true; dl.hidden = false; }
-      function welcome() { form.hidden = true; note.hidden = true; dl.hidden = true; join.hidden = false; jnote.hidden = false; }
-      function start(os, url) {
-        location.href = url;
-        buttons();
-        document.querySelector('[data-dl-note="' + os + '"]').textContent = tips[os];
+      // One row shows at a time: the code field, the ask-for-a-code field, or the download button.
+      function show(which) {
+        form.hidden = note.hidden = which !== 'code';
+        join.hidden = jnote.hidden = which !== 'ask';
+        dl.hidden = which !== 'dl';
+        soon.hidden = which === 'dl';
       }
-      function ask(os) {
-        want = os; go.textContent = LABEL[os];
-        dl.hidden = true; join.hidden = true; jnote.hidden = true; form.hidden = false; note.hidden = false;
-        say('enter the code to download');
-        input.focus();
-      }
-      function back() { if (unlocked) { buttons(); var a = document.querySelector('[data-dl="' + want + '"]'); if (a) a.focus(); } else welcome(); }
+      function start(os, url) { location.href = url; var n = document.querySelector('[data-dl-note="' + os + '"]'); if (n) n.textContent = tips[os]; }
 
       [].forEach.call(document.querySelectorAll('[data-dl]'), function (a) {
         var os = a.getAttribute('data-dl');
         a.addEventListener('click', function (e) {
           e.preventDefault();
           if (os === 'mac' && !MAC_READY) { document.querySelector('[data-dl-note="mac"]').textContent = "the mac build isn't posted yet."; return; }
-          var c = kept();
-          if (!c) { ask(os); return; }
-          unseal(c, os).then(function (url) { start(os, url); }, function () { keep(''); ask(os); });
+          unseal(kept(), os).then(function (url) { start(os, url); }, function () { keep(''); show('code'); msg.textContent = 'enter your code again'; input.focus(); });
         });
       });
 
@@ -1011,45 +1006,33 @@
         if (busy) return;
         if (!c) { input.focus(); return; }
         busy = true; go.disabled = true;
-        unseal(c, want || 'win').then(function (url) {
-          keep(c); input.value = '';
-          if (want) start(want, url); else buttons();
+        unseal(c, 'mac').then(function () {
+          keep(c); input.value = ''; msg.textContent = ''; show('dl');
         }, function (err) {
-          say(err && err.message === 'no webcrypto' ? "this browser can't open the download" : 'wrong code');
+          msg.textContent = err && err.message === 'no webcrypto' ? "this browser can't open the download" : 'wrong code';
           input.select();
         }).then(function () { busy = false; go.disabled = false; });
       });
-      input.addEventListener('input', function () { if (msg.textContent === 'wrong code') say('enter the code to download'); });
-      input.addEventListener('keydown', function (e) { if (e.key === 'Escape') back(); });
-      note.querySelector('[data-code-back]').addEventListener('click', function (e) { e.preventDefault(); back(); });
-      // "have a code?" opens the code field; a right code shows the two download buttons.
-      jnote.querySelector('[data-have-code]').addEventListener('click', function (e) {
-        e.preventDefault(); want = null; go.textContent = 'unlock';
-        join.hidden = true; jnote.hidden = true; dl.hidden = true; form.hidden = false; note.hidden = false;
-        say('enter your code'); input.focus();
+      input.addEventListener('input', function () { if (msg.textContent) msg.textContent = ''; });
+
+      function ask(e) { if (e) e.preventDefault(); jmsg.textContent = "we'll email you a code."; show('ask'); join.querySelector('input').focus({ preventScroll: true }); }
+      note.querySelector('[data-want]').addEventListener('click', ask);
+      [].forEach.call(document.querySelectorAll('[data-want-link]'), function (a) {
+        a.addEventListener('click', function (e) { ask(e); if (window.miyagiLenis) window.miyagiLenis.scrollTo(0); else scrollTo({ top: 0, behavior: 'smooth' }); });
       });
-      // Early access: no list service yet, so it opens an email to us with their address in it.
+      jnote.querySelector('[data-back]').addEventListener('click', function (e) { e.preventDefault(); show('code'); input.focus(); });
+      // Asking for a code: no list service yet, so it opens an email to us with their address in it.
       join.addEventListener('submit', function (e) {
         e.preventDefault();
         var em = join.querySelector('input'), v = em.value.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { jmsg.textContent = 'that email looks off'; em.focus(); return; }
-        location.href = 'mailto:erlikhman.adrian@gmail.com?subject=' + encodeURIComponent('miyagi early access') + '&body=' + encodeURIComponent('please add me to miyagi early access: ' + v);
+        location.href = 'mailto:erlikhman.adrian@gmail.com?subject=' + encodeURIComponent('miyagi code') + '&body=' + encodeURIComponent('can i get a miyagi code? my email: ' + v);
         jmsg.textContent = 'thanks. send the email that just opened.'; em.value = '';
       });
-      join.querySelector('input').addEventListener('input', function () { if (jmsg.textContent === 'that email looks off') jmsg.textContent = 'for mac'; });
-      // A code kept from before still works: show the downloads straight away.
-      if (kept()) unseal(kept(), 'win').then(function () { buttons(); }, function () { keep(''); });
-    })();
+      join.querySelector('input').addEventListener('input', function () { if (jmsg.textContent === 'that email looks off') jmsg.textContent = "we'll email you a code."; });
 
-    // Tablet or phone: copy the page link so it can be opened on a Mac.
-    (function () {
-      var b = document.querySelector('[data-copylink]'), m = document.querySelector('[data-copymsg]');
-      if (!b) return;
-      b.addEventListener('click', function () {
-        var url = 'https://miyagi.study/', done = function (t) { m.textContent = t; };
-        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { done('link copied'); }, function () { done(url); });
-        else done(url);
-      });
+      // A code kept from before still works: show the download straight away.
+      if (kept()) unseal(kept(), 'mac').then(function () { show('dl'); }, function () { keep(''); });
     })();
 
     // "See it work" in the hero scrolls down to the story.
@@ -1072,7 +1055,7 @@
         a.addEventListener('click', function (e) {
           var id = a.getAttribute('href').slice(1), to = id === 'top' ? null : document.getElementById(id);
           e.preventDefault();
-          if (id === 'get') { var f = document.querySelector('[data-join]'); if (window.miyagiLenis) window.miyagiLenis.scrollTo(0); else scrollTo({ top: 0, behavior: 'smooth' });
+          if (id === 'get') { var wl = document.querySelector('[data-want]'); if (wl && !document.querySelector('[data-code]').hidden) wl.click(); var f = document.querySelector('[data-join]'); if (window.miyagiLenis) window.miyagiLenis.scrollTo(0); else scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(function () { if (f && !f.hidden) f.querySelector('input').focus({ preventScroll: true }); }, 900); return; }
           if (!to) { if (window.miyagiLenis) window.miyagiLenis.scrollTo(0); else scrollTo({ top: 0, behavior: 'smooth' }); return; }
           if (window.miyagiLenis) window.miyagiLenis.scrollTo(to, { offset: -70 }); else to.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1221,7 +1204,10 @@
       var L7 = $('#L7 .cd');
 
       /* the film's clock: 38 s, five scenes */
-      var T = 38, SC = [[0, 8], [8, 14], [14, 22], [22, 30.9], [30.9, 38]];
+      var T = 41, SC = [[0, 8], [8, 14], [14, 25], [25, 33.9], [33.9, 41]];
+      // 15-18 s is the ask beat: the lesson clock holds at 15 (the video pauses while miyagi answers), then runs on 3 s behind.
+      function W(t) { return t < 15 ? t : t < 18 ? 15 : t - 3; }
+      var OX = 80, OY = 50;
       function sceneAt(t) { for (var i = SC.length - 1; i >= 0; i--) if (t >= SC[i][0]) return i; return 0; }
       function typed(s, t0, t1, t) { return s.slice(0, Math.round(clamp((t - t0) / (t1 - t0)) * s.length)); }
       function on(el, v, c) { el.classList.toggle(c || 'on', !!v); }
@@ -1238,7 +1224,7 @@
         [27.0, '#L7', .44, .5, 1], [27.6, '#L7', .8, 3.2], [29.4, '#L7', .8, 3.2], [32.0, [1020, 560]], [38, [1010, 690]]
       ];
       function cursorAt(t) {
-        var P = CUR.map(function (k) { return { t: k[0], p: typeof k[1] === 'string' ? pos(k[1], k[2], k[3]) : k[1], click: k[4] }; });
+        var P = CUR.map(function (k) { return { t: k[0], p: typeof k[1] === 'string' ? pos(k[1], k[2], k[3]) : [k[1][0] + OX, k[1][1] + OY], click: k[4] }; });
         var i = 0; while (i < P.length - 1 && P[i + 1].t <= t) i++;
         var a = P[i], b = P[Math.min(i + 1, P.length - 1)], p = a.p;
         if (b !== a) { var dur = Math.min(.8, b.t - a.t), s = clamp((t - (b.t - dur)) / dur), e = ease(s); p = [a.p[0] + (b.p[0] - a.p[0]) * e, a.p[1] + (b.p[1] - a.p[1]) * e]; }
@@ -1251,10 +1237,20 @@
         skill: $('#skill'), skrev: $('#skrev'), sbar: $('#sbar'), barCheck: $('#barCheck'), barShow: $('#barShow'), barHint: $('#barHint'),
         cursor: $('#cursor'), ripple: $('#ripple'), chapters: $$('#chapters button'), capline: $('#capline'), frames: ['#f0', '#f1', '#f2', '#f3'].map(function (s) { return $(s); }) };
       var lastScene = -1;
-      function render(t) {
-        var sc = sceneAt(t);
+      var guide = $('#guide'), gtx = $('#guideTx'), gring = $('#gring'), barAsk = $('#barAsk'), barAskTx = $('#barAskTx');
+      function rectOf(sel) { var a = pos(sel, 0, 0), e = $(sel); return [a[0], a[1], e.offsetWidth, e.offsetHeight]; }
+      function vidRing() { var r = rectOf('.vid'); return [r[0] - 4, r[1] - 4, r[2] + 8, r[3] + 8]; }
+      function under(g) { return [g[0] + 18, g[1] + g[3] + 14]; }
+      var GUIDES = [
+        { real: 1, a: 16.4, b: 17.9, text: "each digit is 28 × 28 pixels, flattened. that's 784 inputs.", ring: vidRing, at: under },
+        { a: 16.5, b: 17.9, text: 'your turn. set up W1, b1, W2 and b2, starting here.', ring: function () { var r = rectOf('#L7'); return [r[0] + 64, r[1] - 3, 250, r[3] + 6]; }, at: function (g) { return [g[0] + 150, g[1] - 60]; } },
+        { a: 19.7, b: 20.9, text: "now run it. i'll check the result.", ring: function () { var r = rectOf('#wterm'); return [r[0] + 8, r[1] + 26, 300, 52]; }, at: function (g) { return [g[0] + 320, g[1] - 4]; } },
+        { a: 33.6, b: 36.8, text: 'next up: the forward pass. watch this part, then write forward().', ring: vidRing, at: under }
+      ];
+      function render(tr) {
+        var t = W(tr), sc = sceneAt(tr);
         if (sc !== lastScene) { canv.forEach(function (c, i) { on(c, i === sc); }); lastScene = sc; el.capline.textContent = el.chapters[sc].querySelector('span').textContent; }
-        el.chapters.forEach(function (b, i) { on(b, i === sc); b.querySelector('i').style.width = (i < sc ? 100 : i === sc ? clamp((t - SC[i][0]) / (SC[i][1] - SC[i][0])) * 100 : 0) + '%'; });
+        el.chapters.forEach(function (b, i) { on(b, i === sc); b.querySelector('i').style.width = (i < sc ? 100 : i === sc ? clamp((tr - SC[i][0]) / (SC[i][1] - SC[i][0])) * 100 : 0) + '%'; });
 
         var p = ['idle', 'ask miyagi'];
         if (t >= 7.2) p = ['spin', 'Writing the steps'];
@@ -1266,6 +1262,7 @@
         if (t >= 29.35) p = ['spin', 'Checking'];
         if (t >= 30.9) p = ['pass', 'Step passed'];
         if (t >= 33.5) p = ['bars', 'Watching · step 3'];
+        if (tr >= 16.2 && tr < 16.5) p = ['spin', 'Answering'];
         if (el.pillTx.textContent !== p[1]) el.pillTx.textContent = p[1];
         el.pillKc.textContent = KC; el.pillKc.style.display = p[0] === 'idle' ? '' : 'none';
         $$('.st', el.pill).forEach(function (s) { on(s, s.getAttribute('data-st') === p[0]); });
@@ -1328,7 +1325,25 @@
         var l0 = $('#skl0'); l0.style.strokeDasharray = 120; l0.style.strokeDashoffset = 120 * (1 - clamp((t - 32.5) / .5));
         on(el.skrev, t >= 33.6);
 
-        var c = cursorAt(t), hide = t >= 8.1 && t < 16;
+        // the ask beat: type a question in the bar, miyagi answers and rings the video
+        on(barAsk, tr >= 15.5 && tr < 16.4, 'typing');
+        var ask = tr >= 15.6 && tr < 16.4 ? typed('why 784 inputs?', 15.6, 16.15, tr) : 'ask miyagi';
+        if (barAskTx.textContent !== ask) barAskTx.textContent = ask;
+        var gact = null; GUIDES.forEach(function (g) { var tt = g.real ? tr : t; if (tt >= g.a && tt < g.b && (g.real || tr < 15 || tr >= 18)) gact = g; });
+        on(guide, gact); on(gring, gact);
+        if (gact) {
+          var rg = gact.ring(), at = gact.at(rg);
+          gring.style.cssText = 'left:' + rg[0] + 'px;top:' + rg[1] + 'px;width:' + rg[2] + 'px;height:' + rg[3] + 'px';
+          guide.style.left = at[0] + 'px'; guide.style.top = at[1] + 'px';
+          if (gtx.textContent !== gact.text) gtx.textContent = gact.text;
+        }
+
+        var c = cursorAt(t), hide = tr >= 8.1 && tr < 14.6;
+        if (tr >= 15 && tr < 18) {
+          var ap = pos('#barAsk', .5, .5), rest = cursorAt(15).p, k1 = ease(clamp((tr - 15) / .5)), k2 = ease(clamp((tr - 17.3) / .7));
+          var mid = [rest[0] + (ap[0] - rest[0]) * k1, rest[1] + (ap[1] - rest[1]) * k1];
+          c = { p: [mid[0] + (rest[0] - mid[0]) * k2, mid[1] + (rest[1] - mid[1]) * k2], click: tr >= 15.5 && tr < 15.95 ? tr - 15.5 : null };
+        }
         el.cursor.style.opacity = hide ? 0 : 1;
         var press = c.click != null && c.click < .18;
         el.cursor.style.transform = 'translate(' + (c.p[0] - 4) + 'px,' + (c.p[1] - 3) + 'px) scale(' + (press ? .86 : 1) + ')';
@@ -1337,21 +1352,22 @@
       }
 
       var film = $('#film'), frame = $('#wframe'), t = 0, playing = !reduce, last = 0, mode = 'auto', narrow = false, started = false, visible = false;
-      if (reduce) t = 19.9;
-      var FOCUS = [[0, 720, 450], [2, 780, 420], [4.5, 800, 520], [7.3, 720, 330], [8.3, 430, 500], [13.4, 980, 330], [14.4, 860, 300], [17, 380, 380],
-        [20, 400, 640], [21.6, 860, 580], [23.3, 420, 380], [25.6, 860, 580], [27, 380, 380], [29.3, 400, 640], [30.9, 1180, 330], [32.2, 1200, 640], [35, 720, 450]];
+      if (reduce) t = 22.9;
+      var FOCUS = [[0, 720, 450], [2, 780, 420], [4.5, 800, 520], [7.3, 720, 330], [8.3, 430, 500], [13.4, 980, 330], [14.4, 860, 300], [15, 640, 760], [16.4, 880, 360],
+        [18, 860, 300], [19.5, 380, 380], [22.7, 400, 640], [24.6, 860, 580], [26.3, 420, 380], [28.6, 860, 580], [30, 380, 380], [32.3, 400, 640], [33.9, 1180, 330],
+        [35.2, 1200, 640], [36.6, 880, 360], [39, 720, 450]];
       function camera(t) {
         if (!narrow) return;
         var f = FOCUS[0]; FOCUS.forEach(function (k) { if (t >= k[0]) f = k; });
-        var w = frame.clientWidth, h = frame.clientHeight, sc = Math.max(w / 1440, h / 780);
-        var tx = clamp(w / 2 - f[1] * sc, w - 1440 * sc, 0), ty = clamp(h / 2 - f[2] * sc, h - 900 * sc, 0);
+        var w = frame.clientWidth, h = frame.clientHeight, sc = Math.max(w / 1600, h / 867);
+        var tx = clamp(w / 2 - (f[1] + OX) * sc, w - 1600 * sc, 0), ty = clamp(h / 2 - (f[2] + OY) * sc, h - 1000 * sc, 0);
         wstage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
       }
       function fit() {
         var hw = $('.mw-hold', film).clientWidth;
         frame.style.width = mode === 'scroll' && hw >= 720 ? Math.min(hw, (innerHeight - 200) * 1.6) + 'px' : '';
         narrow = frame.clientWidth < 720; wstage.classList.toggle('cam', narrow);
-        if (!narrow) wstage.style.transform = 'scale(' + frame.clientWidth / 1440 + ')';
+        if (!narrow) wstage.style.transform = 'scale(' + frame.clientWidth / 1600 + ')';
         layoutConn(); layoutOrbit();
       }
       addEventListener('resize', fit);
@@ -1370,18 +1386,18 @@
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !started) { started = true; if (!reduce && mode === 'auto') t = 0; } }, { threshold: .35 }).observe(frame);
 
       /* any app: miyagi's card with the apps floating around it */
-      var ORB = [['youtube', 250, 110, -6], ['blender', 125, 235, 5], ['vscode', 255, 360, -3, 1], ['figma', 120, 485, 6], ['terminal', 250, 600, -4],
-        ['jupyter', 950, 95, 5, 1], ['googlesheets', 1075, 215, -5], ['davinciresolve', 945, 330, 3], ['python', 1080, 455, -6, 1], ['unity', 955, 585, 4],
-        ['xcode', 40, 360, 3], ['adobephotoshop', 1160, 335, -3], ['pytorch', 60, 110, 0, 1], ['arduino', 1150, 95, 0, 1], ['github', 50, 610, 4, 1], ['rstudioide', 1150, 610, -4]];
-      $('#ologos').innerHTML = ORB.map(function (o, i) {
-        return '<span class="ologo' + (o[4] ? ' round' : '') + '" style="left:' + o[1] + 'px;top:' + o[2] + 'px;--r:' + o[3] + 'deg;--d:' + (-i * 0.9) + 's">' + tool(o[0]) + '</span>';
+      // the apps sit in a ring around miyagi's card, like notion's
+      var RING = ['youtube', 'blender', 'vscode', 'figma', 'terminal', 'xcode', 'pytorch', 'github', 'rstudioide', 'unity', 'python', 'davinciresolve', 'googlesheets', 'jupyter', 'arduino', 'adobephotoshop'];
+      $('#ologos').innerHTML = RING.map(function (n, i) {
+        var a = -Math.PI / 2 + i * 2 * Math.PI / RING.length, x = 600 + Math.cos(a) * 500, y = 380 + Math.sin(a) * 320;
+        return '<span class="ologo' + (i % 3 === 0 ? ' round' : '') + '" style="left:' + x.toFixed(0) + 'px;top:' + y.toFixed(0) + 'px;--r:' + ((i % 5) - 2) * 2 + 'deg;--d:' + (-i * .8) + 's">' + tool(n) + '</span>';
       }).join('');
       var oPainted = false;
       function layoutOrbit() {
         var of = $('#oframe'), os = $('#ostage'), w = of.clientWidth, slim = w < 760;
-        of.style.aspectRatio = slim ? '620 / 700' : '1200 / 700';
-        var s = slim ? w / 620 : w / 1200;
-        os.style.transform = (slim ? 'translateX(' + (-290 * s) + 'px) ' : '') + 'scale(' + s + ')';
+        of.style.aspectRatio = slim ? '660 / 760' : '1200 / 760';
+        var s = slim ? w / 660 : w / 1200;
+        os.style.transform = (slim ? 'translateX(' + (-270 * s) + 'px) ' : '') + 'scale(' + s + ')';
       }
       var QA = [['how do i bevel this edge?', "select it and press ctrl+b. i'll circle the edge."],
         ['why is my sum 0?', "those numbers are stored as text. i'll show you the fix."],
