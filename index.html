@@ -272,6 +272,12 @@
     .hx-field button[disabled] { opacity: .45; cursor: default; transform: none; }
     .hx-field.bad { animation: hxno .34s ease; }
     @keyframes hxno { 20% { transform: translateX(-6px); } 50% { transform: translateX(5px); } 80% { transform: translateX(-2px); } }
+    .hx-tabs { display: flex; gap: 24px; margin-bottom: 2px; }
+    .hx-tabs button { appearance: none; border: 0; background: none; padding: 6px 0; cursor: pointer; color: var(--m-ink-faint); font: 500 15px/1 var(--m-font-brand); letter-spacing: -.005em;
+      box-shadow: inset 0 -2px 0 transparent; transition: color .2s ease, box-shadow .2s ease; }
+    .hx-tabs button:hover { color: var(--m-ink); }
+    .hx-tabs button.on { color: var(--m-ink); box-shadow: inset 0 -2px 0 var(--m-ink); }
+    .hx-tabs button:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 4px; border-radius: 2px; }
     .hx-sub { margin: 0; min-height: 1.45em; font-size: 14px; line-height: 1.45; color: var(--m-ink-faint); letter-spacing: -.005em; text-wrap: balance; max-width: 420px; }
     .hx-sub b { font-weight: 500; color: var(--m-ink); }
     .hx-sub a { color: var(--m-ink); font-weight: 500; text-decoration: none; }
@@ -968,8 +974,9 @@
         <p class="lede after" style="animation-delay:1.52s">tutorials that wait until you've done each step.</p>
         <div class="hx hx-a after" style="animation-delay:1.6s" data-hx>
           
-          <form class="hx-field" data-code>
-            <input type="text" name="code" placeholder="enter your code" aria-label="access code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+          <div class="hx-tabs" role="tablist" aria-label="get miyagi"><button type="button" role="tab" data-act="ask">join the waitlist</button><button type="button" role="tab" data-act="code">enter your code</button></div>
+          <form class="hx-field" data-code hidden>
+            <input type="text" name="code" placeholder="your code" aria-label="access code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
             <button type="submit" aria-label="unlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
           </form>
           <form class="hx-field" data-join id="get" novalidate hidden>
@@ -1381,9 +1388,9 @@
         mac: 'unzip and move miyagi to applications. if macos blocks it, open system settings › privacy & security › open anyway.',
         win: 'download stuck? press ctrl+j and choose keep. if windows warns you, click more info › run anyway.'
       };
-      var KEPT = 'miyagi-code', V = 'a', FIRST = V === 'a' ? 'code' : 'start';
+      var KEPT = 'miyagi-code', V = 'a', FIRST = 'ask';
       var hx = document.querySelector('[data-hx]'), start0 = hx.querySelector('[data-start]'), form = hx.querySelector('[data-code]'), input = form.querySelector('input'), go = form.querySelector('button');
-      var join = hx.querySelector('[data-join]'), dlrow = hx.querySelector('[data-dlrow]'), sub = hx.querySelector('[data-sub]');
+      var tabs = hx.querySelector('.hx-tabs'), join = hx.querySelector('[data-join]'), dlrow = hx.querySelector('[data-dlrow]'), sub = hx.querySelector('[data-sub]');
       var busy = false, state = FIRST;
 
       function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
@@ -1402,8 +1409,8 @@
       var L = function (act, t) { return '<a href="#get" data-act="' + act + '">' + t + '</a>'; };
       var LINES = {
         start: 'coming soon for public access · ' + L('code', 'have a code?'),
-        code: V === 'a' ? 'coming soon for public access · ' + L('ask', 'join the waitlist') : L('ask', 'join the waitlist') + ' · ' + L('back', 'back'),
-        ask: "we'll email you when it opens · " + L('back', 'back'),
+        code: 'coming soon for public access.',
+        ask: 'coming soon for public access.',
         joined: "you're on the waitlist. we'll email you when it opens.",
         dl: 'apple silicon · macos 13 or later'
       };
@@ -1411,7 +1418,8 @@
       function show(which, msg) {
         state = which;
         if (start0) start0.hidden = which !== 'start';
-        form.hidden = which !== 'code' && which !== 'joined'; join.hidden = which !== 'ask'; dlrow.hidden = which !== 'dl';
+        form.hidden = which !== 'code'; join.hidden = which !== 'ask' && which !== 'joined'; dlrow.hidden = which !== 'dl'; tabs.hidden = which === 'dl';
+        [].forEach.call(tabs.children, function (b) { var on = b.getAttribute('data-act') === (which === 'code' ? 'code' : 'ask'); b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
         sub.innerHTML = (msg ? '<b>' + msg + '</b> · ' : '') + LINES[which];
       }
       function nope(f, msg) { show(f === form ? 'code' : 'ask', msg); f.classList.remove('bad'); void f.offsetWidth; f.classList.add('bad'); }
@@ -1424,7 +1432,6 @@
         var act = a.getAttribute('data-act');
         if (act === 'ask') ask();
         if (act === 'code') { show('code'); focus(form); }
-        if (act === 'back') { show(state === 'ask' && V === 'a' ? 'code' : FIRST); if (state === 'code') focus(form); }
       });
       function start(os, url) { location.href = url; sub.textContent = tips[os]; }
 
@@ -1469,7 +1476,7 @@
           }, function () { nope(join, "couldn't reach the waitlist, try again"); })
           .then(function () { jbusy = false; jb.disabled = false; });
       });
-      join.querySelector('input').addEventListener('input', function () { if (sub.querySelector('b')) show('ask'); });
+      join.querySelector('input').addEventListener('input', function () { if (sub.querySelector('b') || state === 'joined') show('ask'); });
 
       show(FIRST);
       // A code kept from before still works: show the download straight away.
