@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll) settings for miyagi.study.
+# privacy.md and terms.md are the review copies of /privacy/ and /terms/ (same text). Pages renders root Markdown files
+# even without front matter, so without this they'd be published as /privacy.html and /terms.html, and those could
+# answer the app's links (miyagi.study/privacy, miyagi.study/terms) instead of the real pages.
+exclude:
+  - privacy.md
+  - terms.md

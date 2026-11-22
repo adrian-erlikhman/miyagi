@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>miyagi privacy policy</title>
+  <meta name="description" content="What the miyagi beta sees, where it goes, and how to delete it.">
+  <meta name="theme-color" content="#f6f6f3">
+  <link rel="canonical" href="https://miyagi.study/privacy/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/GoogleSansFlex.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: "Google Sans Flex";
+      src: url("/fonts/GoogleSansFlex.woff2") format("woff2");
+      font-weight: 400 700;
+      font-display: swap;
+    }
+    /* Tokens from the miyagi brand kit, as on the home page. */
+    :root {
+      --m-paper: #f6f6f3;
+      --m-ink: #141414;
+      --m-ink-muted: #66665f;
+      --m-ink-faint: #8f8f88;
+      --m-rule: rgba(20, 20, 20, .1);
+      --m-wash: rgba(20, 20, 20, .05);
+      --m-font-brand: "Google Sans Flex", system-ui, sans-serif;
+      --m-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; background: var(--m-paper); }
+    body { margin: 0; background: var(--m-paper); color: var(--m-ink); font: 17px/1.6 var(--m-font-brand); -webkit-font-smoothing: antialiased; }
+
+    .top { display: flex; align-items: center; gap: 16px; height: 58px; padding: 0 clamp(16px, 3vw, 30px); border-bottom: 1px solid var(--m-rule); }
+    .top .lg { display: flex; align-items: center; gap: 7px; color: var(--m-ink); text-decoration: none; font-weight: 600; font-size: 18px; letter-spacing: -.03em; }
+    .top .lg svg { width: 28px; height: 28px; display: block; }
+    .top .back { margin-left: auto; color: var(--m-ink-muted); font-size: 15px; text-decoration: none; }
+    .top .back:hover { color: var(--m-ink); }
+
+    .doc { max-width: 700px; margin: 0 auto; padding: 44px 16px 56px; }
+    h1 { margin: 0; font-weight: 600; font-size: clamp(34px, 5.4vw, 50px); line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
+    .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0 0; color: var(--m-ink-muted); font-size: 15px; }
+    .beta { display: inline-block; padding: 3px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--m-ink); color: var(--m-ink); font-weight: 600; font-size: 13px; line-height: 1.3; }
+    .meta + p { margin-top: 18px; }
+    h2 { margin: 48px 0 10px; font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -.025em; scroll-margin-top: 16px; }
+    h3 { margin: 30px 0 6px; font-weight: 600; font-size: 19px; line-height: 1.3; letter-spacing: -.015em; }
+    p { margin: 10px 0; }
+    ul { margin: 10px 0; padding-left: 1.25em; }
+    li { margin: 7px 0; }
+    li::marker { color: var(--m-ink-faint); }
+    strong { font-weight: 600; }
+    a { color: var(--m-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 4px; }
+    code { font-family: var(--m-font-mono); font-size: .88em; padding: 1px 5px; border-radius: 5px; background: var(--m-wash); }
+    blockquote { margin: 12px 0; padding: 12px 16px; border-radius: 12px; background: var(--m-wash); }
+    blockquote p { margin: 0; }
+
+    table { width: 100%; margin: 16px 0; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+    th { text-align: left; font-weight: 600; font-size: 13px; color: var(--m-ink-muted); padding: 0 14px 8px 0; border-bottom: 1px solid var(--m-ink); }
+    td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--m-rule); vertical-align: top; }
+    td:first-child { font-weight: 600; }
+    th:last-child, td:last-child { padding-right: 0; }
+
+    .foot { max-width: 700px; margin: 0 auto; padding: 22px 16px 48px; border-top: 1px solid var(--m-rule); color: var(--m-ink-muted); font-size: 14px; }
+    .foot a { color: var(--m-ink-muted); }
+    .foot a:hover { color: var(--m-ink); }
+    .foot span { margin: 0 8px; color: var(--m-ink-faint); }
+
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      .doc { padding-top: 32px; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      tr { padding: 12px 0; border-bottom: 1px solid var(--m-rule); }
+      tbody tr:first-child { border-top: 1px solid var(--m-ink); }
+      td { padding: 2px 0; border: 0; }
+      td + td::before { content: attr(data-label); display: block; margin-top: 6px; font-weight: 600; font-size: 12px; color: var(--m-ink-faint); }
+    }
+    @media print {
+      .top, .foot { display: none; }
+      body { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Built from /privacy.md (the review copy, same text). No scripts, and nothing loads from another host. -->
+  <header class="top">
+    <a class="lg" href="/" aria-label="miyagi home"><svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#b5603f"><rect x="18" y="73" width="64" height="6" rx="2"/><path d="M22 79H78L74 89H26Z"/></g><g fill="#5a4433"><path d="M47 72C45 60 52 52 50 40C49 34 46 30 44 27L50 24C54 30 57 36 57 43C58 54 51 61 54 72Z"/></g><g fill="#1f9b45"><circle cx="48" cy="22" r="11"/><circle cx="30" cy="40" r="9"/><circle cx="70" cy="34" r="10"/></g></svg>miyagi</a>
+    <a class="back" href="/">back to miyagi.study</a>
+  </header>
+  <main class="doc">
+    <h1>miyagi privacy policy</h1>
+    <p class="meta"><span class="beta">beta</span><span>last updated Nov 21, 2026</span></p>
+    <p>This policy covers the beta of miyagi. It may change before our public launch, and when it does, the date above will change too.</p>
+    <h2 id="who-we-are">Who we are</h2>
+    <p>miyagi is made by the miyagi team. Write to us at <a href="mailto:hello@miyagi.study">hello@miyagi.study</a> about anything in this policy.</p>
+    <h2 id="the-short-version">The short version</h2>
+    <ul>
+      <li>miyagi is a Mac app that follows along while you learn from a coding tutorial.</li>
+      <li>During a lesson, miyagi sends screenshots of your screen, text on your screen, your code and your questions to Anthropic, the company that makes Claude, so it can check your work and help. Anything visible on your screen can be in a screenshot.</li>
+      <li>Anthropic is the only AI company miyagi sends your data to. These calls go through our server, which passes them on and keeps counts, not your work. If you add your own Anthropic key, they go straight to Anthropic.</li>
+      <li>Videos play in YouTube's own player, so YouTube sees what you watch.</li>
+      <li>Signing in is optional. If you sign in with Google, our server links this Mac's install to your account ID.</li>
+      <li>Crash reports and usage counts are off unless you turn them on.</li>
+      <li>We don't sell your data, we don't use it for ads, and we don't train AI on it.</li>
+    </ul>
+    <h2 id="what-miyagi-sees-and-where-it-goes">What miyagi sees and where it goes</h2>
+    <p>miyagi needs to see your work to help with it. Here is what it reads, and where each thing goes.</p>
+    <table>
+      <thead><tr><th scope="col">What</th><th scope="col">What happens</th><th scope="col">Where it goes</th></tr></thead>
+      <tbody>
+        <tr><td data-label="What">Your screen</td><td data-label="What happens">During a lesson, screenshots and screen text. Text from password apps dropped.</td><td data-label="Where it goes">To Anthropic</td></tr>
+        <tr><td data-label="What">Your code</td><td data-label="What happens">The step's code, when miyagi checks your work or helps.</td><td data-label="Where it goes">To Anthropic</td></tr>
+        <tr><td data-label="What">Your editor</td><td data-label="What happens">miyagi reads VS Code here to follow your step.</td><td data-label="Where it goes">Read on this Mac, then sent as your code</td></tr>
+        <tr><td data-label="What">Your questions</td><td data-label="What happens">What you type to miyagi, and code you pick for Explain this.</td><td data-label="Where it goes">To Anthropic</td></tr>
+        <tr><td data-label="What">Your searches</td><td data-label="What happens">What you ask to learn goes to YouTube search and the AI.</td><td data-label="Where it goes">To YouTube and Anthropic</td></tr>
+        <tr><td data-label="What">Lesson videos</td><td data-label="What happens">The video's captions and what you want to learn, to Anthropic.</td><td data-label="Where it goes">To Anthropic</td></tr>
+        <tr><td data-label="What">Video player</td><td data-label="What happens">Videos play in YouTube's player, which sees what you watch.</td><td data-label="Where it goes">To YouTube</td></tr>
+        <tr><td data-label="What">Your sign-in</td><td data-label="What happens">Google sign-in through Supabase. The session stays encrypted here.</td><td data-label="Where it goes">To Supabase</td></tr>
+        <tr><td data-label="What">Account link</td><td data-label="What happens">When you sign in, miyagi's server ties this Mac to your account.</td><td data-label="Where it goes">To miyagi</td></tr>
+        <tr><td data-label="What">miyagi's server</td><td data-label="What happens">Passes AI calls on. Keeps counts and cost, never your work.</td><td data-label="Where it goes">To miyagi</td></tr>
+        <tr><td data-label="What">Your API key</td><td data-label="What happens">Locked by your Keychain, sent only to Anthropic.</td><td data-label="Where it goes">On this Mac</td></tr>
+        <tr><td data-label="What">Lesson progress</td><td data-label="What happens">Lesson folders and progress, kept in ~/miyagi on this Mac.</td><td data-label="Where it goes">On this Mac</td></tr>
+        <tr><td data-label="What">Crash reports</td><td data-label="What happens">Only the kind of error, never its text. Off unless you share.</td><td data-label="Where it goes">To miyagi, if on</td></tr>
+        <tr><td data-label="What">Usage counts</td><td data-label="What happens">Lesson and step counts. Never your code or screen.</td><td data-label="Where it goes">To miyagi, if on</td></tr>
+      </tbody>
+    </table>
+    <h3>Your screen</h3>
+    <ul>
+      <li><strong>When.</strong> miyagi reads your screen only while a lesson step is active. When no step is running, it stops.</li>
+      <li><strong>What.</strong> Screenshots of your screen, made smaller before they're sent. The text on your screen, which miyagi reads on this Mac with macOS text recognition and accessibility features. The name of the app in front.</li>
+      <li><strong>How often.</strong> While a step is active and your screen changes, miyagi sends a screenshot to Anthropic about every 5 seconds to see how you're doing. It also sends one when it points at something on your screen or answers a question.</li>
+      <li><strong>What is removed first.</strong> In text read from your screen, miyagi replaces email addresses, card numbers, US phone numbers and US social security numbers. It drops text from password managers (1Password, Bitwarden, Dashlane, LastPass, Keychain Access, Passwords) and from Messages. It also replaces text that looks like an API key, a token or a password, and blacks out the rows of the screen where it found one in the screenshots it sends. miyagi finds these by their shape, so it can miss some.</li>
+      <li><strong>Password apps in screenshots.</strong> In the regular screenshots during a step, miyagi blacks out the windows of those password managers and Messages, and it skips the screenshot while one of them is the app in front. Screenshots taken to point at something or to answer a question don't black them out.</li>
+      <li><strong>What is not removed.</strong> miyagi sends your whole screen, not just your work. It doesn't remove names, addresses, other chat or email apps, or browser tabs. <strong>Anything on your screen, including other people's messages, can be in a screenshot.</strong> Close or hide anything private before a lesson.</li>
+      <li><strong>Why.</strong> To tell whether you've done a step, to point at the right place, and to answer when you ask for help.</li>
+    </ul>
+    <h3>Your code and VS Code</h3>
+    <p>miyagi's companion extension for VS Code lets it follow your step. On this Mac, it reads the file you're working on (including changes you haven't saved), your open tabs, where you're typing and what you've selected, and the commands you run in VS Code's terminal with the last lines of their output.</p>
+    <p>miyagi sends to Anthropic:</p>
+    <ul>
+      <li>the step's code and the files a step checks, when it checks your work or helps;</li>
+      <li>error messages and recent output from commands you ran, when it helps you with an error;</li>
+      <li>the questions you type to miyagi;</li>
+      <li>text you select for "Explain this", with up to 12 lines around it and the file's name and location;</li>
+      <li>when it builds a lesson, to fit the lesson's checks to your lesson folder: the list of files in that folder, up to 60,000 characters of their contents, and the folder's path, which includes your Mac username. Files and folders whose names start with a dot (such as <code>.env</code>) are skipped, and so are folders like <code>node_modules</code>. Keys or passwords written inside the other files are not removed from this scan.</li>
+    </ul>
+    <p>Before your code, "Explain this" text and your questions are sent, miyagi replaces text that looks like an API key, a token or a password, and it hides the values in files like <code>.env</code>. As on screen, it finds these by their shape and can miss some. The lesson folder scan above is sent as it is.</p>
+    <h3>Building a lesson</h3>
+    <ul>
+      <li><strong>From a video.</strong> miyagi reads the video's public YouTube page and its captions from your Mac. It sends the video's title, description, chapters and captions, with what you want to learn, to Anthropic, which writes the lesson's steps.</li>
+      <li><strong>Without a video</strong> ("Just teach me"). miyagi sends what you want to learn to Anthropic, which may search the web to research the lesson.</li>
+    </ul>
+    <h3>Finding tutorials</h3>
+    <p>When you ask miyagi to find something to learn, the words you type go to YouTube's search, straight from your Mac, and to Anthropic, which may use its web search to find and rank videos.</p>
+    <h3>Videos and YouTube</h3>
+    <p>miyagi plays tutorials in YouTube's embedded player. YouTube, which is part of Google, gets your IP address, the videos you watch and how you play them, and can keep its own cookies in the miyagi app.</p>
+    <p>miyagi uses YouTube API Services. Google's Privacy Policy applies to what YouTube collects: <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>. Watching YouTube in miyagi is also covered by the <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>.</p>
+    <h3>Signing in (optional)</h3>
+    <p>You can use miyagi without an account. If you sign in with Google, Google shares your name, email address and basic profile with Supabase, the service we use for sign-in. Supabase keeps your account and a record of your sign-ins. On this Mac, your session is stored encrypted with a key from your Keychain.</p>
+    <h3>miyagi's server</h3>
+    <ul>
+      <li>On first launch, the app gets an install token from our server. It sends the app version, the macOS version and the chip type. The token is stored encrypted on this Mac.</li>
+      <li><strong>If you sign in, our server links this install to your account.</strong> The app sends your install token and your sign-in token. Our server checks the sign-in and keeps your account ID (not your name or email) next to this install. Signing out does not undo the link. If someone else signs in on this Mac, the link moves to their account.</li>
+      <li>Our server passes your screenshots, code and questions to Anthropic and returns the answer. <strong>It does not store them.</strong></li>
+      <li>It stores, for each install: a fingerprint of the install token (not the token), the app version, the platform and the day it started; daily counts of requests, with their size and cost, by AI model and kind of request; and the account link, if you signed in. If you turn on crash reports and usage counts, it also keeps daily counts of those.</li>
+      <li>Its request logs show the time, the kind of request, the AI model, sizes, a short install ID and, if you signed in, your account ID.</li>
+      <li>It sees your IP address, and uses it only in memory to limit how often new installs are made. It doesn't store it.</li>
+      <li>Our server runs on Render.</li>
+    </ul>
+    <h3>Crash reports and usage counts</h3>
+    <p>These are off for everyone unless you turn on "Share crash reports and usage" in Settings › Privacy. Nothing is sent before you're past sign-in and setup. When it's on, miyagi sends:</p>
+    <ul>
+      <li>that the app was installed (with the app version, the system and the chip type) and that setup finished;</li>
+      <li>lesson counts: a lesson was built (how many steps, how it was built), a step passed or failed its check, a hint was used, a lesson was finished (steps passed and skipped, minutes) or left (a one-word reason);</li>
+      <li>for each crash, only what kind of error it was and the app version. The error text stays on this Mac.</li>
+    </ul>
+    <p>They never include your code, files, screen text, file paths or anything you typed. They go to our server with your install token, so they're tied to this install, and to your account if you signed in. Turning the switch off stops sending right away and drops anything not yet sent.</p>
+    <h3>Other connections</h3>
+    <ul>
+      <li><strong>Updates.</strong> About every 6 hours, the app checks GitHub for a new version. GitHub sees your IP address. The check sends nothing about you.</li>
+      <li><strong>Setup.</strong> miyagi installs its companion extension in VS Code, and Microsoft's Python and Jupyter extensions from the VS Code Marketplace. Those extensions follow VS Code's own settings, including its telemetry setting.</li>
+      <li><strong>Starter files.</strong> If a tutorial links starter files (on GitHub or Google Drive, for example), miyagi may download them into your lesson folder.</li>
+    </ul>
+    <h3>What stays on this Mac</h3>
+    <p>Your API key, your sign-in session and your install token, which are encrypted. Your settings. Your lesson folders and progress in ~/miyagi. Cached searches, lessons and video captions. Logs, the local error log and crash reports. We don't receive any of these. If you turn on crash sharing, we get only the kind of each error.</p>
+    <h2 id="who-receives-your-data">Who receives your data</h2>
+    <table>
+      <thead><tr><th scope="col">Who</th><th scope="col">What they get</th><th scope="col">Why</th><th scope="col">How long</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Who">Anthropic</td><td data-label="What they get">Screenshots, screen text, code, files, questions, video captions and what you want to learn, through our server</td><td data-label="Why">To check your work, coach you, and build and find lessons</td><td data-label="How long">Under Anthropic's commercial terms, which don't let it train its models on this data</td></tr>
+        <tr><td data-label="Who">Supabase</td><td data-label="What they get">Your Google name, email address and basic profile, and a record of your sign-ins</td><td data-label="Why">Sign-in</td><td data-label="How long">Until you ask us to delete your account</td></tr>
+        <tr><td data-label="Who">Render</td><td data-label="What they get">What passes through our server, while it passes, and our server's stored counts and logs</td><td data-label="Why">Hosts our server</td><td data-label="How long">Stored data until it's deleted; logs under Render's log retention</td></tr>
+        <tr><td data-label="Who">YouTube (Google)</td><td data-label="What they get">Your IP address, your searches and the videos you watch</td><td data-label="Why">Plays videos and finds tutorials</td><td data-label="How long">Under Google's Privacy Policy</td></tr>
+        <tr><td data-label="Who">GitHub</td><td data-label="What they get">Your IP address</td><td data-label="Why">Update checks and downloads</td><td data-label="How long">Under GitHub's Privacy Statement</td></tr>
+        <tr><td data-label="Who">Microsoft</td><td data-label="What they get">Your IP address</td><td data-label="Why">VS Code extensions during setup</td><td data-label="How long">Under Microsoft's privacy terms</td></tr>
+      </tbody>
+    </table>
+    <p>Anthropic, Supabase and Render handle this data to run miyagi for us. YouTube, GitHub and Microsoft act on their own.</p>
+    <p><strong>If you add your own Anthropic API key,</strong> calls go straight from your Mac to Anthropic, not through our server, under your own agreement with Anthropic.</p>
+    <h2 id="what-we-don-t-do">What we don't do</h2>
+    <ul>
+      <li>We don't sell your data or share it for advertising. Nothing in miyagi tracks you across other sites or apps. Because we don't track you, we don't change anything when your browser or system sends a Do Not Track or Global Privacy Control signal.</li>
+      <li>We don't train AI models on your screen, your code or your questions.</li>
+      <li>We don't look for health, money or other sensitive information. If a screenshot catches some, it's used only to answer that request, and our server doesn't keep it.</li>
+    </ul>
+    <h2 id="how-long-we-keep-it">How long we keep it</h2>
+    <table>
+      <thead><tr><th scope="col">Where</th><th scope="col">What</th><th scope="col">How long</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Where">Your Mac</td><td data-label="What">Everything in "What stays on this Mac"</td><td data-label="How long">Until you delete it (see below)</td></tr>
+        <tr><td data-label="Where">Our server</td><td data-label="What">Install record, daily counts, account link</td><td data-label="How long">Until you ask us to delete it. We don't delete it automatically yet.</td></tr>
+        <tr><td data-label="Where">Our server's logs, at Render</td><td data-label="What">Request log lines</td><td data-label="How long">As long as Render keeps logs for our plan</td></tr>
+        <tr><td data-label="Where">Supabase</td><td data-label="What">Your account</td><td data-label="How long">Until you ask us to delete it</td></tr>
+        <tr><td data-label="Where">Anthropic</td><td data-label="What">What the AI calls carried</td><td data-label="How long">Under Anthropic's terms</td></tr>
+      </tbody>
+    </table>
+    <h2 id="deleting-your-data">Deleting your data</h2>
+    <p>In Settings › Privacy, Delete my data says:</p>
+    <blockquote><p>Erases keys, settings and sign-in on this Mac. Cannot be undone.</p></blockquote>
+    <p>It asks once more before it deletes:</p>
+    <blockquote><p>Signs you out. Lesson folders in ~/miyagi stay. Cannot be undone.</p></blockquote>
+    <p>It erases your API key, resets your settings, removes your sign-in on this Mac and signs you out. It also removes the note of your account link on this Mac.</p>
+    <p>It does not remove your install token, your lesson folders and progress in ~/miyagi, cached searches, lessons and captions, logs and crash reports, YouTube's cookies in the app, or the VS Code extensions. It does not delete anything on our server or at Supabase.</p>
+    <p>To remove everything from your Mac: quit miyagi, move the app to the Trash, delete the <code>miyagi</code> folder in your home folder (~/miyagi), delete ~/Library/Application Support/miyagi, and uninstall the miyagi companion extension in VS Code.</p>
+    <p><strong>To delete your account and what our server keeps,</strong> email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a>. There's no way to do this in the app yet. We'll confirm when it's done. If you never signed in, our server doesn't know who you are: it only holds counts tied to an install token.</p>
+    <h2 id="children-and-teens">Children and teens</h2>
+    <ul>
+      <li>miyagi is for people 13 and older. If you're under 13, please don't use miyagi. We don't knowingly collect personal information from children under 13.</li>
+      <li><strong>Parents:</strong> if you believe a child under 13 used miyagi, email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a> and we'll delete what we hold about them.</li>
+      <li>If you're under 18, a parent or guardian needs to agree to our <a href="/terms/">terms</a> for you. Parents and guardians can ask us to see or delete their teen's data.</li>
+      <li>Everyone gets the same privacy defaults: crash and usage sharing off, no public profile, no ads.</li>
+      <li>miyagi's coach is an AI. It can be wrong.</li>
+    </ul>
+    <h2 id="your-choices-and-rights">Your choices and rights</h2>
+    <p>Anyone can ask us what we hold about them, ask us to correct it, or ask us to delete it. Email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a>. We answer within 30 days.</p>
+    <p>We offer miyagi in the United States for now. Our providers may process data in the United States and other countries.</p>
+    <h2 id="security">Security</h2>
+    <p>Secrets on your Mac (your API key, your sign-in session and your install token) are encrypted with macOS's secure storage. The app talks to our server over HTTPS. Our server stores only a fingerprint of your install token, not the token itself, and it doesn't store your screenshots, code or answers. No system is perfectly secure. If a breach affects your personal information, we'll tell you as the law requires.</p>
+    <h2 id="the-miyagi-study-website">The miyagi.study website</h2>
+    <p>The website sets no cookies and has no analytics, ads or trackers. If you enter a download code, your browser remembers it for this site until you clear the site's data. The early access form opens your own email app; the site doesn't send it anywhere.</p>
+    <p>The site is hosted on GitHub Pages, so GitHub sees your IP address when you visit. Parts of the home page load from other servers, which also see your IP address: jsDelivr (code for the 3D bonsai and smooth scrolling) and YouTube's image server (video thumbnails). Downloads come from GitHub. This page and the terms page load nothing from other servers.</p>
+    <h2 id="changes">Changes</h2>
+    <p>If this policy changes, we'll update the date at the top. If a change would let us use your data in a new way, we'll ask you first, and it won't apply to data we collected before.</p>
+    <h2 id="contact">Contact</h2>
+    <p><a href="mailto:hello@miyagi.study">hello@miyagi.study</a>, for privacy questions, deletion requests, support and copyright notices. Our <a href="/terms/">terms</a> cover the rest.</p>
+  </main>
+  <footer class="foot">
+    <a href="/privacy/">privacy</a><span aria-hidden="true">·</span><a href="/terms/">terms</a><span aria-hidden="true">·</span><a href="mailto:hello@miyagi.study">hello@miyagi.study</a>
+  </footer>
+</body>
+</html>
