@@ -330,15 +330,15 @@
     /* ---------- the film ---------- */
     .mw .film .pin { display: flex; flex-direction: column; justify-content: center; }
     /* The demo fits the window, width AND height (Notion/Linear style): the heading plus the whole 16:10 frame stay on one screen at every common size.
-       --fit is the widest frame whose height still fits under the bar and the heading; the frame is never wider than the page, never over 1600px (the stage's own size, so it is crisp there).
+       --fit is the widest frame whose height still fits under the bar and the heading; the frame is never wider than the page, never over 2200px (the stage is vector, so it scales up crisp; the cap only stops a huge monitor from stretching it forever).
        The film's JS (fit) only reads the resulting width, it does not set one. */
     .mw .film { --vh: 100vh; --fs: clamp(26px, 4.2vh, 44px); --gap: clamp(12px, 2.2vh, 26px); }
     @supports (height: 100svh) { .mw .film { --vh: 100svh; --fs: clamp(26px, 4.2svh, 44px); --gap: clamp(12px, 2.2svh, 26px); } }
-    .mw .film .mw-hold { max-width: 1640px; }
+    .mw .film .mw-hold { max-width: 2240px; }
     @media (min-width: 761px) {
       .mw .film { --fit: calc((var(--vh) - 70px - var(--fs) * 1.05 - var(--gap) - 22px) * 1.6); }
       .mw .film .mw-h { font-size: var(--fs); }
-      .mw .film .wframe { width: min(100%, 1600px, max(var(--fit), 520px)); margin: var(--gap) auto 0; }
+      .mw .film .wframe { width: min(100%, 2200px, max(var(--fit), 520px)); margin: var(--gap) auto 0; }
     }
     .mw .film.scroll .wrap { height: 700vh; }
     .mw .film.scroll .pin { position: sticky; top: 0; height: 100vh; padding: 64px 0 18px; }
@@ -1825,18 +1825,19 @@
       var FOCUS = [[0, 720, 450], [2, 780, 420], [4.5, 800, 520], [7.3, 720, 330], [8.3, 430, 500], [13.4, 980, 330], [14.4, 860, 300], [15, 640, 760], [16.4, 880, 360],
         [18, 860, 300], [19.5, 380, 380], [22.7, 400, 640], [24.6, 860, 580], [26.3, 420, 380], [28.6, 860, 580], [30, 380, 380], [32.3, 400, 640], [33.9, 1180, 330],
         [35.2, 1200, 640], [36.6, 880, 360], [39, 720, 450]];
-      // A frame under 720px wide is too small to read the whole 1600x1000 stage, so the camera zooms in and follows the focus points (phones, very short windows).
-      // From 720px up the whole stage always shows: the Mac menu bar, the ask pill at the top and the miyagi bar at the bottom are part of the picture, so no crop.
+      // Legibility floor: the stage's smallest text is 14px, so a stage scale under MINSC (0.78, about 11px text) is too small to read.
+      // Where the frame would need a smaller scale (laptops, short windows, phones) the camera zooms to MINSC and follows the focus points; above it the whole stage shows, menu bar and miyagi bar included.
+      var MINSC = 0.78;
       function camera(t) {
         if (!narrow) return;
         var f = FOCUS[0]; FOCUS.forEach(function (k) { if (t >= k[0]) f = k; });
-        var w = frame.clientWidth, h = frame.clientHeight, sc = Math.max(w / 1600, h / 867);
+        var w = frame.clientWidth, h = frame.clientHeight, sc = Math.max(w / 1600, h / 867, MINSC);
         var tx = clamp(w / 2 - (f[1] + OX) * sc, w - 1600 * sc, 0), ty = clamp(h / 2 - (f[2] + OY) * sc, h - 1000 * sc, 0);
         wstage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
       }
       function fit() {
         // the CSS sizes the frame (width and height, see .film); this only reads that width, so the stage scale always matches the box
-        narrow = frame.clientWidth < 720; wstage.classList.toggle('cam', narrow);
+        narrow = frame.clientWidth / 1600 < MINSC; wstage.classList.toggle('cam', narrow);
         if (narrow) camera(t); else wstage.style.transform = 'scale(' + frame.clientWidth / 1600 + ')';
         layoutConn(); layoutOrbit();
       }
