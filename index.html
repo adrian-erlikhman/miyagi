@@ -24,10 +24,10 @@
     // Use the 3D tree when WebGL and modules work and motion is welcome; otherwise the flat page stays.
     (function () {
       var d = document.documentElement, ok = false;
-      // Tablets and phones (iPadOS Safari reports a Mac, so a touch screen on a "Macintosh" gives it away) can't install the
-      // Mac or Windows app: the download buttons give way to "miyagi runs on a Mac for now" (html.nodl).
+      // miyagi is Mac-only for now (Nov 21): anything that isn't a Mac desktop (Windows, Linux, phones, tablets; iPadOS
+      // Safari reports a Mac, so a touch screen on a "Macintosh" gives it away) sees "miyagi runs on a Mac for now" (html.nodl).
       var ua = navigator.userAgent || '';
-      if (/iPhone|iPad|iPod|Android/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) d.classList.add('nodl');
+      if (!/Macintosh/.test(ua) || navigator.maxTouchPoints > 1 || /iPhone|iPad|iPod|Android/i.test(ua)) d.classList.add('nodl');
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       try {
         var c = document.createElement('canvas'), x = c.getContext('webgl2') || c.getContext('webgl');
@@ -458,13 +458,6 @@
               </a>
               <span class="note" data-dl-note="mac">apple silicon · macos 13 or later</span>
             </div>
-            <div class="dl-item">
-              <a class="btn" href="#download" data-dl="win">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
-                download for windows
-              </a>
-              <span class="note" data-dl-note="win">windows 10 and 11</span>
-            </div>
           </div>
           <div class="macnote" data-macnote>
             <p>miyagi runs on a Mac for now. open this page on your Mac to download.</p>
@@ -523,6 +516,8 @@
   </footer>
 
   <script>
+    // Windows is off the site for launch (decision D5, Nov 21: Mac only for now); its sealed link stays below for when it
+    // comes back, with a "download for windows" button (data-dl="win") next to the Mac one.
     // Downloads: Mac and Windows are two equal buttons, behind a code (Adrian, Nov 20). The release links (tags "mac" and
     // "windows" in this repo) aren't in the page: each one is sealed with the code (PBKDF2-SHA256 -> AES-GCM), so only the
     // right code opens it. The first click opens the code field; a right code is kept in this browser, so later clicks
@@ -537,7 +532,7 @@
         win: 'HsnkMICP2hkPDDpLdoTuT8WvXe/akC/EeNU5Z/fY3VmmMjVfks3tMqdS+yDsS4d1XutYRvLvfNYKMlnBGgFPe6mfug2RgGsh8q0kNQJvBnwneAeYWtD0a4vx5bkGaMdfhRYPFSR+pfQi1cOe8/oUrYG/P7fmNoWzzw=='
       };
       var tips = {
-        mac: 'unzip, move miyagi to applications, then right-click › open the first time.',
+        mac: 'unzip and move miyagi to applications. if macos blocks it, open system settings › privacy & security › open anyway.',
         win: 'download stuck? press ctrl+j and choose keep. if windows warns you, click more info › run anyway.'
       };
       var KEPT = 'miyagi-code', LABEL = { mac: 'download for mac', win: 'download for windows' };
@@ -934,7 +929,10 @@
       var lastSlide = '';
       // The real video: while a part plays, the YouTube embed plays it (muted) from the part's start, over the stills; it pauses
       // when the story holds. It only shows once YouTube says it's playing, so if the embed can't load, the stills stay.
-      var PARTS = [0, 370, 1530], yt = null, ytReady = false, ytOn = false, ytPart = -1, NOYT = false;
+      // EU, UK and Swiss visitors (a European time zone) keep the stills: an embed that starts by itself could need cookie
+      // consent there (research/launch/cookies.md on the team repo). Everyone else gets the real video.
+      var EUTZ = false; try { EUTZ = /^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone || ''); } catch (e) {}
+      var PARTS = [0, 370, 1530], yt = null, ytReady = false, ytOn = false, ytPart = -1, NOYT = EUTZ;
       function ytShow() { el.yt.className = 'd-yt' + (ytOn && ytPart >= 0 ? ' on' : ''); }
       function ytStart() { if (ytReady && ytPart >= 0) { yt.mute(); yt.seekTo(PARTS[ytPart], true); yt.playVideo(); } }
       function ytLoad() {
