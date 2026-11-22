@@ -329,12 +329,22 @@
 
     /* ---------- the film ---------- */
     .mw .film .pin { display: flex; flex-direction: column; justify-content: center; }
-    .mw .film .mw-hold { max-width: min(1200px, 94vw, max(min(74vw, (100vh - 270px) * 1.6), 740px)); } /* Notion-size demo: about three quarters of the window, never over 1200px; 740px keeps the full Mac view (narrow camera mode starts under 720) */
+    /* The demo fits the window, width AND height (Notion/Linear style): the heading plus the whole 16:10 frame stay on one screen at every common size.
+       --fit is the widest frame whose height still fits under the bar and the heading; the frame is never wider than the page, never over 1600px (the stage's own size, so it is crisp there).
+       The film's JS (fit) only reads the resulting width, it does not set one. */
+    .mw .film { --vh: 100vh; --fs: clamp(26px, 4.2vh, 44px); --gap: clamp(12px, 2.2vh, 26px); }
+    @supports (height: 100svh) { .mw .film { --vh: 100svh; --fs: clamp(26px, 4.2svh, 44px); --gap: clamp(12px, 2.2svh, 26px); } }
+    .mw .film .mw-hold { max-width: 1640px; }
+    @media (min-width: 761px) {
+      .mw .film { --fit: calc((var(--vh) - 70px - var(--fs) * 1.05 - var(--gap) - 22px) * 1.6); }
+      .mw .film .mw-h { font-size: var(--fs); }
+      .mw .film .wframe { width: min(100%, 1600px, max(var(--fit), 520px)); margin: var(--gap) auto 0; }
+    }
     .mw .film.scroll .wrap { height: 700vh; }
     .mw .film.scroll .pin { position: sticky; top: 0; height: 100vh; padding: 64px 0 18px; }
     .mw .wframe { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; margin-top: 38px;
       background: #d9d6cc; box-shadow: 0 30px 80px -40px rgba(20, 20, 20, .45); isolation: isolate; }
-    .mw .film.scroll .wframe { margin: 18px auto 0; }
+    @media (min-width: 761px) { .mw .film.scroll { --gap: 18px; --fit: calc((var(--vh) - 64px - var(--fs) * 1.05 - 18px - 18px) * 1.6); } }
     .mw .walls { position: absolute; inset: 0; }
     .mw .walls canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .9s var(--settle); }
     .mw .walls canvas.on { opacity: 1; }
@@ -1815,6 +1825,8 @@
       var FOCUS = [[0, 720, 450], [2, 780, 420], [4.5, 800, 520], [7.3, 720, 330], [8.3, 430, 500], [13.4, 980, 330], [14.4, 860, 300], [15, 640, 760], [16.4, 880, 360],
         [18, 860, 300], [19.5, 380, 380], [22.7, 400, 640], [24.6, 860, 580], [26.3, 420, 380], [28.6, 860, 580], [30, 380, 380], [32.3, 400, 640], [33.9, 1180, 330],
         [35.2, 1200, 640], [36.6, 880, 360], [39, 720, 450]];
+      // A frame under 720px wide is too small to read the whole 1600x1000 stage, so the camera zooms in and follows the focus points (phones, very short windows).
+      // From 720px up the whole stage always shows: the Mac menu bar, the ask pill at the top and the miyagi bar at the bottom are part of the picture, so no crop.
       function camera(t) {
         if (!narrow) return;
         var f = FOCUS[0]; FOCUS.forEach(function (k) { if (t >= k[0]) f = k; });
@@ -1823,13 +1835,13 @@
         wstage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
       }
       function fit() {
-        var hw = $('.mw-hold', film).clientWidth;
-        frame.style.width = mode === 'scroll' && hw >= 720 ? Math.min(hw, (innerHeight - 200) * 1.6) + 'px' : '';
+        // the CSS sizes the frame (width and height, see .film); this only reads that width, so the stage scale always matches the box
         narrow = frame.clientWidth < 720; wstage.classList.toggle('cam', narrow);
-        if (!narrow) wstage.style.transform = 'scale(' + frame.clientWidth / 1600 + ')';
+        if (narrow) camera(t); else wstage.style.transform = 'scale(' + frame.clientWidth / 1600 + ')';
         layoutConn(); layoutOrbit();
       }
       addEventListener('resize', fit);
+      if (window.ResizeObserver) new ResizeObserver(function () { fit(); }).observe(frame); // the CSS sizes the frame (width and height); this follows it, e.g. a zoom change or a phone's bar
       var pauseBtn = $('#pause');
       function setPause(pz) { playing = !pz; pauseBtn.innerHTML = icon(playing ? 'pause' : 'play'); pauseBtn.setAttribute('aria-label', playing ? 'pause' : 'play'); }
       setPause(!playing);
