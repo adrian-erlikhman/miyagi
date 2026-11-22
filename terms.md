@@ -95,7 +95,7 @@ If you send us ideas or suggestions, we may use them without owing you anything.
 
 ## 12. Copyright complaints
 
-If you believe something in miyagi infringes your copyright, email [hello@miyagi.study](mailto:hello@miyagi.study) with:
+If you believe something in miyagi infringes your copyright, email [support@miyagi.study](mailto:support@miyagi.study) with:
 
 - your name and contact details;
 - the work you believe is infringed;
@@ -112,13 +112,13 @@ You may not use, download or export miyagi in breach of US export control or san
 
 ## 14. Ending things
 
-You can stop using miyagi at any time. To erase your keys, settings and sign-in on your Mac, use Settings › Privacy › Delete my data. To delete your account and what our server keeps, email [hello@miyagi.study](mailto:hello@miyagi.study). The [privacy policy](https://miyagi.study/privacy/) explains what each one removes.
+You can stop using miyagi at any time. To erase your keys, settings and sign-in on your Mac, use Settings › Privacy › Delete my data. To delete your account and what our server keeps, email [support@miyagi.study](mailto:support@miyagi.study). The [privacy policy](https://miyagi.study/privacy/) explains what each one removes.
 
 We may suspend or end your access if you break these terms, if the law requires it, or if we stop offering miyagi. If we stop offering our server, we'll try to tell you in the app first. Sections 6 (what we don't do with your content), 7, 11, 16, 17, 18 and 19 still apply after this agreement ends.
 
 ## 15. For parents and guardians
 
-If your teen uses miyagi, you agree to these terms for yourself and for them, and you're responsible for their use. You can ask us to see or delete your teen's account and data at any time. If you believe a child under 13 used miyagi, email [hello@miyagi.study](mailto:hello@miyagi.study) and we'll delete what we hold about them.
+If your teen uses miyagi, you agree to these terms for yourself and for them, and you're responsible for their use. You can ask us to see or delete your teen's account and data at any time. If you believe a child under 13 used miyagi, email [support@miyagi.study](mailto:support@miyagi.study) and we'll delete what we hold about them.
 
 ## 16. No warranties
 
@@ -135,7 +135,7 @@ These limits don't apply to liability for fraud, willful misconduct or violation
 
 ## 18. Disputes
 
-Let's try to fix problems first. Before you start a claim, email [hello@miyagi.study](mailto:hello@miyagi.study), tell us what's wrong, and give us 30 days to try to resolve it with you informally. We'll do the same before we start one.
+Let's try to fix problems first. Before you start a claim, email [support@miyagi.study](mailto:support@miyagi.study), tell us what's wrong, and give us 30 days to try to resolve it with you informally. We'll do the same before we start one.
 
 These terms are governed by California law, without regard to its conflict-of-laws rules. A dispute we can't resolve informally will be decided in the state or federal courts in California, and you and we agree to those courts' jurisdiction. Either of us may instead bring a claim in small claims court if it qualifies. We don't require arbitration. If the consumer law where you live gives you rights that these terms can't take away, you keep them.
 
@@ -149,4 +149,4 @@ These terms are governed by California law, without regard to its conflict-of-la
 
 ## 20. Contact
 
-[hello@miyagi.study](mailto:hello@miyagi.study), for questions about these terms, support, privacy and copyright notices.
+[support@miyagi.study](mailto:support@miyagi.study), for questions about these terms, support, privacy and copyright notices.

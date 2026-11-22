@@ -6,7 +6,7 @@ This policy covers the beta of miyagi. It may change before our public launch, a
 
 ## Who we are
 
-miyagi is made by the miyagi team. Write to us at [hello@miyagi.study](mailto:hello@miyagi.study) about anything in this policy.
+miyagi is made by the miyagi team. Write to us at [support@miyagi.study](mailto:support@miyagi.study) about anything in this policy.
 
 ## The short version
 
@@ -159,19 +159,19 @@ It does not remove your install token, your lesson folders and progress in ~/miy
 
 To remove everything from your Mac: quit miyagi, move the app to the Trash, delete the `miyagi` folder in your home folder (~/miyagi), delete ~/Library/Application Support/miyagi, and uninstall the miyagi companion extension in VS Code.
 
-**To delete your account and what our server keeps,** email [hello@miyagi.study](mailto:hello@miyagi.study). There's no way to do this in the app yet. We'll confirm when it's done. If you never signed in, our server doesn't know who you are: it only holds counts tied to an install token.
+**To delete your account and what our server keeps,** email [support@miyagi.study](mailto:support@miyagi.study). There's no way to do this in the app yet. We'll confirm when it's done. If you never signed in, our server doesn't know who you are: it only holds counts tied to an install token.
 
 ## Children and teens
 
 - miyagi is for people 13 and older. If you're under 13, please don't use miyagi. We don't knowingly collect personal information from children under 13.
-- **Parents:** if you believe a child under 13 used miyagi, email [hello@miyagi.study](mailto:hello@miyagi.study) and we'll delete what we hold about them.
+- **Parents:** if you believe a child under 13 used miyagi, email [support@miyagi.study](mailto:support@miyagi.study) and we'll delete what we hold about them.
 - If you're under 18, a parent or guardian needs to agree to our [terms](https://miyagi.study/terms/) for you. Parents and guardians can ask us to see or delete their teen's data.
 - Everyone gets the same privacy defaults: crash and usage sharing off, no public profile, no ads.
 - miyagi's coach is an AI. It can be wrong.
 
 ## Your choices and rights
 
-Anyone can ask us what we hold about them, ask us to correct it, or ask us to delete it. Email [hello@miyagi.study](mailto:hello@miyagi.study). We answer within 30 days.
+Anyone can ask us what we hold about them, ask us to correct it, or ask us to delete it. Email [support@miyagi.study](mailto:support@miyagi.study). We answer within 30 days.
 
 We offer miyagi in the United States for now. Our providers may process data in the United States and other countries.
 
@@ -191,4 +191,4 @@ If this policy changes, we'll update the date at the top. If a change would let 
 
 ## Contact
 
-[hello@miyagi.study](mailto:hello@miyagi.study), for privacy questions, deletion requests, support and copyright notices. Our [terms](https://miyagi.study/terms/) cover the rest.
+[support@miyagi.study](mailto:support@miyagi.study), for privacy questions, deletion requests, support and copyright notices. Our [terms](https://miyagi.study/terms/) cover the rest.
