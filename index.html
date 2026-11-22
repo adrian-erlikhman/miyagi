@@ -332,7 +332,7 @@
 
     /* ---------- the film ---------- */
     .mw .film .pin { display: flex; flex-direction: column; justify-content: center; }
-    .mw .film .mw-hold { max-width: min(1560px, 94vw); }
+    .mw .film .mw-hold { max-width: min(1200px, 94vw, max(min(74vw, (100vh - 270px) * 1.6), 740px)); } /* Notion-size demo: about three quarters of the window, never over 1200px; 740px keeps the full Mac view (narrow camera mode starts under 720) */
     .mw .film.scroll .wrap { height: 700vh; }
     .mw .film.scroll .pin { position: sticky; top: 0; height: 100vh; padding: 64px 0 18px; }
     .mw .wframe { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; margin-top: 38px;
