@@ -6,19 +6,19 @@
   "ih": 720,
   "frame": {
    "x": 175.7,
-   "y": 122.6,
+   "y": 117.6,
    "w": 928.6,
    "h": 580.4,
-   "b": 703
+   "b": 698
   },
   "cssW": 929,
-  "scale": 0.580625,
-  "cssScale": 0.580625,
-  "fontPx": 8.13,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1366x768",
@@ -27,19 +27,19 @@
   "ih": 768,
   "frame": {
    "x": 182.8,
-   "y": 125.8,
+   "y": 120.8,
    "w": 1000.4,
    "h": 625.2,
-   "b": 751
+   "b": 746
   },
   "cssW": 1000,
-  "scale": 0.625,
-  "cssScale": 0.625,
-  "fontPx": 8.75,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1440x900",
@@ -48,19 +48,19 @@
   "ih": 900,
   "frame": {
    "x": 121.2,
-   "y": 134.5,
+   "y": 129.5,
    "w": 1197.6,
    "h": 748.5,
-   "b": 883
+   "b": 878
   },
   "cssW": 1198,
-  "scale": 0.74875,
-  "cssScale": 0.74875,
-  "fontPx": 10.48,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "scale": 0.8639,
+  "cam": true,
+  "fontPx": 12.09,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1536x864",
@@ -69,19 +69,19 @@
   "ih": 864,
   "frame": {
    "x": 196.1,
-   "y": 132.1,
+   "y": 127.1,
    "w": 1143.8,
    "h": 714.9,
-   "b": 847
+   "b": 842
   },
   "cssW": 1144,
-  "scale": 0.715,
-  "cssScale": 0.715,
-  "fontPx": 10.01,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "scale": 0.8247,
+  "cam": true,
+  "fontPx": 11.55,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1728x1117",
@@ -90,19 +90,19 @@
   "ih": 1117,
   "frame": {
    "x": 100.6,
-   "y": 145.8,
+   "y": 140.8,
    "w": 1526.8,
    "h": 954.2,
-   "b": 1100
+   "b": 1095
   },
   "cssW": 1527,
   "scale": 0.954375,
-  "cssScale": 0.954375,
+  "cam": false,
   "fontPx": 13.36,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1920x1080",
@@ -111,19 +111,19 @@
   "ih": 1080,
   "frame": {
    "x": 225.6,
-   "y": 144.9,
+   "y": 139.9,
    "w": 1468.9,
    "h": 918,
-   "b": 1063
+   "b": 1058
   },
   "cssW": 1469,
   "scale": 0.918125,
-  "cssScale": 0.918125,
+  "cam": false,
   "fontPx": 12.85,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "2560x1440",
@@ -131,20 +131,20 @@
   "iw": 2560,
   "ih": 1440,
   "frame": {
-   "x": 480,
-   "y": 285.2,
-   "w": 1600,
-   "h": 1000,
-   "b": 1285.2
+   "x": 259.4,
+   "y": 142.2,
+   "w": 2041.3,
+   "h": 1275.8,
+   "b": 1418
   },
-  "cssW": 1600,
-  "scale": 1,
-  "cssScale": 1,
-  "fontPx": 14,
-  "emptyTop": 155,
-  "emptyBot": 154.8,
-  "vis": true,
-  "narrow": false
+  "cssW": 2041,
+  "scale": 1.27562,
+  "cam": false,
+  "fontPx": 17.86,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1280x720",
@@ -153,19 +153,19 @@
   "ih": 720,
   "frame": {
    "x": 175.7,
-   "y": 122.4,
-   "w": 928.7,
+   "y": 117.6,
+   "w": 928.6,
    "h": 580.4,
-   "b": 702.8
+   "b": 698
   },
   "cssW": 929,
-  "scale": 0.580625,
-  "cssScale": 0.580625,
-  "fontPx": 8.13,
-  "emptyTop": 16.8,
-  "emptyBot": 17.2,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1366x768",
@@ -173,20 +173,20 @@
   "iw": 1366,
   "ih": 768,
   "frame": {
-   "x": 183,
-   "y": 125.6,
+   "x": 182.8,
+   "y": 120.8,
    "w": 1000.4,
    "h": 625.2,
-   "b": 750.8
+   "b": 746
   },
   "cssW": 1000,
-  "scale": 0.625,
-  "cssScale": 0.625,
-  "fontPx": 8.75,
-  "emptyTop": 16.8,
-  "emptyBot": 17.2,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1440x900",
@@ -195,19 +195,19 @@
   "ih": 900,
   "frame": {
    "x": 121.2,
-   "y": 134.3,
+   "y": 129.5,
    "w": 1197.6,
    "h": 748.5,
-   "b": 882.8
+   "b": 878
   },
   "cssW": 1198,
-  "scale": 0.74875,
-  "cssScale": 0.74875,
-  "fontPx": 10.48,
-  "emptyTop": 16.8,
-  "emptyBot": 17.2,
-  "vis": true,
-  "narrow": false
+  "scale": 0.8639,
+  "cam": true,
+  "fontPx": 12.09,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1536x864",
@@ -216,40 +216,40 @@
   "ih": 864,
   "frame": {
    "x": 196.1,
-   "y": 131.9,
+   "y": 127.1,
    "w": 1143.8,
    "h": 714.9,
-   "b": 846.8
+   "b": 842
   },
   "cssW": 1144,
-  "scale": 0.715,
-  "cssScale": 0.715,
-  "fontPx": 10.01,
-  "emptyTop": 16.8,
-  "emptyBot": 17.2,
-  "vis": true,
-  "narrow": false
+  "scale": 0.8247,
+  "cam": true,
+  "fontPx": 11.55,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1728x1117",
   "dsf": 1.25,
   "iw": 1728,
-  "ih": 1118,
+  "ih": 1117,
   "frame": {
-   "x": 100.2,
-   "y": 146.4,
-   "w": 1527.7,
-   "h": 954.8,
-   "b": 1101.2
+   "x": 100.6,
+   "y": 140.8,
+   "w": 1526.8,
+   "h": 954.2,
+   "b": 1095
   },
-  "cssW": 1528,
-  "scale": 0.955,
-  "cssScale": 0.955,
-  "fontPx": 13.37,
-  "emptyTop": 17.6,
-  "emptyBot": 16.8,
-  "vis": true,
-  "narrow": false
+  "cssW": 1527,
+  "scale": 0.954375,
+  "cam": false,
+  "fontPx": 13.36,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1920x1080",
@@ -258,19 +258,19 @@
   "ih": 1080,
   "frame": {
    "x": 225.6,
-   "y": 144.9,
+   "y": 139.9,
    "w": 1468.9,
    "h": 918,
-   "b": 1063
+   "b": 1058
   },
   "cssW": 1469,
   "scale": 0.918125,
-  "cssScale": 0.918125,
+  "cam": false,
   "fontPx": 12.85,
-  "emptyTop": 17,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "2560x1440",
@@ -278,20 +278,20 @@
   "iw": 2560,
   "ih": 1440,
   "frame": {
-   "x": 480,
-   "y": 285.4,
-   "w": 1600,
-   "h": 1000,
-   "b": 1285.4
+   "x": 259.4,
+   "y": 142.2,
+   "w": 2041.3,
+   "h": 1275.8,
+   "b": 1418
   },
-  "cssW": 1600,
-  "scale": 1,
-  "cssScale": 1,
-  "fontPx": 14,
-  "emptyTop": 155.2,
-  "emptyBot": 154.6,
-  "vis": true,
-  "narrow": false
+  "cssW": 2041,
+  "scale": 1.27562,
+  "cam": false,
+  "fontPx": 17.86,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1280x720",
@@ -300,19 +300,19 @@
   "ih": 720,
   "frame": {
    "x": 175.7,
-   "y": 122.9,
+   "y": 117.6,
    "w": 928.6,
    "h": 580.4,
-   "b": 703.3
+   "b": 698
   },
   "cssW": 929,
-  "scale": 0.580625,
-  "cssScale": 0.580625,
-  "fontPx": 8.13,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1366x768",
@@ -321,19 +321,19 @@
   "ih": 768,
   "frame": {
    "x": 182.8,
-   "y": 126.1,
+   "y": 120.8,
    "w": 1000.4,
    "h": 625.2,
-   "b": 751.3
+   "b": 746
   },
   "cssW": 1000,
-  "scale": 0.625,
-  "cssScale": 0.625,
-  "fontPx": 8.75,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1440x900",
@@ -342,19 +342,19 @@
   "ih": 900,
   "frame": {
    "x": 121.2,
-   "y": 134.8,
+   "y": 129.5,
    "w": 1197.6,
    "h": 748.5,
-   "b": 883.3
+   "b": 878
   },
   "cssW": 1198,
-  "scale": 0.74875,
-  "cssScale": 0.74875,
-  "fontPx": 10.48,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "scale": 0.8639,
+  "cam": true,
+  "fontPx": 12.09,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1536x864",
@@ -363,19 +363,19 @@
   "ih": 864,
   "frame": {
    "x": 196.1,
-   "y": 132.4,
+   "y": 127.1,
    "w": 1143.8,
    "h": 714.9,
-   "b": 847.3
+   "b": 842
   },
   "cssW": 1144,
-  "scale": 0.715,
-  "cssScale": 0.715,
-  "fontPx": 10.01,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "scale": 0.8247,
+  "cam": true,
+  "fontPx": 11.55,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1728x1117",
@@ -383,20 +383,20 @@
   "iw": 1728,
   "ih": 1117,
   "frame": {
-   "x": 100.4,
-   "y": 145.4,
-   "w": 1527.3,
-   "h": 954.5,
-   "b": 1100
+   "x": 100.6,
+   "y": 140.8,
+   "w": 1526.8,
+   "h": 954.2,
+   "b": 1095
   },
   "cssW": 1527,
   "scale": 0.954375,
-  "cssScale": 0.954375,
+  "cam": false,
   "fontPx": 13.36,
-  "emptyTop": 16.7,
-  "emptyBot": 17,
-  "vis": true,
-  "narrow": false
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1920x1080",
@@ -405,19 +405,19 @@
   "ih": 1080,
   "frame": {
    "x": 225.6,
-   "y": 145.3,
+   "y": 139.9,
    "w": 1468.9,
    "h": 918,
-   "b": 1063.3
+   "b": 1058
   },
   "cssW": 1469,
   "scale": 0.918125,
-  "cssScale": 0.918125,
+  "cam": false,
   "fontPx": 12.85,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "2560x1440",
@@ -425,20 +425,20 @@
   "iw": 2560,
   "ih": 1440,
   "frame": {
-   "x": 480,
-   "y": 284.9,
-   "w": 1600,
-   "h": 1000,
-   "b": 1284.9
+   "x": 259.4,
+   "y": 142.2,
+   "w": 2041.3,
+   "h": 1275.8,
+   "b": 1418
   },
-  "cssW": 1600,
-  "scale": 1,
-  "cssScale": 1,
-  "fontPx": 14,
-  "emptyTop": 154.7,
-  "emptyBot": 155.1,
-  "vis": true,
-  "narrow": false
+  "cssW": 2041,
+  "scale": 1.27562,
+  "cam": false,
+  "fontPx": 17.86,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1536x730",
@@ -446,20 +446,20 @@
   "iw": 1536,
   "ih": 730,
   "frame": {
-   "x": 295.9,
-   "y": 123.1,
-   "w": 944.2,
-   "h": 590.1,
-   "b": 713.2
+   "x": 296.2,
+   "y": 118.2,
+   "w": 943.6,
+   "h": 589.7,
+   "b": 708
   },
   "cssW": 944,
-  "scale": 0.59,
-  "cssScale": 0.59,
-  "fontPx": 8.26,
-  "emptyTop": 16.8,
-  "emptyBot": 16.8,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1280x600",
@@ -468,19 +468,19 @@
   "ih": 600,
   "frame": {
    "x": 266,
-   "y": 115.3,
+   "y": 110.5,
    "w": 748,
    "h": 467.5,
-   "b": 582.8
+   "b": 578
   },
   "cssW": 748,
-  "scale": 0.4675,
-  "cssScale": 0.4675,
-  "fontPx": 6.54,
-  "emptyTop": 16.8,
-  "emptyBot": 17.2,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1536x730",
@@ -489,19 +489,19 @@
   "ih": 730,
   "frame": {
    "x": 296.2,
-   "y": 123.6,
+   "y": 118.2,
    "w": 943.6,
    "h": 589.7,
-   "b": 713.3
+   "b": 708
   },
   "cssW": 944,
-  "scale": 0.59,
-  "cssScale": 0.59,
-  "fontPx": 8.26,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  },
  {
   "vp": "1280x600",
@@ -510,18 +510,18 @@
   "ih": 600,
   "frame": {
    "x": 266,
-   "y": 115.8,
+   "y": 110.5,
    "w": 748,
    "h": 467.5,
-   "b": 583.3
+   "b": 578
   },
   "cssW": 748,
-  "scale": 0.4675,
-  "cssScale": 0.4675,
-  "fontPx": 6.54,
-  "emptyTop": 17.3,
-  "emptyBot": 16.7,
-  "vis": true,
-  "narrow": false
+  "scale": 0.78,
+  "cam": true,
+  "fontPx": 10.92,
+  "headingY": 70,
+  "frameInView": true,
+  "hscroll": false,
+  "styleW": ""
  }
 ]
