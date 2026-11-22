@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>miyagi terms of service</title>
+  <meta name="description" content="The terms for using the miyagi beta.">
+  <meta name="theme-color" content="#f6f6f3">
+  <link rel="canonical" href="https://miyagi.study/terms/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/GoogleSansFlex.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: "Google Sans Flex";
+      src: url("/fonts/GoogleSansFlex.woff2") format("woff2");
+      font-weight: 400 700;
+      font-display: swap;
+    }
+    /* Tokens from the miyagi brand kit, as on the home page. */
+    :root {
+      --m-paper: #f6f6f3;
+      --m-ink: #141414;
+      --m-ink-muted: #66665f;
+      --m-ink-faint: #8f8f88;
+      --m-rule: rgba(20, 20, 20, .1);
+      --m-wash: rgba(20, 20, 20, .05);
+      --m-font-brand: "Google Sans Flex", system-ui, sans-serif;
+      --m-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; background: var(--m-paper); }
+    body { margin: 0; background: var(--m-paper); color: var(--m-ink); font: 17px/1.6 var(--m-font-brand); -webkit-font-smoothing: antialiased; }
+
+    .top { display: flex; align-items: center; gap: 16px; height: 58px; padding: 0 clamp(16px, 3vw, 30px); border-bottom: 1px solid var(--m-rule); }
+    .top .lg { display: flex; align-items: center; gap: 7px; color: var(--m-ink); text-decoration: none; font-weight: 600; font-size: 18px; letter-spacing: -.03em; }
+    .top .lg svg { width: 28px; height: 28px; display: block; }
+    .top .back { margin-left: auto; color: var(--m-ink-muted); font-size: 15px; text-decoration: none; }
+    .top .back:hover { color: var(--m-ink); }
+
+    .doc { max-width: 700px; margin: 0 auto; padding: 44px 16px 56px; }
+    h1 { margin: 0; font-weight: 600; font-size: clamp(34px, 5.4vw, 50px); line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
+    .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0 0; color: var(--m-ink-muted); font-size: 15px; }
+    .beta { display: inline-block; padding: 3px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--m-ink); color: var(--m-ink); font-weight: 600; font-size: 13px; line-height: 1.3; }
+    .meta + p { margin-top: 18px; }
+    h2 { margin: 48px 0 10px; font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -.025em; scroll-margin-top: 16px; }
+    h3 { margin: 30px 0 6px; font-weight: 600; font-size: 19px; line-height: 1.3; letter-spacing: -.015em; }
+    p { margin: 10px 0; }
+    ul { margin: 10px 0; padding-left: 1.25em; }
+    li { margin: 7px 0; }
+    li::marker { color: var(--m-ink-faint); }
+    strong { font-weight: 600; }
+    a { color: var(--m-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; border-radius: 4px; }
+    code { font-family: var(--m-font-mono); font-size: .88em; padding: 1px 5px; border-radius: 5px; background: var(--m-wash); }
+    blockquote { margin: 12px 0; padding: 12px 16px; border-radius: 12px; background: var(--m-wash); }
+    blockquote p { margin: 0; }
+
+    table { width: 100%; margin: 16px 0; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+    th { text-align: left; font-weight: 600; font-size: 13px; color: var(--m-ink-muted); padding: 0 14px 8px 0; border-bottom: 1px solid var(--m-ink); }
+    td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--m-rule); vertical-align: top; }
+    td:first-child { font-weight: 600; }
+    th:last-child, td:last-child { padding-right: 0; }
+
+    .foot { max-width: 700px; margin: 0 auto; padding: 22px 16px 48px; border-top: 1px solid var(--m-rule); color: var(--m-ink-muted); font-size: 14px; }
+    .foot a { color: var(--m-ink-muted); }
+    .foot a:hover { color: var(--m-ink); }
+    .foot span { margin: 0 8px; color: var(--m-ink-faint); }
+
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      .doc { padding-top: 32px; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      tr { padding: 12px 0; border-bottom: 1px solid var(--m-rule); }
+      tbody tr:first-child { border-top: 1px solid var(--m-ink); }
+      td { padding: 2px 0; border: 0; }
+      td + td::before { content: attr(data-label); display: block; margin-top: 6px; font-weight: 600; font-size: 12px; color: var(--m-ink-faint); }
+    }
+    @media print {
+      .top, .foot { display: none; }
+      body { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Built from /terms.md (the review copy, same text). No scripts, and nothing loads from another host. -->
+  <header class="top">
+    <a class="lg" href="/" aria-label="miyagi home"><svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#b5603f"><rect x="18" y="73" width="64" height="6" rx="2"/><path d="M22 79H78L74 89H26Z"/></g><g fill="#5a4433"><path d="M47 72C45 60 52 52 50 40C49 34 46 30 44 27L50 24C54 30 57 36 57 43C58 54 51 61 54 72Z"/></g><g fill="#1f9b45"><circle cx="48" cy="22" r="11"/><circle cx="30" cy="40" r="9"/><circle cx="70" cy="34" r="10"/></g></svg>miyagi</a>
+    <a class="back" href="/">back to miyagi.study</a>
+  </header>
+  <main class="doc">
+    <h1>miyagi terms of service</h1>
+    <p class="meta"><span class="beta">beta</span><span>last updated Nov 21, 2026</span></p>
+    <p>These are the terms for the beta of miyagi. They may change before our public launch, and when they do, the date above will change too.</p>
+    <p>These terms are an agreement between you and the miyagi team ("we", "us"). They cover the miyagi app for Mac, the server the app uses, and this website, miyagi.study (together, "miyagi").</p>
+    <p><strong>By using miyagi, you agree to these terms and to our <a href="/privacy/">privacy policy</a>.</strong> If you don't agree, please don't use miyagi.</p>
+    <h2 id="1-who-can-use-miyagi">1. Who can use miyagi</h2>
+    <ul>
+      <li>miyagi is for people <strong>13 and older</strong>. If you're under 13, don't use miyagi.</li>
+      <li>If you're <strong>under 18</strong>, a parent or legal guardian must agree to these terms for you, and they're responsible for how you use miyagi. If you or your parent later cancel this agreement because you're a minor, your access ends. Parents, see section 15.</li>
+      <li>We offer miyagi in the United States for now. You can't use miyagi where our AI provider doesn't offer service, or where US law doesn't allow it (section 13).</li>
+    </ul>
+    <h2 id="2-what-miyagi-does">2. What miyagi does</h2>
+    <p>miyagi turns a coding tutorial into a hands-on lesson. During a lesson it looks at your screen and your code, checks whether you've done each step, and coaches you. To do that it sends some of what it sees to Claude, made by Anthropic, through our server, or straight to Anthropic if you add your own API key. The <a href="/privacy/">privacy policy</a> says exactly what is sent and where.</p>
+    <p><strong>miyagi's coach is an AI.</strong> It can be wrong (section 7).</p>
+    <p>miyagi is in beta. It's new, it changes often, and features may change or go away. It runs on a Mac for now.</p>
+    <h2 id="3-your-account">3. Your account</h2>
+    <p>Signing in with Google is optional. If you sign in, keep your Google account secure. You're responsible for what happens under your sign-in. Tell us if you think someone else is using it.</p>
+    <h2 id="4-the-app-license">4. The app license</h2>
+    <p>We give you a personal, non-exclusive, non-transferable, revocable license to install and use the miyagi app on computers you own or control, for your own learning, as long as you follow these terms.</p>
+    <p>Except where the law lets you do it anyway, you may not:</p>
+    <ul>
+      <li>copy, sell, rent, sublicense or redistribute the app (sharing a link to miyagi.study is fine);</li>
+      <li>reverse engineer, decompile or disassemble the app;</li>
+      <li>take out, use or share any credential built into the app or issued to it by our server;</li>
+      <li>remove or change our notices or the notices of open-source parts of the app.</li>
+    </ul>
+    <p>The app includes open-source software under its own licenses. Nothing here limits your rights under those licenses.</p>
+    <p>The app checks for new versions and tells you when one is ready. It doesn't install them on its own. Some updates may be needed to keep using our server. We won't hold back security fixes to make you accept other changes.</p>
+    <h2 id="5-using-miyagi-fairly">5. Using miyagi fairly</h2>
+    <p>We pay for the AI calls that go through our server, within usage limits. To keep it working for everyone, you may not:</p>
+    <ul>
+      <li>get around usage limits, for example by making many installs or accounts, or by sharing install tokens;</li>
+      <li>use our server from anything other than the miyagi app, scrape it, overload it, or use it as a general AI service;</li>
+      <li>try to make the AI ignore its instructions or safety rules;</li>
+      <li>use miyagi's output to train a competing AI model;</li>
+      <li>use miyagi to break the law, to harass anyone, to make sexual content, or to make malware or anything meant to cause harm;</li>
+      <li>point miyagi at other people's private information (messages, documents, accounts) without their permission;</li>
+      <li><strong>use miyagi to cheat</strong>, for example to complete graded schoolwork, tests or interviews where AI help isn't allowed, or to hand in AI-assisted work without saying so where that's required;</li>
+      <li>break <a href="https://www.anthropic.com/legal/aup">Anthropic's Usage Policy</a>, which applies to everything sent to Claude.</li>
+    </ul>
+    <p>We set free usage limits and may change them. We may pause or block access if we see abuse.</p>
+    <h2 id="6-your-screen-your-code-and-what-s-on-them">6. Your screen, your code, and what's on them</h2>
+    <p>You keep all rights to your code, your files and anything else that's yours. You let us read, copy, process and send your screen content, code and questions, as the privacy policy describes, only to run miyagi for you (including through Anthropic), to keep miyagi secure, and to fix problems you report. We don't use them to train AI models, and we don't sell them.</p>
+    <p><strong>You control what's on your screen.</strong> During a lesson miyagi takes screenshots. Before a lesson, close or hide what you don't want sent: passwords, API keys, banking, private messages, and anyone else's information. miyagi leaves some apps (such as password managers and Messages) out of some screenshots, but it can't catch everything. Only show miyagi things you have the right to show.</p>
+    <h2 id="7-lessons-ai-output-and-grades">7. Lessons, AI output and grades</h2>
+    <ul>
+      <li><strong>AI makes mistakes.</strong> Lessons, hints, explanations, code and grades are made with AI and can be wrong, incomplete or out of date. Check them before you rely on them.</li>
+      <li><strong>Grades are practice feedback.</strong> When miyagi says a step passed, it means its checks passed at that moment. That isn't a certificate, a school grade, or proof that your code is correct or safe.</li>
+      <li><strong>These terms beat the chat.</strong> If the AI says something about miyagi's prices, features or rules that differs from these terms or our website, these terms and the website are what count.</li>
+      <li><strong>Be careful with commands and code.</strong> Lessons may ask you to install packages or run commands, and miyagi can do some steps for you when you ask. Read what it will run first, run it only on a computer you're allowed to change, and keep backups.</li>
+      <li><strong>No professional advice.</strong> Nothing in miyagi is legal, financial, medical, academic or career advice.</li>
+      <li><strong>What you make is yours.</strong> As between you and us, you own the code you write. To the extent we have any rights in the output miyagi makes for you, we give them to you, subject to Anthropic's terms. Others may get similar output.</li>
+    </ul>
+    <h2 id="8-tutorials-and-other-people-s-content">8. Tutorials and other people's content</h2>
+    <p>The videos miyagi builds lessons from belong to their creators and play from YouTube. miyagi isn't affiliated with, endorsed by or sponsored by YouTube, Google or the tutorial creators. A lesson is a study guide that follows the video.</p>
+    <p>miyagi uses YouTube API Services to play videos. When you watch a video in miyagi, you agree to the <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>, and <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> applies to what YouTube collects.</p>
+    <h2 id="9-your-own-api-key">9. Your own API key</h2>
+    <p>You can add your own Anthropic API key in Settings, but only if you're <strong>18 or older</strong>. If you do:</p>
+    <ul>
+      <li>the key stays on your Mac, locked by your Keychain, and calls with it go straight from your Mac to Anthropic, not through our server;</li>
+      <li>those calls are between you and Anthropic, under your agreement with them: you pay their charges, and their terms decide how they use what you send;</li>
+      <li>keep your key secret, and remove it in Settings when you stop using it. We aren't responsible for charges or misuse of a key you added, unless we caused it by breaking these terms.</li>
+    </ul>
+    <h2 id="10-services-we-rely-on">10. Services we rely on</h2>
+    <p>miyagi relies on services we don't control, including Anthropic, YouTube, Google sign-in, Supabase, Render, GitHub and VS Code. They may change or stop, and that may change or stop parts of miyagi. Their own terms and privacy policies cover what they do with what they receive.</p>
+    <h2 id="11-feedback">11. Feedback</h2>
+    <p>If you send us ideas or suggestions, we may use them without owing you anything.</p>
+    <h2 id="12-copyright-complaints">12. Copyright complaints</h2>
+    <p>If you believe something in miyagi infringes your copyright, email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a> with:</p>
+    <ul>
+      <li>your name and contact details;</li>
+      <li>the work you believe is infringed;</li>
+      <li>where it appears in miyagi (the lesson, or the video link);</li>
+      <li>a statement that you believe in good faith the use isn't authorized by you, your agent or the law;</li>
+      <li>a statement, under penalty of perjury, that your notice is accurate and that you own the right or may act for its owner;</li>
+      <li>your physical or electronic signature.</li>
+    </ul>
+    <p>If your material was removed and you think that was a mistake, you can send a counter-notice to the same address. We end the access of people who repeatedly infringe, where appropriate.</p>
+    <h2 id="13-export-and-sanctions">13. Export and sanctions</h2>
+    <p>You may not use, download or export miyagi in breach of US export control or sanctions laws, including from a country or region under comprehensive US embargo, or if you're on a US government restricted-party list. Anthropic serves only <a href="https://www.anthropic.com/supported-countries">certain countries and regions</a>, so miyagi may not work everywhere.</p>
+    <h2 id="14-ending-things">14. Ending things</h2>
+    <p>You can stop using miyagi at any time. To erase your keys, settings and sign-in on your Mac, use Settings › Privacy › Delete my data. To delete your account and what our server keeps, email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a>. The <a href="/privacy/">privacy policy</a> explains what each one removes.</p>
+    <p>We may suspend or end your access if you break these terms, if the law requires it, or if we stop offering miyagi. If we stop offering our server, we'll try to tell you in the app first. Sections 6 (what we don't do with your content), 7, 11, 16, 17, 18 and 19 still apply after this agreement ends.</p>
+    <h2 id="15-for-parents-and-guardians">15. For parents and guardians</h2>
+    <p>If your teen uses miyagi, you agree to these terms for yourself and for them, and you're responsible for their use. You can ask us to see or delete your teen's account and data at any time. If you believe a child under 13 used miyagi, email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a> and we'll delete what we hold about them.</p>
+    <h2 id="16-no-warranties">16. No warranties</h2>
+    <p><strong>miyagi is a beta, provided "as is" and "as available".</strong> To the fullest extent the law allows, we disclaim all warranties, express or implied, including merchantability, fitness for a particular purpose and non-infringement. We don't promise that miyagi will be accurate, uninterrupted, secure or error-free.</p>
+    <h2 id="17-limits-on-liability">17. Limits on liability</h2>
+    <p>To the fullest extent the law allows:</p>
+    <ul>
+      <li>we're not liable for indirect, incidental, special, consequential or punitive damages, or for lost data, profits or work, arising from miyagi;</li>
+      <li>our total liability for all claims about miyagi is limited to the greater of US$100 or what you paid us for miyagi in the 12 months before the claim.</li>
+    </ul>
+    <p>These limits don't apply to liability for fraud, willful misconduct or violations of law, or to anything else the law doesn't let us limit.</p>
+    <h2 id="18-disputes">18. Disputes</h2>
+    <p>Let's try to fix problems first. Before you start a claim, email <a href="mailto:hello@miyagi.study">hello@miyagi.study</a>, tell us what's wrong, and give us 30 days to try to resolve it with you informally. We'll do the same before we start one.</p>
+    <p>These terms are governed by California law, without regard to its conflict-of-laws rules. A dispute we can't resolve informally will be decided in the state or federal courts in California, and you and we agree to those courts' jurisdiction. Either of us may instead bring a claim in small claims court if it qualifies. We don't require arbitration. If the consumer law where you live gives you rights that these terms can't take away, you keep them.</p>
+    <h2 id="19-general">19. General</h2>
+    <ul>
+      <li><strong>Changes.</strong> We may update these terms. We'll change the date at the top, and for important changes we'll tell you in the app before they apply. Changes don't apply to disputes that started before them. If a change would let us use your data in a new way, we'll ask you first.</li>
+      <li><strong>Whole agreement.</strong> These terms and the privacy policy are the whole agreement between you and us about miyagi.</li>
+      <li><strong>If part doesn't work.</strong> If a court finds part of these terms unenforceable, the rest still applies.</li>
+      <li><strong>No waiver.</strong> If we don't enforce something right away, we can still enforce it later.</li>
+      <li><strong>Transfer.</strong> You can't transfer these terms. We can transfer them to a company that takes over miyagi, including a company we form to run it, and we'll tell you if we do.</li>
+    </ul>
+    <h2 id="20-contact">20. Contact</h2>
+    <p><a href="mailto:hello@miyagi.study">hello@miyagi.study</a>, for questions about these terms, support, privacy and copyright notices.</p>
+  </main>
+  <footer class="foot">
+    <a href="/privacy/">privacy</a><span aria-hidden="true">·</span><a href="/terms/">terms</a><span aria-hidden="true">·</span><a href="mailto:hello@miyagi.study">hello@miyagi.study</a>
+  </footer>
+</body>
+</html>
