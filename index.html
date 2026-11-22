@@ -1858,20 +1858,22 @@
       new IntersectionObserver(function (es) { visible = es[es.length - 1].isIntersecting; if (visible && !started) { started = true; if (!reduce && mode === 'auto') t = 0; } }, { threshold: .35 }).observe(frame);
 
       /* any app: miyagi's card with the apps floating around it */
-      // The apps orbit miyagi's card, slowly: two rings, tilted, so they pass behind the card at the top (smaller, softer)
-      // and in front of it at the bottom (bigger).
-      var RING = ['youtube', 'blender', 'vscode', 'figma', 'terminal', 'xcode', 'pytorch', 'github', 'rstudioide', 'unity', 'python', 'davinciresolve', 'googlesheets', 'jupyter', 'arduino', 'adobephotoshop'];
+      // The apps orbit miyagi's window, slowly: two tilted rings wide enough to clear the window, so every logo shows.
+      // Up top they are smaller and softer, at the bottom bigger. The rings interleave so no two logos meet.
+      var RING = ['blender', 'vscode', 'figma', 'googlesheets', 'jupyter', 'xcode', 'adobephotoshop', 'unity', 'python', 'davinciresolve', 'terminal', 'github', 'pytorch',
+        'canva', 'rstudioide', 'godotengine', 'arduino', 'androidstudio', 'obsidian', 'unrealengine', 'docker', 'overleaf', 'kicad', 'tensorflow', 'youtube', 'googlecolab'];
       $('#ologos').innerHTML = RING.map(function (n, i) { return '<span class="ologo' + (i % 3 === 0 ? ' round' : '') + '">' + tool(n) + '</span>'; }).join('');
-      var logos = $$('#ologos .ologo'), orbT = 0, orbOn = false, orbLast = 0, hot = null;
+      var logos = $$('#ologos .ologo'), orbT = 0, orbOn = false, orbLast = 0, hot = null, ORX = [540, 452], ORY = [322, 268], oSlim = false;
       function orbit() {
-        var w = orbT * 2 * Math.PI / 80;
+        var w = orbT * 2 * Math.PI / 90, n = Math.ceil(logos.length / 2);
         logos.forEach(function (el, i) {
-          var inner = i % 2, a = i * 2 * Math.PI / logos.length + w + (inner ? .2 : 0), z = Math.sin(a);
-          var x = 600 + Math.cos(a) * (inner ? 300 : 390), y = 380 + z * (inner ? 245 : 300) + ((i % 3) - 1) * 18;
-          var k = (z + 1) / 2, s = .72 + .38 * k, isHot = RING[i] === hot; if (isHot) { s = 1.2; k = 1; }
+          var r = i % 2, a = (i >> 1) * 2 * Math.PI / n + w + r * Math.PI / n, z = Math.sin(a);
+          var x = 600 + Math.cos(a) * ORX[r], y = 380 + z * ORY[r] + ((i % 3) - 1) * 8;
+          var k = (z + 1) / 2, s = .8 + .26 * k, isHot = RING[i] === hot; if (isHot) { s = 1.2; k = 1; }
           el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + s.toFixed(3) + ') rotate(' + ((i % 5) - 2) * 3 + 'deg)';
-          el.style.zIndex = isHot ? 4 : z > -.1 ? 3 : 1;
-          el.style.opacity = (.62 + .38 * k).toFixed(2);
+          // on a phone the rings can't clear the window, so beside it they pass behind (the lesson stays readable)
+          el.style.zIndex = oSlim && y > 150 && y < 600 ? 1 : isHot ? 4 : z > -.1 ? 3 : 1;
+          el.style.opacity = (.74 + .26 * k).toFixed(2);
         });
       }
       orbit();
@@ -1881,6 +1883,8 @@
         of.style.aspectRatio = slim ? '660 / 760' : '1200 / 760';
         var s = slim ? w / 660 : w / 1200;
         os.style.transform = (slim ? 'translateX(' + (-270 * s) + 'px) ' : '') + 'scale(' + s + ')';
+        // a phone shows only the middle of the stage, so the rings pull in to fit it
+        oSlim = slim; ORX = slim ? [300, 258] : [540, 452]; if (logos) orbit();
       }
       // In the middle: miyagi inside four apps, one after another. A logo or a dot picks one.
       // Sheets: six months, a total whose SUM stops two rows short (shown mid-edit, its range outlined like Sheets does).
