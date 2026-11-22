@@ -162,6 +162,8 @@
       html.gl .top { min-height: 44px; padding-right: 10px; }
       .person a { display: block; padding: 12px 6px; }
       .note .alt { display: inline-block; padding: 12px 4px; }
+      .foot .team a, .legal a { display: inline-block; padding: 12px 6px; }
+      .foot .team, .legal { gap: 0 16px; }
     }
     /* The download code: on the first download click the field takes the buttons' place (same height, so the hero
        doesn't grow into the tree), with "back" to the buttons. */
@@ -279,6 +281,16 @@
     .hx-tabs button.on { color: var(--m-ink); box-shadow: inset 0 -2px 0 var(--m-ink); }
     .hx-tabs button:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 4px; border-radius: 2px; }
     .hx-sub { margin: 0; min-height: 1.45em; font-size: 14px; line-height: 1.45; color: var(--m-ink-faint); letter-spacing: -.005em; text-wrap: balance; max-width: 420px; }
+    /* Short screens (a phone on its side): the tree, the big wordmark and the form can't all fit under the top bar, so the wordmark
+       (the bar already shows the logo) steps out and the hero tightens; the 3D layout then fits the tree between the bar and the headline. */
+    @media (max-height: 520px) and (orientation: landscape) {
+      html.gl .frame { padding-bottom: 12px; }
+      .hero > .after:first-child { display: none; }
+      .hero h1 { margin-top: 0; font-size: 32px; }
+      .hero .lede { margin-top: 6px; font-size: 15px; }
+      .hx { margin-top: 12px; gap: 8px; }
+      .hx-field { height: 48px; }
+    }
     .hx-sub b { font-weight: 500; color: var(--m-ink); }
     .hx-sub a { color: var(--m-ink); font-weight: 500; text-decoration: none; }
     .hx-sub a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -658,6 +670,8 @@
     .mw .mask .lg { width: 16px; height: 16px; }
     .mw .mask.typing { background: #fff; color: #1c1b19; box-shadow: 0 0 0 1.5px #1c1b19; }
     .mw .vg.stuck { display: grid; grid-template-columns: .95fr 1.15fr; gap: 12px; padding: 14px 16px; }
+    /* Phones: the notebook and the Not yet panel stack, so the panel's chips and help have the card's full width. */
+    @media (max-width: 560px) { .mw .vg.stuck { height: auto; grid-template-columns: 1fr; } .mw .vg.stuck .mhelp { flex: none; min-height: 58px; } }
     .mw .mnb { background: #fff; border-radius: 10px; padding: 10px; font: 11.5px/1.4 var(--mono); color: #1c1b19; }
     .mw .mnb .cell { display: flex; gap: 8px; align-items: center; padding: 6px 8px; margin-bottom: 6px; border-radius: 6px; background: #f5f5f4; border: 1px solid #ebeae6; }
     .mw .mnb .out { display: flex; gap: 8px; padding: 2px 9px; }
@@ -1802,8 +1816,9 @@
         if (gact) {
           var rg = gact.ring();
           gring.style.cssText = 'left:' + rg[0] + 'px;top:' + rg[1] + 'px;width:' + rg[2] + 'px;height:' + rg[3] + 'px';
-          if (gtx.textContent !== gact.text) { gtx.textContent = gact.text; ghd.textContent = gact.hd; guide.className = 'guide ' + gact.side + (guide.classList.contains('on') ? ' on' : ''); }
-          var gx = gact.side === 'right' ? rg[0] + rg[2] + 16 : rg[0] + 6, gy = gact.side === 'up' ? rg[1] - 14 - guide.offsetHeight : gact.side === 'down' ? rg[1] + rg[3] + 14 : rg[1] - 2;
+          var gside = small && gact.side === 'right' ? 'down' : gact.side; // phones: a callout to the right would leave the frame, so it sits under its spot
+          if (gtx.textContent !== gact.text || !guide.classList.contains(gside)) { gtx.textContent = gact.text; ghd.textContent = gact.hd; guide.className = 'guide ' + gside + (guide.classList.contains('on') ? ' on' : ''); }
+          var gx = gside === 'right' ? rg[0] + rg[2] + 16 : rg[0] + 6, gy = gside === 'up' ? rg[1] - 14 - guide.offsetHeight : gside === 'down' ? rg[1] + rg[3] + 14 : rg[1] - 2;
           guide.style.left = gx + 'px'; guide.style.top = gy + 'px';
         }
 
@@ -1828,8 +1843,22 @@
       // Legibility floor: the stage's smallest text is 14px, so a stage scale under MINSC (0.78, about 11px text) is too small to read.
       // Where the frame would need a smaller scale (laptops, short windows, phones) the camera zooms to MINSC and follows the focus points; above it the whole stage shows, menu bar and miyagi bar included.
       var MINSC = 0.78;
+      // Phones (any frame under 600px wide, upright or sideways): at MINSC a 358px frame holds only ~460 stage px, less than one card or callout (the Not yet card is 572),
+      // so the camera frames each beat's box instead [t, x, y, w, h] in stage px and zooms out just enough to fit it (never past 0.95 or under 0.5).
+      var SMALL = 600, PBOX = [[0, 588, 150, 470, 330], [2.1, 588, 400, 470, 110], [4.5, 590, 410, 630, 340], [7.4, 540, 0, 520, 640], [8.3, 140, 560, 320, 300],
+        [11.2, 540, 200, 520, 440], [13.4, 740, 110, 470, 410], [15, 420, 840, 290, 100], [16.4, 740, 140, 470, 370], [18, 740, 110, 470, 410], [19.5, 120, 240, 540, 130],
+        [22.7, 120, 640, 420, 210], [24.6, 618, 508, 592, 224], [26.3, 180, 300, 420, 80], [28.6, 618, 508, 592, 224], [30, 120, 300, 480, 80], [32.3, 120, 640, 420, 220],
+        [33.9, 1196, 0, 290, 420], [35.2, 1196, 630, 290, 240], [36.6, 740, 140, 470, 370], [39.8, 740, 110, 470, 410]];
+      var small = false;
+      function boxCam(t) {
+        var b = PBOX[0]; PBOX.forEach(function (k) { if (t >= k[0]) b = k; });
+        var w = frame.clientWidth, h = frame.clientHeight, sc = clamp(Math.min(w / (b[3] + 24), h / (b[4] + 24)), .5, .95);
+        var tx = clamp(w / 2 - (b[1] + b[3] / 2) * sc, w - 1600 * sc, 0), ty = clamp(h / 2 - (b[2] + b[4] / 2) * sc, h - 1000 * sc, 0);
+        wstage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
+      }
       function camera(t) {
         if (!narrow) return;
+        if (small) return boxCam(t);
         var f = FOCUS[0]; FOCUS.forEach(function (k) { if (t >= k[0]) f = k; });
         var w = frame.clientWidth, h = frame.clientHeight, sc = Math.max(w / 1600, h / 867, MINSC);
         var tx = clamp(w / 2 - (f[1] + OX) * sc, w - 1600 * sc, 0), ty = clamp(h / 2 - (f[2] + OY) * sc, h - 1000 * sc, 0);
@@ -1837,7 +1866,7 @@
       }
       function fit() {
         // the CSS sizes the frame (width and height, see .film); this only reads that width, so the stage scale always matches the box
-        narrow = frame.clientWidth / 1600 < MINSC; wstage.classList.toggle('cam', narrow);
+        narrow = frame.clientWidth / 1600 < MINSC; small = frame.clientWidth < SMALL; wstage.classList.toggle('cam', narrow);
         if (narrow) camera(t); else wstage.style.transform = 'scale(' + frame.clientWidth / 1600 + ')';
         layoutConn(); layoutOrbit();
       }
@@ -2515,9 +2544,9 @@
       let L = {};
       function layout() {
         const vh = innerHeight, asp = innerWidth / vh, narrow = asp < 0.8;
-        const mark = frameEl.querySelector('.hero .wordmark');
+        const wm = frameEl.querySelector('.hero .wordmark'), mark = wm && wm.getBoundingClientRect().height ? wm : frameEl.querySelector('.hero h1');   // the headline when a short screen hides the wordmark
         const textTop = mark ? mark.getBoundingClientRect().top - frameEl.getBoundingClientRect().top : vh * 0.5;
-        const top = 24, bottom = Math.max(top + vh * 0.26, textTop - 36);
+        const short = vh < 520 && asp > 1, top = short ? 64 : 24, bottom = Math.max(top + vh * (short ? 0.18 : 0.26), textTop - (short ? 20 : 36));   // short: clear the 58px top bar
         const f = (bottom - top) / vh, c = (top + bottom) / 2 / vh;
         const DF = Math.max(84 / f, (88 / 0.86) / asp) * K;
         const DR = Math.max(84 / 0.64, (80 / 0.8) / asp) * K;   // first view: the whole tree, about where the board was
