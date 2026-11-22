@@ -24,6 +24,10 @@
     // Use the 3D tree when WebGL and modules work and motion is welcome; otherwise the flat page stays.
     (function () {
       var d = document.documentElement, ok = false;
+      // Tablets and phones (iPadOS Safari reports a Mac, so a touch screen on a "Macintosh" gives it away) can't install the
+      // Mac or Windows app: the download buttons give way to "miyagi runs on a Mac for now" (html.nodl).
+      var ua = navigator.userAgent || '';
+      if (/iPhone|iPad|iPod|Android/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) d.classList.add('nodl');
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       try {
         var c = document.createElement('canvas'), x = c.getContext('webgl2') || c.getContext('webgl');
@@ -86,7 +90,7 @@
       align-items: center; justify-content: center; text-align: center; padding: 28px 16px 24px;
     }
     html.gl .frame { position: sticky; top: 0; height: 100vh; height: 100svh; justify-content: flex-end; padding-bottom: 9vh; pointer-events: none; }
-    html.gl .frame a { pointer-events: auto; }
+    html.gl .frame a, html.gl .frame button { pointer-events: auto; }
     html.gl .frame .tree { display: none; }
 
     .tree { width: clamp(150px, 19vw, 200px); height: auto; display: block; overflow: visible; }
@@ -342,6 +346,21 @@
     .dl .note { max-width: 240px; text-align: center; line-height: 1.4; }
     .cta .btn-ghost { height: 40px; padding: 0 16px; font-size: 14px; margin-top: 4px; }
     @media (max-width: 520px) { .dl { flex-direction: column; align-items: center; } }
+    /* A tablet or phone can't install the app: the buttons give way to a calm line and a way to send the link to a Mac. */
+    .macnote { display: none; flex-direction: column; align-items: center; gap: 12px; text-align: center; max-width: 440px; }
+    .macnote .btn { height: 48px; }
+    .macnote p { text-wrap: balance; margin: 0; font-size: 16px; line-height: 1.45; color: var(--m-ink); }
+    .macnote .row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    html.nodl .dl, html.nodl .code, html.nodl [data-code-note] { display: none !important; }
+    html.nodl .macnote { display: flex; }
+    /* Touch screens: every control is at least 44 pt tall. */
+    @media (pointer: coarse) {
+      .cta .btn-ghost { height: 44px; }
+      .snd { height: 44px; }
+      html.gl .top { min-height: 44px; padding-right: 10px; }
+      .person a { display: block; padding: 12px 6px; }
+      .note .alt { display: inline-block; padding: 12px 4px; }
+    }
     /* The download code: on the first download click the field takes the buttons' place (same height, so the hero
        doesn't grow into the tree), with "back" to the buttons. */
     .code { display: flex; gap: 10px; width: min(494px, 100%, calc(100vw - 32px)); }
@@ -446,6 +465,14 @@
               </a>
               <span class="note" data-dl-note="win">windows 10 and 11</span>
             </div>
+          </div>
+          <div class="macnote" data-macnote>
+            <p>miyagi runs on a Mac for now. open this page on your Mac to download.</p>
+            <div class="row">
+              <button class="btn" type="button" data-copylink>copy link</button>
+              <a class="btn btn-ghost" data-maillink href="mailto:?subject=miyagi%20for%20my%20Mac&amp;body=https%3A%2F%2Fmiyagi.study%2F">email it to me</a>
+            </div>
+            <span class="note" data-copymsg aria-live="polite"></span>
           </div>
           <form class="code" data-code hidden>
             <input type="text" name="code" placeholder="code" aria-label="download code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
@@ -574,6 +601,17 @@
       input.addEventListener('input', function () { if (msg.textContent === 'wrong code') say('enter the code to download'); });
       input.addEventListener('keydown', function (e) { if (e.key === 'Escape') back(); });
       note.querySelector('[data-code-back]').addEventListener('click', function (e) { e.preventDefault(); back(); });
+    })();
+
+    // Tablet or phone: copy the page link so it can be opened on a Mac.
+    (function () {
+      var b = document.querySelector('[data-copylink]'), m = document.querySelector('[data-copymsg]');
+      if (!b) return;
+      b.addEventListener('click', function () {
+        var url = 'https://miyagi.study/', done = function (t) { m.textContent = t; };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { done('link copied'); }, function () { done(url); });
+        else done(url);
+      });
     })();
 
     // "See it work" in the hero scrolls down to the story.
