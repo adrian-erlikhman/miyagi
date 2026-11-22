@@ -594,16 +594,17 @@
     .mw .skill .rev:not(.on) { opacity: 0; } .mw .skill .rev b { color: var(--tx); font-weight: 500; }
 
     /* ---------- everything it does: a bento of live cards ---------- */
-    .mw .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1180px; margin: 56px auto 0; }
-    .mw .bx { background: #fff; border-radius: 22px; padding: 12px 12px 22px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
+    .mw .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-flow: dense; gap: 14px; max-width: 1180px; margin: 44px auto 0; }
+    .mw .bx { background: #fff; border-radius: 20px; padding: 10px 10px 16px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
       transition: transform .35s var(--spring), box-shadow .35s; min-width: 0; }
     .mw .bx:hover { transform: translateY(-3px); box-shadow: 0 1px 0 #fff inset, 0 28px 54px -30px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
     .mw .bx.w2 { grid-column: span 2; }
-    .mw .bx > b { display: block; margin: 16px 10px 0; font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
-    .mw .bx > p { margin: 4px 10px 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
-    .mw .vg { position: relative; height: 214px; border-radius: 14px; background: var(--tb); overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
+    .mw .bx > b { display: block; margin: 12px 8px 0; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
+    .mw .bx > p { margin: 3px 8px 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+    .mw .vg { position: relative; height: 196px; border-radius: 13px; background: var(--tb); overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
     .mw .vg .lg svg { width: 100%; height: 100%; display: block; }
     .mw .vg .spin { width: 11px; height: 11px; }
+    @media (max-width: 1100px) { .mw .bento { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 860px) { .mw .bento { grid-template-columns: 1fr 1fr; } .mw .bx.w2 { grid-column: span 2; } }
     @media (max-width: 560px) { .mw .bento { grid-template-columns: 1fr; } .mw .bx.w2 { grid-column: span 1; } }
     .mw .mfield { position: absolute; left: 18px; right: 18px; top: 16px; height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 12px; background: #fff; border-radius: 11px; box-shadow: 0 0 0 1.5px #1c1b19; font-size: 14px; }
@@ -615,12 +616,12 @@
     .mw .mr .th { width: 46px; height: 28px; border-radius: 6px; background: #efede7; display: grid; place-items: center; color: #75726b; flex: none; }
     .mw .mr .th.v { background: #1c1b19; color: #fff; } .mw .mr .th .ico { width: 13px; height: 13px; }
     .mw .mr .tx { flex: 1; min-width: 0; } .mw .mr b { display: block; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .mr small { color: #75726b; font-size: 11.5px; }
-    .mw .vg.ask2 { display: grid; grid-template-columns: 1fr 200px; gap: 16px; padding: 16px 18px; }
+    .mw .vg.ask2 { display: grid; grid-template-columns: 1fr 176px; gap: 14px; padding: 14px 16px; }
     .mw .vg.ask2 .mfield { position: static; }
     .mw .vg.ask2 .mres { position: static; margin-top: 10px; }
     .mw .aright { display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
     .mw .aright .lab2 { font-size: 11px; color: #8f8c84; margin: 0 0 3px 10px; letter-spacing: .02em; }
-    .mw .aright button { display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 10px; border-radius: 10px; font-size: 13px; color: #4a4843; text-align: left; transition: background .2s, box-shadow .2s, color .2s; }
+    .mw .aright button { display: flex; align-items: center; gap: 9px; height: 30px; padding: 0 10px; border-radius: 10px; font-size: 13px; color: #4a4843; text-align: left; transition: background .2s, box-shadow .2s, color .2s; }
     .mw .aright button .ti { width: 16px; height: 16px; display: grid; place-items: center; flex: none; }
     .mw .aright button .ti svg { width: 16px; height: 16px; display: block; }
     .mw .aright button:hover { background: rgba(255, 255, 255, .5); color: #1c1b19; }
@@ -654,7 +655,7 @@
     .mw .mbub b { display: block; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .6); margin-bottom: 1px; }
     .mw .mbub:not(.on) { opacity: 0; transform: translateY(6px); }
     .mw .mbub.down::after { content: ""; position: absolute; top: -5px; left: 20px; width: 10px; height: 10px; background: #0b0b0b; border-radius: 2px; transform: rotate(45deg); }
-    .mw #gRing { left: 52px; top: 52px; width: 210px; height: 24px; } .mw #gBub { left: 56px; top: 90px; }
+    .mw #gRing { left: 52px; right: 34px; top: 52px; height: 24px; } .mw #gBub { left: 56px; top: 90px; }
     .mw .mterm { position: absolute; inset: 16px 18px; border-radius: 10px; background: #1e1e1e; color: #cccccc; font: 12.5px/22px var(--mono); padding: 12px 14px; white-space: pre; }
     .mw .mterm .ok { color: #6fcf8f; }
     .mw .mmini { position: absolute; left: 18px; right: 18px; top: 16px; padding: 14px; border-radius: 10px; background: #fff; font: 12.5px/1.4 var(--mono); color: #4a4843; }
@@ -689,8 +690,8 @@
     .mw .tbl5 i.na { background: transparent; box-shadow: inset 0 0 0 1px #b9b4a8; }
     .mw .arr { font: 11px var(--mono); color: #75726b; } .mw .arr.x { color: #a6a39b; }
     .mw .msk { position: absolute; inset: 14px 16px; background: #fff; border-radius: 12px; padding: 10px 12px; }
-    .mw .skh { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-    .mw .skh b { font-weight: 600; } .mw .lgd { display: flex; align-items: center; gap: 4px; color: #75726b; font-size: 10.5px; }
+    .mw .skh { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2px 8px; font-size: 12px; }
+    .mw .skh b { font-weight: 600; white-space: nowrap; } .mw .lgd { display: flex; align-items: center; gap: 4px; color: #75726b; font-size: 10.5px; }
     .mw .lgd i { width: 8px; height: 8px; border-radius: 50%; margin-left: 7px; } .mw .lgd .m { background: #1f9b45; } .mw .lgd .p { box-shadow: inset 0 0 0 1.5px #1f9b45; } .mw .lgd .r { box-shadow: inset 0 0 0 1.5px #c9c4b8; }
     .mw .mtree { display: block; width: 100%; height: 150px; margin-top: 4px; }
     .mw .mtree text { font: 10px var(--font); fill: #4a4843; }
@@ -739,59 +740,144 @@
     .mw .dot.ok { background: #1f9b45; border-color: #1f9b45; }
     .mw .when { color: var(--muted); font-size: 13px; }
     .mw .ologo.tap { cursor: pointer; }
-    .mw .oscr { position: absolute; z-index: 2; left: 310px; top: 176px; width: 580px; height: 392px; border-radius: 14px; overflow: hidden; background: #fff;
-      box-shadow: 0 36px 80px -34px rgba(20, 16, 10, .5), 0 0 0 1px rgba(20, 20, 20, .08); font-family: var(--font); }
-    .mw .otb { position: relative; height: 30px; display: flex; align-items: center; padding: 0 12px; background: #ecebe7; font-size: 12px; color: #6f6c66; }
-    .mw .otb .tl i { width: 10px; height: 10px; } .mw .otitle { position: absolute; left: 0; right: 0; text-align: center; pointer-events: none; }
-    .mw .obody { position: absolute; left: 0; right: 0; top: 30px; bottom: 0; }
+    .mw .oscr { position: absolute; z-index: 2; left: 310px; top: 176px; width: 580px; height: 392px; border-radius: 12px; overflow: hidden; background: #fff;
+      box-shadow: 0 36px 80px -34px rgba(20, 16, 10, .5), 0 0 0 1px rgba(20, 20, 20, .1); font-family: var(--font); }
+    .mw .obody { position: absolute; inset: 0; }
     .mw .ex { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .28s, visibility 0s .28s; overflow: hidden; } .mw .ex.on { opacity: 1; visibility: visible; transition: opacity .32s; }
     .mw .tgt { position: absolute; pointer-events: none; }
-    .mw .opill { position: absolute; z-index: 5; top: 40px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 7px; height: 28px; padding: 0 12px 0 7px; border-radius: 14px; background: #0b0b0b; color: #fff; font-size: 12px; white-space: nowrap; box-shadow: 0 8px 20px -8px rgba(0, 0, 0, .5); }
+    .mw .oscr .xi { width: 12px; height: 12px; flex: none; display: block; }
+    .mw .opill { position: absolute; z-index: 5; top: 138px; left: 600px; transform: translateX(-50%); display: flex; align-items: center; gap: 7px; height: 28px; padding: 0 13px 0 8px; border-radius: 14px; background: #0b0b0b; color: #fff; font-size: 12.5px; white-space: nowrap; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .55); }
     .mw .opill .lg { width: 17px; height: 17px; } .mw .opill .lg svg { width: 100%; height: 100%; display: block; }
-    .mw .oring { position: absolute; z-index: 6; border-radius: 8px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .4); pointer-events: none; transition: opacity .3s, left .45s var(--settle), top .45s var(--settle), width .45s var(--settle), height .45s var(--settle); }
+    .mw .oring { position: absolute; z-index: 6; border-radius: 7px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .4); pointer-events: none; transition: opacity .3s, left .45s var(--settle), top .45s var(--settle), width .45s var(--settle), height .45s var(--settle); }
     .mw .oring:not(.on) { opacity: 0; }
-    .mw .ocall { z-index: 7; max-width: 260px; font-size: 13px; }
-    .mw .odots { position: absolute; z-index: 3; left: 0; right: 0; top: 588px; display: flex; justify-content: center; gap: 8px; }
-    .mw .odots button { width: 26px; height: 5px; border-radius: 3px; background: rgba(20, 20, 20, .15); transition: background .3s, width .3s; }
-    .mw .odots button.on { background: #141414; width: 34px; }
-    .mw .ex-blender { background: #3a3a3a; color: #cfcfcf; font-size: 11px; }
-    .mw .bl-top { position: absolute; left: 0; right: 0; top: 0; height: 24px; background: #2b2b2b; display: flex; align-items: center; gap: 14px; padding: 0 10px; }
-    .mw .bl-top .mode { margin-left: auto; background: #4a4a4a; padding: 2px 8px; border-radius: 4px; color: #e6e6e6; }
-    .mw .bl-tools { position: absolute; left: 6px; top: 34px; display: flex; flex-direction: column; gap: 5px; }
-    .mw .bl-tools i { width: 22px; height: 22px; border-radius: 5px; background: #2f2f2f; display: block; } .mw .bl-tools i.on { background: #4772b3; }
-    .mw .bl-view { position: absolute; left: 36px; top: 24px; width: 420px; height: 336px; }
-    .mw .bl-out { position: absolute; right: 0; top: 24px; bottom: 0; width: 124px; background: #2b2b2b; padding: 8px 6px; display: flex; flex-direction: column; gap: 2px; }
-    .mw .bl-out div { padding: 3px 7px; border-radius: 4px; white-space: nowrap; } .mw .bl-out .on { background: #4772b3; color: #fff; }
-    .mw .ex-sheets { background: #fff; color: #1f1f1f; font-size: 11.5px; }
-    .mw .sh-menu { height: 26px; display: flex; gap: 14px; align-items: center; padding: 0 12px; background: #f9fbfd; color: #444; border-bottom: 1px solid #e3e3e3; }
-    .mw .sh-fx { height: 26px; display: flex; gap: 10px; align-items: center; padding: 0 10px; border-bottom: 1px solid #e3e3e3; font: 12px var(--mono); }
-    .mw .sh-fx b { font: italic 600 12px var(--font); color: #777; padding-right: 8px; border-right: 1px solid #e3e3e3; }
-    .mw #shFx { padding: 1px 3px; }
-    .mw .sh-grid { display: grid; grid-template-columns: 34px 150px 96px 96px 96px 1fr; font-size: 11.5px; }
-    .mw .sh-grid span { height: 20px; line-height: 20px; padding: 0 6px; border-right: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; white-space: nowrap; overflow: hidden; }
-    .mw .sh-grid .h { background: #f8f9fa; color: #666; text-align: center; padding: 0; }
+    .mw .ocall { z-index: 7; max-width: 250px; font-size: 13px; }
+    .mw .odots { position: absolute; z-index: 6; left: 0; right: 0; top: 590px; width: max-content; margin: 0 auto; display: flex; gap: 7px; padding: 7px 9px; border-radius: 11px;
+      background: rgba(255, 255, 255, .82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), 0 8px 20px -12px rgba(20, 16, 10, .35); }
+    .mw .odots button { width: 22px; height: 5px; border-radius: 3px; background: rgba(20, 20, 20, .15); transition: background .3s, width .3s; }
+    .mw .odots button.on { background: #141414; width: 32px; }
+    /* Chrome around the web apps */
+    .mw .xchr { height: 32px; display: flex; align-items: flex-end; gap: 10px; padding: 0 10px 0 12px; background: #dfe3e7; }
+    .mw .xchr .tl { align-self: center; margin-right: 6px; } .mw .xchr .tl i { width: 10px; height: 10px; }
+    .mw .xtab { position: relative; display: flex; align-items: center; gap: 7px; width: 210px; height: 26px; padding: 0 9px; border-radius: 8px 8px 0 0; background: #fff; font-size: 11px; color: #1f1f1f; }
+    .mw .xtab .fav { width: 13px; height: 13px; flex: none; } .mw .xtab .fav svg { width: 100%; height: 100%; display: block; }
+    .mw .xtab .tt { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .xtab > i { font-style: normal; color: #777; font-size: 13px; }
+    .mw .xnew { align-self: center; color: #555; margin-bottom: 2px; }
+    .mw .xomni { height: 30px; display: flex; align-items: center; gap: 9px; padding: 0 10px; background: #fff; border-bottom: 1px solid #e3e3e3; color: #5f6368; }
+    .mw .xomni .url { flex: 1; display: flex; align-items: center; gap: 7px; height: 22px; padding: 0 10px; border-radius: 11px; background: #f1f3f4; font-size: 11px; color: #202124; }
+    .mw .xomni .url .xi { width: 10px; height: 10px; color: #5f6368; }
+    /* native title bars */
+    .mw .xtb { height: 28px; display: flex; align-items: center; gap: 10px; padding: 0 12px; font-size: 11.5px; }
+    .mw .xtb .tl i { width: 10px; height: 10px; }
+    /* JupyterLab */
+    .mw .ex-jup { background: #fff; color: #1c1b19; }
+    .mw .jl-menu { height: 23px; display: flex; align-items: center; gap: 13px; padding: 0 12px; border-bottom: 1px solid #e0e0e0; font-size: 11px; color: #333; }
+    .mw .jl-main { position: absolute; left: 0; right: 0; top: 86px; bottom: 0; display: flex; }
+    .mw .jl-side { width: 30px; flex: none; background: #eee; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 9px; color: #616161; }
+    .mw .jl-side span { position: relative; width: 30px; display: grid; place-items: center; } .mw .jl-side .xi { width: 14px; height: 14px; }
+    .mw .jl-side .on { color: #1976d2; } .mw .jl-side .on::before { content: ""; position: absolute; left: 0; top: -4px; bottom: -4px; width: 2px; background: #1976d2; }
+    .mw .jl-doc { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .mw .jl-tabs { height: 25px; flex: none; display: flex; align-items: flex-end; background: #eee; border-bottom: 1px solid #e0e0e0; font-size: 11px; color: #555; }
+    .mw .jl-tabs span { display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-right: 1px solid #e0e0e0; }
+    .mw .jl-tabs .on { background: #fff; color: #1c1b19; box-shadow: inset 0 2px 0 #1976d2; margin-bottom: -1px; height: 25px; } .mw .jl-tabs i { font-style: normal; color: #888; margin-left: 6px; }
+    .mw .jl-tabs .nb { width: 11px; height: 11px; border-radius: 2px; background: #f37626; }
+    .mw .jl-tool { height: 26px; flex: none; display: flex; align-items: center; gap: 11px; padding: 0 10px; border-bottom: 1px solid #e0e0e0; color: #616161; }
+    .mw .jl-tool .sel { display: flex; align-items: center; gap: 4px; margin-left: 4px; padding: 2px 6px; border: 1px solid #ddd; border-radius: 3px; font-size: 10.5px; color: #333; }
+    .mw .jl-tool .sel .xi { width: 9px; height: 9px; }
+    .mw .jl-tool .kern { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: #555; }
+    .mw .jl-tool .kern i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #616161; }
+    .mw .jl-cells { flex: 1; padding: 6px 14px 0 6px; font: 11px/1.45 var(--mono); overflow: hidden; }
+    .mw .jc { position: relative; display: flex; gap: 8px; align-items: flex-start; margin-top: 5px; }
+    .mw .jc .pr, .mw .jo .pr { width: 34px; flex: none; padding-top: 5px; color: #303f9f; text-align: right; font-size: 10.5px; }
+    .mw .jc .in { flex: 1; min-height: 23px; padding: 4px 8px; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 2px; }
+    .mw .jc.act::before { content: ""; position: absolute; left: -6px; top: 0; bottom: 0; width: 3px; background: #1976d2; }
+    .mw .jc.act .in { border-color: #64b5f6; background: #fff; }
+    .mw .jc .k { color: #008000; font-weight: 700; } .mw .jc .o { color: #aa22ff; font-weight: 700; } .mw .jc .s { color: #ba2121; } .mw .jc .n { color: #080; }
+    .mw .jc .caret { display: inline-block; width: 1px; height: 12px; background: #1c1b19; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+    .mw .jo { display: flex; gap: 8px; margin-top: 4px; } .mw .jo .pr { color: #d84315; padding-top: 3px; }
+    .mw .df { border-collapse: collapse; font: 10.5px/1 var(--font); color: #222; }
+    .mw .df th, .mw .df td { padding: 3px 9px; text-align: right; } .mw .df tr:first-child th { border-bottom: 1px solid #bbb; font-weight: 600; } .mw .df th { font-weight: 600; }
+    .mw .df tr:nth-child(even) { background: #f5f5f5; }
+    .mw .jerr { margin: 4px 0 0 42px; padding: 5px 8px; background: #fdd; color: #1c1b19; border-radius: 2px; font-size: 10.5px; line-height: 1.5; }
+    .mw .jerr b { color: #b22b31; } .mw .jerr .hd { display: flex; gap: 14px; } .mw .jerr .hd span { color: #555; }
+    /* Google Sheets */
+    .mw .ex-sheets { background: #f9fbfd; color: #1f1f1f; }
+    .mw .gs-head { height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 12px; }
+    .mw .gs-logo { width: 22px; height: 22px; flex: none; } .mw .gs-logo svg { width: 100%; height: 100%; display: block; }
+    .mw .gs-t { flex: 1; min-width: 0; } .mw .gs-t > div:first-child { display: flex; align-items: center; gap: 7px; font-size: 13px; color: #444; } .mw .gs-t b { font-weight: 400; color: #1f1f1f; margin-right: 2px; }
+    .mw .gs-t .xi { width: 11px; height: 11px; }
+    .mw .gs-menu { display: flex; gap: 10px; margin-top: 2px; font-size: 10.5px; color: #444; }
+    .mw .gs-cm { color: #444; } .mw .gs-share { display: flex; align-items: center; gap: 5px; height: 24px; padding: 0 12px; border-radius: 12px; background: #c2e7ff; color: #001d35; font-size: 11px; font-weight: 500; }
+    .mw .gs-share .xi { width: 10px; height: 10px; } .mw .gs-av { width: 22px; height: 22px; border-radius: 50%; background: #BFE6DA; display: grid; place-items: center; font-size: 10.5px; color: #1c1b19; }
+    .mw .gs-tool { height: 28px; margin: 0 10px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 14px; background: #edf2fa; color: #444; font-size: 11px; }
+    .mw .gs-tool .dv { width: 1px; height: 14px; background: #c7c7c7; } .mw .gs-tool .tx { display: flex; align-items: center; gap: 3px; } .mw .gs-tool .tx .xi { width: 9px; height: 9px; }
+    .mw .gs-tool .b { font-weight: 700; } .mw .gs-tool .i { font-style: italic; } .mw .gs-tool .s { text-decoration: line-through; } .mw .gs-tool .a { text-decoration: underline 2px; }
+    .mw .gs-fx { height: 26px; margin-top: 6px; display: flex; align-items: center; gap: 10px; padding: 0 10px; background: #fff; border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; font: 11.5px var(--mono); }
+    .mw .gs-fx .nm { width: 64px; font: 11px var(--font); color: #444; border-right: 1px solid #e3e3e3; } .mw .gs-fx > b { font: italic 600 11.5px var(--font); color: #777; padding-right: 10px; border-right: 1px solid #e3e3e3; }
+    .mw .rg { color: #e37400; }
+    .mw .sh-grid { position: relative; display: grid; grid-template-columns: 34px 120px 96px 90px 90px 1fr; background: #fff; font-size: 11px; }
+    .mw .sh-grid span { position: relative; height: 21px; line-height: 21px; padding: 0 6px; border-right: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; white-space: nowrap; }
+    .mw .sh-grid span span { padding: 0; border: 0; height: auto; line-height: inherit; }
+    .mw .sh-grid .h { background: #f8f9fa; color: #5f6368; text-align: center; padding: 0; font-size: 10px; } .mw .sh-grid .h.on { background: #d3e3fd; color: #0b57d0; font-weight: 600; }
     .mw .sh-grid .n { text-align: right; } .mw .sh-grid .bd { font-weight: 600; }
-    .mw .sh-grid .sel { box-shadow: inset 0 0 0 2px #1a73e8; }
-    .mw .ex-figma { background: #e6e6e6; font-size: 11px; color: #333; }
-    .mw .fg-top { position: absolute; left: 0; right: 0; top: 0; height: 28px; background: #2c2c2c; display: flex; align-items: center; gap: 6px; padding: 0 10px; color: #ddd; }
-    .mw .fg-top i { width: 18px; height: 14px; border-radius: 3px; background: #444; } .mw .fg-top span { margin-left: auto; margin-right: auto; }
-    .mw .fg-l, .mw .fg-r { position: absolute; top: 28px; bottom: 0; background: #fff; padding: 8px; display: flex; flex-direction: column; gap: 3px; }
-    .mw .fg-l { left: 0; width: 118px; border-right: 1px solid #e5e5e5; } .mw .fg-r { right: 0; width: 150px; border-left: 1px solid #e5e5e5; }
-    .mw .fg-l .h, .mw .fg-r .h { font-weight: 600; margin-bottom: 4px; } .mw .fg-l div { padding: 3px 6px; border-radius: 4px; } .mw .fg-l .on { background: #e5f0ff; } .mw .fg-l .in { padding-left: 18px; color: #666; }
-    .mw .fg-r .row { display: flex; gap: 6px; padding: 4px 2px; color: #333; } .mw .fg-r .row span { color: #999; }
-    .mw .btnc { margin-top: 8px; padding: 7px 8px; border-radius: 6px; background: #f5f5f5; color: #333; }
-    .mw .fg-c { position: absolute; left: 118px; right: 150px; top: 28px; bottom: 0; display: grid; place-items: center; }
-    .mw .fg-frame { position: relative; width: 160px; height: 160px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 0 1.5px #0d99ff; }
-    .mw .fg-frame .fl { position: absolute; left: 0; top: -16px; font-size: 10px; color: #0d99ff; }
-    .mw .fg-frame svg { width: 92px; height: 92px; } .mw .fg-frame b { font: 700 18px var(--font); letter-spacing: -.02em; margin-top: -6px; }
-    .mw .ex-jup { background: #fff; font: 12px/1.45 var(--mono); color: #1c1b19; padding: 34px 16px 0; }
-    .mw .jp-top { position: absolute; left: 0; right: 0; top: 0; height: 26px; display: flex; gap: 14px; align-items: center; padding: 0 12px; background: #f5f5f5; border-bottom: 1px solid #e0e0e0; font: 11.5px var(--font); color: #444; }
-    .mw .jp-top .k { margin-left: auto; color: #777; }
-    .mw .jp-cell { display: flex; gap: 10px; align-items: center; margin: 8px 0 0; }
-    .mw .jp-cell .pr, .mw .jp-out .pr { width: 34px; flex: none; color: #303f9f; text-align: right; font-size: 11px; }
-    .mw .jp-cell code { flex: 1; padding: 7px 9px; background: #f7f7f7; border: 1px solid #e0e0e0; border-radius: 3px; }
-    .mw .jp-err { margin: 6px 0 0 44px; padding: 7px 9px; background: #ffdddd; color: #7a1f1f; border-radius: 3px; }
-    .mw .jp-out { display: flex; gap: 10px; margin-top: 6px; } .mw .jp-out .pr { color: #c2410c; }
+    .mw .sh-grid .inr { background: #fdf1e5; }
+    .mw .sh-grid .ed { z-index: 2; overflow: visible; background: #fff; box-shadow: 0 0 0 2px #1a73e8; font: 11px/21px var(--mono); }
+    .mw .sh-grid .ed .cur { display: inline-block; width: 1px; height: 12px; background: #1f1f1f; vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+    .mw .gs-box { position: absolute; z-index: 1; border: 1.5px dashed #e37400; pointer-events: none; }
+    .mw .gs-tabs { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; display: flex; align-items: center; gap: 12px; padding: 0 12px; background: #f9fbfd; border-top: 1px solid #e3e3e3; color: #444; font-size: 11px; }
+    .mw .gs-tabs .on { display: flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 12px; background: #e1e9f7; color: #0b57d0; font-weight: 500; } .mw .gs-tabs .on .xi { width: 9px; height: 9px; }
+    .mw .gs-sum { margin-left: auto; display: flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 6px; background: #fff; box-shadow: 0 0 0 1px #e3e3e3; }
+    /* Figma (UI3) */
+    .mw .ex-figma { background: #f5f5f5; color: #1e1e1e; font-size: 10.5px; }
+    .mw .fg-tb { background: #e8e8e8; color: #333; } .mw .fg-home { width: 14px; height: 12px; border-radius: 2px; background: #bdbdbd; }
+    .mw .fg-file { display: flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 6px; background: #fff; font-size: 11px; }
+    .mw .fg-file [data-tool] { width: 11px; height: 11px; } .mw .fg-file [data-tool] svg { width: 100%; height: 100%; display: block; } .mw .fg-file i { font-style: normal; color: #888; margin-left: 10px; }
+    .mw .fg-l, .mw .fg-r { position: absolute; top: 28px; bottom: 0; background: #fff; display: flex; flex-direction: column; }
+    .mw .fg-l { left: 0; width: 132px; border-right: 1px solid #e6e6e6; padding: 8px 6px; gap: 2px; }
+    .mw .fg-r { right: 0; width: 156px; border-left: 1px solid #e6e6e6; padding: 8px 8px; gap: 3px; }
+    .mw .fg-proj { display: flex; gap: 7px; align-items: center; padding: 2px 4px 8px; } .mw .fg-proj [data-tool] { width: 16px; height: 16px; } .mw .fg-proj [data-tool] svg { width: 100%; height: 100%; display: block; }
+    .mw .fg-proj b { display: flex; align-items: center; gap: 3px; font-size: 11.5px; } .mw .fg-proj small { display: block; color: #8a8a8a; font-size: 10px; }
+    .mw .fg-tabs { display: flex; gap: 10px; padding: 3px 4px 7px; border-bottom: 1px solid #eee; margin-bottom: 4px; color: #8a8a8a; } .mw .fg-tabs b { color: #1e1e1e; font-weight: 600; }
+    .mw .fg-h { display: flex; align-items: center; gap: 4px; padding: 6px 4px 3px; font-weight: 600; } .mw .fg-h i { margin-left: auto; font-style: normal; font-weight: 400; color: #555; font-size: 13px; line-height: 1; }
+    .mw .fg-row { display: flex; align-items: center; gap: 6px; height: 22px; padding: 0 6px; border-radius: 5px; color: #1e1e1e; } .mw .fg-row .xi { width: 10px; height: 10px; color: #757575; }
+    .mw .fg-row.on { background: #e5f4ff; } .mw .fg-row.on .xi { color: #0d99ff; } .mw .fg-row.in { padding-left: 20px; }
+    .mw .fg-c { position: absolute; left: 132px; right: 156px; top: 28px; bottom: 0; display: grid; place-items: center; }
+    .mw .fg-frame { position: relative; width: 140px; height: 140px; margin-top: -26px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 0 1px #0d99ff; }
+    .mw .fg-frame .fl { position: absolute; left: 0; top: -15px; font-size: 10px; color: #0d99ff; }
+    .mw .fg-frame svg { width: 82px; height: 82px; } .mw .fg-frame b { font: 700 16px var(--font); letter-spacing: -.02em; margin-top: -6px; }
+    .mw .fg-frame .hd { position: absolute; width: 6px; height: 6px; background: #fff; border: 1px solid #0d99ff; } .mw .fg-frame .a { left: -3px; top: -3px; } .mw .fg-frame .b { right: -3px; top: -3px; } .mw .fg-frame .c { left: -3px; bottom: -3px; } .mw .fg-frame .d { right: -3px; bottom: -3px; }
+    .mw .fg-frame .sz { position: absolute; left: 50%; bottom: -21px; transform: translateX(-50%); padding: 1px 5px; border-radius: 3px; background: #0d99ff; color: #fff; font-size: 9.5px; white-space: nowrap; }
+    .mw .fg-bar { position: absolute; left: 0; right: 0; bottom: 10px; width: max-content; margin: 0 auto; display: flex; align-items: center; gap: 3px; padding: 4px; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .07), 0 6px 16px -6px rgba(0, 0, 0, .25); color: #333; }
+    .mw .fg-bar span { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; } .mw .fg-bar .on { background: #0d99ff; color: #fff; } .mw .fg-bar i { width: 1px; height: 16px; background: #e6e6e6; margin: 0 3px; }
+    .mw .fg-top { display: flex; align-items: center; justify-content: flex-end; gap: 7px; padding-bottom: 7px; }
+    .mw .fg-av { width: 20px; height: 20px; border-radius: 50%; background: #F9C5D5; display: grid; place-items: center; font-size: 10px; } .mw .fg-share { padding: 4px 10px; border-radius: 6px; background: #0d99ff; color: #fff; font-weight: 500; }
+    .mw .fg-act { display: flex; align-items: center; gap: 6px; padding: 6px 7px; margin: 2px 0 2px; border-radius: 6px; background: #f5f5f5; font-weight: 500; } .mw .fg-act .xi { width: 11px; height: 11px; color: #7b61ff; }
+    .mw .fg-f { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; } .mw .fg-f.one { grid-template-columns: 1fr; }
+    .mw .fg-f span { display: flex; align-items: center; gap: 6px; height: 22px; padding: 0 6px; border-radius: 5px; background: #f5f5f5; } .mw .fg-f i { font-style: normal; color: #8a8a8a; }
+    .mw .fg-f .sw { width: 12px; height: 12px; border-radius: 2px; background: #fff; box-shadow: 0 0 0 1px #d0d0d0; } .mw .fg-f em { margin-left: auto; font-style: normal; color: #8a8a8a; }
+    /* Blender */
+    .mw .ex-blender { background: #303030; color: #c8c8c8; font-size: 10px; }
+    .mw .bl-tb { background: #262626; color: #9a9a9a; } .mw .bl-tb .tl i { background: rgba(255, 255, 255, .16); } .mw .bl-tb .tt { position: absolute; left: 0; right: 0; text-align: center; }
+    .mw .bl-top { height: 22px; display: flex; align-items: center; gap: 11px; padding: 0 8px; background: #1d1d1d; color: #d0d0d0; }
+    .mw .bl-logo { width: 13px; height: 13px; border-radius: 50%; background: #e87d0d; box-shadow: inset -3px 2px 0 #1d1d1d; margin-right: 2px; }
+    .mw .bl-top .ws { padding: 2px 7px; border-radius: 4px; color: #a8a8a8; } .mw .bl-top .ws:first-of-type { margin-left: 10px; } .mw .bl-top .ws.on { background: #303030; color: #fff; }
+    .mw .bl-vh { position: absolute; left: 0; right: 126px; top: 50px; height: 24px; display: flex; align-items: center; gap: 10px; padding: 0 8px; background: #2b2b2b; border-bottom: 1px solid #1d1d1d; }
+    .mw .bl-vh .ed { color: #9a9a9a; } .mw .bl-vh .mode { display: flex; align-items: center; gap: 5px; padding: 2px 7px; border-radius: 4px; background: #545454; color: #e8e8e8; } .mw .bl-vh .mode .xi { width: 8px; height: 8px; }
+    .mw .bl-vh .sm { margin-left: auto; display: flex; } .mw .bl-vh .sm i { width: 16px; height: 15px; background: #545454; border-right: 1px solid #2b2b2b; } .mw .bl-vh .sm i.on { background: #4772b3; } .mw .bl-vh .sm i:first-child { border-radius: 3px 0 0 3px; } .mw .bl-vh .sm i:last-child { border-radius: 0 3px 3px 0; }
+    .mw .bl-tools { position: absolute; left: 0; top: 74px; width: 28px; bottom: 46px; background: #2e2e2e; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 6px; color: #c8c8c8; }
+    .mw .bl-tools span { width: 21px; height: 21px; border-radius: 4px; background: #3d3d3d; display: grid; place-items: center; } .mw .bl-tools span.on { background: #4772b3; color: #fff; } .mw .bl-tools .xi { width: 11px; height: 11px; }
+    .mw .bl-view { position: absolute; left: 28px; top: 74px; width: 426px; height: 272px; display: block; background: #393939; }
+    .mw .bl-ov { position: absolute; left: 36px; top: 79px; color: #d8d8d8; line-height: 1.45; font-size: 9.5px; }
+    .mw .bl-giz { position: absolute; left: 418px; top: 82px; width: 30px; height: 30px; } .mw .bl-giz i { position: absolute; width: 11px; height: 11px; border-radius: 50%; font: 600 7px/11px var(--font); text-align: center; font-style: normal; color: #1d1d1d; }
+    .mw .bl-giz .x { right: 0; top: 13px; background: #f0546c; } .mw .bl-giz .y { left: 9px; top: 0; background: #8bdc00; } .mw .bl-giz .z { left: 2px; top: 17px; background: #2890ff; }
+    .mw .bl-out { position: absolute; right: 0; top: 50px; bottom: 46px; width: 126px; background: #2b2b2b; border-left: 1px solid #1d1d1d; padding: 6px 5px; display: flex; flex-direction: column; gap: 1px; }
+    .mw .bl-out > div { padding: 2px 6px; border-radius: 3px; white-space: nowrap; } .mw .bl-out .h { color: #9a9a9a; } .mw .bl-out .in { padding-left: 16px; } .mw .bl-out .on { background: #334d80; color: #fff; }
+    .mw .bl-props { margin-top: auto; padding: 6px 4px 2px !important; border-top: 1px solid #1d1d1d; border-radius: 0 !important; display: flex; flex-direction: column; gap: 3px; }
+    .mw .bl-props .v { display: flex; gap: 6px; padding: 2px 6px; border-radius: 4px; background: #545454; color: #e8e8e8; } .mw .bl-props .v span { color: #b0b0b0; }
+    .mw .bl-tl { position: absolute; left: 0; right: 0; bottom: 16px; height: 30px; display: flex; align-items: flex-start; gap: 10px; padding: 4px 8px 0; background: #2b2b2b; border-top: 1px solid #1d1d1d; color: #b8b8b8; }
+    .mw .bl-tl .ru { position: relative; flex: 1; height: 22px; margin-top: -3px; margin-left: 10px; background: #252525; border-radius: 3px; }
+    .mw .bl-tl .ru i { position: absolute; top: 5px; font-style: normal; color: #8a8a8a; font-size: 9px; } .mw .bl-tl .ru i:nth-child(1) { left: 2%; } .mw .bl-tl .ru i:nth-child(2) { left: 20%; } .mw .bl-tl .ru i:nth-child(3) { left: 38%; } .mw .bl-tl .ru i:nth-child(4) { left: 56%; } .mw .bl-tl .ru i:nth-child(5) { left: 74%; } .mw .bl-tl .ru i:nth-child(6) { left: 92%; }
+    .mw .bl-tl .ru b { position: absolute; left: 1%; top: 3px; padding: 1px 4px; border-radius: 3px; background: #4772b3; color: #fff; font-weight: 500; }
+    .mw .bl-st { position: absolute; left: 0; right: 0; bottom: 0; height: 16px; display: flex; align-items: center; gap: 12px; padding: 0 8px; background: #1d1d1d; color: #9a9a9a; font-size: 9px; } .mw .bl-st .r { margin-left: auto; }
     .mw .bub { position: absolute; z-index: 5; pointer-events: none; max-width: 360px; padding: 14px 18px; border-radius: 16px; background: #efeee9; font-size: 16px; line-height: 1.4; color: var(--ink);
       box-shadow: 0 16px 36px -20px rgba(20, 16, 10, .4); transition: opacity .45s, transform .55s var(--spring); }
     .mw .bub:not(.on) { opacity: 0; transform: translateY(12px) scale(.98); }
@@ -1143,12 +1229,6 @@
         <div class="vg"><div class="mterm" id="cTerm"></div><div class="mpass c" id="cPass"><i></i>step passed</div></div>
         <b>checks your work</b><p>it watches every run and tells you when a step passes.</p>
       </div>
-      <div class="bx tn-sky">
-        <div class="vg"><div class="mmini">X: <span class="m784" id="qTok">784</span> inputs, 10 hidden, 10 out</div><div class="mring" id="qRing"></div>
-          <div class="mbub down" id="qBub"><b>Why 784?</b>28 × 28 pixels, flattened.</div>
-          <div class="mask" id="qAsk"><span class="lg" data-logo></span><span id="qTx">ask miyagi</span></div></div>
-        <b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p>
-      </div>
       <div class="bx w2 tn-pink">
         <div class="vg stuck">
           <div class="mnb">
@@ -1172,6 +1252,12 @@
         </div>
         <b>helps when you're stuck</b><p>explain, diagram, show me or hint. nudges, not the answer.</p>
       </div>
+      <div class="bx tn-sky">
+        <div class="vg"><div class="mmini">X: <span class="m784" id="qTok">784</span> inputs, 10 hidden</div><div class="mring" id="qRing"></div>
+          <div class="mbub down" id="qBub"><b>Why 784?</b>28 × 28 pixels, flattened.</div>
+          <div class="mask" id="qAsk"><span class="lg" data-logo></span><span id="qTx">ask miyagi</span></div></div>
+        <b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p>
+      </div>
       <div class="bx tn-mint">
         <div class="vg"><div class="msk"><div class="skh"><b>Neural networks</b><span class="lgd"><i class="m"></i>Mastered<i class="p"></i>Practicing<i class="r"></i>Next</span></div><svg class="mtree" id="kTree" viewBox="0 0 304 132" aria-hidden="true"></svg></div></div>
         <b>grows your skills</b><p>every step you pass lands on your skill tree, with reviews.</p>
@@ -1191,51 +1277,83 @@
     <div class="oframe" id="oframe"><div class="ostage" id="ostage">
       <div id="ologos"></div>
       <div class="oscr" id="oscr">
-        <div class="otb"><span class="tl"><i></i><i></i><i></i></span><span class="otitle" id="otitle">Blender</span></div>
         <div class="obody">
           <div class="ex ex-blender">
-            <div class="bl-top"><span>File</span><span>Edit</span><span>Add</span><span>Mesh</span><span class="mode">Edit Mode</span></div>
-            <div class="bl-tools"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
-            <svg class="bl-view" viewBox="0 0 420 336" aria-hidden="true">
-              <g stroke="#474747" stroke-width="1"><line x1="0" y1="230" x2="420" y2="230"/><line x1="0" y1="246" x2="420" y2="246"/><line x1="0" y1="266" x2="420" y2="266"/><line x1="0" y1="292" x2="420" y2="292"/><line x1="0" y1="326" x2="420" y2="326"/>
-                <line x1="210" y1="150" x2="-260" y2="336"/><line x1="210" y1="150" x2="-60" y2="336"/><line x1="210" y1="150" x2="110" y2="336"/><line x1="210" y1="150" x2="310" y2="336"/><line x1="210" y1="150" x2="480" y2="336"/><line x1="210" y1="150" x2="680" y2="336"/></g>
-              <line x1="0" y1="258" x2="420" y2="250" stroke="#9e4848" stroke-width="1.3"/>
-              <ellipse cx="210" cy="206" rx="112" ry="54" fill="#c9905b"/>
-              <path d="M104 196 C 108 160, 312 160, 316 196 C 312 222, 290 214, 280 228 C 262 222, 250 236, 226 230 C 204 238, 186 226, 168 232 C 150 222, 132 230, 120 218 C 110 214, 102 208, 104 196 Z" fill="#f2a3c0"/>
-              <ellipse cx="210" cy="190" rx="34" ry="14" fill="#a76d3e"/><ellipse cx="210" cy="187" rx="30" ry="11" fill="#3a3a3a"/>
-              <g fill="#fff"><rect x="150" y="176" width="9" height="3" rx="1.5" transform="rotate(20 150 176)"/><rect x="262" y="182" width="9" height="3" rx="1.5" transform="rotate(-30 262 182)"/></g>
-              <g fill="#f6d365"><rect x="178" y="206" width="9" height="3" rx="1.5" transform="rotate(-12 178 206)"/><rect x="286" y="200" width="9" height="3" rx="1.5" transform="rotate(40 286 200)"/></g>
-              <g fill="#7ec4ff"><rect x="236" y="210" width="9" height="3" rx="1.5" transform="rotate(25 236 210)"/><rect x="132" y="196" width="9" height="3" rx="1.5" transform="rotate(-40 132 196)"/></g>
-              <ellipse cx="210" cy="206" rx="112" ry="54" fill="none" stroke="#ffa31a" stroke-width="2.4"/>
-              <g fill="#ffa31a"><circle cx="98" cy="206" r="2.6"/><circle cx="322" cy="206" r="2.6"/><circle cx="210" cy="260" r="2.6"/><circle cx="130" cy="244" r="2.6"/><circle cx="290" cy="244" r="2.6"/></g>
-            </svg>
-            <div class="bl-out"><div>Scene Collection</div><div>Camera</div><div>Light</div><div class="on">Donut</div><div>Icing</div></div>
-            <div class="tgt" id="blEdge" style="left:134px;top:174px;width:224px;height:112px"></div>
+            <div class="xtb bl-tb"><span class="tl"><i></i><i></i><i></i></span><span class="tt">donut.blend - Blender 4.2</span></div>
+            <div class="bl-top"><span class="bl-logo"></span><span>File</span><span>Edit</span><span>Render</span><span>Window</span><span>Help</span>
+              <span class="ws on">Layout</span><span class="ws">Modeling</span><span class="ws">Sculpting</span><span class="ws">UV Editing</span><span class="ws">Shading</span></div>
+            <div class="bl-vh"><span class="ed"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></span><span class="mode">Edit Mode<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><span>View</span><span>Select</span><span>Add</span><span>Mesh</span><span>Vertex</span><span>Edge</span><span>Face</span>
+              <span class="sm"><i></i><i class="on"></i><i></i></span></div>
+            <div class="bl-tools"><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1" stroke-dasharray="3 3"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="6"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></span><span class="on"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l6 17 2.4-7.1L20.5 10z" fill="currentColor" stroke="none"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 20 4M14 4h6v6M10 20H4v-6"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg></span></div>
+            <svg class="bl-view" id="blView" viewBox="0 0 426 272" aria-hidden="true"></svg>
+            <div class="bl-ov">User Perspective<br>(1) Collection | Donut</div>
+            <div class="bl-giz"><i class="x">X</i><i class="y">Y</i><i class="z">Z</i></div>
+            <div class="bl-out"><div class="h">Scene Collection</div><div>Collection</div><div class="in">Camera</div><div class="in">Light</div><div class="in on">Donut</div><div class="in">Icing</div>
+              <div class="bl-props"><div class="h">Donut</div><div>Location</div><div class="v"><span>X</span>0 m</div><div class="v"><span>Y</span>0 m</div><div class="v"><span>Z</span>0 m</div></div></div>
+            <div class="bl-tl"><span>Playback</span><span>Keying</span><span>View</span><span>Marker</span><span class="ru"><i>0</i><i>50</i><i>100</i><i>150</i><i>200</i><i>250</i><b>1</b></span></div>
+            <div class="bl-st"><span>Select</span><span>Pan View</span><span>Context Menu</span><span class="r">Donut | Verts 32/448 | Edges 32/896</span></div>
+            <div class="tgt" id="blLoop"></div>
           </div>
           <div class="ex ex-sheets">
-            <div class="sh-menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Data</span></div>
-            <div class="sh-fx"><b>fx</b><span id="shFx">=SUM(B2:B9)</span></div>
+            <div class="xchr"><span class="tl"><i></i><i></i><i></i></span><span class="xtab"><span class="fav" data-tool="googlesheets"></span><span class="tt">Sales 2026 - Google Sheets</span><i>&times;</i></span><span class="xnew"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></div><div class="xomni"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg><span class="url"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>docs.google.com/spreadsheets/d/1Bx9tQ/edit</span></span></div>
+            <div class="gs-head"><span class="gs-logo" data-tool="googlesheets"></span><div class="gs-t"><div><b>Sales 2026</b><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1 0 8z"/></svg></div>
+              <div class="gs-menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Data</span><span>Tools</span><span>Extensions</span><span>Help</span></div></div>
+              <span class="gs-cm"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="gs-share"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Share</span><span class="gs-av">S</span></div>
+            <div class="gs-tool"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2l4 4-9 9-4-4z"/><path d="M9 11c-3 0-5 2-5 5 0 2-1 3-2 4 4 1 9 0 9-4"/></svg><span class="dv"></span><span class="tx">100%<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><span class="dv"></span><span class="tx">$</span><span class="tx">%</span><span class="tx">.0</span><span class="tx">.00</span><span class="tx">123</span><span class="dv"></span><span class="tx">Default...<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><span class="dv"></span><span class="tx b">B</span><span class="tx i">I</span><span class="tx s">S</span><span class="tx a">A</span></div>
+            <div class="gs-fx"><span class="nm">B8</span><b>fx</b><span id="shFx">=SUM(<span class="rg">B2:B5</span>)</span></div>
             <div class="sh-grid" id="shGrid"></div>
+            <div class="gs-tabs"><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="on">Sheet1<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><span class="gs-sum"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 4H6l6 8-6 8h12"/></svg>Sum: 9,295</span></div>
           </div>
           <div class="ex ex-figma">
-            <div class="fg-top"><i></i><i></i><i></i><span>bloom / Logo</span></div>
-            <div class="fg-l"><div class="h">Layers</div><div class="on"># Logo</div><div class="in">Mark</div><div class="in">bloom</div></div>
-            <div class="fg-c"><div class="fg-frame"><span class="fl">Logo</span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="40" r="24" fill="#F9C5D5"/><circle cx="50" cy="40" r="10" fill="#1c1b19"/></svg><b>bloom</b></div></div>
-            <div class="fg-r"><div class="h">Design</div><div class="row"><span>Frame</span></div><div class="row"><span>W</span>160<span>H</span>160</div><div class="row"><span>Fill</span>FFFFFF</div><div class="btnc" id="fgBtn">&#9671; Create component</div></div>
+            <div class="xtb fg-tb"><span class="tl"><i></i><i></i><i></i></span><span class="fg-home"></span><span class="fg-file"><span data-tool="figma"></span>bloom<i>&times;</i></span></div>
+            <div class="fg-l">
+              <div class="fg-proj"><span data-tool="figma"></span><div><b>bloom<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></b><small>Drafts</small></div></div>
+              <div class="fg-tabs"><b>File</b><span>Assets</span></div>
+              <div class="fg-h">Pages</div><div class="fg-row">Page 1</div>
+              <div class="fg-h">Layers</div>
+              <div class="fg-row on"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v18M16 3v18M3 8h18M3 16h18"/></svg>Logo</div><div class="fg-row in"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>Mark</div><div class="fg-row in"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>bloom</div>
+            </div>
+            <div class="fg-c"><div class="fg-frame"><span class="fl">Logo</span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="40" r="24" fill="#F9C5D5"/><circle cx="50" cy="40" r="10" fill="#1c1b19"/></svg><b>bloom</b>
+              <i class="hd a"></i><i class="hd b"></i><i class="hd c"></i><i class="hd d"></i><span class="sz">160 &times; 160</span></div>
+              <div class="fg-bar"><span class="on"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l6 17 2.4-7.1L20.5 10z" fill="currentColor" stroke="none"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v18M16 3v18M3 8h18M3 16h18"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/><circle cx="11" cy="11" r="2"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><i></i><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span></div></div>
+            <div class="fg-r">
+              <div class="fg-top"><span class="fg-av">S</span><span class="fg-share">Share</span></div>
+              <div class="fg-tabs"><b>Design</b><span>Prototype</span></div>
+              <div class="fg-act" id="fgBtn"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 15 5.5 12 8.5 9 5.5zM12 15.5l3 3-3 3-3-3zM5.5 9l3 3-3 3-3-3zM18.5 9l3 3-3 3-3-3z" fill="currentColor" stroke="none"/></svg>Create component</div>
+              <div class="fg-h">Frame<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="fg-f"><span><i>X</i>0</span><span><i>Y</i>0</span></div>
+              <div class="fg-f"><span><i>W</i>160</span><span><i>H</i>160</span></div>
+              <div class="fg-h">Fill</div>
+              <div class="fg-f one"><span><b class="sw"></b>FFFFFF<em>100%</em></span></div>
+              <div class="fg-h">Stroke<i>+</i></div>
+              <div class="fg-h">Effects<i>+</i></div>
+              <div class="fg-h">Export<i>+</i></div>
+            </div>
           </div>
           <div class="ex ex-jup">
-            <div class="jp-top"><span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span><span class="k">Python 3</span></div>
-            <div class="jp-cell"><span class="pr">[5]:</span><code>df = pd.read_csv("sales.csv")</code></div>
-            <div class="jp-cell"><span class="pr">[6]:</span><code>df["Sales"].sum()</code></div>
-            <div class="jp-err" id="jpErr"><b>KeyError</b>: 'Sales'</div>
-            <div class="jp-cell"><span class="pr">[7]:</span><code>df.columns</code></div>
-            <div class="jp-out"><span class="pr">[7]:</span>Index(['region', 'sales', 'month'])</div>
+            <div class="xchr"><span class="tl"><i></i><i></i><i></i></span><span class="xtab"><span class="fav" data-tool="jupyter"></span><span class="tt">sales.ipynb - JupyterLab</span><i>&times;</i></span><span class="xnew"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></div><div class="xomni"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg><span class="url"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>localhost:8888/lab/tree/sales.ipynb</span></span></div>
+            <div class="jl-menu"><span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span><span>Tabs</span><span>Settings</span><span>Help</span></div>
+            <div class="jl-main">
+              <div class="jl-side"><span class="on"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><rect x="9" y="9" width="6" height="6" fill="currentColor" stroke="none"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3a2 2 0 0 1 4 0v2h4v4h-2a2 2 0 0 0 0 4h2v4h-4v-2a2 2 0 0 0-4 0v2H6v-4h2a2 2 0 0 0 0-4H6V5h4z"/></svg></span></div>
+              <div class="jl-doc">
+                <div class="jl-tabs"><span class="on"><span class="nb"></span>sales.ipynb<i>&times;</i></span><span>Launcher</span></div>
+                <div class="jl-tool"><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5v14l11-7z" fill="currentColor" stroke="none"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5v14l8-7zM12 5v14l8-7z" fill="currentColor" stroke="none"/></svg><span class="sel">Code<svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><span class="kern">Python 3 (ipykernel)<i></i></span></div>
+                <div class="jl-cells">
+                  <div class="jc"><span class="pr">[4]:</span><div class="in"><b class="k">import</b> pandas <b class="k">as</b> pd</div></div>
+                  <div class="jc"><span class="pr">[5]:</span><div class="in">df <b class="o">=</b> pd.read_csv(<span class="s">"sales.csv"</span>)<br>df.head(<span class="n">3</span>)</div></div>
+                  <div class="jo"><span class="pr">[5]:</span><table class="df"><tr><th></th><th>region</th><th>sales</th><th>month</th></tr><tr><th>0</th><td>West</td><td>1240</td><td>Jan</td></tr><tr><th>1</th><td>East</td><td>1380</td><td>Feb</td></tr><tr><th>2</th><td>North</td><td>1515</td><td>Mar</td></tr></table></div>
+                  <div class="jc act"><span class="pr">[6]:</span><div class="in">df[<span class="s">"Sales"</span>].sum()</div></div>
+                  <div class="jerr" id="jpErr"><div class="hd"><b>KeyError</b><span>Traceback (most recent call last)</span></div><div><b>KeyError</b>: 'Sales'</div></div>
+                  <div class="jc"><span class="pr">[ ]:</span><div class="in"><i class="caret"></i></div></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="opill"><span class="lg" data-logo="dark"></span><span id="opillTx">Your turn</span></div>
         <div class="oring" id="oring"></div>
         <div class="ocall down" id="ocall"><b><span class="glg" data-logo="dark"></span><span id="ocallHd"></span></b><span id="ocallTx"></span></div>
       </div>
+      <div class="opill"><span class="lg" data-logo="dark"></span><span id="opillTx">Your turn</span></div>
       <div class="odots" id="odots"><button type="button" aria-label="Blender"></button><button type="button" aria-label="Google Sheets"></button><button type="button" aria-label="Figma"></button><button type="button" aria-label="Jupyter"></button></div>
     </div></div>
   </div>
@@ -1770,15 +1888,53 @@
         os.style.transform = (slim ? 'translateX(' + (-270 * s) + 'px) ' : '') + 'scale(' + s + ')';
       }
       // In the middle: miyagi inside four apps, one after another. A logo or a dot picks one.
-      var SH = [['', 'A', 'B', 'C', 'D', 'E']], MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], SALES = [1240, 1380, 1515, 1410, 1630, 1720, 1690, 1805, 1760, 1880, 1950, 2110];
-      var shHtml = '<span class="h"></span><span class="h">A</span><span class="h">B</span><span class="h">C</span><span class="h">D</span><span class="h"></span>' +
+      // Sheets: six months, a total whose SUM stops two rows short (shown mid-edit, its range outlined like Sheets does).
+      var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], SALES = [1240, 1380, 1515, 1410, 1630, 1720];
+      var shHtml = '<span class="h"></span><span class="h">A</span><span class="h on">B</span><span class="h">C</span><span class="h">D</span><span class="h">E</span>' +
         '<span class="h">1</span><span class="bd">Month</span><span class="bd n">Sales</span><span></span><span></span><span></span>';
-      MON.forEach(function (m, k) { shHtml += '<span class="h">' + (k + 2) + '</span><span>' + m + '</span><span class="n">' + SALES[k].toLocaleString('en-US') + '</span><span></span><span></span><span></span>'; });
-      shHtml += '<span class="h">14</span><span class="bd">Total</span><span class="n bd sel">' + SALES.slice(0, 8).reduce(function (a, b) { return a + b; }, 0).toLocaleString('en-US') + '</span><span></span><span></span><span></span>';
-      $('#shGrid').innerHTML = shHtml;
+      MON.forEach(function (m, k) { shHtml += '<span class="h">' + (k + 2) + '</span><span>' + m + '</span><span class="n' + (k < 4 ? ' inr' : '') + '"' + (k === 0 ? ' id="shTop"' : k === 3 ? ' id="shBot"' : '') + '>' + SALES[k].toLocaleString('en-US') + '</span><span></span><span></span><span></span>'; });
+      shHtml += '<span class="h on">8</span><span class="bd">Total</span><span class="ed" id="shCell">=SUM(<span class="rg">B2:B5</span>)<i class="cur"></i></span><span></span><span></span><span></span>';
+      [9, 10].forEach(function (r) { shHtml += '<span class="h">' + r + '</span><span></span><span></span><span></span><span></span><span></span>'; });
+      $('#shGrid').innerHTML = shHtml + '<i class="gs-box" id="shBox"></i>';
+      function sheetBox() { var a = $('#shTop'), b = $('#shBot'), x = $('#shBox'); x.style.cssText = 'left:' + (a.offsetLeft - 1) + 'px;top:' + (a.offsetTop - 1) + 'px;width:' + (a.offsetWidth + 1) + 'px;height:' + (b.offsetTop + b.offsetHeight - a.offsetTop + 1) + 'px'; }
+      // Blender: the donut as a real mesh in edit mode, seen from above; the top edge loop is selected.
+      (function () {
+        var NU = 32, NV = 14, Rr = 1, rr = 0.4, sc = 94, cx = 213, cy = 154, el = 0.6, ce = Math.cos(el), se = Math.sin(el), yw = 0.3, cyw = Math.cos(yw), syw = Math.sin(yw);
+        var Lx = -0.35, Ly = -0.6, Lz = 0.72, Ln = Math.hypot(Lx, Ly, Lz); Lx /= Ln; Ly /= Ln; Lz /= Ln;
+        function rot(x, y) { return [x * cyw - y * syw, x * syw + y * cyw]; }
+        function P(i, j) {
+          var u = i / NU * 2 * Math.PI, v = j / NV * 2 * Math.PI, rad = Rr + rr * Math.cos(v), q = rot(rad * Math.cos(u), rad * Math.sin(u)), z = rr * Math.sin(v) * 0.9;
+          return { sx: cx + q[0] * sc, sy: cy - (q[1] * se + z * ce) * sc, d: -q[1] * ce + z * se };
+        }
+        var faces = [], g = '';
+        for (var i = 0; i < NU; i++) for (var j = 0; j < NV; j++) {
+          var u = (i + .5) / NU * 2 * Math.PI, v = (j + .5) / NV * 2 * Math.PI, n = rot(Math.cos(v) * Math.cos(u), Math.cos(v) * Math.sin(u)), nz = Math.sin(v);
+          var vis = -n[1] * ce + nz * se; if (vis <= 0.01) continue;
+          var lam = Math.max(0, n[0] * Lx + n[1] * Ly + nz * Lz), pts = [P(i, j), P(i + 1, j), P(i + 1, j + 1), P(i, j + 1)];
+          faces.push({ d: (pts[0].d + pts[2].d) / 2, pts: pts, c: Math.round(78 + 118 * lam + 14 * nz) });
+        }
+        faces.sort(function (a, b) { return a.d - b.d; });
+        // the floor grid in perspective, the red X and green Y axes through the donut
+        for (var k = 0; k < 9; k++) { var y = 60 + Math.pow(k / 8, 1.6) * 212; g += '<line x1="0" y1="' + y.toFixed(1) + '" x2="426" y2="' + y.toFixed(1) + '"/>'; }
+        for (var m = -6; m <= 6; m++) g += '<line x1="' + (213 + m * 18) + '" y1="60" x2="' + (213 + m * 70) + '" y2="272"/>';
+        var out = '<g stroke="#454545" stroke-width="1">' + g + '</g><line x1="0" y1="' + (cy + 14) + '" x2="426" y2="' + (cy + 6) + '" stroke="#a5414b" stroke-width="1.4"/><line x1="' + (cx + 4) + '" y1="60" x2="' + (cx - 30) + '" y2="272" stroke="#6f9a1f" stroke-width="1.4"/>';
+        out += '<g stroke="#1a1a1a" stroke-width=".55" stroke-linejoin="round">';
+        faces.forEach(function (f) { out += '<path d="M' + f.pts.map(function (p) { return p.sx.toFixed(1) + ' ' + p.sy.toFixed(1); }).join('L') + 'Z" fill="rgb(' + f.c + ',' + f.c + ',' + f.c + ')"/>'; });
+        out += '</g><g fill="#111">';
+        var seen = {};
+        faces.forEach(function (f) { f.pts.forEach(function (p) { var key = Math.round(p.sx) + ',' + Math.round(p.sy); if (seen[key]) return; seen[key] = 1; out += '<circle cx="' + p.sx.toFixed(1) + '" cy="' + p.sy.toFixed(1) + '" r=".95"/>'; }); });
+        out += '</g>';
+        var jl = NV / 4, loop = [], x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+        for (var a = 0; a <= NU; a++) { var p = P(a, jl); loop.push(p.sx.toFixed(1) + ' ' + p.sy.toFixed(1)); x0 = Math.min(x0, p.sx); x1 = Math.max(x1, p.sx); y0 = Math.min(y0, p.sy); y1 = Math.max(y1, p.sy); }
+        out += '<path d="M' + loop.join('L') + '" fill="none" stroke="#ffa31a" stroke-width="1.7" stroke-linejoin="round"/><g fill="#ffa31a">';
+        for (var b2 = 0; b2 < NU; b2++) { var pp = P(b2, jl); out += '<circle cx="' + pp.sx.toFixed(1) + '" cy="' + pp.sy.toFixed(1) + '" r="1.7"/>'; }
+        out += '</g>';
+        $('#blView').innerHTML = out;
+        $('#blLoop').style.cssText = 'left:' + (28 + x0 - 4).toFixed(0) + 'px;top:' + (74 + y0 - 4).toFixed(0) + 'px;width:' + (x1 - x0 + 8).toFixed(0) + 'px;height:' + (y1 - y0 + 8).toFixed(0) + 'px';
+      })();
       var EX = [
-        { app: 'blender', title: 'Blender', pill: 'Your turn', hd: 'Your turn', text: 'Press Ctrl+B, then drag to round this edge.', ring: '#blEdge', side: 'up' },
-        { app: 'googlesheets', title: 'Google Sheets', pill: 'Not yet', hd: 'Not yet', text: 'Your SUM stops at B9 (August). The months go to B13.', ring: '#shFx', side: 'down' },
+        { app: 'blender', title: 'Blender', pill: 'Your turn', hd: 'Your turn', text: 'Press Ctrl+B, then drag to round this edge.', ring: '#blLoop', side: 'down' },
+        { app: 'googlesheets', title: 'Google Sheets', pill: 'Not yet', hd: 'Not yet', text: 'Your SUM stops at B5 (April). The months go to B7.', ring: '#shCell', side: 'down' },
         { app: 'figma', title: 'Figma', pill: 'Your turn', hd: 'Show me', text: 'Select Logo, then Create component (' + (isWin ? 'Ctrl+Alt+K' : '⌥⌘K') + ').', ring: '#fgBtn', side: 'down' },
         { app: 'jupyter', title: 'Jupyter', pill: 'Not yet', hd: 'Explain', text: "Column names are case-sensitive. This one is 'sales'.", ring: '#jpErr', side: 'down' }
       ];
@@ -1790,13 +1946,15 @@
         // one app at a time: the old one fades out, then the new one fades in with its title (a dark and a light app never blend)
         exs.forEach(function (x) { on(x, false); }); odots.forEach(function (d, k) { on(d, k === i); });
         on(oring, false); on(ocall, false); clearTimeout(exT); clearTimeout(showEx.t2);
-        showEx.t2 = setTimeout(function () { on(exs[i], true); $('#otitle').textContent = E.title; $('#opillTx').textContent = E.pill; }, 280);
+        showEx.t2 = setTimeout(function () { on(exs[i], true); $('#opillTx').textContent = E.pill; if (i === 1) sheetBox(); }, 280);
         exT = setTimeout(function () {
           var r = relPos($(E.ring)), pad = 5, W = oscr.clientWidth;
           oring.style.cssText = 'left:' + (r[0] - pad) + 'px;top:' + (r[1] - pad) + 'px;width:' + (r[2] + 2 * pad) + 'px;height:' + (r[3] + 2 * pad) + 'px';
-          $('#ocallHd').textContent = E.hd; $('#ocallTx').textContent = E.text; ocall.className = 'ocall ' + E.side;
+          $('#ocallHd').textContent = E.hd; $('#ocallTx').textContent = E.text; ocall.className = 'ocall down';
           var cw = ocall.offsetWidth, ch = ocall.offsetHeight, lx = clamp(r[0] + r[2] / 2 - 40, 10, W - cw - 10);
-          ocall.style.left = lx + 'px'; ocall.style.top = (E.side === 'up' ? r[1] - pad - 12 - ch : r[1] + r[3] + pad + 12) + 'px';
+          // below the ring when it fits inside the window, else above it
+          var side = r[1] + r[3] + pad + 12 + ch <= oscr.clientHeight - 8 ? 'down' : 'up'; ocall.className = 'ocall ' + side;
+          ocall.style.left = lx + 'px'; ocall.style.top = (side === 'up' ? r[1] - pad - 12 - ch : r[1] + r[3] + pad + 12) + 'px';
           ocall.style.setProperty('--nx', clamp(r[0] + r[2] / 2 - lx - 5, 14, cw - 24) + 'px');
           on(oring, true); on(ocall, true);
         }, 700);
@@ -1962,7 +2120,7 @@
         ui: function (v) { wstage.classList.toggle('dark', v === 'dark'); fillLogos(); },
         wall: function (v) { root.classList.toggle('paper', v === 'paper'); },
         mode: function (v) { mode = v; film.classList.toggle('scroll', v === 'scroll'); pauseBtn.style.display = v === 'scroll' ? 'none' : ''; requestAnimationFrame(fit); },
-        paint: paintWalls, conn: function (x) { cStart = performance.now() - x * 1000; }, fit: fit
+        paint: paintWalls, conn: function (x) { cStart = performance.now() - x * 1000; }, fit: fit, ex: function (i) { showEx(i, true); }
       };
     })();
 
