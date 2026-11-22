@@ -44,11 +44,17 @@
     { "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    },
+      "integrity": {
+      "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js": "sha384-61S/Nu32S3E5+n+KpCOTb2eRYps6fVKm+9Gz1QBvSePFthb46f063Aa/qe/lykFZ",
+      "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/SVGLoader.js": "sha384-9bjPxggmiDnjr/OACK/AtBAq85KJBJ8uSxAccTaM1brUeoDRXfcC1wAo3l6hRsfZ",
+      "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.mjs": "sha384-dBDNMwS418EXOC2QsiNrTrG+ExSrkt8cSJhwAFYR6so25haE/VTcEl2r6SjtHrRs"
     } }
   </script>
-  <!-- Preloads must come after the import map, or browsers ignore the map. -->
-  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
-  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/SVGLoader.js" crossorigin>
+  <!-- Preloads must come after the import map, or browsers ignore the map. The integrity hashes pin the exact CDN files
+       (launch risk R42): if jsDelivr ever served something else, the browser refuses it and the flat page stays. -->
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" integrity="sha384-61S/Nu32S3E5+n+KpCOTb2eRYps6fVKm+9Gz1QBvSePFthb46f063Aa/qe/lykFZ" crossorigin>
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/SVGLoader.js" integrity="sha384-9bjPxggmiDnjr/OACK/AtBAq85KJBJ8uSxAccTaM1brUeoDRXfcC1wAo3l6hRsfZ" crossorigin>
   <style>
     @font-face {
       font-family: "Google Sans Flex";
