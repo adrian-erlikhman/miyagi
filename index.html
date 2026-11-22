@@ -251,6 +251,7 @@
     .mnav.sc { border-bottom-color: rgba(20, 20, 20, .08); }
     .mnav .lg { display: flex; align-items: center; gap: 7px; text-decoration: none; color: #141414; font-weight: 600; font-size: 18px; letter-spacing: -.03em; }
     .mnav .lg svg { width: 28px; height: 28px; display: block; }
+    .mnav .lg .wordmark { width: 74px; height: auto; overflow: visible; }
     .mnav nav { display: flex; gap: 22px; }
     .mnav nav a { color: #66665f; text-decoration: none; transition: color .2s; }
     .mnav nav a:hover { color: #141414; }
@@ -286,6 +287,7 @@
 
     /* ---------- the film ---------- */
     .mw .film .pin { display: flex; flex-direction: column; justify-content: center; }
+    .mw .film .mw-hold { max-width: min(1560px, 94vw); }
     .mw .film.scroll .wrap { height: 700vh; }
     .mw .film.scroll .pin { position: sticky; top: 0; height: 100vh; padding: 64px 0 18px; }
     .mw .wframe { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; margin-top: 38px;
@@ -521,27 +523,104 @@
     .mw .skill .rev { display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--ln); font-size: 12.5px; color: var(--mu); transition: opacity .35s; }
     .mw .skill .rev:not(.on) { opacity: 0; } .mw .skill .rev b { color: var(--tx); font-weight: 500; }
 
-    /* ---------- everything it does ---------- */
-    .mw .feat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 42px 40px; max-width: 1080px; margin: 60px auto 0; }
-    .mw .feat .t { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--tb); color: var(--tf); }
-    .mw .feat .t svg { width: 21px; height: 21px; }
-    .mw .feat b { display: block; margin-top: 14px; font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
-    .mw .feat p { margin: 4px 0 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
-    @media (max-width: 860px) { .mw .feat { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .mw .feat { grid-template-columns: 1fr; gap: 26px; } }
+    /* ---------- everything it does: a bento of live cards ---------- */
+    .mw .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1180px; margin: 56px auto 0; }
+    .mw .bx { background: #fff; border-radius: 22px; padding: 12px 12px 22px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
+      transition: transform .35s var(--spring), box-shadow .35s; min-width: 0; }
+    .mw .bx:hover { transform: translateY(-3px); box-shadow: 0 1px 0 #fff inset, 0 28px 54px -30px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
+    .mw .bx.w2 { grid-column: span 2; }
+    .mw .bx > b { display: block; margin: 16px 10px 0; font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
+    .mw .bx > p { margin: 4px 10px 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+    .mw .vg { position: relative; height: 196px; border-radius: 14px; background: var(--tb); overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
+    .mw .vg .lg svg { width: 100%; height: 100%; display: block; }
+    .mw .vg .spin { width: 11px; height: 11px; }
+    @media (max-width: 860px) { .mw .bento { grid-template-columns: 1fr 1fr; } .mw .bx.w2 { grid-column: span 2; } }
+    @media (max-width: 560px) { .mw .bento { grid-template-columns: 1fr; } .mw .bx.w2 { grid-column: span 1; } }
+    .mw .mfield { position: absolute; left: 18px; right: 18px; top: 16px; height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 12px; background: #fff; border-radius: 11px; box-shadow: 0 0 0 1.5px #1c1b19; font-size: 14px; }
+    .mw .mfield .lg { width: 17px; height: 17px; flex: none; }
+    .mw .mfield .caret { margin-left: -6px; }
+    .mw .mres { position: absolute; left: 18px; right: 18px; top: 64px; display: flex; flex-direction: column; gap: 6px; }
+    .mw .mr { display: flex; align-items: center; gap: 10px; padding: 6px; border-radius: 10px; background: #fff; transition: opacity .3s, transform .4s var(--spring); }
+    .mw .mr:not(.on) { opacity: 0; transform: translateY(6px); }
+    .mw .mr .th { width: 46px; height: 28px; border-radius: 6px; background: #efede7; display: grid; place-items: center; color: #75726b; flex: none; }
+    .mw .mr .th.v { background: #1c1b19; color: #fff; } .mw .mr .th .ico { width: 13px; height: 13px; }
+    .mw .mr .tx { flex: 1; min-width: 0; } .mw .mr b { display: block; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .mr small { color: #75726b; font-size: 11.5px; }
+    .mw .mchips { position: absolute; left: 18px; right: 18px; bottom: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .mw .mchips button { font-size: 12px; padding: 5px 9px; border-radius: 999px; background: rgba(255, 255, 255, .7); color: #4a4843; transition: background .2s, color .2s; }
+    .mw .mchips button:hover, .mw .mchips button.on { background: #1c1b19; color: #fff; }
+    .mw .msetup { position: absolute; inset: 16px 18px; display: flex; flex-direction: column; gap: 7px; }
+    .mw .ms { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 10px; background: #fff; transition: opacity .3s, transform .4s var(--spring); }
+    .mw .ms:not(.on) { opacity: 0; transform: translateX(-8px); }
+    .mw .ms .lg { width: 18px; height: 18px; flex: none; } .mw .ms .tx { flex: 1; font-weight: 500; }
+    .mw .ms .ok { width: 14px; height: 14px; display: none; } .mw .ms.done .ok { display: block; } .mw .ms.done .spin { display: none; }
+    .mw .mvid { position: absolute; inset: 16px 18px; border-radius: 10px; overflow: hidden; background: #1c1b19; }
+    .mw .mvid canvas { width: 100%; height: 100%; display: block; }
+    .mw .mlock { position: absolute; inset: 0; background: rgba(10, 10, 10, .55); color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 15px; transition: opacity .35s; }
+    .mw .mlock:not(.on) { opacity: 0; } .mw .mlock .ico { width: 16px; height: 16px; }
+    .mw .mpass { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; background: #0b0b0b; color: #fff; font-size: 12.5px; white-space: nowrap; transition: opacity .3s, transform .45s var(--spring); }
+    .mw .mpass:not(.on) { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+    .mw .mpass i { width: 8px; height: 8px; border-radius: 50%; background: #30d158; }
+    .mw .mpass.c { top: auto; bottom: 14px; }
+    .mw .mbar { position: absolute; left: 10px; right: 10px; bottom: 9px; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); }
+    .mw .mbar i { display: block; height: 100%; width: 0; border-radius: 2px; background: #fff; }
+    .mw .mbar .notch { position: absolute; left: 46%; top: -3px; width: 3px; height: 9px; border-radius: 2px; background: #fff; }
+    .mw .mcode { position: absolute; inset: 16px 18px; border-radius: 10px; background: #1e1e1e; color: #d4d4d4; font: 12.5px/23px var(--mono); padding: 12px 14px; white-space: pre; overflow: hidden; }
+    .mw .mcode.sm { position: static; padding: 8px 10px; font-size: 11.5px; line-height: 21px; margin-top: 6px; }
+    .mw .mring { position: absolute; border-radius: 7px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .3); pointer-events: none; transition: opacity .3s; }
+    .mw .mring:not(.on) { opacity: 0; }
+    .mw .mbub { position: absolute; display: flex; gap: 8px; align-items: center; padding: 7px 11px 7px 7px; border-radius: 12px; background: #fff; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .35); font-size: 12.5px; white-space: nowrap; transition: opacity .3s, transform .45s var(--spring); }
+    .mw .mbub:not(.on) { opacity: 0; transform: translateY(6px); }
+    .mw .mbub .av { width: 22px; height: 22px; border-radius: 50%; background: #0b0b0b; display: grid; place-items: center; flex: none; } .mw .mbub .av svg { width: 15px; height: 15px; }
+    .mw #gRing { left: 52px; top: 52px; width: 210px; height: 24px; } .mw #gBub { left: 110px; top: 116px; }
+    .mw .mterm { position: absolute; inset: 16px 18px; border-radius: 10px; background: #1e1e1e; color: #cccccc; font: 12.5px/22px var(--mono); padding: 12px 14px; white-space: pre; }
+    .mw .mterm .ok { color: #6fcf8f; }
+    .mw .mmini { position: absolute; left: 18px; right: 18px; top: 16px; padding: 14px; border-radius: 10px; background: #fff; font: 12.5px/1.4 var(--mono); color: #4a4843; }
+    .mw .m784 { color: #1c1b19; font-weight: 600; }
+    .mw #qRing { left: 48px; top: 27px; width: 34px; height: 20px; }
+    .mw #qBub { left: 18px; top: 76px; }
+    .mw .mask { position: absolute; left: 18px; bottom: 14px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 10px; background: rgba(255, 255, 255, .75); color: #75726b; font-size: 13px; transition: background .2s, box-shadow .2s, color .2s; }
+    .mw .mask .lg { width: 16px; height: 16px; }
+    .mw .mask.typing { background: #fff; color: #1c1b19; box-shadow: 0 0 0 1.5px #1c1b19; }
+    .mw .vg.stuck { display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px; padding: 16px 18px; }
+    .mw .mny { background: #fff; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; }
+    .mw .mny .ch { display: flex; gap: 7px; align-items: center; font-size: 12px; color: #75726b; font-weight: 500; }
+    .mw .mny .ch i { width: 10px; height: 10px; border-radius: 50%; border: 1.7px solid #1c1b19; }
+    .mw .mny b { font-size: 14.5px; font-weight: 600; margin-top: 4px; } .mw .mny p { margin: 2px 0 0; color: #75726b; font-size: 12px; }
+    .mw .mny .chips { margin-top: auto; gap: 6px; }
+    .mw .mny .chips button { font-size: 12px; padding: 6px 9px; border-radius: 8px; color: #1b1b1b; transition: transform .2s, box-shadow .2s; }
+    .mw .mny .chips button.sky { background: var(--sky); } .mw .mny .chips button.mint { background: var(--mint); } .mw .mny .chips button.lilac { background: var(--lilac); } .mw .mny .chips button.pink { background: var(--pink); }
+    .mw .mny .chips button.on { box-shadow: 0 0 0 2px #1c1b19; } .mw .mny .chips button:hover { transform: translateY(-1px); }
+    .mw .mhelp { position: relative; background: #fff; border-radius: 12px; padding: 12px 14px; font-size: 13.5px; line-height: 1.45; }
+    .mw .mhelp .hp { position: absolute; inset: 12px 14px; transition: opacity .3s, transform .4s var(--spring); }
+    .mw .mhelp .hp:not(.on) { opacity: 0; transform: translateY(6px); pointer-events: none; }
+    .mw .mhelp .hl { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 7px; border-radius: 6px; margin: 0 0 8px; color: #1b1b1b; }
+    .mw .mhelp .hl.sky { background: var(--sky); } .mw .mhelp .hl.mint { background: var(--mint); } .mw .mhelp .hl.lilac { background: var(--lilac); } .mw .mhelp .hl.pink { background: var(--pink); }
+    .mw .mhelp .hp[data-h="0"] .hl, .mw .mhelp .hp[data-h="3"] .hl { display: table; }
+    .mw .ringed { border-radius: 5px; box-shadow: 0 0 0 2px var(--lilac), 0 0 0 3.5px rgba(0, 0, 0, .3); padding: 0 3px; }
+    .mw .mhelp svg { width: 100%; height: 108px; display: block; }
+    .mw .mtree { position: absolute; inset: 14px 16px; width: calc(100% - 32px); height: calc(100% - 28px); }
+    .mw .mtree text { font: 11px var(--font); fill: #4a4843; }
+    .mw .mtree circle { transition: fill .4s, stroke .4s; }
+    .mw .vg.apps { display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+    .mw .mq { display: flex; gap: 14px; width: max-content; animation: mw-mq 34s linear infinite; }
+    .mw .mq.rev { animation-direction: reverse; animation-duration: 40s; }
+    .mw .mq span { width: 58px; height: 58px; border-radius: 16px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px -12px rgba(20, 16, 10, .35); flex: none; }
+    .mw .mq span svg { width: 28px; height: 28px; display: block; }
+    .mw .mq .termtile { width: 30px; height: 30px; border-radius: 8px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .mq .termtile svg { width: 20px; height: 20px; }
+    @keyframes mw-mq { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .mw .mq { animation: none; } }
 
     /* ---------- any app: miyagi's card with the apps around it ---------- */
     .mw .oframe { position: relative; width: 100%; max-width: 1040px; aspect-ratio: 1200 / 760; margin: 30px auto 0; overflow: hidden; }
     .mw .ostage { position: absolute; left: 0; top: 0; width: 1200px; height: 760px; transform-origin: 0 0; }
     .mw .ologo { position: absolute; width: 68px; height: 68px; margin: -34px 0 0 -34px; border-radius: 20px; background: #fff; display: grid; place-items: center;
       box-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 14px 30px -14px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
-      transform: rotate(var(--r, 0deg)); animation: mw-bob 7s ease-in-out infinite; animation-delay: var(--d, 0s); }
+      left: 0; top: 0; will-change: transform, opacity; }
     .mw .ologo.round { border-radius: 50%; }
     .mw .ologo svg { width: 34px; height: 34px; display: block; }
     .mw .ologo .termtile { width: 36px; height: 36px; border-radius: 9px; background: #141414; color: #fff; display: grid; place-items: center; }
     .mw .ologo .termtile svg { width: 24px; height: 24px; }
-    @keyframes mw-bob { 0%, 100% { transform: rotate(var(--r, 0deg)) translateY(0); } 50% { transform: rotate(var(--r, 0deg)) translateY(-8px); } }
-    .mw .ocard { position: absolute; left: 410px; top: 120px; width: 380px; height: 520px; background: #fff; border-radius: 18px; overflow: hidden;
+    .mw .ocard { position: absolute; z-index: 2; left: 410px; top: 120px; width: 380px; height: 520px; background: #fff; border-radius: 18px; overflow: hidden;
       box-shadow: 0 30px 70px -30px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
     .mw .ocard canvas { display: block; width: 100%; height: 124px; }
     .mw .ohead { padding: 22px 28px 0; }
@@ -549,18 +628,27 @@
     .mw .ohead h3 svg { width: 40px; height: 40px; flex: none; }
     .mw .ohead p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
     .mw .otabs { display: flex; gap: 2px; margin: 16px 22px 4px; }
-    .mw .otabs span { display: flex; gap: 6px; align-items: center; padding: 6px 10px; border-radius: 9px; color: var(--muted); font-size: 13.5px; }
-    .mw .otabs span.on { background: #f1efe9; color: var(--ink); }
+    .mw .otabs button { display: flex; gap: 6px; align-items: center; padding: 6px 10px; border-radius: 9px; color: var(--muted); font-size: 13.5px; transition: background .2s, color .2s; }
+    .mw .otabs button:hover { color: var(--ink); }
+    .mw .otabs button.on { background: #f1efe9; color: var(--ink); }
     .mw .otabs .ico { width: 14px; height: 14px; }
     .mw .orow { display: grid; grid-template-columns: 1fr 120px; align-items: center; margin: 0 28px; border-top: 1px solid rgba(20, 20, 20, .07); height: 44px; font-size: 14.5px; }
     .mw .orow.hd { color: var(--faint); font-size: 12.5px; height: 34px; border-top: 0; }
     .mw .orow .l { display: flex; gap: 10px; align-items: center; } .mw .orow .l svg { width: 16px; height: 16px; flex: none; }
     .mw .orow .tag { font-size: 12px; padding: 4px 7px; justify-self: start; }
-    .mw .bub { position: absolute; max-width: 360px; padding: 14px 18px; border-radius: 16px; background: #efeee9; font-size: 16px; line-height: 1.4; color: var(--ink);
+    .mw button.orow { width: calc(100% - 40px); font-size: 14.5px; white-space: nowrap; text-align: left; border-top: 1px solid rgba(20, 20, 20, .07); padding: 0 8px; margin: 0 20px; cursor: pointer; transition: background .2s; border-radius: 0; }
+    .mw button.orow:hover { background: #f7f6f2; }
+    .mw button.orow.sel { background: #f1efe9; border-radius: 9px; border-top-color: transparent; }
+    .mw .opane[hidden] { display: none; }
+    .mw .dot { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #b8b6ae; display: inline-block; margin: 0 4px 0 3px; flex: none; }
+    .mw .dot.ok { background: #1f9b45; border-color: #1f9b45; }
+    .mw .when { color: var(--muted); font-size: 13px; }
+    .mw .ologo.tap { cursor: pointer; }
+    .mw .bub { position: absolute; z-index: 5; pointer-events: none; max-width: 360px; padding: 14px 18px; border-radius: 16px; background: #efeee9; font-size: 16px; line-height: 1.4; color: var(--ink);
       box-shadow: 0 16px 36px -20px rgba(20, 16, 10, .4); transition: opacity .45s, transform .55s var(--spring); }
     .mw .bub:not(.on) { opacity: 0; transform: translateY(12px) scale(.98); }
-    .mw .bub.me { left: 640px; top: 430px; }
-    .mw .bub.mi { left: 300px; top: 540px; max-width: 420px; display: flex; gap: 12px; align-items: flex-start; background: #fff; box-shadow: 0 16px 36px -18px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
+    .mw .bub.me { left: 545px; top: 454px; max-width: 290px; }
+    .mw .bub.mi { left: 372px; top: 560px; max-width: 400px; display: flex; gap: 12px; align-items: flex-start; background: #fff; box-shadow: 0 16px 36px -18px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
     .mw .bub.mi .av { width: 30px; height: 30px; flex: none; border-radius: 50%; background: #0b0b0b; display: grid; place-items: center; margin-top: -2px; }
     .mw .bub.mi .av svg { width: 21px; height: 21px; }
 
@@ -638,7 +726,7 @@
   <div class="dots" aria-hidden="true"></div>
   <canvas id="gl" aria-hidden="true"></canvas>
 <header class="mnav" id="mnav">
-  <a class="lg" href="#top" data-go aria-label="miyagi"><svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#b5603f"><rect x="18" y="73" width="64" height="6" rx="2"/><path d="M22 79H78L74 89H26Z"/></g><g fill="#5a4433"><path d="M47 72C45 60 52 52 50 40C49 34 46 30 44 27L50 24C54 30 57 36 57 43C58 54 51 61 54 72Z"/></g><g fill="#1f9b45"><circle cx="48" cy="22" r="11"/><circle cx="30" cy="40" r="9"/><circle cx="70" cy="34" r="10"/></g></svg>miyagi</a>
+  <a class="lg" href="#top" data-go aria-label="miyagi"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="#b5603f"><rect x="18" y="73" width="64" height="6" rx="2"></rect><path d="M22 79H78L74 89H26Z"></path></g><g fill="#5a4433"><path d="M53.6 69.2L52.99 68.84L52.49 68.5L52.08 68.18L51.74 67.89L51.48 67.64L51.26 67.4L51.09 67.19L50.94 66.99L50.82 66.78L50.71 66.56L50.63 66.31L50.56 66.02L50.52 65.68L50.51 65.3L50.53 64.86L50.58 64.38L50.68 63.86L50.81 63.29L50.98 62.69L51.18 62.05L51.41 61.38L51.68 60.68L51.97 59.96L52.29 59.21L52.63 58.44L52.98 57.64L53.35 56.83L53.73 55.99L54.11 55.14L54.49 54.26L54.87 53.37L55.25 52.45L55.61 51.52L55.96 50.57L56.3 49.6L56.6 48.61L56.89 47.59L57.14 46.56L57.35 45.51L57.52 44.44L57.64 43.35L57.72 42.24L57.73 41.12L57.69 39.98L57.58 38.83L57.4 37.67L57.15 36.5L56.82 35.33L56.42 34.16L55.93 33L55.37 31.83L54.72 30.67L53.99 29.51L53.18 28.35L52.27 27.2L51.29 26.06L46.71 29.94L47.45 30.93L48.1 31.89L48.66 32.82L49.14 33.72L49.53 34.6L49.86 35.46L50.12 36.29L50.32 37.1L50.46 37.89L50.55 38.66L50.58 39.41L50.58 40.16L50.53 40.9L50.44 41.63L50.31 42.37L50.15 43.09L49.95 43.82L49.72 44.56L49.45 45.29L49.16 46.02L48.84 46.76L48.5 47.5L48.13 48.25L47.74 48.99L47.33 49.74L46.91 50.49L46.47 51.25L46.02 52.01L45.57 52.77L45.11 53.54L44.65 54.32L44.19 55.1L43.74 55.89L43.29 56.7L42.86 57.51L42.43 58.34L42.03 59.19L41.65 60.06L41.29 60.95L40.97 61.88L40.69 62.84L40.46 63.83L40.29 64.86L40.18 65.92L40.16 67.03L40.22 68.15L40.39 69.3L40.66 70.46L41.04 71.6L41.52 72.73L42.11 73.83L42.8 74.9L43.58 75.93L44.44 76.91L45.38 77.87L46.4 78.8Z"></path><circle cx="49" cy="28" r="3"></circle></g><g fill="#30d158"><clipPath id="t8s0-top"><rect x="-10" y="-10" width="120" height="60"></rect></clipPath><g clip-path="url(#t8s0-top)"><circle cx="23" cy="46" r="7"></circle><circle cx="32" cy="42" r="9"></circle><circle cx="40" cy="46" r="6.5"></circle><rect x="23" y="43.5" width="17" height="6.5"></rect></g><clipPath id="t8s1-top"><rect x="-10" y="-10" width="120" height="50"></rect></clipPath><g clip-path="url(#t8s1-top)"><circle cx="61" cy="36" r="6.5"></circle><circle cx="70" cy="32" r="9"></circle><circle cx="78" cy="36" r="6.5"></circle><rect x="61" y="33.5" width="17" height="6.5"></rect></g><clipPath id="t8s2-top"><rect x="-10" y="-10" width="120" height="38"></rect></clipPath><g clip-path="url(#t8s2-top)"><circle cx="43" cy="24" r="6.5"></circle><circle cx="50" cy="20" r="8.5"></circle><circle cx="57" cy="24" r="6.5"></circle><rect x="43" y="21.5" width="14" height="6.5"></rect></g></g></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="82.7 -1612.3 5814.7 2118.3" class="wordmark" role="img" aria-label="miyagi"><path fill="#141414" d="M122.66656494140625 0.0Q122.66656494140625 0.0 122.66656494140625 0.0Q122.66656494140625 0.0 122.66656494140625 0.0V-1025.33349609375Q122.66656494140625 -1025.33349609375 122.66656494140625 -1025.33349609375Q122.66656494140625 -1025.33349609375 122.66656494140625 -1025.33349609375H376.002685546875Q376.002685546875 -1025.33349609375 376.002685546875 -1025.33349609375Q376.002685546875 -1025.33349609375 376.002685546875 -1025.33349609375V-845.9998779296875L353.00250244140625 -876.0001831054688H382.66937255859375Q426.002685546875 -956.6668701171875 516.002685546875 -1008.0002136230469Q606.002685546875 -1059.3335571289062 708.6695556640625 -1059.3335571289062Q817.336181640625 -1059.3335571289062 901.0028686523438 -1008.6669616699219Q984.6695556640625 -958.0003662109375 1022.0028686523438 -868.6671142578125Q1082.0029907226562 -964.6671142578125 1173.3363342285156 -1012.0003356933594Q1264.669677734375 -1059.3335571289062 1373.3362426757812 -1059.3335571289062Q1554.6698608398438 -1059.3335571289062 1648.0032653808594 -953.6668395996094Q1741.336669921875 -848.0001220703125 1741.336669921875 -656.666748046875V0.0Q1741.336669921875 0.0 1741.336669921875 0.0Q1741.336669921875 0.0 1741.336669921875 0.0H1478.0004272460938Q1478.0004272460938 0.0 1478.0004272460938 0.0Q1478.0004272460938 0.0 1478.0004272460938 0.0V-610.6661376953125Q1478.0004272460938 -725.3320922851562 1430.3340148925781 -781.331787109375Q1382.6676025390625 -837.3314819335938 1285.0130510001347 -837.3314819335938Q1190.6688232421875 -837.3314819335938 1127.6692810058594 -761.6653747558594Q1064.6697387695312 -685.999267578125 1064.6697387695312 -573.9999389648438V0.0Q1064.6697387695312 0.0 1064.6697387695312 0.0Q1064.6697387695312 0.0 1064.6697387695312 0.0H799.33349609375Q799.33349609375 0.0 799.33349609375 0.0Q799.33349609375 0.0 799.33349609375 0.0V-609.3328247070312Q799.33349609375 -723.998779296875 751.6670837402344 -780.9984741210938Q704.0006713867188 -837.9981689453125 607.8389579441236 -837.9981689453125Q513.335205078125 -837.9981689453125 450.66900634765625 -760.6654052734375Q388.0028076171875 -683.3326416015625 388.0028076171875 -571.3333129882812V0.0Q388.0028076171875 0.0 388.0028076171875 0.0Q388.0028076171875 0.0 388.0028076171875 0.0Z M1895.999755859375 0.0Q1895.999755859375 0.0 1895.999755859375 0.0Q1895.999755859375 0.0 1895.999755859375 0.0V-1025.33349609375Q1895.999755859375 -1025.33349609375 1895.999755859375 -1025.33349609375Q1895.999755859375 -1025.33349609375 1895.999755859375 -1025.33349609375H2160.6693115234375Q2160.6693115234375 -1025.33349609375 2160.6693115234375 -1025.33349609375Q2160.6693115234375 -1025.33349609375 2160.6693115234375 -1025.33349609375V0.0Q2160.6693115234375 0.0 2160.6693115234375 0.0Q2160.6693115234375 0.0 2160.6693115234375 0.0Z M2393.6661376953125 434.00006103515625Q2393.6661376953125 434.00006103515625 2393.6661376953125 434.00006103515625Q2393.6661376953125 434.00006103515625 2393.6661376953125 434.00006103515625L2655.3329467773438 -132.66680908203125L2659.3328857421875 0.0L2207.6663818359375 -1025.33349609375Q2207.6663818359375 -1025.33349609375 2207.6663818359375 -1025.33349609375Q2207.6663818359375 -1025.33349609375 2207.6663818359375 -1025.33349609375H2483.0025024414062Q2483.0025024414062 -1025.33349609375 2483.0025024414062 -1025.33349609375Q2483.0025024414062 -1025.33349609375 2483.0025024414062 -1025.33349609375L2727.0009155273438 -432.66973876953125L2755.764471238659 -341.33575439453125H2762.667724609375L2793.6678466796875 -434.0030517578125L3024.3330688476562 -1025.33349609375Q3024.3330688476562 -1025.33349609375 3024.3330688476562 -1025.33349609375Q3024.3330688476562 -1025.33349609375 3024.3330688476562 -1025.33349609375H3293.335693359375Q3293.335693359375 -1025.33349609375 3293.335693359375 -1025.33349609375Q3293.335693359375 -1025.33349609375 3293.335693359375 -1025.33349609375L2670.0025024414062 434.00006103515625Q2670.0025024414062 434.00006103515625 2670.0025024414062 434.00006103515625Q2670.0025024414062 434.00006103515625 2670.0025024414062 434.00006103515625Z M3629.665771484375 34.00006103515625Q3465.6659545898438 34.00006103515625 3366.3328552246094 -55.83306884765625Q3266.999755859375 -145.66619873046875 3266.999755859375 -293.66607666015625Q3266.999755859375 -458.66644287109375 3386.8330688476562 -551.3330993652344Q3506.6663818359375 -643.999755859375 3698.3331298828125 -643.999755859375Q3782.9998168945312 -643.999755859375 3856.9996032714844 -630.333251953125Q3930.9993896484375 -616.666748046875 3980.99951171875 -596.0003051757812V-652.0001220703125Q3980.99951171875 -749.9996948242188 3915.6665954589844 -805.3325805664062Q3850.3336791992188 -860.6654663085938 3741.0007934570312 -860.6654663085938Q3645.3339233398438 -860.6654663085938 3571.6669006347656 -825.8320617675781Q3497.9998779296875 -790.9986572265625 3432.3330688476562 -724.66552734375Q3432.3330688476562 -724.66552734375 3432.3330688476562 -724.66552734375Q3432.3330688476562 -724.66552734375 3432.3330688476562 -724.66552734375L3301.3330078125 -868.6669921875Q3301.3330078125 -868.6669921875 3301.3330078125 -868.6669921875Q3301.3330078125 -868.6669921875 3301.3330078125 -868.6669921875Q3412.33349609375 -970.0000610351562 3522.3341369628906 -1013.6667785644531Q3632.3347778320312 -1057.33349609375 3773.0017700195312 -1057.33349609375Q3995.6689453125 -1057.33349609375 4120.335784912109 -952.0002746582031Q4245.002624511719 -846.6670532226562 4245.002624511719 -650.0001220703125V0.0Q4245.002624511719 0.0 4245.002624511719 0.0Q4245.002624511719 0.0 4245.002624511719 0.0H3980.99951171875Q3980.99951171875 0.0 3980.99951171875 0.0Q3980.99951171875 0.0 3980.99951171875 0.0V-230.33282470703125L4041.6661987304688 -150.33343505859375H3974.99951171875Q3934.3330688476562 -73.00018310546875 3842.6663513183594 -19.50006103515625Q3750.9996337890625 34.00006103515625 3629.665771484375 34.00006103515625ZM3721.0014038085938 -167.66815185546875Q3836.0008544921875 -167.66815185546875 3908.5001831054688 -242.334228515625Q3980.99951171875 -317.00030517578125 3980.99951171875 -426.66619873046875V-430.66632080078125Q3941.66650390625 -456.66607666015625 3882.6668395996094 -470.6659240722656Q3823.6671752929688 -484.665771484375 3759.0008544921875 -484.665771484375Q3655.6683349609375 -484.665771484375 3591.0020141601562 -442.6660461425781Q3526.335693359375 -400.66632080078125 3526.335693359375 -321.33367919921875Q3526.335693359375 -249.000732421875 3580.3353881835938 -208.33444213867188Q3634.3350830078125 -167.66815185546875 3721.0014038085938 -167.66815185546875Z M4865.0 466Q4687.5 466.0 4571.75 392.5Q4456.0 319 4378.5 168.5Q4378.5 168.5 4378.5 168.5Q4378.5 168.5 4378.5 168.5L4591.0 71Q4591.0 71 4591.0 71.0Q4591.0 71 4591.0 71Q4638.0 155.5 4700.5 202.0Q4763.0 248.5 4858.0 248.5Q4993.0 248.5 5068.25 169.25Q5143.5 90.0 5143.0 -58V-144.5H5135.0Q5088.0 -82.5 5006.75 -37.75Q4925.5 7.0 4819.0 7Q4601.0 7 4467.25 -135.0Q4333.5 -277.0 4333.5 -520.0Q4333.5 -760.0 4470.75 -907.75Q4608.0 -1055.5 4819.5 -1055.5Q4928.0 -1055.5 5011.0 -1012.75Q5094.0 -970 5137.0 -904H5189.5L5143.0 -866.5V-1023Q5143.0 -1023 5143.0 -1023.0Q5143.0 -1023 5143.0 -1023H5396.0Q5396.0 -1023 5396.0 -1023.0Q5396.0 -1023 5396.0 -1023V-126.5Q5396.0 164 5266.5 315.0Q5137.0 466 4865.0 466ZM4866.5 -222.0Q4988.0 -222 5065.0 -306.25Q5142.0 -390.5 5142.0 -527Q5142.0 -665 5065.5 -747.25Q4989.0 -829.5 4867.5 -829.5Q4748.5 -829.5 4671.0 -747.5Q4593.5 -665.5 4593.5 -526.0Q4593.5 -384.0 4671.25 -303.0Q4749.0 -222 4866.5 -222.0Z M5569.999755859375 0.0Q5569.999755859375 0.0 5569.999755859375 0.0Q5569.999755859375 0.0 5569.999755859375 0.0V-1025.33349609375Q5569.999755859375 -1025.33349609375 5569.999755859375 -1025.33349609375Q5569.999755859375 -1025.33349609375 5569.999755859375 -1025.33349609375H5834.6693115234375Q5834.6693115234375 -1025.33349609375 5834.6693115234375 -1025.33349609375Q5834.6693115234375 -1025.33349609375 5834.6693115234375 -1025.33349609375V0.0Q5834.6693115234375 0.0 5834.6693115234375 0.0Q5834.6693115234375 0.0 5834.6693115234375 0.0ZM5703.001220703125 -1203.3324584960938Q5638.000671386719 -1203.3324584960938 5592.6669921875 -1248.3327941894531Q5547.333312988281 -1293.3331298828125 5547.333312988281 -1358.3336791992188Q5547.333312988281 -1424.6675415039062 5592.6669921875 -1468.001220703125Q5638.000671386719 -1511.3348999023438 5703.001220703125 -1511.3348999023438Q5769.3350830078125 -1511.3348999023438 5813.33544921875 -1468.001220703125Q5857.3358154296875 -1424.6675415039062 5857.3358154296875 -1358.3336791992188Q5857.3358154296875 -1293.3331298828125 5813.33544921875 -1248.3327941894531Q5769.3350830078125 -1203.3324584960938 5703.001220703125 -1203.3324584960938Z"/><circle cx="2028.3" cy="-1357.3" r="215.0" fill="#30d158"/></svg></a>
   <nav aria-label="sections"><a data-go href="#see-it">see it work</a><a data-go href="#what">features</a><a data-go href="#apps">apps</a><a data-go href="#faq">faq</a></nav>
   <a class="go" href="#get" data-go>get a code</a>
 </header>
@@ -845,30 +933,73 @@
       </div>
       <button class="pause" id="pause" type="button" aria-label="pause"></button>
     </div>
-    <div class="chapters" id="chapters">
-      <button type="button"><i></i><b>ask</b><span>type a goal or paste a youtube link.</span></button>
-      <button type="button"><i></i><b>set up</b><span>it gets your computer ready.</span></button>
-      <button type="button"><i></i><b>your turn</b><span>ask anything. it tells you what to do, then waits.</span></button>
-      <button type="button"><i></i><b>not yet</b><span>it shows you where, then hints.</span></button>
-      <button type="button"><i></i><b>passed</b><span>the video moves on. your skills grow.</span></button>
-    </div>
-    <p class="capline" id="capline"></p>
   </div></div></div>
 </section>
 
 <section class="mw-sec" id="what" aria-labelledby="what-h">
   <div class="mw-hold">
     <h2 class="mw-h" id="what-h">everything it does.</h2>
-    <div class="feat">
-      <div class="fi tn-sand"><span class="t" data-ico="search"></span><b>ask for anything</b><p>type a goal or paste a youtube link. it finds the best tutorial.</p></div>
-      <div class="fi tn-mint"><span class="t" data-ico="wrench"></span><b>sets up your computer</b><p>installs what the lesson needs and opens the project.</p></div>
-      <div class="fi tn-sky"><span class="t" data-ico="lock"></span><b>waits for you</b><p>the video stops at each step until you've done it.</p></div>
-      <div class="fi tn-lilac"><span class="t" data-ico="target"></span><b>guides every step</b><p>it says what to do next and circles where to do it.</p></div>
-      <div class="fi tn-peach"><span class="t" data-ico="check"></span><b>checks your work</b><p>it watches every run and tells you when a step passes.</p></div>
-      <div class="fi tn-sky"><span class="t" data-ico="q"></span><b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p></div>
-      <div class="fi tn-pink"><span class="t" data-ico="bulb"></span><b>helps when you're stuck</b><p>explain, diagram, show me or hint. nudges, not the answer.</p></div>
-      <div class="fi tn-mint"><span class="t" data-ico="skills"></span><b>grows your skills</b><p>every step you pass lands on your skill tree, with reviews.</p></div>
-      <div class="fi tn-sand"><span class="t" data-ico="grid"></span><b>any app on your screen</b><p>blender, figma, sheets or vs code. if you can see it, it can teach it.</p></div>
+    <div class="bento" id="bento">
+      <div class="bx w2 tn-sand">
+        <div class="vg">
+          <div class="mfield"><span class="lg" data-logo></span><span id="aTx"></span><i class="caret"></i></div>
+          <div class="mres">
+            <div class="mr" id="aR0"><span class="th"><span class="ico" data-ico="book"></span></span><span class="tx"><b>Just teach me first</b><small>A short lesson before any video</small></span></div>
+            <div class="mr" id="aR1"><span class="th v"><span class="ico" data-ico="play"></span></span><span class="tx"><b id="aR1t">Best tutorial for it</b><small id="aR1s">3 more to pick from</small></span><em class="tag pink">Best</em></div>
+          </div>
+          <div class="mchips" id="aChips"><button type="button">a neural network</button><button type="button">a donut in blender</button><button type="button">a pivot table</button><button type="button">a youtube link</button></div>
+        </div>
+        <b>ask for anything</b><p>type a goal or paste a youtube link. it finds the best tutorial.</p>
+      </div>
+      <div class="bx tn-mint">
+        <div class="vg"><div class="msetup" id="sRows">
+          <div class="ms"><span class="lg" data-tool="python"></span><span class="tx">Python</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
+          <div class="ms"><span class="lg" data-tool="numpy"></span><span class="tx">numpy</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
+          <div class="ms"><span class="lg" data-tool="vscode"></span><span class="tx">VS Code</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
+          <div class="ms"><span class="lg" data-tool="jupyter"></span><span class="tx">Jupyter</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
+        </div></div>
+        <b>sets up your computer</b><p>installs what the lesson needs and opens the project.</p>
+      </div>
+      <div class="bx tn-sky">
+        <div class="vg"><div class="mvid"><canvas id="wCv" width="600" height="300"></canvas><div class="mlock" id="wLock"><span class="ico" data-ico="lock"></span>your turn</div><div class="mpass" id="wPass"><i></i>step passed</div><div class="mbar"><i id="wBar"></i><span class="notch"></span></div></div></div>
+        <b>waits for you</b><p>the video stops at each step until you've done it.</p>
+      </div>
+      <div class="bx tn-lilac">
+        <div class="vg"><div class="mcode" id="gCode"><div>def init_params():</div><div id="gLine">    W1 = <span id="gTyp"></span></div><div>    b1 = np.zeros((10, 1))</div><div>    W2 = np.random.rand(10, 10) - 0.5</div></div>
+          <div class="mring" id="gRing"></div><div class="mbub" id="gBub"><span class="av" data-logo="dark"></span>your turn. start here.</div></div>
+        <b>guides every step</b><p>it says what to do next and circles where to do it.</p>
+      </div>
+      <div class="bx tn-peach">
+        <div class="vg"><div class="mterm" id="cTerm"></div><div class="mpass c" id="cPass"><i></i>step passed</div></div>
+        <b>checks your work</b><p>it watches every run and tells you when a step passes.</p>
+      </div>
+      <div class="bx tn-sky">
+        <div class="vg"><div class="mmini">X: <span class="m784" id="qTok">784</span> inputs, 10 hidden, 10 out</div><div class="mring" id="qRing"></div>
+          <div class="mbub" id="qBub"><span class="av" data-logo="dark"></span>28 × 28 pixels, flattened.</div>
+          <div class="mask" id="qAsk"><span class="lg" data-logo></span><span id="qTx">ask miyagi</span></div></div>
+        <b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p>
+      </div>
+      <div class="bx w2 tn-pink">
+        <div class="vg stuck">
+          <div class="mny"><div class="ch"><i></i>Not yet</div><b>Your hidden layer never learns</b><p>acc 0.11, expected above 0.80</p>
+            <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>
+          <div class="mhelp" id="hPane">
+            <div class="hp" data-h="0"><span class="hl sky">Explain</span>W1 starts at zero, so every hidden unit outputs 0. With no output, it gets no gradient, so it never changes.</div>
+            <div class="hp" data-h="1"><span class="hl mint">Diagram</span><span id="hDiag"></span></div>
+            <div class="hp" data-h="2"><span class="hl lilac">Show me</span><div class="mcode sm"><div>def init_params():</div><div><span class="ringed">W1 = np.zeros((10, 784))</span></div></div></div>
+            <div class="hp" data-h="3"><span class="hl pink">Hint</span>Start W1 small and random, like W2.</div>
+          </div>
+        </div>
+        <b>helps when you're stuck</b><p>explain, diagram, show me or hint. nudges, not the answer.</p>
+      </div>
+      <div class="bx tn-mint">
+        <div class="vg"><svg class="mtree" id="kTree" viewBox="0 0 260 150" aria-hidden="true"></svg></div>
+        <b>grows your skills</b><p>every step you pass lands on your skill tree, with reviews.</p>
+      </div>
+      <div class="bx w2 tn-sand">
+        <div class="vg apps"><div class="mq" id="mq1"></div><div class="mq rev" id="mq2"></div></div>
+        <b>any app on your screen</b><p>blender, figma, sheets or vs code. if you can see it, it can teach it.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -882,13 +1013,29 @@
       <div class="ocard">
         <canvas id="ocover" width="1040" height="340"></canvas>
         <div class="ohead"><h3><span data-tree></span>miyagi</h3><p>tutorials that wait until you've done each step.</p></div>
-        <div class="otabs"><span class="on"><span class="ico" data-ico="book"></span>Lessons</span><span><span class="ico" data-ico="skills"></span>Skills</span><span><span class="ico" data-ico="replay"></span>Review</span></div>
-        <div class="orow hd"><span>Lesson</span><span>App</span></div>
-        <div class="orow"><span class="l"><span data-tool="blender"></span>Model a donut</span><em class="tag peach">Blender</em></div>
-        <div class="orow"><span class="l"><span data-tool="vscode"></span>Build a neural network</span><em class="tag sky">VS Code</em></div>
-        <div class="orow"><span class="l"><span data-tool="googlesheets"></span>Make a pivot table</span><em class="tag mint">Google Sheets</em></div>
-        <div class="orow"><span class="l"><span data-tool="figma"></span>Design a logo</span><em class="tag pink">Figma</em></div>
-        <div class="orow"><span class="l"><span data-tool="jupyter"></span>Clean a CSV with pandas</span><em class="tag lilac">Jupyter</em></div>
+        <div class="otabs"><button type="button" class="on" data-tab="lessons"><span class="ico" data-ico="book"></span>Lessons</button><button type="button" data-tab="skills"><span class="ico" data-ico="skills"></span>Skills</button><button type="button" data-tab="review"><span class="ico" data-ico="replay"></span>Review</button></div>
+        <div class="opane" data-pane="lessons">
+          <div class="orow hd"><span>Lesson</span><span>App</span></div>
+          <button type="button" class="orow" data-app="blender"><span class="l"><span data-tool="blender"></span>Model a donut</span><em class="tag peach">Blender</em></button>
+          <button type="button" class="orow" data-app="vscode"><span class="l"><span data-tool="vscode"></span>Build a neural network</span><em class="tag sky">VS Code</em></button>
+          <button type="button" class="orow" data-app="googlesheets"><span class="l"><span data-tool="googlesheets"></span>Make a pivot table</span><em class="tag mint">Google Sheets</em></button>
+          <button type="button" class="orow" data-app="figma"><span class="l"><span data-tool="figma"></span>Design a logo</span><em class="tag pink">Figma</em></button>
+          <button type="button" class="orow" data-app="jupyter"><span class="l"><span data-tool="jupyter"></span>Clean a CSV with pandas</span><em class="tag lilac">Jupyter</em></button>
+        </div>
+        <div class="opane" data-pane="skills" hidden>
+          <div class="orow hd"><span>Skill</span><span>App</span></div>
+          <div class="orow"><span class="l"><i class="dot ok"></i>Weight init</span><em class="tag sky">VS Code</em></div>
+          <div class="orow"><span class="l"><i class="dot ok"></i>Pivot tables</span><em class="tag mint">Google Sheets</em></div>
+          <div class="orow"><span class="l"><i class="dot ok"></i>Dropping rows</span><em class="tag lilac">Jupyter</em></div>
+          <div class="orow"><span class="l"><i class="dot"></i>Bevels</span><em class="tag peach">Blender</em></div>
+          <div class="orow"><span class="l"><i class="dot"></i>Components</span><em class="tag pink">Figma</em></div>
+        </div>
+        <div class="opane" data-pane="review" hidden>
+          <div class="orow hd"><span>Review</span><span>When</span></div>
+          <div class="orow"><span class="l"><span data-tool="vscode"></span>Weight init</span><span class="when">tomorrow</span></div>
+          <div class="orow"><span class="l"><span data-tool="googlesheets"></span>Pivot tables</span><span class="when">in 3 days</span></div>
+          <div class="orow"><span class="l"><span data-tool="jupyter"></span>Dropping rows</span><span class="when">next week</span></div>
+        </div>
       </div>
       <div class="bub me" id="bq"></div>
       <div class="bub mi" id="ba"><span class="av" data-logo="dark"></span><span id="baTx"></span></div>
@@ -1254,7 +1401,7 @@
       ];
       function render(tr) {
         var t = W(tr), sc = sceneAt(tr);
-        if (sc !== lastScene) { canv.forEach(function (c, i) { on(c, i === sc); }); lastScene = sc; el.capline.textContent = el.chapters[sc].querySelector('span').textContent; }
+        if (sc !== lastScene) { canv.forEach(function (c, i) { on(c, i === sc); }); lastScene = sc; }
         el.chapters.forEach(function (b, i) { on(b, i === sc); b.querySelector('i').style.width = (i < sc ? 100 : i === sc ? clamp((tr - SC[i][0]) / (SC[i][1] - SC[i][0])) * 100 : 0) + '%'; });
 
         var p = ['idle', 'ask miyagi'];
@@ -1388,15 +1535,26 @@
       });
       function scrollT() { var w = $('.wrap', film), r = w.getBoundingClientRect(); return clamp(-r.top / (w.offsetHeight - innerHeight)) * (T - .01); }
       new IntersectionObserver(function (es) { if (es[0].isIntersecting) paintWalls(); }, { rootMargin: '1200px 0px' }).observe(frame);
-      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !started) { started = true; if (!reduce && mode === 'auto') t = 0; } }, { threshold: .35 }).observe(frame);
+      new IntersectionObserver(function (es) { visible = es[es.length - 1].isIntersecting; if (visible && !started) { started = true; if (!reduce && mode === 'auto') t = 0; } }, { threshold: .35 }).observe(frame);
 
       /* any app: miyagi's card with the apps floating around it */
-      // the apps sit in a ring around miyagi's card, like notion's
+      // The apps orbit miyagi's card, slowly: two rings, tilted, so they pass behind the card at the top (smaller, softer)
+      // and in front of it at the bottom (bigger).
       var RING = ['youtube', 'blender', 'vscode', 'figma', 'terminal', 'xcode', 'pytorch', 'github', 'rstudioide', 'unity', 'python', 'davinciresolve', 'googlesheets', 'jupyter', 'arduino', 'adobephotoshop'];
-      $('#ologos').innerHTML = RING.map(function (n, i) {
-        var a = -Math.PI / 2 + i * 2 * Math.PI / RING.length, x = 600 + Math.cos(a) * 500, y = 380 + Math.sin(a) * 320;
-        return '<span class="ologo' + (i % 3 === 0 ? ' round' : '') + '" style="left:' + x.toFixed(0) + 'px;top:' + y.toFixed(0) + 'px;--r:' + ((i % 5) - 2) * 2 + 'deg;--d:' + (-i * .8) + 's">' + tool(n) + '</span>';
-      }).join('');
+      $('#ologos').innerHTML = RING.map(function (n, i) { return '<span class="ologo' + (i % 3 === 0 ? ' round' : '') + '">' + tool(n) + '</span>'; }).join('');
+      var logos = $$('#ologos .ologo'), orbT = 0, orbOn = false, orbLast = 0, hot = null;
+      function orbit() {
+        var w = orbT * 2 * Math.PI / 80;
+        logos.forEach(function (el, i) {
+          var inner = i % 2, a = i * 2 * Math.PI / logos.length + w + (inner ? .2 : 0), z = Math.sin(a);
+          var x = 600 + Math.cos(a) * (inner ? 300 : 390), y = 380 + z * (inner ? 245 : 300) + ((i % 3) - 1) * 18;
+          var k = (z + 1) / 2, s = .72 + .38 * k, isHot = RING[i] === hot; if (isHot) { s = 1.2; k = 1; }
+          el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + s.toFixed(3) + ') rotate(' + ((i % 5) - 2) * 3 + 'deg)';
+          el.style.zIndex = isHot ? 4 : z > -.1 ? 3 : 1;
+          el.style.opacity = (.62 + .38 * k).toFixed(2);
+        });
+      }
+      orbit();
       var oPainted = false;
       function layoutOrbit() {
         var of = $('#oframe'), os = $('#ostage'), w = of.clientWidth, slim = w < 760;
@@ -1404,22 +1562,122 @@
         var s = slim ? w / 660 : w / 1200;
         os.style.transform = (slim ? 'translateX(' + (-270 * s) + 'px) ' : '') + 'scale(' + s + ')';
       }
-      var QA = [['how do i bevel this edge?', "select it and press ctrl+b. i'll circle the edge."],
-        ['why is my sum 0?', "those numbers are stored as text. i'll show you the fix."],
-        ['how do i make this a component?', 'select it, then ' + (isWin ? 'ctrl+alt+k' : '⌥⌘k') + ". i'll point to the panel."]];
-      var bq = $('#bq'), ba = $('#ba'), baTx = $('#baTx'), qa = -1, qaTimer = null;
-      function nextQA() {
-        qa = (qa + 1) % QA.length; on(bq, false); on(ba, false);
-        setTimeout(function () { bq.textContent = QA[qa][0]; baTx.textContent = QA[qa][1]; on(bq, true); }, 500);
-        setTimeout(function () { on(ba, true); }, 1700);
-        qaTimer = setTimeout(nextQA, 6500);
+      // The card is live: tabs switch, a lesson row (or its app's logo) shows that app's question and miyagi's answer.
+      var QA = {
+        blender: ['how do i bevel this edge?', "select it and press ctrl+b. i'll circle the edge."],
+        vscode: ['why is my loss flat?', "W1 starts at zero. i'll show you the line."],
+        googlesheets: ['why is my sum 0?', "those numbers are stored as text. i'll show you the fix."],
+        figma: ['how do i make this a component?', 'select it, then ' + (isWin ? 'ctrl+alt+k' : '⌥⌘k') + ". i'll point to the panel."],
+        jupyter: ['how do i drop the empty rows?', "use df.dropna(). i'll mark the cell to run."]
+      };
+      var ORDER = ['blender', 'vscode', 'googlesheets', 'figma', 'jupyter'];
+      var bq = $('#bq'), ba = $('#ba'), baTx = $('#baTx'), qaTimer = null, holdUntil = 0, cur = -1, oVisible = false, t1 = null, t2 = null;
+      var orows = $$('.orow[data-app]'), otabs = $$('.otabs button'), panes = $$('.opane');
+      function setTab(name) {
+        otabs.forEach(function (b) { on(b, b.getAttribute('data-tab') === name); });
+        panes.forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== name; });
       }
+      function pick(app, byUser) {
+        if (byUser) holdUntil = Date.now() + 15000;
+        cur = ORDER.indexOf(app); hot = app; if (reduce || !orbOn) orbit();
+        orows.forEach(function (r) { on(r, r.getAttribute('data-app') === app, 'sel'); });
+        on(bq, false); on(ba, false); clearTimeout(t1); clearTimeout(t2);
+        t1 = setTimeout(function () { bq.textContent = QA[app][0]; baTx.textContent = QA[app][1]; on(bq, true); }, 350);
+        t2 = setTimeout(function () { on(ba, true); }, 1300);
+      }
+      function tick() {
+        if (oVisible && Date.now() >= holdUntil) { setTab('lessons'); pick(ORDER[(cur + 1) % ORDER.length]); }
+        qaTimer = setTimeout(tick, 6500);
+      }
+      orows.forEach(function (r) { r.addEventListener('click', function () { pick(r.getAttribute('data-app'), true); }); });
+      logos.forEach(function (el, i) {
+        if (!QA[RING[i]]) return;
+        el.classList.add('tap'); el.setAttribute('role', 'button'); el.setAttribute('aria-label', RING[i]);
+        el.addEventListener('click', function () { setTab('lessons'); pick(RING[i], true); });
+      });
+      otabs.forEach(function (b) { b.addEventListener('click', function () { setTab(b.getAttribute('data-tab')); holdUntil = Date.now() + 15000; }); });
       new IntersectionObserver(function (es) {
-        if (es[0].isIntersecting) {
+        oVisible = es[es.length - 1].isIntersecting;
+        if (oVisible) {
           if (!oPainted) { oPainted = true; paint($('#ocover'), WALLS[0], 1040, 340, 1); }
-          if (!qaTimer) nextQA();
-        } else if (qaTimer) { clearTimeout(qaTimer); qaTimer = null; }
+          if (!qaTimer) { pick(ORDER[0]); qaTimer = setTimeout(tick, 6500); }
+        }
       }, { threshold: .3 }).observe($('#oframe'));
+
+      /* ---------- everything it does: each card plays its own little loop (and some take clicks) ---------- */
+      var bento = $('#bento'), bOn = false, bT = 0, bLast = 0;
+      var GOALS = [['Build a neural network from scratch', 'Best tutorial for neural networks', '3 more to pick from'],
+        ['Model a donut in Blender', 'Best donut tutorial for Blender', '2 more to pick from'],
+        ['Make a pivot table', 'Best pivot table walkthrough', '4 more to pick from'],
+        ['youtube.com/watch?v=w8yWXqWQYmU', 'Steps from this video', 'Building a neural network FROM SCRATCH']];
+      var aSel = -1, aStart = 0, aHold = 0, aChips = $$('#aChips button'), hSel = 0, hHold = -1, hChips = $$('#hChips button'), hPanes = $$('#hPane .hp');
+      aChips.forEach(function (b, i) { b.addEventListener('click', function () { aSel = i; aStart = bT; aHold = bT + 12; bentoAt(bT); }); });
+      hChips.forEach(function (b, i) { b.addEventListener('click', function () { hSel = i; hHold = bT + 12; bentoAt(bT); }); });
+      $('#hDiag').outerHTML = (function () {
+        var L = [[30, 24], [30, 54], [30, 84]], H = [[110, 30], [110, 78]], O = [[190, 54]], g = '';
+        L.forEach(function (a) { H.forEach(function (b) { g += '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '"/>'; }); });
+        H.forEach(function (a) { O.forEach(function (b) { g += '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" stroke-dasharray="3 3"/>'; }); });
+        var n = L.map(function (a) { return '<circle cx="' + a[0] + '" cy="' + a[1] + '" r="8" fill="#fff" stroke="#1c1b19" stroke-width="1.5"/>'; }).join('') +
+          H.map(function (a) { return '<circle cx="' + a[0] + '" cy="' + a[1] + '" r="11" fill="#efede7" stroke="#b8b6ae" stroke-width="1.5"/><text x="' + a[0] + '" y="' + (a[1] + 4) + '" text-anchor="middle" font-size="11" fill="#75726b">0</text>'; }).join('') +
+          O.map(function (a) { return '<circle cx="' + a[0] + '" cy="' + a[1] + '" r="9" fill="#fff" stroke="#b8b6ae" stroke-width="1.5"/>'; }).join('');
+        return '<svg viewBox="0 0 220 108" aria-hidden="true"><g stroke="#cfcac0" stroke-width="1.2">' + g + '</g>' + n + '</svg>';
+      })();
+      var KN = [[34, 118, 'Arrays'], [92, 70, 'Weight init'], [152, 112, 'Forward'], [206, 62, 'Backprop'], [128, 22, 'Training']], KE = [[0, 1], [1, 2], [1, 3], [3, 4], [2, 3]];
+      $('#kTree').innerHTML = KE.map(function (e) { var a = KN[e[0]], b = KN[e[1]]; return '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" stroke="#b8b6ae" stroke-width="1.5"/>'; }).join('') +
+        KN.map(function (n) { return '<circle cx="' + n[0] + '" cy="' + n[1] + '" r="9" fill="#fff" stroke="#b8b6ae" stroke-width="2"/><text x="' + n[0] + '" y="' + (n[1] + (n[1] < 40 ? -14 : 24)) + '" text-anchor="middle">' + n[2] + '</text>'; }).join('');
+      var kDots = $$('#kTree circle');
+      var MQ = ['blender', 'figma', 'vscode', 'googlesheets', 'davinciresolve', 'unity', 'xcode', 'jupyter', 'pytorch', 'adobephotoshop', 'github', 'terminal', 'rstudioide', 'arduino', 'python', 'youtube'];
+      function mq(list) { var h = list.map(function (n) { return '<span>' + tool(n) + '</span>'; }).join(''); return h + h; }
+      $('#mq1').innerHTML = mq(MQ.slice(0, 8)); $('#mq2').innerHTML = mq(MQ.slice(8));
+      var wPainted = false, sRows = $$('#sRows .ms');
+      function bentoAt(T) {
+        // ask for anything
+        var ai = aSel >= 0 && T < aHold ? aSel : Math.floor(T / 4.2) % GOALS.length, au = aSel >= 0 && T < aHold ? (T - aStart) % 4.2 : T % 4.2;
+        var g = GOALS[ai], tx = typed(g[0], .1, 1.4, au);
+        $('#aTx').textContent = tx; on($('#aR0'), au > 1.6); on($('#aR1'), au > 1.9);
+        $('#aR1t').textContent = g[1]; $('#aR1s').textContent = g[2];
+        aChips.forEach(function (b, i) { on(b, i === ai); });
+        // sets up your computer
+        var su = T % 6.4;
+        sRows.forEach(function (r, i) { on(r, su > .2 + i * .25 && su < 6); on(r, su > 1 + i * 1.05, 'done'); });
+        // waits for you
+        var wu = T % 7.5, wp = wu < 2.4 ? wu / 2.4 * 46 : wu < 4.9 ? 46 : wu < 5.5 ? 46 : 46 + (wu - 5.5) / 2 * 30;
+        $('#wBar').style.width = wp + '%'; on($('#wLock'), wu >= 2.4 && wu < 4.9); on($('#wPass'), wu >= 4.9 && wu < 6.6);
+        // guides every step
+        var gu = T % 6.2;
+        on($('#gRing'), gu > .5 && gu < 4.8); on($('#gBub'), gu > .7 && gu < 4.8);
+        $('#gTyp').textContent = typed('np.random.rand(10, 784) - 0.5', 2.2, 3.8, gu);
+        // checks your work
+        var cu = T % 6.4, lines = [];
+        if (cu > .3) lines.push('$ ' + typed('python nn.py', .3, .8, cu));
+        if (cu > 1.1) lines.push('iter 100    acc 0.47');
+        if (cu > 1.7) lines.push('iter 200    acc 0.76');
+        if (cu > 2.3) lines.push('<span class="ok">iter 300    acc 0.84</span>');
+        var lh = lines.join('\n'); if ($('#cTerm').innerHTML !== lh) $('#cTerm').innerHTML = lh;
+        on($('#cPass'), cu > 2.7 && cu < 6);
+        // ask about your screen
+        var qu = T % 6.4;
+        on($('#qAsk'), qu > .3 && qu < 1.7, 'typing');
+        $('#qTx').textContent = qu > .4 && qu < 1.7 ? typed('why 784?', .4, 1.2, qu) : 'ask miyagi';
+        on($('#qRing'), qu > 1.9 && qu < 5.6); on($('#qBub'), qu > 2 && qu < 5.8);
+        // helps when you're stuck
+        var hi = T < hHold ? hSel : Math.floor(T / 3) % 4;
+        hChips.forEach(function (b, i) { on(b, i === hi); }); hPanes.forEach(function (p, i) { on(p, i === hi); });
+        // grows your skills
+        var ku = T % 6.6;
+        kDots.forEach(function (c, i) { var lit = ku > .5 + i * .8 && ku < 6.2; c.setAttribute('fill', lit ? '#1f9b45' : '#fff'); c.setAttribute('stroke', lit ? '#1f9b45' : '#b8b6ae'); });
+      }
+      bentoAt(reduce ? 3 : 0);
+      // The orbit and the bento move from the film's frame loop, only while they're on screen.
+      function inView(e) { var r = e.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
+      var oframeEl = $('#oframe');
+      function sideTick(dt) {
+        if (inView(oframeEl)) { orbOn = true; if (!reduce) orbT += dt; orbit(); } else orbOn = false;
+        if (inView(bento)) {
+          if (!wPainted) { wPainted = true; paint($('#wCv'), WALLS[2], 600, 300, 1); }
+          if (!reduce) bT += dt; bentoAt(bT);
+        }
+      }
 
       /* your tools, one lesson */
       var CONN = [
@@ -1489,6 +1747,7 @@
         else if (playing && visible) { t += dt; if (t >= T) t = 0; }
         if (visible || mode === 'scroll') { render(t); camera(t); }
         connTick(now);
+        sideTick(dt);
         requestAnimationFrame(loop);
       }
       fit(); render(t);
