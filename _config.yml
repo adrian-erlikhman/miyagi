@@ -5,3 +5,6 @@
 exclude:
   - privacy.md
   - terms.md
+# Jekyll skips dot-folders unless listed: publish /.well-known/security.txt (launch register R34).
+include:
+  - .well-known
