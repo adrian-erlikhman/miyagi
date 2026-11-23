@@ -326,14 +326,12 @@
       .mnav .lg { padding: 8px 0; margin: -8px 0; }
       .mnav nav a { padding: 15px 12px; margin: -15px -12px; }
       .mnav .go { height: 44px; }
-      .hx-tabs button, .mw .aright button, .mw .mny .chips button { position: relative; }
+      .hx-tabs button, .mw .bny .chips button { position: relative; }
       .hx-tabs button::before { content: ""; position: absolute; inset: -9px -12px; }
       .hx-field button { width: 44px; height: 44px; }
       .mw .pause::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; }
       .mw .replay::before { content: ""; position: absolute; inset: -12px -10px; }
-      .mw .aright { gap: 14px; }
-      .mw .aright button::before { content: ""; position: absolute; inset: -7px 0; }
-      .mw .mny .chips button::before { content: ""; position: absolute; inset: -10px -4px; }
+      .mw .bny .chips button::before { content: ""; position: absolute; inset: -10px -2px; }
       [data-want-link] { display: inline-block; padding: 12px 0; margin: -12px 0; }
       .foot .hello { padding: 7px 0; margin: -7px 0; }
     }
@@ -621,7 +619,7 @@
     .mw .skill .rev { display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--ln); font-size: 12.5px; color: var(--mu); transition: opacity .35s; }
     .mw .skill .rev:not(.on) { opacity: 0; } .mw .skill .rev b { color: var(--tx); font-weight: 500; }
 
-    /* ---------- everything it does: a bento of live cards ---------- */
+    /* ---------- everything it does: nine crops of the real screen, one playing at a time ---------- */
     .mw .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-flow: dense; gap: 14px; max-width: 1180px; margin: 44px auto 0; }
     .mw .bx { background: #fff; border-radius: 20px; padding: 10px 10px 16px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
       transition: transform .35s var(--spring), box-shadow .35s; min-width: 0; }
@@ -629,112 +627,144 @@
     .mw .bx.w2 { grid-column: span 2; }
     .mw .bx > b { display: block; margin: 12px 8px 0; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
     .mw .bx > p { margin: 3px 8px 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
-    .mw .vg { position: relative; height: 196px; border-radius: 13px; background: var(--tb); overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
+    /* every tile is the same quiet paper; the colour comes from what is on the screen */
+    .mw .vg { position: relative; height: 232px; border-radius: 13px; background: #efede8; overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
     .mw .vg .lg svg { width: 100%; height: 100%; display: block; }
-    .mw .vg .spin { width: 11px; height: 11px; }
     @media (max-width: 1100px) { .mw .bento { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 860px) { .mw .bento { grid-template-columns: 1fr 1fr; } .mw .bx.w2 { grid-column: span 2; } }
     @media (max-width: 560px) { .mw .bento { grid-template-columns: 1fr; } .mw .bx.w2 { grid-column: span 1; } }
-    .mw .mfield { position: absolute; left: 18px; right: 18px; top: 16px; height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 12px; background: #fff; border-radius: 11px; box-shadow: 0 0 0 1.5px #1c1b19; font-size: 14px; }
-    .mw .mfield .lg { width: 17px; height: 17px; flex: none; }
-    .mw .mfield .caret { margin-left: -6px; }
-    .mw .mres { position: absolute; left: 18px; right: 18px; top: 64px; display: flex; flex-direction: column; gap: 6px; }
-    .mw .mr { display: flex; align-items: center; gap: 10px; padding: 6px; border-radius: 10px; background: #fff; transition: opacity .3s, transform .4s var(--spring); }
-    .mw .mr:not(.on) { opacity: 0; transform: translateY(6px); }
-    .mw .mr .th { width: 46px; height: 28px; border-radius: 6px; background: #efede7; display: grid; place-items: center; color: #75726b; flex: none; }
-    .mw .mr .th.v { background: #1c1b19; color: #fff; } .mw .mr .th .ico { width: 13px; height: 13px; }
-    .mw .mr .tx { flex: 1; min-width: 0; } .mw .mr b { display: block; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .mr small { color: #75726b; font-size: 11.5px; }
-    .mw .vg.ask2 { display: grid; grid-template-columns: 1fr 176px; gap: 14px; padding: 14px 16px; }
-    .mw .vg.ask2 .mfield { position: static; }
-    .mw .vg.ask2 .mres { position: static; margin-top: 10px; }
-    .mw .aright { display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
-    .mw .aright .lab2 { font-size: 11px; color: #8f8c84; margin: 0 0 3px 10px; letter-spacing: .02em; }
-    .mw .aright button { display: flex; align-items: center; gap: 9px; height: 30px; padding: 0 10px; border-radius: 10px; font-size: 13px; color: #4a4843; text-align: left; transition: background .2s, box-shadow .2s, color .2s; }
-    .mw .aright button .ti { width: 16px; height: 16px; display: grid; place-items: center; flex: none; }
-    .mw .aright button .ti svg { width: 16px; height: 16px; display: block; }
-    .mw .aright button:hover { background: rgba(255, 255, 255, .5); color: #1c1b19; }
-    .mw .aright button.on { background: #fff; color: #1c1b19; box-shadow: 0 8px 18px -12px rgba(0, 0, 0, .4), 0 0 0 1px rgba(20, 20, 20, .06); }
-    @media (max-width: 560px) { .mw .vg.ask2 { grid-template-columns: 1fr; } .mw .aright { display: none; } }
-    .mw .mchips { position: absolute; left: 18px; right: 18px; bottom: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .mw .mchips button { font-size: 12px; padding: 5px 9px; border-radius: 999px; background: rgba(255, 255, 255, .7); color: #4a4843; transition: background .2s, color .2s; }
-    .mw .mchips button:hover, .mw .mchips button.on { background: #1c1b19; color: #fff; }
-    .mw .msetup { position: absolute; inset: 16px 18px; display: flex; flex-direction: column; gap: 7px; }
-    .mw .ms { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 10px; background: #fff; transition: opacity .3s, transform .4s var(--spring); }
-    .mw .ms:not(.on) { opacity: 0; transform: translateX(-8px); }
-    .mw .ms .lg { width: 18px; height: 18px; flex: none; } .mw .ms .tx { flex: 1; font-weight: 500; }
-    .mw .ms .ok { width: 14px; height: 14px; display: none; } .mw .ms.done .ok { display: block; } .mw .ms.done .spin { display: none; }
-    .mw .mvid { position: absolute; inset: 16px 18px; border-radius: 10px; overflow: hidden; background: #1c1b19; }
-    .mw .mvid canvas { width: 100%; height: 100%; display: block; }
-    .mw .mlock { position: absolute; inset: 0; background: rgba(10, 10, 10, .55); color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 15px; transition: opacity .35s; }
-    .mw .mlock:not(.on) { opacity: 0; } .mw .mlock .ico { width: 16px; height: 16px; }
-    .mw .mpass { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; background: #0b0b0b; color: #fff; font-size: 12.5px; white-space: nowrap; transition: opacity .3s, transform .45s var(--spring); }
-    .mw .mpass:not(.on) { opacity: 0; transform: translateX(-50%) translateY(-6px); }
-    .mw .mpass i { width: 8px; height: 8px; border-radius: 50%; background: #30d158; }
-    .mw .mpass.c { top: auto; bottom: 14px; }
-    .mw .mbar { position: absolute; left: 10px; right: 10px; bottom: 9px; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); }
-    .mw .mbar i { display: block; height: 100%; width: 0; border-radius: 2px; background: #fff; }
-    .mw .mbar .notch { position: absolute; left: 46%; top: -3px; width: 3px; height: 9px; border-radius: 2px; background: #fff; }
-    .mw .mcode { position: absolute; inset: 16px 18px; border-radius: 10px; background: #1e1e1e; color: #d4d4d4; font: 12.5px/23px var(--mono); padding: 12px 14px; white-space: pre; overflow: hidden; }
-    .mw .mcode.sm { position: static; padding: 8px 10px; font-size: 11.5px; line-height: 21px; margin-top: 6px; }
-    .mw .mring { position: absolute; border-radius: 7px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .3); pointer-events: none; transition: opacity .3s; }
-    .mw .mring:not(.on) { opacity: 0; }
-    .mw .mbub { position: absolute; padding: 8px 11px 9px; border-radius: 10px; background: #0b0b0b; color: #fff; font-size: 12.5px; line-height: 1.35; white-space: nowrap;
-      box-shadow: 0 12px 26px -12px rgba(0, 0, 0, .5); transition: opacity .3s, transform .45s var(--spring); }
-    .mw .mbub b { display: block; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .6); margin-bottom: 1px; }
-    .mw .mbub:not(.on) { opacity: 0; transform: translateY(6px); }
-    .mw .mbub.down::after { content: ""; position: absolute; top: -5px; left: 20px; width: 10px; height: 10px; background: #0b0b0b; border-radius: 2px; transform: rotate(45deg); }
-    .mw #gRing { left: 52px; right: 34px; top: 52px; height: 24px; } .mw #gBub { left: 56px; top: 90px; }
-    .mw .mterm { position: absolute; inset: 16px 18px; border-radius: 10px; background: #1e1e1e; color: #cccccc; font: 12.5px/22px var(--mono); padding: 12px 14px; white-space: pre; }
-    .mw .mterm .ok { color: #6fcf8f; }
-    .mw .mmini { position: absolute; left: 18px; right: 18px; top: 16px; padding: 14px; border-radius: 10px; background: #fff; font: 12.5px/1.4 var(--mono); color: #4a4843; }
-    .mw .m784 { color: #1c1b19; font-weight: 600; }
-    .mw #qRing { left: 48px; top: 27px; width: 34px; height: 20px; }
-    .mw #qBub { left: 40px; top: 62px; }
-    .mw .mask { position: absolute; left: 18px; bottom: 14px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 10px; background: rgba(255, 255, 255, .75); color: #75726b; font-size: 13px; transition: background .2s, box-shadow .2s, color .2s; }
-    .mw .mask .lg { width: 16px; height: 16px; }
-    .mw .mask.typing { background: #fff; color: #1c1b19; box-shadow: 0 0 0 1.5px #1c1b19; }
-    .mw .vg.stuck { display: grid; grid-template-columns: .95fr 1.15fr; gap: 12px; padding: 14px 16px; }
-    /* Phones: the notebook and the Not yet panel stack, so the panel's chips and help have the card's full width. */
-    @media (max-width: 560px) { .mw .vg.stuck { height: auto; grid-template-columns: 1fr; } .mw .vg.stuck .mhelp { flex: none; min-height: 58px; } }
-    .mw .mnb { background: #fff; border-radius: 10px; padding: 10px; font: 11.5px/1.4 var(--mono); color: #1c1b19; }
-    .mw .mnb .cell { display: flex; gap: 8px; align-items: center; padding: 6px 8px; margin-bottom: 6px; border-radius: 6px; background: #f5f5f4; border: 1px solid #ebeae6; }
-    .mw .mnb .out { display: flex; gap: 8px; padding: 2px 9px; }
-    .mw .mnb .pr { color: #3f51b5; flex: none; font-size: 10.5px; }
-    .mw .mnb .out .pr { color: #c2410c; }
-    .mw .mnb .dl { border-radius: 4px; padding: 1px 2px; transition: box-shadow .3s; }
-    .mw .mnb .dl.ringed { box-shadow: 0 0 0 2px var(--lilac), 0 0 0 3.5px rgba(0, 0, 0, .35); }
-    .mw .mny { position: relative; background: #fff; border-radius: 12px; padding: 11px 13px; display: flex; flex-direction: column; box-shadow: 0 10px 24px -16px rgba(0, 0, 0, .3); }
-    .mw .mny .ch { display: flex; gap: 7px; align-items: center; font-size: 11.5px; color: #75726b; font-weight: 500; }
-    .mw .mny .ch i { width: 10px; height: 10px; border-radius: 50%; border: 1.7px solid #1c1b19; }
-    .mw .mny b { font-size: 14px; font-weight: 600; margin-top: 3px; } .mw .mny p { margin: 1px 0 0; color: #75726b; font-size: 12px; }
-    .mw .mny .chips { margin-top: 8px; gap: 5px; flex-wrap: nowrap; }
-    .mw .mny .chips button { font-size: 11.5px; padding: 5px 8px; border-radius: 7px; color: #1b1b1b; transition: transform .2s, box-shadow .2s; }
-    .mw .mny .chips button.sky { background: var(--sky); } .mw .mny .chips button.mint { background: var(--mint); } .mw .mny .chips button.lilac { background: var(--lilac); } .mw .mny .chips button.pink { background: var(--pink); }
-    .mw .mny .chips button.on { box-shadow: 0 0 0 2px #1c1b19; } .mw .mny .chips button:hover { transform: translateY(-1px); }
-    .mw .mhelp { position: relative; flex: 1; margin-top: 8px; border-radius: 8px; background: #f6f5f1; font-size: 12.5px; line-height: 1.4; }
-    .mw .mhelp .hp { position: absolute; inset: 8px 10px; transition: opacity .3s, transform .4s var(--spring); }
-    .mw .mhelp .hp:not(.on) { opacity: 0; transform: translateY(5px); pointer-events: none; }
-    .mw .tbls { display: flex; align-items: center; gap: 8px; height: 100%; }
-    .mw .tbl5 { display: flex; flex-direction: column; gap: 3px; width: 40px; }
-    .mw .tbl5 i { height: 5px; border-radius: 2px; background: #b9b4a8; }
-    .mw .tbl5 i.na { background: transparent; box-shadow: inset 0 0 0 1px #b9b4a8; }
-    .mw .arr { font: 11px var(--mono); color: #75726b; } .mw .arr.x { color: #a6a39b; }
-    .mw .msk { position: absolute; inset: 14px 16px; background: #fff; border-radius: 12px; padding: 10px 12px; }
-    .mw .skh { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2px 8px; font-size: 12px; }
-    .mw .skh b { font-weight: 600; white-space: nowrap; } .mw .lgd { display: flex; align-items: center; gap: 4px; color: #75726b; font-size: 10.5px; }
-    .mw .lgd i { width: 8px; height: 8px; border-radius: 50%; margin-left: 7px; } .mw .lgd .m { background: #1f9b45; } .mw .lgd .p { box-shadow: inset 0 0 0 1.5px #1f9b45; } .mw .lgd .r { box-shadow: inset 0 0 0 1.5px #c9c4b8; }
-    .mw .mtree { display: block; width: 100%; height: 150px; margin-top: 4px; }
-    .mw .mtree text { font: 10px var(--font); fill: #4a4843; }
-    .mw .mtree circle { transition: fill .4s, stroke .4s; }
-    .mw .vg.apps { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
-    .mw .mq { display: flex; gap: 14px; width: max-content; animation: mw-mq 34s linear infinite; }
-    .mw .mq.rev { animation-direction: reverse; animation-duration: 40s; }
-    .mw .mq span { width: 52px; height: 52px; border-radius: 14px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px -12px rgba(20, 16, 10, .35); flex: none; }
-    .mw .mq span svg { width: 26px; height: 26px; display: block; }
-    .mw #mq3 { animation-duration: 46s; }
-    .mw .mq .termtile { width: 30px; height: 30px; border-radius: 8px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .mq .termtile svg { width: 20px; height: 20px; }
-    @keyframes mw-mq { to { transform: translateX(-50%); } }
-    @media (prefers-reduced-motion: reduce) { .mw .mq { animation: none; } }
+
+    /* a window on the screen: it starts inside the tile and runs off its edge, like a zoomed screenshot */
+    .mw .bw { position: absolute; left: 14px; top: 14px; right: 14px; bottom: -40px; border-radius: 10px; overflow: hidden; background: #fff;
+      box-shadow: 0 0 0 1px rgba(20, 20, 20, .07), 0 18px 34px -20px rgba(20, 16, 10, .5); }
+    .mw .bw.off { right: -90px; }
+    .mw .bw.dk { background: #1e1e1e; color: #d4d4d4; box-shadow: 0 18px 34px -20px rgba(20, 16, 10, .65); }
+    .mw .bw-tb { position: relative; height: 26px; display: flex; align-items: center; padding: 0 10px; background: #f3f1ec; font-size: 11px; color: #8f8c84; white-space: nowrap; }
+    .mw .bw.dk .bw-tb { background: #2b2b2b; color: #9a9a9a; }
+    .mw .bw .tl { gap: 6px; flex: none; } .mw .bw .tl i { width: 9px; height: 9px; }
+    .mw .bw.dk .tl i { background: rgba(255, 255, 255, .16); }
+    .mw .bw-tb .tt { position: absolute; left: 0; right: 0; text-align: center; pointer-events: none; }
+    .mw .bw.off .bw-tb .tt { position: static; margin-left: 14px; }
+    .mw .bw-src { font: 12px/21px var(--mono); padding: 8px 0; }
+    .mw .bw-src > div { display: flex; }
+    .mw .bw-src > div > span { white-space: pre; }
+    .mw .bw-src .n { width: 34px; padding-right: 12px; text-align: right; color: #5a5a5a; flex: none; }
+    .mw .bw-src .act { background: rgba(255, 255, 255, .04); } .mw .bw-src .act .n { color: #c6c6c6; }
+    .mw .bw-src .ecaret { height: 15px; }
+
+    /* miyagi on top of the screen: the ring, the callout, the pill, the ask field */
+    .mw .bring { position: absolute; border-radius: 7px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .3); pointer-events: none; transition: opacity .3s; }
+    .mw .bring:not(.on) { opacity: 0; }
+    /* show me: the rest of the window dims, like the app's spotlight */
+    .mw .bring.bsp { box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 2000px rgba(10, 10, 10, .52); transition: opacity .45s; }
+    .mw .bcall { position: absolute; padding: 8px 11px 9px; border-radius: 10px; background: #0b0b0b; color: #fff; font-size: 12.5px; line-height: 1.35; white-space: nowrap;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 12px 26px -10px rgba(0, 0, 0, .6); transition: opacity .3s, transform .45s var(--spring); }
+    .mw .bcall b { display: flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .6); margin-bottom: 1px; }
+    .mw .bcall .glg { width: 12px; height: 12px; }
+    .mw .bcall:not(.on) { opacity: 0; transform: translateY(6px); }
+    .mw .bcall::after { content: ""; position: absolute; top: -5px; left: var(--nx, 20px); width: 10px; height: 10px; background: #0b0b0b; border-radius: 2px; transform: rotate(45deg); box-shadow: -1px -1px 0 rgba(255, 255, 255, .14); }
+    .mw .bpill { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); height: 30px; padding: 0 12px 0 7px; border-radius: 15px; background: #0b0b0b; color: #fff;
+      display: flex; align-items: center; gap: 7px; font-size: 12.5px; white-space: nowrap; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .55); }
+    .mw .bpill .lg { width: 18px; height: 18px; }
+    .mw .bpill .st { display: none; align-items: center; } .mw .bpill .st.on { display: inline-flex; }
+    .mw .bpill .gd { width: 8px; height: 8px; border-radius: 50%; background: #30d158; }
+    .mw .bpill .ring { width: 9px; height: 9px; border-radius: 50%; border: 1.6px solid #fff; }
+    .mw .bpill .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 10px; }
+    .mw .bpill .bars i { width: 2.5px; background: #fff; border-radius: 1px; animation: mw-eq 1s ease-in-out infinite; }
+    .mw .bpill .bars i:nth-child(2) { animation-delay: -.3s; } .mw .bpill .bars i:nth-child(3) { animation-delay: -.6s; }
+    .mw .bask { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); min-width: 236px; height: 38px; padding: 0 8px 0 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px;
+      background: rgba(250, 249, 246, .95); color: #75726b; font-size: 13px; white-space: nowrap; box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), 0 16px 34px -14px rgba(0, 0, 0, .65); transition: background .2s, box-shadow .2s, color .2s; }
+    .mw .bask .lg { width: 17px; height: 17px; flex: none; } .mw .bask .tx { flex: 1; }
+    .mw .bask .kc { font-size: 11px; background: #efede7; border-radius: 5px; padding: 2px 6px; color: #75726b; }
+    .mw .bask.typing { background: #fff; color: #1c1b19; box-shadow: 0 0 0 1.5px #1c1b19, 0 16px 34px -14px rgba(0, 0, 0, .65); }
+
+    /* ask for anything: miyagi's own window */
+    .mw .ba { display: flex; background: #f3f1ec; }
+    .mw .ba-side { width: 142px; flex: none; background: #ebe8e1; padding: 9px 9px; display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; }
+    .mw .ba-side .tl { margin: 0 1px 12px; }
+    .mw .ba-side .brand { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 13px; margin: 0 5px 8px; }
+    .mw .ba-side .brand .lg { width: 18px; height: 18px; }
+    .mw .ba-side .nv { display: flex; align-items: center; gap: 8px; padding: 5px 7px; border-radius: 7px; color: #75726b; }
+    .mw .ba-side .nv .ico { width: 14px; height: 14px; }
+    .mw .ba-side .nv.sel { background: #fff; color: #1c1b19; box-shadow: 0 6px 14px -8px rgba(20, 16, 10, .3); }
+    .mw .ba-main { flex: 1; min-width: 0; padding: 14px 16px; }
+    .mw .ba-lab { display: block; font-size: 11.5px; line-height: 16px; color: #75726b; margin-bottom: 6px; }
+    .mw .ba-field { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 11px; border-radius: 10px; background: #fff; box-shadow: 0 0 0 1.5px #1c1b19, 0 0 0 5px rgba(20, 20, 20, .05); font-size: 13.5px; white-space: nowrap; overflow: hidden; }
+    .mw .ba-field .lg { width: 16px; height: 16px; flex: none; }
+    .mw .ba-field .caret { height: 16px; margin-left: -6px; }
+    .mw .ba-res { margin-top: 9px; padding: 5px; border-radius: 11px; background: #fff; box-shadow: 0 14px 30px -16px rgba(20, 16, 10, .35), 0 0 0 1px rgba(20, 20, 20, .05); transition: opacity .3s; }
+    .mw .ba-res:not(.on) { opacity: 0; }
+    .mw .ba-r { display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 6px; border-radius: 8px; transition: opacity .3s, transform .4s var(--spring), background .2s; }
+    .mw .ba-r:not(.on) { opacity: 0; transform: translateY(6px); }
+    .mw .ba-r.sel { background: #efede7; }
+    .mw .ba-r img, .mw .ba-r .bk { width: 68px; height: 38px; border-radius: 5px; object-fit: cover; flex: none; }
+    .mw .ba-r .bk { display: grid; place-items: center; background: #efede7; color: #75726b; } .mw .ba-r .bk .ico { width: 15px; height: 15px; }
+    .mw .ba-r.sel .bk { background: #e4e1d9; }
+    .mw .ba-r .tx { flex: 1; min-width: 0; }
+    .mw .ba-r b { display: block; font-weight: 500; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .ba-r small { display: block; color: #75726b; font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    @media (max-width: 560px) { .mw .ba-side { display: none; } }
+
+    /* sets up your computer */
+    .mw .bs { position: absolute; left: 14px; right: 14px; top: 14px; display: flex; flex-direction: column; gap: 7px; }
+    .mw .bs-r { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px 0 9px; border-radius: 11px; background: #fff; box-shadow: 0 10px 22px -16px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .04); transition: opacity .3s, transform .45s var(--spring); }
+    .mw .bs-r:not(.on) { opacity: 0; transform: translateY(8px); }
+    .mw .bs-i { width: 28px; height: 28px; border-radius: 8px; background: #efede7; display: grid; place-items: center; flex: none; } .mw .bs-i svg { width: 17px; height: 17px; display: block; }
+    .mw .bs-r .tx { flex: 1; min-width: 0; } .mw .bs-r b { display: block; font-weight: 500; font-size: 13px; line-height: 1.25; } .mw .bs-r small { display: block; color: #75726b; font-size: 11.5px; line-height: 1.3; }
+    .mw .bs-r .spin { color: #75726b; }
+    .mw .bs-r .ok { width: 15px; height: 15px; display: none; } .mw .bs-r.done .ok { display: block; } .mw .bs-r.done .spin { display: none; }
+
+    /* waits for you: the tutorial in the browser, held at the gate */
+    .mw .bw-url { flex: 1; min-width: 0; height: 17px; margin: 0 24px 0 12px; border-radius: 5px; background: #e7e4dc; color: #75726b; font-size: 10.5px; line-height: 17px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
+    .mw .bv { position: relative; height: 146px; background: #000; overflow: hidden; }
+    .mw .bv img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .5s; }
+    .mw .bv img:not(.on) { opacity: 0; }
+    .mw .bv-gate { position: absolute; inset: 0; background: rgba(10, 10, 10, .64); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: opacity .35s; }
+    .mw .bv-gate:not(.on) { opacity: 0; }
+    .mw .bv-gate .ico { width: 17px; height: 17px; margin-bottom: 3px; } .mw .bv-gate b { font-weight: 600; font-size: 14px; } .mw .bv-gate small { color: rgba(255, 255, 255, .78); font-size: 11.5px; }
+    .mw .bv-bar { position: absolute; left: 9px; right: 9px; bottom: 8px; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .32); }
+    .mw .bv-bar i { display: block; height: 100%; width: 46%; border-radius: 2px; background: #f00; }
+    .mw .bv-t { padding: 8px 11px; } .mw .bv-t b { display: block; font-weight: 600; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .bv-t small { color: #606060; font-size: 11.5px; }
+
+    /* checks your work: the terminal under the pill */
+    .mw .bw.bt { top: 54px; }
+    .mw .bt pre { margin: 0; padding: 9px 12px; font: 12px/20px var(--mono); color: #d6d6d6; white-space: pre; }
+    .mw .bt .pr { color: #8b8b8b; }
+    .mw .bt .ecaret { height: 14px; }
+
+    /* helps when you're stuck: the Not yet card over the code */
+    .mw .bny { position: absolute; right: 26px; bottom: 14px; width: 420px; max-width: calc(100% - 28px); display: flex; gap: 12px; padding: 12px 13px; border-radius: 13px; background: #fff; color: #1c1b19;
+      box-shadow: 0 0 0 1px rgba(20, 20, 20, .05), 0 22px 44px -18px rgba(0, 0, 0, .65); transition: opacity .35s, transform .5s var(--spring); }
+    .mw .bny:not(.on) { opacity: 0; transform: translateY(12px) scale(.97); pointer-events: none; }
+    .mw .bny .cl { flex: 1; min-width: 0; } .mw .bny .cr { width: 118px; flex: none; display: flex; flex-direction: column; gap: 6px; }
+    .mw .bny .ch { display: flex; gap: 7px; align-items: center; font-size: 11.5px; line-height: 15px; color: #75726b; font-weight: 500; }
+    .mw .bny .ch i { width: 10px; height: 10px; border-radius: 50%; border: 1.7px solid #1c1b19; }
+    .mw .bny .cl > b { display: block; font-size: 14.5px; line-height: 20px; font-weight: 600; letter-spacing: -.01em; margin: 4px 0 2px; white-space: nowrap; }
+    .mw .bny p { margin: 0; color: #75726b; font-size: 12px; line-height: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mw .bny .chips { margin-top: 9px; gap: 5px; flex-wrap: nowrap; }
+    .mw .bny .chips button { font-size: 11.5px; line-height: 16px; padding: 5px 8px; border-radius: 7px; color: #1b1b1b; white-space: nowrap; transition: transform .2s, box-shadow .2s; }
+    .mw .bny .chips button.sky { background: var(--sky); } .mw .bny .chips button.mint { background: var(--mint); } .mw .bny .chips button.lilac { background: var(--lilac); } .mw .bny .chips button.pink { background: var(--pink); }
+    .mw .bny .chips button.on { box-shadow: 0 0 0 2px #1c1b19; } .mw .bny .chips button:hover { transform: translateY(-1px); }
+    .mw .bny .cmp { flex: 1; border-radius: 8px; background: #f3f1ec; padding: 6px 9px; display: flex; flex-direction: column; justify-content: center; }
+    .mw .bny .cmp small { display: block; font-size: 10.5px; color: #75726b; } .mw .bny .cmp code { font: 11.5px var(--mono); color: #1c1b19; white-space: nowrap; }
+    /* Phones: the card is as wide as the window, so the lines it would cut through are left out. */
+    @media (max-width: 560px) { .mw .bny { right: 14px; } .mw .bny .cr { display: none; } .mw #bH .bw-src > div:nth-child(n+3) { visibility: hidden; } }
+
+    /* grows your skills: the Skills map */
+    .mw .bkt { display: block; width: 100%; max-width: 253px; margin: 7px auto 0; overflow: visible; }
+    .mw .bkt .ed { fill: none; stroke: #dcd8ce; stroke-width: 1.5; transition: stroke .4s; } .mw .bkt .ed.m { stroke: #1f9b45; }
+    .mw .bkt .nd > rect { fill: #fff; stroke: #dcd8ce; stroke-width: 1; transition: fill .4s, stroke .4s; }
+    .mw .bkt .nd text { font: 500 11.5px var(--font); fill: #1c1b19; transition: fill .4s; }
+    .mw .bkt .nd .i { display: none; }
+    .mw .bkt .nd.m .i.m, .mw .bkt .nd.p .i.p, .mw .bkt .nd.o .i.o, .mw .bkt .nd.l .i.l { display: block; }
+    .mw .bkt .nd.p > rect { stroke: #1c1b19; stroke-width: 1.5; }
+    .mw .bkt .nd.l > rect { fill: #f1efe9; stroke: #f1efe9; } .mw .bkt .nd.l text { fill: #a6a39b; }
+
+    /* any app on your screen */
+    .mw .bp { position: absolute; inset: 0; padding: 0 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; align-content: center; justify-items: center; }
+    .mw .bp > span { width: 100%; max-width: 50px; aspect-ratio: 1; border-radius: 13px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 18px -12px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .04); transition: transform .4s var(--spring), box-shadow .3s; }
+    .mw .bp > span > svg { width: 52%; height: 52%; display: block; }
+    .mw .bp > span.on { transform: scale(1.1); box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .25); }
+    .mw .bp .termtile { width: 60%; height: 60%; border-radius: 7px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .bp .termtile svg { width: 66%; height: 66%; display: block; }
 
     /* ---------- any app: miyagi's card with the apps around it ---------- */
     .mw .oframe { position: relative; width: 100%; max-width: 1040px; aspect-ratio: 1200 / 760; margin: 30px auto 0; overflow: hidden; }
@@ -1350,82 +1380,99 @@
   <div class="mw-hold">
     <h2 class="mw-h" id="what-h">everything it does.</h2>
     <div class="bento" id="bento">
-      <div class="bx w2 tn-sand">
-        <div class="vg ask2">
-          <div class="aleft">
-            <div class="mfield"><span class="lg" data-logo></span><span id="aTx"></span><i class="caret"></i></div>
-            <div class="mres">
-              <div class="mr" id="aR0"><span class="th"><span class="ico" data-ico="book"></span></span><span class="tx"><b>Just teach me first</b><small>A short lesson before any video</small></span></div>
-              <div class="mr" id="aR1"><span class="th v"><span class="ico" data-ico="play"></span></span><span class="tx"><b id="aR1t">Best tutorial for it</b><small id="aR1s">3 more to pick from</small></span><em class="tag pink">Best</em></div>
+      <div class="bx w2" id="bA">
+        <div class="vg"><div class="bw ba">
+          <div class="ba-side"><div class="tl"><i></i><i></i><i></i></div><div class="brand"><span class="lg" data-logo></span>miyagi</div>
+            <span class="nv sel"><span class="ico" data-ico="home"></span>Home</span><span class="nv"><span class="ico" data-ico="book"></span>Lessons</span><span class="nv"><span class="ico" data-ico="skills"></span>Skills</span><span class="nv"><span class="ico" data-ico="progress"></span>Progress</span></div>
+          <div class="ba-main"><span class="ba-lab">Learn something new</span>
+            <div class="ba-field"><span class="lg" data-logo></span><span id="aTx"></span><i class="caret"></i></div>
+            <div class="ba-res" id="aRes">
+              <div class="ba-r"><span class="bk"><span class="ico" data-ico="book"></span></span><span class="tx"><b>Just teach me first</b><small>A short lesson before any video</small></span></div>
+              <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/mqdefault.jpg"><span class="tx"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang · 31:28 · 3M views</small></span><em class="tag pink">Best</em></div>
+              <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/aircAruvnKk/mqdefault.jpg"><span class="tx"><b>But what is a neural network? | Deep learning chapter 1</b><small>3Blue1Brown · 18:40 · 25M views</small></span></div>
             </div>
           </div>
-          <div class="aright" id="aChips">
-            <span class="lab2">try</span>
-            <button type="button"><span class="ti" data-tool="vscode"></span>a neural network</button>
-            <button type="button"><span class="ti" data-tool="blender"></span>a donut in blender</button>
-            <button type="button"><span class="ti" data-tool="googlesheets"></span>a pivot table</button>
-            <button type="button"><span class="ti" data-tool="youtube"></span>a youtube link</button>
-          </div>
-        </div>
+        </div></div>
         <b>ask for anything</b><p>type a goal or paste a youtube link. it finds the best tutorial.</p>
       </div>
-      <div class="bx tn-mint">
-        <div class="vg"><div class="msetup" id="sRows">
-          <div class="ms"><span class="lg" data-tool="python"></span><span class="tx">Python</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
-          <div class="ms"><span class="lg" data-tool="numpy"></span><span class="tx">numpy</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
-          <div class="ms"><span class="lg" data-tool="vscode"></span><span class="tx">VS Code</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
-          <div class="ms"><span class="lg" data-tool="jupyter"></span><span class="tx">Jupyter</span><i class="spin"></i><span class="ok" data-ico="check"></span></div>
+      <div class="bx" id="bS">
+        <div class="vg"><div class="bs">
+          <div class="bs-r"><span class="bs-i" data-tool="python"></span><span class="tx"><b>Python</b><small data-a="Looking for Python…" data-b="3.12 found"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
+          <div class="bs-r"><span class="bs-i" data-tool="numpy"></span><span class="tx"><b>numpy</b><small data-a="Installing…" data-b="Installed"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
+          <div class="bs-r"><span class="bs-i" data-tool="vscode"></span><span class="tx"><b>VS Code</b><small data-a="Opening the project…" data-b="nn.py open"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
+          <div class="bs-r"><span class="bs-i" data-tool="jupyter"></span><span class="tx"><b>Jupyter</b><small data-a="Starting a kernel…" data-b="Kernel ready"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
         </div></div>
         <b>sets up your computer</b><p>installs what the lesson needs and opens the project.</p>
       </div>
-      <div class="bx tn-sky">
-        <div class="vg"><div class="mvid"><canvas id="wCv" width="600" height="300"></canvas><div class="mlock" id="wLock"><span class="ico" data-ico="lock"></span>your turn</div><div class="mpass" id="wPass"><i></i>step passed</div><div class="mbar"><i id="wBar"></i><span class="notch"></span></div></div></div>
-        <b>waits for you</b><p>every step waits until you've done it, and the video pauses with it.</p>
-      </div>
-      <div class="bx tn-lilac">
-        <div class="vg"><div class="mcode" id="gCode"><div>def init_params():</div><div id="gLine">    W1 = <span id="gTyp"></span></div><div>    b1 = np.zeros((10, 1))</div><div>    W2 = np.random.rand(10, 10) - 0.5</div></div>
-          <div class="mring" id="gRing"></div><div class="mbub down" id="gBub"><b>Your turn</b>Start on this line.</div></div>
+      <div class="bx" id="bG">
+        <div class="vg"><div class="bw dk off"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
+          <div class="bw-src">
+            <div><span class="n">3</span><span>data = np.load(<span class="hs">"digits.npz"</span>)</span></div>
+            <div><span class="n">4</span><span>X, Y = data[<span class="hs">"x"</span>] / <span class="hm">255</span>, data[<span class="hs">"y"</span>]</span></div>
+            <div><span class="n">5</span><span></span></div>
+            <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
+            <div class="act"><span class="n">7</span><span>    W1 = <span id="gTyp"></span><i class="ecaret"></i></span></div>
+          </div></div>
+          <div class="bring" id="gRing"></div>
+          <div class="bcall" id="gCall"><b><span class="glg" data-logo="dark"></span>Your turn</b>Set up W1 on this line.</div></div>
         <b>guides every step</b><p>it says what to do next and circles where to do it.</p>
       </div>
-      <div class="bx tn-peach">
-        <div class="vg"><div class="mterm" id="cTerm"></div><div class="mpass c" id="cPass"><i></i>step passed</div></div>
+      <div class="bx" id="bW">
+        <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="bw-url">youtube.com/watch?v=w8yWXqWQYmU</span></div>
+          <div class="bv"><img id="wF0" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq1.jpg"><img class="on" id="wF1" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq2.jpg">
+            <div class="bv-gate on" id="wGate"><span class="ico" data-ico="lock"></span><b>Your turn</b><small>The video waits for you.</small></div>
+            <div class="bv-bar"><i id="wBar"></i></div></div>
+          <div class="bv-t"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang</small></div>
+        </div></div>
+        <b>waits for you</b><p>every step waits until you've done it, and the video pauses with it.</p>
+      </div>
+      <div class="bx" id="bC">
+        <div class="vg"><div class="bpill"><span class="lg" data-logo="dark"></span><span class="st" id="cSt0"><i class="ring"></i></span><span class="st" id="cSt1"><span class="bars"><i></i><i></i><i></i></span></span><span class="st on" id="cSt2"><i class="gd"></i></span><span id="cPt">Step passed</span></div>
+          <div class="bw dk off bt"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">digits — -zsh</span></div><pre id="cTerm"></pre></div></div>
         <b>checks your work</b><p>it watches every run and tells you when a step passes.</p>
       </div>
-      <div class="bx w2 tn-pink">
-        <div class="vg stuck">
-          <div class="mnb">
-            <div class="cell"><span class="pr">[2]:</span><code>df = pd.read_csv("sales.csv")</code></div>
-            <div class="cell"><span class="pr">[3]:</span><code><span class="dl" id="hLine">df.dropna()</span></code></div>
-            <div class="cell"><span class="pr">[4]:</span><code>df.isna().sum().sum()</code></div>
-            <div class="out"><span class="pr">[4]:</span><code>42</code></div>
-          </div>
-          <div class="mny">
-            <div class="ch"><i></i>Not yet</div>
-            <b>The empty rows are still there</b>
-            <p>df still has 42 empty cells.</p>
-            <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div>
-            <div class="mhelp" id="hPane">
-              <div class="hp" data-h="0">dropna() doesn't change df. It hands back a clean copy, and nothing keeps it.</div>
-              <div class="hp" data-h="1"><span class="tbls"><span class="tbl5"><i></i><i class="na"></i><i></i><i class="na"></i><i></i></span><span class="arr">dropna() &rarr;</span><span class="tbl5"><i></i><i></i><i></i></span><span class="arr x">&rarr; not kept</span></span></div>
-              <div class="hp" data-h="2">Circled on your screen: the line where the copy is lost.</div>
-              <div class="hp" data-h="3">Keep what dropna() gives back.</div>
-            </div>
-          </div>
-        </div>
+      <div class="bx w2" id="bH">
+        <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
+          <div class="bw-src">
+            <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
+            <div class="act"><span class="n">7</span><span>    <span id="hCode">W1 = np.zeros((<span class="hm">10</span>, <span class="hm">784</span>))</span></span></div>
+            <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+            <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
+            <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+            <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
+            <div><span class="n">12</span><span></span></div>
+            <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
+          </div><div class="bring bsp" id="hRing"></div></div>
+          <div class="bny on" id="hNy">
+            <div class="cl"><div class="ch"><i></i>Not yet</div><b>Your hidden layer never learns</b><p id="hTx"></p>
+              <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>
+            <div class="cr"><div class="cmp"><small>Yours</small><code>acc 0.11</code></div><div class="cmp"><small>Expected</small><code>acc above 0.80</code></div></div>
+          </div></div>
         <b>helps when you're stuck</b><p>explain, diagram, show me or hint. nudges, not the answer.</p>
       </div>
-      <div class="bx tn-sky">
-        <div class="vg"><div class="mmini">X: <span class="m784" id="qTok">784</span> inputs, 10 hidden</div><div class="mring" id="qRing"></div>
-          <div class="mbub down" id="qBub"><b>Why 784?</b>28 × 28 pixels, flattened.</div>
-          <div class="mask" id="qAsk"><span class="lg" data-logo></span><span id="qTx">ask miyagi</span></div></div>
+      <div class="bx w2" id="bQ">
+        <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
+          <div class="bw-src">
+            <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
+            <div class="act"><span class="n">7</span><span>    W1 = np.random.rand(<span class="hm">10</span>, <span class="hm" id="qTok">784</span>) - <span class="hm">0.5</span></span></div>
+            <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+            <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
+            <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+            <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
+            <div><span class="n">12</span><span></span></div>
+            <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
+          </div></div>
+          <div class="bring" id="qRing"></div>
+          <div class="bcall" id="qCall"><b><span class="glg" data-logo="dark"></span>Why 784?</b>Each digit is 28 × 28 pixels, flattened.</div>
+          <div class="bask" id="qAsk"><span class="lg" data-logo></span><span class="tx" id="qTx">ask miyagi</span><span class="kc" data-kc></span></div></div>
         <b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p>
       </div>
-      <div class="bx tn-mint">
-        <div class="vg"><div class="msk"><div class="skh"><b>Neural networks</b><span class="lgd"><i class="m"></i>Mastered<i class="p"></i>Practicing<i class="r"></i>Next</span></div><svg class="mtree" id="kTree" viewBox="0 0 304 132" aria-hidden="true"></svg></div></div>
+      <div class="bx" id="bK">
+        <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">Skills</span></div><svg class="bkt" id="kTree" viewBox="0 0 253 172" aria-hidden="true"></svg></div></div>
         <b>grows your skills</b><p>every step you pass lands on your skill tree, with reviews.</p>
       </div>
-      <div class="bx w2 tn-sand">
-        <div class="vg apps"><div class="mq" id="mq1"></div><div class="mq rev" id="mq2"></div><div class="mq" id="mq3"></div></div>
+      <div class="bx" id="bP">
+        <div class="vg"><div class="bp" id="pApps"></div></div>
         <b>any app on your screen</b><p>blender, figma, sheets or vs code. if you can see it, it can teach it.</p>
       </div>
     </div>
@@ -2231,78 +2278,135 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         el.addEventListener('click', function () { showEx(k, true); });
       });
 
-      /* ---------- everything it does: each card plays its own little loop (and some take clicks) ---------- */
-      var bento = $('#bento'), bOn = false, bT = 0, bLast = 0;
-      var GOALS = [['Build a neural network from scratch', 'Best tutorial for neural networks', '3 more to pick from'],
-        ['Model a donut in Blender', 'Best donut tutorial for Blender', '2 more to pick from'],
-        ['Make a pivot table', 'Best pivot table walkthrough', '4 more to pick from'],
-        ['youtube.com/watch?v=w8yWXqWQYmU', 'Steps from this video', 'Building a neural network FROM SCRATCH']];
-      var aSel = -1, aStart = 0, aHold = 0, aChips = $$('#aChips button'), hSel = 0, hHold = -1, hChips = $$('#hChips button'), hPanes = $$('#hPane .hp');
-      aChips.forEach(function (b, i) { b.addEventListener('click', function () { aSel = i; aStart = bT; aHold = bT + 12; bentoAt(bT); }); });
-      hChips.forEach(function (b, i) { b.addEventListener('click', function () { hSel = i; hHold = bT + 12; bentoAt(bT); }); });
+      /* ---------- everything it does: nine crops of the real screen. Each rests on its finished frame; one plays at a time, in reading order, and the card under the pointer goes first ---------- */
+      var bento = $('#bento'), bT = 0;
+      // where a piece sits inside its tile (the tile is the first positioned box above the window)
+      function bIn(el, vg) { var x = 0, y = 0, e = el; while (e && e !== vg) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y, el.offsetWidth, el.offsetHeight]; }
+      var ECAR = '<i class="ecaret"></i>';
 
-      var KN = [[22, 66, 'Arrays'], [94, 30, 'Weight init'], [94, 102, 'Broadcasting'], [166, 66, 'Forward pass'], [236, 30, 'Backprop'], [284, 96, 'Training']],
-        KE = [[0, 1], [0, 2], [1, 3], [2, 3], [3, 4], [4, 5]];
-      $('#kTree').innerHTML = KE.map(function (e, i) { var a = KN[e[0]], b = KN[e[1]], mx = (a[0] + b[0]) / 2; return '<path data-e="' + i + '" d="M' + a[0] + ' ' + a[1] + ' C ' + mx + ' ' + a[1] + ', ' + mx + ' ' + b[1] + ', ' + b[0] + ' ' + b[1] + '" fill="none" stroke="#dcd8ce" stroke-width="2"/>'; }).join('') +
-        KN.map(function (n, i) { return '<g><circle cx="' + n[0] + '" cy="' + n[1] + '" r="9" fill="#fff" stroke="#c9c4b8" stroke-width="2"/><path d="M' + (n[0] - 4) + ' ' + (n[1] + .5) + ' l2.8 2.8 l5.2 -5.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0"/><text x="' + n[0] + '" y="' + (n[1] < 50 ? n[1] - 15 : n[1] + 23) + '" text-anchor="middle">' + n[2] + '</text></g>'; }).join('');
-      var kG = $$('#kTree g'), kE = $$('#kTree path[data-e]');
-      var MQ = Object.keys(SI).filter(function (n) { return n !== 'apple' && n !== 'safari'; }).concat(['vscode', 'terminal']);
-      function mq(list) { var h = list.map(function (n) { return '<span>' + tool(n) + '</span>'; }).join(''); return h + h; }
-      var mqn = Math.ceil(MQ.length / 3);
-      $('#mq1').innerHTML = mq(MQ.slice(0, mqn)); $('#mq2').innerHTML = mq(MQ.slice(mqn, 2 * mqn)); $('#mq3').innerHTML = mq(MQ.slice(2 * mqn));
-      var wPainted = false, sRows = $$('#sRows .ms');
-      function bentoAt(T) {
-        // ask for anything
-        var ai = aSel >= 0 && T < aHold ? aSel : Math.floor(T / 4.2) % GOALS.length, au = aSel >= 0 && T < aHold ? (T - aStart) % 4.2 : T % 4.2;
-        var g = GOALS[ai], tx = typed(g[0], .1, 1.4, au);
-        $('#aTx').textContent = tx; on($('#aR0'), au > 1.6); on($('#aR1'), au > 1.9);
-        $('#aR1t').textContent = g[1]; $('#aR1s').textContent = g[2];
-        aChips.forEach(function (b, i) { on(b, i === ai); });
-        // sets up your computer
-        var su = T % 6.4;
-        sRows.forEach(function (r, i) { on(r, su > .2 + i * .25 && su < 6); on(r, su > 1 + i * 1.05, 'done'); });
-        // waits for you
-        var wu = T % 7.5, wp = wu < 2.4 ? wu / 2.4 * 46 : wu < 4.9 ? 46 : wu < 5.5 ? 46 : 46 + (wu - 5.5) / 2 * 30;
-        $('#wBar').style.width = wp + '%'; on($('#wLock'), wu >= 2.4 && wu < 4.9); on($('#wPass'), wu >= 4.9 && wu < 6.6);
-        // guides every step
-        var gu = T % 6.2;
-        on($('#gRing'), gu > .5 && gu < 4.8); on($('#gBub'), gu > .7 && gu < 4.8);
-        $('#gTyp').textContent = typed('np.random.rand(10, 784) - 0.5', 2.2, 3.8, gu);
-        // checks your work
-        var cu = T % 6.4, lines = [];
-        if (cu > .3) lines.push('$ ' + typed('python nn.py', .3, .8, cu));
-        if (cu > 1.1) lines.push('iter 100    acc 0.47');
-        if (cu > 1.7) lines.push('iter 200    acc 0.76');
-        if (cu > 2.3) lines.push('<span class="ok">iter 300    acc 0.84</span>');
-        var lh = lines.join('\n'); if ($('#cTerm').innerHTML !== lh) $('#cTerm').innerHTML = lh;
-        on($('#cPass'), cu > 2.7 && cu < 6);
-        // ask about your screen
-        var qu = T % 6.4;
-        on($('#qAsk'), qu > .3 && qu < 1.7, 'typing');
-        $('#qTx').textContent = qu > .4 && qu < 1.7 ? typed('why 784?', .4, 1.2, qu) : 'ask miyagi';
-        on($('#qRing'), qu > 1.9 && qu < 5.6); on($('#qBub'), qu > 2 && qu < 5.8);
-        // helps when you're stuck
-        var hi = T < hHold ? hSel : Math.floor(T / 3) % 4;
-        hChips.forEach(function (b, i) { on(b, i === hi); }); hPanes.forEach(function (p, i) { on(p, i === hi); }); on($('#hLine'), hi === 2, 'ringed');
-        // grows your skills: nodes turn mastered one by one; the one after is being practiced
-        var ku = T % 7.6, nm = 0; for (var q = 0; q < KN.length; q++) if (ku > .7 + q * .95 && ku < 7.2) nm = q + 1;
-        kG.forEach(function (g, i) {
-          var c = g.firstChild, ck = c.nextSibling, st = i < nm ? 'm' : i === nm ? 'p' : 'r';
-          c.setAttribute('fill', st === 'm' ? '#1f9b45' : '#fff'); c.setAttribute('stroke', st === 'r' ? '#c9c4b8' : '#1f9b45');
-          c.setAttribute('stroke-dasharray', st === 'p' ? '30 30' : 'none'); ck.setAttribute('opacity', st === 'm' ? 1 : 0);
-        });
-        kE.forEach(function (p, i) { p.setAttribute('stroke', KE[i][1] < nm ? '#1f9b45' : '#dcd8ce'); });
+      // ask for anything
+      var aRows = $$('#aRes .ba-r'), GOAL = 'Build a neural network from scratch';
+      function cardA(u) {
+        $('#aTx').textContent = typed(GOAL, .2, 1.6, u);
+        on($('#aRes'), u > 1.8); aRows.forEach(function (r, i) { on(r, u > 1.85 + i * .18); });
+        on(aRows[1], u > 3, 'sel');
       }
-      bentoAt(reduce ? 3 : 0);
+      // sets up your computer
+      var sRows = $$('#bS .bs-r');
+      function cardS(u) {
+        sRows.forEach(function (r, i) {
+          var d = u > .9 + i * .75, s = $('small', r), tx = s.getAttribute(d ? 'data-b' : 'data-a');
+          on(r, u > .15 + i * .2); on(r, d, 'done'); if (s.textContent !== tx) s.textContent = tx;
+        });
+      }
+      // guides every step
+      function cardG(u) { on($('#gRing'), u > .3); on($('#gCall'), u > .5); $('#gTyp').textContent = typed('np.random.rand(10, 784) - 0.5', 1.6, 3.2, u); }
+      // waits for you: the video runs, then holds at the gate
+      function cardW(u) {
+        var run = u < 2.4;
+        on($('#wGate'), !run); on($('#wF0'), u < 1.4); on($('#wF1'), u >= 1.4);
+        $('#wBar').style.width = (run ? 30 + u / 2.4 * 16 : 46) + '%';
+      }
+      // checks your work
+      var cTerm = $('#cTerm'), cLast = null, PR = '<span class="pr">sam@mac digits %</span> ';
+      function cardC(u) {
+        var L = [PR + typed('python nn.py', .3, 1, u) + (u < 1.2 ? ECAR : '')];
+        if (u > 1.4) L.push('iter 100    acc 0.47');
+        if (u > 2) L.push('iter 200    acc 0.76');
+        if (u > 2.6) L.push('iter 300    acc 0.84');
+        if (u > 2.9) L.push(PR + ECAR);
+        var h = L.join('\n'); if (h !== cLast) { cLast = h; cTerm.innerHTML = h; }
+        var st = u > 3 ? 2 : u > 1.2 ? 1 : 0, tx = ['Your turn', 'Checking your run', 'Step passed'][st];
+        on($('#cSt0'), st === 0); on($('#cSt1'), st === 1); on($('#cSt2'), st === 2);
+        if ($('#cPt').textContent !== tx) $('#cPt').textContent = tx;
+      }
+      // helps when you're stuck: each chip is a different nudge (they take clicks)
+      var H0 = 'W1 starts at zero, so every unit outputs 0.',
+        HT = ["Zeros in, zeros out. The layer can't learn.", 'Draws your layer: four units, all the same.', 'Circled above: where W1 starts at zero.', 'Start W1 small and random, like W2.'];
+      var hSel = -1, hUntil = -1, hChips = $$('#hChips button');
+      function cardH(u) {
+        var s = bT < hUntil ? hSel : u > 2.2 ? 2 : -1, tx = s < 0 ? H0 : HT[s];
+        on($('#hNy'), u > .3 || bT < hUntil); hChips.forEach(function (b, k) { on(b, k === s); });
+        if ($('#hTx').textContent !== tx) $('#hTx').textContent = tx;
+        on($('#hRing'), s === 2);
+      }
+      // ask about your screen
+      function cardQ(u) {
+        on($('#qAsk'), u > .3, 'typing');
+        var tx = u > .3 ? typed('why 784 inputs?', .4, 1.5, u) : 'ask miyagi'; if ($('#qTx').textContent !== tx) $('#qTx').textContent = tx;
+        on($('#qRing'), u > 1.9); on($('#qCall'), u > 2.1);
+      }
+      // grows your skills: the map fills in from the bottom; a line turns green once both ends are mastered
+      var KN = [['Arrays', 8, 138], ['Vectors', 139, 138], ['Weight init', 8, 94], ['Dot product', 139, 94], ['Forward pass', 73.5, 50], ['Backprop', 73.5, 6]],
+        KE = [[0, 2, 'M61 138V122'], [1, 3, 'M192 138V122'], [2, 4, 'M61 94v-4q0-4 4-4h57.5q4 0 4-4v-4'], [3, 4, 'M192 94v-4q0-4-4-4h-57.5q-4 0-4-4v-4'], [4, 5, 'M126.5 50V34']];
+      $('#kTree').innerHTML = KE.map(function (e) { return '<path class="ed" d="' + e[2] + '"/>'; }).join('') + KN.map(function (n) {
+        var x = n[1], y = n[2], cx = x + 15, cy = y + 14;
+        return '<g class="nd"><rect x="' + x + '" y="' + y + '" width="106" height="28" rx="7"/>' +
+          '<g class="i m"><circle cx="' + cx + '" cy="' + cy + '" r="6.2" fill="#1f9b45"/><path d="M' + (cx - 2.9) + ' ' + (cy + .2) + 'l2 2 3.8-4.1" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>' +
+          '<circle class="i p" cx="' + cx + '" cy="' + cy + '" r="5.2" fill="none" stroke="#1c1b19" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="21 12" transform="rotate(-90 ' + cx + ' ' + cy + ')"/>' +
+          '<circle class="i o" cx="' + cx + '" cy="' + cy + '" r="5.2" fill="none" stroke="#1c1b19" stroke-width="1.6"/>' +
+          '<g class="i l" fill="none" stroke="#a6a39b" stroke-width="1.4" stroke-linecap="round"><rect x="' + (cx - 4) + '" y="' + (cy - 1) + '" width="8" height="6.4" rx="1.6" fill="#a6a39b"/><path d="M' + (cx - 2.4) + ' ' + (cy - 1) + 'v-1.8a2.4 2.4 0 0 1 4.8 0v1.8"/></g>' +
+          '<text x="' + (x + 28) + '" y="' + (y + 18.2) + '">' + n[0] + '</text></g>';
+      }).join('');
+      var kN = $$('#kTree .nd'), kE = $$('#kTree .ed');
+      function cardK(u) {
+        var st = u < .9 ? 'mmpoll' : u < 2.1 ? 'mmmpll' : 'mmmmpl';
+        kN.forEach(function (g, i) { var c = 'nd ' + st.charAt(i); if (g.getAttribute('class') !== c) g.setAttribute('class', c); });
+        kE.forEach(function (p, i) { var c = 'ed' + (st.charAt(KE[i][0]) === 'm' && st.charAt(KE[i][1]) === 'm' ? ' m' : ''); if (p.getAttribute('class') !== c) p.setAttribute('class', c); });
+      }
+      // any app on your screen
+      $('#pApps').innerHTML = ['blender', 'figma', 'googlesheets', 'vscode', 'jupyter', 'adobephotoshop', 'xcode', 'youtube', 'davinciresolve', 'terminal', 'github', 'unity'].map(function (n) { return '<span>' + tool(n) + '</span>'; }).join('');
+      var pI = $$('#pApps > span'), PSEQ = [0, 2, 5, 8];
+      function cardP(u) { var k = u < .3 ? -1 : Math.floor((u - .3) / .9); pI.forEach(function (s, i) { on(s, k >= 0 && k < PSEQ.length && PSEQ[k] === i); }); }
+
+      // rings and callouts that follow the text they point at, whatever the font and the card's width
+      function bPlace() {
+        var r = bIn($('#hCode'), $('#bH .bw'));
+        $('#hRing').style.cssText = 'left:' + (r[0] - 6) + 'px;top:' + (r[1] - 3) + 'px;width:' + (r[2] + 12) + 'px;height:' + (r[3] + 6) + 'px';
+        var gv = $('#bG .vg'), g = bIn($('#gTyp'), gv), gc = $('#gCall');
+        $('#gRing').style.cssText = 'left:' + (g[0] - 40) + 'px;top:' + (g[1] - 3) + 'px;right:-20px;height:' + (g[3] + 6) + 'px';
+        gc.style.left = (g[0] - 34) + 'px'; gc.style.top = (g[1] + g[3] + 14) + 'px';
+        var qv = $('#bQ .vg'), k = bIn($('#qTok'), qv), qc = $('#qCall'), cw = qc.offsetWidth, lx = clamp(k[0] + k[2] / 2 - 30, 10, qv.clientWidth - cw - 10);
+        $('#qRing').style.cssText = 'left:' + (k[0] - 5) + 'px;top:' + (k[1] - 2) + 'px;width:' + (k[2] + 10) + 'px;height:' + (k[3] + 4) + 'px';
+        qc.style.left = lx + 'px'; qc.style.top = (k[1] + k[3] + 13) + 'px'; qc.style.setProperty('--nx', clamp(k[0] + k[2] / 2 - lx - 5, 12, cw - 22) + 'px');
+      }
+
+      var BC2 = [[cardA, 5], [cardS, 4.8], [cardG, 5], [cardW, 4.8], [cardC, 5], [cardH, 5.2], [cardQ, 5], [cardK, 4.4], [cardP, 4.4]],
+        bEls = $$('#bento > .bx'), bCur = -1, bU = 0, bHov = -1;
+      function bRest(i) { BC2[i][0](BC2[i][1]); }
+      function bSeen(el) { var r = el.getBoundingClientRect(), m = (r.top + r.bottom) / 2; return m > 0 && m < innerHeight; }
+      function bGo(i) { if (bCur >= 0) bRest(bCur); bCur = i; bU = 0; bPlace(); }
+      // the next card that is on screen (so the one playing is always one you can see)
+      function bNext() { for (var k = 1; k <= BC2.length; k++) { var i = (bCur + k) % BC2.length; if (bSeen(bEls[i])) return i; } return (bCur + 1) % BC2.length; }
+      // from the console: mwalk.bento() rests every card and stops the tour, mwalk.bento(i, u) shows card i at u seconds (or pass a list of nine times), mwalk.bento('play') starts it again
+      var bFroze = false;
+      function bentoShow(i, u) { bFroze = i !== 'play'; if (!bFroze) return; BC2.forEach(function (c, k) { bRest(k); }); bCur = -1; bPlace(); if (i && i.length) i.forEach(function (v, k) { BC2[k][0](v); }); else if (i >= 0) BC2[i][0](u == null ? BC2[i][1] : u); }
+      function bentoTick(dt) {
+        if (bFroze) return;
+        bT += dt;
+        if (bCur < 0) bGo(bSeen(bEls[0]) ? 0 : bNext());
+        bU += dt; var d = BC2[bCur][1];
+        if (bU >= d) {
+          if (bCur === 5 && bT < hUntil) bU = d;               // a chip you picked stays up
+          else if (bHov === bCur) { if (bU >= d + 1.4) bU = 0; }   // under the pointer: play it again
+          else bGo(bNext());
+        }
+        BC2[bCur][0](Math.min(bU, BC2[bCur][1]));
+      }
+      bEls.forEach(function (el, i) {
+        el.addEventListener('pointerenter', function () { bHov = i; if (!reduce && i !== bCur && bT >= hUntil) bGo(i); });
+        el.addEventListener('pointerleave', function () { if (bHov === i) bHov = -1; });
+      });
+      hChips.forEach(function (b, i) { b.addEventListener('click', function () { if (bCur !== 5) bGo(5); hSel = i; hUntil = bT + 12; bU = BC2[5][1]; cardH(bU); }); });
+      BC2.forEach(function (c, i) { bRest(i); }); bPlace();
+      addEventListener('resize', bPlace);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(bPlace);
       // The orbit and the bento move from the film's frame loop, only while they're on screen.
       function inView(e) { var r = e.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
       var oframeEl = $('#oframe');
       function sideTick(dt) {
         if (inView(oframeEl)) { orbOn = true; if (!reduce) orbT += dt; orbit(); if (!exTimer) { showEx(0); exTimer = setTimeout(exTick, 5500); } } else orbOn = false;
-        if (inView(bento)) {
-          if (!wPainted) { wPainted = true; paint($('#wCv'), WALLS[2], 600, 300, 1); }
-          if (!reduce) bT += dt; bentoAt(bT);
-        }
+        if (!reduce && inView(bento)) bentoTick(dt);
       }
 
       /* your tools, one lesson */
@@ -2384,7 +2488,7 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         ui: function (v) { wstage.classList.toggle('dark', v === 'dark'); fillLogos(); },
         wall: function (v) { root.classList.toggle('paper', v === 'paper'); },
         mode: function (v) { mode = v; film.classList.toggle('scroll', v === 'scroll'); pauseBtn.style.display = v === 'scroll' ? 'none' : ''; requestAnimationFrame(fit); },
-        paint: paintWalls, conn: function (x) { cStart = performance.now() - x * 1000; }, fit: fit, ex: function (i) { showEx(i, true); }
+        paint: paintWalls, conn: function (x) { cStart = performance.now() - x * 1000; }, fit: fit, ex: function (i) { showEx(i, true); }, bento: bentoShow
       };
     })();
 
