@@ -160,9 +160,9 @@
       .cta .btn-ghost { height: 44px; }
       .snd { height: 44px; }
       html.gl .top { min-height: 44px; padding-right: 10px; }
-      .person a { display: block; padding: 12px 6px; }
+      .person a { display: block; padding: 13px 6px; }
       .note .alt { display: inline-block; padding: 12px 4px; }
-      .foot .team a, .legal a { display: inline-block; padding: 12px 6px; }
+      .foot .team a, .legal a { display: inline-block; padding: 13px 6px; }
       .foot .team, .legal { gap: 0 16px; }
     }
     /* The download code: on the first download click the field takes the buttons' place (same height, so the hero
@@ -215,6 +215,12 @@
     .top .wordmark { width: 72px; }
     @media (max-width: 700px) {
       html.gl .caps { left: 16px; right: 16px; width: auto; top: auto; bottom: 16vh; font-size: clamp(30px, 8.5vw, 38px); text-align: center; }
+      .cap { transform: translateY(-100%); }
+    }
+    /* An upright tablet is "narrow" to the 3D layout too (width / height under 0.8), so the tree stays centered there; the two
+       lines sit under the pot, like on a phone, instead of across the branches. */
+    @media (min-width: 701px) and (max-aspect-ratio: 4/5) {
+      html.gl .caps { left: 32px; right: 32px; width: auto; top: auto; bottom: 9vh; font-size: clamp(38px, 5.4vw, 56px); text-align: center; }
       .cap { transform: translateY(-100%); }
     }
 
@@ -313,6 +319,24 @@
       display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: transform .2s; }
     .mnav .go:hover { background: #2e2e2c; }
     @media (max-width: 640px) { .mnav nav { display: none; } .mnav { gap: 12px; } }
+    /* Touch screens, iPads included: every control gets a hit area of at least 44 pt. Where a bigger box would change the
+       look, a transparent ::before carries the extra area instead. The app dots under the window stay small: the logos on the
+       ring switch apps the same way at full size. */
+    @media (pointer: coarse) {
+      .mnav .lg { padding: 8px 0; margin: -8px 0; }
+      .mnav nav a { padding: 15px 12px; margin: -15px -12px; }
+      .mnav .go { height: 44px; }
+      .hx-tabs button, .mw .aright button, .mw .mny .chips button { position: relative; }
+      .hx-tabs button::before { content: ""; position: absolute; inset: -9px -12px; }
+      .hx-field button { width: 44px; height: 44px; }
+      .mw .pause::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; }
+      .mw .replay::before { content: ""; position: absolute; inset: -12px -10px; }
+      .mw .aright { gap: 14px; }
+      .mw .aright button::before { content: ""; position: absolute; inset: -7px 0; }
+      .mw .mny .chips button::before { content: ""; position: absolute; inset: -10px -4px; }
+      [data-want-link] { display: inline-block; padding: 12px 0; margin: -12px 0; }
+      .foot .hello { padding: 7px 0; margin: -7px 0; }
+    }
     html.gl .top { display: none; }
 
     /* See it work, features, apps, tools, questions: drawn in the page, scoped under .mw */
@@ -1151,7 +1175,7 @@
             <input type="email" name="email" placeholder="your email" aria-label="your email" autocomplete="email" enterkeyhint="send">
             <button type="submit" aria-label="join the waitlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
           </form>
-          <div class="hx-row" data-dlrow hidden><a class="hx-pb" href="#download" data-dl="mac"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>download for mac</a></div>
+          <div class="hx-row" data-dlrow hidden><a class="hx-pb" href="#download" data-dl="mac"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>download for mac</a><button class="hx-pb" type="button" data-send hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>send the link to your mac</button></div>
           <p class="hx-sub" data-sub aria-live="polite"></p>
         </div>
       </div>
@@ -1628,15 +1652,20 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         code: 'coming soon for public access.',
         ask: 'coming soon for public access.',
         joined: "you're on the waitlist. we'll email you when it opens.",
-        dl: 'apple silicon · macos 13 or later'
+        dl: 'apple silicon · macos 13 or later',
+        mac: 'miyagi runs on a mac for now. open this page on your mac to download.'
       };
+      // Tablets, phones and Windows (html.nodl, set in the head) can't run miyagi yet: after a right code they get the mac note
+      // and a way to send the page to their mac, never a download they can't open.
+      var NODL = document.documentElement.classList.contains('nodl'), dlBtn = dlrow.querySelector('[data-dl]'), sendBtn = dlrow.querySelector('[data-send]');
+      dlBtn.hidden = NODL; sendBtn.hidden = !NODL;
       // One row at a time: the start actions, the code field, the ask-for-a-code field, or the download.
       function show(which, msg) {
         state = which;
         if (start0) start0.hidden = which !== 'start';
         form.hidden = which !== 'code'; join.hidden = which !== 'ask' && which !== 'joined'; dlrow.hidden = which !== 'dl'; tabs.hidden = which === 'dl';
         [].forEach.call(tabs.children, function (b) { var on = b.getAttribute('data-act') === (which === 'code' ? 'code' : 'ask'); b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
-        sub.innerHTML = (msg ? '<b>' + msg + '</b> · ' : '') + LINES[which];
+        sub.innerHTML = (msg ? '<b>' + msg + '</b> · ' : '') + LINES[which === 'dl' && NODL ? 'mac' : which];
       }
       function nope(f, msg) { show(f === form ? 'code' : 'ask', msg); f.classList.remove('bad'); void f.offsetWidth; f.classList.add('bad'); }
       function focus(f) { f.querySelector('input').focus({ preventScroll: true }); }
@@ -1651,7 +1680,14 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       });
       function start(os, url) { location.href = url; sub.textContent = tips[os]; }
 
-      dlrow.querySelector('[data-dl]').addEventListener('click', function (e) {
+      sendBtn.addEventListener('click', function () {
+        var url = location.origin + '/';
+        if (navigator.share) { navigator.share({ title: 'miyagi', url: url }).catch(function () {}); return; }
+        (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(
+          function () { sub.innerHTML = '<b>link copied</b> · open it on your mac to download.'; },
+          function () { sub.innerHTML = 'open <b>miyagi.study</b> on your mac to download.'; });
+      });
+      dlBtn.addEventListener('click', function (e) {
         e.preventDefault();
         unseal(kept(), 'mac').then(function (url) { start('mac', url); }, function () { keep(''); nope(form, 'enter your code again'); focus(form); });
       });
