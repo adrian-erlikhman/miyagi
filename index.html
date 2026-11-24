@@ -619,20 +619,40 @@
     .mw .skill .rev { display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--ln); font-size: 12.5px; color: var(--mu); transition: opacity .35s; }
     .mw .skill .rev:not(.on) { opacity: 0; } .mw .skill .rev b { color: var(--tx); font-weight: 500; }
 
-    /* ---------- everything it does: nine crops of the real screen, one playing at a time ---------- */
-    .mw .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-flow: dense; gap: 14px; max-width: 1180px; margin: 44px auto 0; }
-    .mw .bx { background: #fff; border-radius: 20px; padding: 10px 10px 16px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05);
-      transition: transform .35s var(--spring), box-shadow .35s; min-width: 0; }
-    .mw .bx:hover { transform: translateY(-3px); box-shadow: 0 1px 0 #fff inset, 0 28px 54px -30px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
-    .mw .bx.w2 { grid-column: span 2; }
-    .mw .bx > b { display: block; margin: 12px 8px 0; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
-    .mw .bx > p { margin: 3px 8px 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
-    /* every tile is the same quiet paper; the colour comes from what is on the screen */
-    .mw .vg { position: relative; height: 232px; border-radius: 13px; background: #efede8; overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
+    /* ---------- everything it does: nine names in a side list, one screen playing at a time ---------- */
+    .mw .bento { display: grid; grid-template-columns: minmax(280px, 370px) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 44px); align-items: center; max-width: 1180px; margin: 44px auto 0; }
+    /* the list is the typography: every feature by name, in three clusters. The open one is ink and carries its line; a rail beside it fills as its screen plays */
+    .mw .flist { display: grid; gap: 20px; min-width: 0; }
+    .mw .fgrp { display: grid; align-content: start; min-width: 0; }
+    .mw .fname { position: relative; display: block; width: 100%; min-width: 0; text-align: left; padding: 5px 0 5px 20px; font-size: clamp(19px, 1.9vw, 24px); line-height: 1.25; letter-spacing: -.025em; color: var(--faint); transition: color .2s; }
+    .mw .fname b { display: block; font-weight: 500; }
+    .mw .fname > span, .mw .fprog { display: none; }
+    .mw .fname:hover { color: var(--muted); }
+    .mw .fname:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .mw .fname.on { color: var(--ink); padding-bottom: 9px; }
+    .mw .fname.on b { font-weight: 600; }
+    .mw .fname.on > span { display: block; margin-top: 4px; max-width: 24em; font-size: 15px; line-height: 1.4; letter-spacing: 0; color: var(--muted); min-height: 2.8em; }
+    .mw .fname.on .fprog { display: block; position: absolute; left: 0; top: 7px; bottom: 11px; width: 2px; border-radius: 1px; background: rgba(20, 20, 20, .08); overflow: hidden; }
+    .mw .fprog i { display: block; width: 100%; height: 100%; background: var(--ink); transform: scaleY(0); transform-origin: 0 0; }
+    /* the stage: one card's screen at a time, laid out at its design width (563px) and scaled up to fit; narrower than that it lays out at its real width */
+    .mw .fstage { min-width: 0; background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05); }
+    /* every tile is the same quiet paper; the colour comes from what is on the screen. The script sets the height: 232px times the scale */
+    .mw .ftile { position: relative; height: 232px; border-radius: 13px; background: #efede8; overflow: hidden; }
+    .mw .fview { position: absolute; left: 0; top: 0; width: 100%; height: 232px; transform-origin: 0 0; }
+    .mw .fcard { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s; }
+    .mw .fcard.on { opacity: 1; visibility: visible; transition: opacity .35s; }
+    .mw .vg { position: absolute; inset: 0; overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
     .mw .vg .lg svg { width: 100%; height: 100%; display: block; }
-    @media (max-width: 1100px) { .mw .bento { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 860px) { .mw .bento { grid-template-columns: 1fr 1fr; } .mw .bx.w2 { grid-column: span 2; } }
-    @media (max-width: 560px) { .mw .bento { grid-template-columns: 1fr; } .mw .bx.w2 { grid-column: span 1; } }
+    /* tablets: the stage on top, the three clusters side by side under it. Phones: one list, and the stage stays pinned while the list scrolls */
+    @media (max-width: 900px) {
+      .mw .bento { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .mw .fstage { order: -1; position: sticky; top: 66px; z-index: 2; }
+      .mw .flist { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
+      .mw .fname { font-size: 18px; }
+    }
+    @media (max-width: 640px) { .mw .flist { grid-template-columns: minmax(0, 1fr); gap: 16px; } .mw .fname { font-size: 20px; } }
+    @media (pointer: coarse) { .mw .fname { padding-top: 9px; padding-bottom: 9px; } .mw .fname.on { padding-bottom: 12px; } .mw .fname.on .fprog { top: 11px; bottom: 14px; } }
+    @media (prefers-reduced-motion: reduce) { .mw .fname.on .fprog { display: none; } .mw .fcard, .mw .fcard.on { transition: none; } }
 
     /* a window on the screen: it starts inside the tile and runs off its edge, like a zoomed screenshot */
     .mw .bw { position: absolute; left: 14px; top: 14px; right: 14px; bottom: -40px; border-radius: 10px; overflow: hidden; background: #fff;
@@ -760,11 +780,12 @@
     .mw .bkt .nd.l > rect { fill: #f1efe9; stroke: #f1efe9; } .mw .bkt .nd.l text { fill: #a6a39b; }
 
     /* any app on your screen */
-    .mw .bp { position: absolute; inset: 0; padding: 0 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; align-content: center; justify-items: center; }
+    .mw .bp { position: absolute; inset: 0; padding: 0 18px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px 13px; align-content: center; justify-items: center; }
     .mw .bp > span { width: 100%; max-width: 50px; aspect-ratio: 1; border-radius: 13px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 18px -12px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .04); transition: transform .4s var(--spring), box-shadow .3s; }
     .mw .bp > span > svg { width: 52%; height: 52%; display: block; }
     .mw .bp > span.on { transform: scale(1.1); box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .25); }
     .mw .bp .termtile { width: 60%; height: 60%; border-radius: 7px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .bp .termtile svg { width: 66%; height: 66%; display: block; }
+    @media (max-width: 560px) { .mw .bp { grid-template-columns: repeat(4, 1fr); gap: 13px; } }
 
     /* ---------- any app: miyagi's card with the apps around it ---------- */
     .mw .oframe { position: relative; width: 100%; max-width: 1040px; aspect-ratio: 1200 / 760; margin: 30px auto 0; overflow: hidden; }
@@ -1380,101 +1401,111 @@
   <div class="mw-hold">
     <h2 class="mw-h" id="what-h">everything it does.</h2>
     <div class="bento" id="bento">
-      <div class="bx w2" id="bA">
-        <div class="vg"><div class="bw ba">
-          <div class="ba-side"><div class="tl"><i></i><i></i><i></i></div><div class="brand"><span class="lg" data-logo></span>miyagi</div>
-            <span class="nv sel"><span class="ico" data-ico="home"></span>Home</span><span class="nv"><span class="ico" data-ico="book"></span>Lessons</span><span class="nv"><span class="ico" data-ico="skills"></span>Skills</span><span class="nv"><span class="ico" data-ico="progress"></span>Progress</span></div>
-          <div class="ba-main"><span class="ba-lab">Learn something new</span>
-            <div class="ba-field"><span class="lg" data-logo></span><span id="aTx"></span><i class="caret"></i></div>
-            <div class="ba-res" id="aRes">
-              <div class="ba-r"><span class="bk"><span class="ico" data-ico="book"></span></span><span class="tx"><b>Just teach me first</b><small>A short lesson before any video</small></span></div>
-              <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/mqdefault.jpg"><span class="tx"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang · 31:28 · 3M views</small></span><em class="tag pink">Best</em></div>
-              <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/aircAruvnKk/mqdefault.jpg"><span class="tx"><b>But what is a neural network? | Deep learning chapter 1</b><small>3Blue1Brown · 18:40 · 25M views</small></span></div>
+      <div class="flist" id="fList">
+        <div class="fgrp">
+          <button type="button" class="fname on" aria-pressed="true"><b>ask for anything</b><span>type a goal or paste a youtube link. it finds the best tutorial.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>any app on your screen</b><span>blender, figma, sheets or vs code. if you can see it, it can teach it.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>sets up your computer</b><span>installs what the lesson needs and opens the project.</span><i class="fprog"><i></i></i></button>
+        </div>
+        <div class="fgrp">
+          <button type="button" class="fname" aria-pressed="false"><b>guides every step</b><span>it says what to do next and circles where to do it.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>waits for you</b><span>every step waits until you've done it, and the video pauses with it.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>checks your work</b><span>it watches every run and tells you when a step passes.</span><i class="fprog"><i></i></i></button>
+        </div>
+        <div class="fgrp">
+          <button type="button" class="fname" aria-pressed="false"><b>helps when you're stuck</b><span>explain, diagram, show me or hint. nudges, not the answer.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>ask about your screen</b><span>stuck mid-step? ask. it answers and points at the spot.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>grows your skills</b><span>every step you pass lands on your skill tree, with reviews.</span><i class="fprog"><i></i></i></button>
+        </div>
+      </div>
+      <div class="fstage"><div class="ftile" id="fTile"><div class="fview" id="fView">
+        <div class="fcard on" id="bA">
+          <div class="vg"><div class="bw ba">
+            <div class="ba-side"><div class="tl"><i></i><i></i><i></i></div><div class="brand"><span class="lg" data-logo></span>miyagi</div>
+              <span class="nv sel"><span class="ico" data-ico="home"></span>Home</span><span class="nv"><span class="ico" data-ico="book"></span>Lessons</span><span class="nv"><span class="ico" data-ico="skills"></span>Skills</span><span class="nv"><span class="ico" data-ico="progress"></span>Progress</span></div>
+            <div class="ba-main"><span class="ba-lab">Learn something new</span>
+              <div class="ba-field"><span class="lg" data-logo></span><span id="aTx"></span><i class="caret"></i></div>
+              <div class="ba-res" id="aRes">
+                <div class="ba-r"><span class="bk"><span class="ico" data-ico="book"></span></span><span class="tx"><b>Just teach me first</b><small>A short lesson before any video</small></span></div>
+                <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/mqdefault.jpg"><span class="tx"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang · 31:28 · 3M views</small></span><em class="tag pink">Best</em></div>
+                <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/aircAruvnKk/mqdefault.jpg"><span class="tx"><b>But what is a neural network? | Deep learning chapter 1</b><small>3Blue1Brown · 18:40 · 25M views</small></span></div>
+              </div>
             </div>
-          </div>
-        </div></div>
-        <b>ask for anything</b><p>type a goal or paste a youtube link. it finds the best tutorial.</p>
-      </div>
-      <div class="bx" id="bS">
-        <div class="vg"><div class="bs">
-          <div class="bs-r"><span class="bs-i" data-tool="python"></span><span class="tx"><b>Python</b><small data-a="Looking for Python…" data-b="3.12 found"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-          <div class="bs-r"><span class="bs-i" data-tool="numpy"></span><span class="tx"><b>numpy</b><small data-a="Installing…" data-b="Installed"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-          <div class="bs-r"><span class="bs-i" data-tool="vscode"></span><span class="tx"><b>VS Code</b><small data-a="Opening the project…" data-b="nn.py open"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-          <div class="bs-r"><span class="bs-i" data-tool="jupyter"></span><span class="tx"><b>Jupyter</b><small data-a="Starting a kernel…" data-b="Kernel ready"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-        </div></div>
-        <b>sets up your computer</b><p>installs what the lesson needs and opens the project.</p>
-      </div>
-      <div class="bx" id="bG">
-        <div class="vg"><div class="bw dk off"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
-          <div class="bw-src">
-            <div><span class="n">3</span><span>data = np.load(<span class="hs">"digits.npz"</span>)</span></div>
-            <div><span class="n">4</span><span>X, Y = data[<span class="hs">"x"</span>] / <span class="hm">255</span>, data[<span class="hs">"y"</span>]</span></div>
-            <div><span class="n">5</span><span></span></div>
-            <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
-            <div class="act"><span class="n">7</span><span>    W1 = <span id="gTyp"></span><i class="ecaret"></i></span></div>
           </div></div>
-          <div class="bring" id="gRing"></div>
-          <div class="bcall" id="gCall"><b><span class="glg" data-logo="dark"></span>Your turn</b>Set up W1 on this line.</div></div>
-        <b>guides every step</b><p>it says what to do next and circles where to do it.</p>
-      </div>
-      <div class="bx" id="bW">
-        <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="bw-url">youtube.com/watch?v=w8yWXqWQYmU</span></div>
-          <div class="bv"><img id="wF0" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq1.jpg"><img class="on" id="wF1" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq2.jpg">
-            <div class="bv-gate on" id="wGate"><span class="ico" data-ico="lock"></span><b>Your turn</b><small>The video waits for you.</small></div>
-            <div class="bv-bar"><i id="wBar"></i></div></div>
-          <div class="bv-t"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang</small></div>
-        </div></div>
-        <b>waits for you</b><p>every step waits until you've done it, and the video pauses with it.</p>
-      </div>
-      <div class="bx" id="bC">
-        <div class="vg"><div class="bpill"><span class="lg" data-logo="dark"></span><span class="st" id="cSt0"><i class="ring"></i></span><span class="st" id="cSt1"><span class="bars"><i></i><i></i><i></i></span></span><span class="st on" id="cSt2"><i class="gd"></i></span><span id="cPt">Step passed</span></div>
-          <div class="bw dk off bt"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">digits — -zsh</span></div><pre id="cTerm"></pre></div></div>
-        <b>checks your work</b><p>it watches every run and tells you when a step passes.</p>
-      </div>
-      <div class="bx w2" id="bH">
-        <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
-          <div class="bw-src">
-            <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
-            <div class="act"><span class="n">7</span><span>    <span id="hCode">W1 = np.zeros((<span class="hm">10</span>, <span class="hm">784</span>))</span></span></div>
-            <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-            <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
-            <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-            <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
-            <div><span class="n">12</span><span></span></div>
-            <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
-          </div><div class="bring bsp" id="hRing"></div></div>
-          <div class="bny on" id="hNy">
-            <div class="cl"><div class="ch"><i></i>Not yet</div><b>Your hidden layer never learns</b><p id="hTx"></p>
-              <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>
-            <div class="cr"><div class="cmp"><small>Yours</small><code>acc 0.11</code></div><div class="cmp"><small>Expected</small><code>acc above 0.80</code></div></div>
+        </div>
+        <div class="fcard" id="bP">
+          <div class="vg"><div class="bp" id="pApps"></div></div>
+        </div>
+        <div class="fcard" id="bS">
+          <div class="vg"><div class="bs">
+            <div class="bs-r"><span class="bs-i" data-tool="python"></span><span class="tx"><b>Python</b><small data-a="Looking for Python…" data-b="3.12 found"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
+            <div class="bs-r"><span class="bs-i" data-tool="numpy"></span><span class="tx"><b>numpy</b><small data-a="Installing…" data-b="Installed"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
+            <div class="bs-r"><span class="bs-i" data-tool="vscode"></span><span class="tx"><b>VS Code</b><small data-a="Opening the project…" data-b="nn.py open"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
+            <div class="bs-r"><span class="bs-i" data-tool="jupyter"></span><span class="tx"><b>Jupyter</b><small data-a="Starting a kernel…" data-b="Kernel ready"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
           </div></div>
-        <b>helps when you're stuck</b><p>explain, diagram, show me or hint. nudges, not the answer.</p>
-      </div>
-      <div class="bx w2" id="bQ">
-        <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
-          <div class="bw-src">
-            <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
-            <div class="act"><span class="n">7</span><span>    W1 = np.random.rand(<span class="hm">10</span>, <span class="hm" id="qTok">784</span>) - <span class="hm">0.5</span></span></div>
-            <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-            <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
-            <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-            <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
-            <div><span class="n">12</span><span></span></div>
-            <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
+        </div>
+        <div class="fcard" id="bG">
+          <div class="vg"><div class="bw dk off"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
+            <div class="bw-src">
+              <div><span class="n">3</span><span>data = np.load(<span class="hs">"digits.npz"</span>)</span></div>
+              <div><span class="n">4</span><span>X, Y = data[<span class="hs">"x"</span>] / <span class="hm">255</span>, data[<span class="hs">"y"</span>]</span></div>
+              <div><span class="n">5</span><span></span></div>
+              <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
+              <div class="act"><span class="n">7</span><span>    W1 = <span id="gTyp"></span><i class="ecaret"></i></span></div>
+            </div></div>
+            <div class="bring" id="gRing"></div>
+            <div class="bcall" id="gCall"><b><span class="glg" data-logo="dark"></span>Your turn</b>Set up W1 on this line.</div></div>
+        </div>
+        <div class="fcard" id="bW">
+          <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="bw-url">youtube.com/watch?v=w8yWXqWQYmU</span></div>
+            <div class="bv"><img id="wF0" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq1.jpg"><img class="on" id="wF1" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq2.jpg">
+              <div class="bv-gate on" id="wGate"><span class="ico" data-ico="lock"></span><b>Your turn</b><small>The video waits for you.</small></div>
+              <div class="bv-bar"><i id="wBar"></i></div></div>
+            <div class="bv-t"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang</small></div>
           </div></div>
-          <div class="bring" id="qRing"></div>
-          <div class="bcall" id="qCall"><b><span class="glg" data-logo="dark"></span>Why 784?</b>Each digit is 28 × 28 pixels, flattened.</div>
-          <div class="bask" id="qAsk"><span class="lg" data-logo></span><span class="tx" id="qTx">ask miyagi</span><span class="kc" data-kc></span></div></div>
-        <b>ask about your screen</b><p>stuck mid-step? ask. it answers and points at the spot.</p>
-      </div>
-      <div class="bx" id="bK">
-        <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">Skills</span></div><svg class="bkt" id="kTree" viewBox="0 0 253 172" aria-hidden="true"></svg></div></div>
-        <b>grows your skills</b><p>every step you pass lands on your skill tree, with reviews.</p>
-      </div>
-      <div class="bx" id="bP">
-        <div class="vg"><div class="bp" id="pApps"></div></div>
-        <b>any app on your screen</b><p>blender, figma, sheets or vs code. if you can see it, it can teach it.</p>
-      </div>
+        </div>
+        <div class="fcard" id="bC">
+          <div class="vg"><div class="bpill"><span class="lg" data-logo="dark"></span><span class="st" id="cSt0"><i class="ring"></i></span><span class="st" id="cSt1"><span class="bars"><i></i><i></i><i></i></span></span><span class="st on" id="cSt2"><i class="gd"></i></span><span id="cPt">Step passed</span></div>
+            <div class="bw dk off bt"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">digits — -zsh</span></div><pre id="cTerm"></pre></div></div>
+        </div>
+        <div class="fcard" id="bH">
+          <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
+            <div class="bw-src">
+              <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
+              <div class="act"><span class="n">7</span><span>    <span id="hCode">W1 = np.zeros((<span class="hm">10</span>, <span class="hm">784</span>))</span></span></div>
+              <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+              <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
+              <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+              <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
+              <div><span class="n">12</span><span></span></div>
+              <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
+            </div><div class="bring bsp" id="hRing"></div></div>
+            <div class="bny on" id="hNy">
+              <div class="cl"><div class="ch"><i></i>Not yet</div><b>Your hidden layer never learns</b><p id="hTx"></p>
+                <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>
+              <div class="cr"><div class="cmp"><small>Yours</small><code>acc 0.11</code></div><div class="cmp"><small>Expected</small><code>acc above 0.80</code></div></div>
+            </div></div>
+        </div>
+        <div class="fcard" id="bQ">
+          <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
+            <div class="bw-src">
+              <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
+              <div class="act"><span class="n">7</span><span>    W1 = np.random.rand(<span class="hm">10</span>, <span class="hm" id="qTok">784</span>) - <span class="hm">0.5</span></span></div>
+              <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+              <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
+              <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
+              <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
+              <div><span class="n">12</span><span></span></div>
+              <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
+            </div></div>
+            <div class="bring" id="qRing"></div>
+            <div class="bcall" id="qCall"><b><span class="glg" data-logo="dark"></span>Why 784?</b>Each digit is 28 × 28 pixels, flattened.</div>
+            <div class="bask" id="qAsk"><span class="lg" data-logo></span><span class="tx" id="qTx">ask miyagi</span><span class="kc" data-kc></span></div></div>
+        </div>
+        <div class="fcard" id="bK">
+          <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">Skills</span></div><svg class="bkt" id="kTree" viewBox="0 0 253 172" aria-hidden="true"></svg></div></div>
+        </div>
+      </div></div></div>
     </div>
   </div>
 </section>
@@ -2278,7 +2309,7 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         el.addEventListener('click', function () { showEx(k, true); });
       });
 
-      /* ---------- everything it does: nine crops of the real screen. Each rests on its finished frame; one plays at a time, in reading order, and the card under the pointer goes first ---------- */
+      /* ---------- everything it does: nine names in a side list and one stage. The open name's screen plays, then the next one opens; a click opens any of them ---------- */
       var bento = $('#bento'), bT = 0;
       // where a piece sits inside its tile (the tile is the first positioned box above the window)
       function bIn(el, vg) { var x = 0, y = 0, e = el; while (e && e !== vg) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y, el.offsetWidth, el.offsetHeight]; }
@@ -2371,37 +2402,44 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         qc.style.left = lx + 'px'; qc.style.top = (k[1] + k[3] + 13) + 'px'; qc.style.setProperty('--nx', clamp(k[0] + k[2] / 2 - lx - 5, 12, cw - 22) + 'px');
       }
 
-      var BC2 = [[cardA, 5], [cardS, 4.8], [cardG, 5], [cardW, 4.8], [cardC, 5], [cardH, 5.2], [cardQ, 5], [cardK, 4.4], [cardP, 4.4]],
-        bEls = $$('#bento > .bx'), bCur = -1, bU = 0, bHov = -1;
+      // list order: starting (ask, any app, setup), learning (guide, wait, check), keeping going (stuck, ask, skills)
+      var BC2 = [[cardA, 5], [cardP, 4.4], [cardS, 4.8], [cardG, 5], [cardW, 4.8], [cardC, 5], [cardH, 5.2], [cardQ, 5], [cardK, 4.4]], HI = 6,
+        bEls = $$('#fView > .fcard'), fBtns = $$('#fList .fname'), fBars = $$('#fList .fprog > i'), fTile = $('#fTile'), fView = $('#fView'),
+        bCur = 0, bU = 0, bHov = false, bBegun = false;
       function bRest(i) { BC2[i][0](BC2[i][1]); }
       function bSeen(el) { var r = el.getBoundingClientRect(), m = (r.top + r.bottom) / 2; return m > 0 && m < innerHeight; }
-      function bGo(i) { if (bCur >= 0) bRest(bCur); bCur = i; bU = 0; bPlace(); }
-      // the next card that is on screen (so the one playing is always one you can see)
-      function bNext() { for (var k = 1; k <= BC2.length; k++) { var i = (bCur + k) % BC2.length; if (bSeen(bEls[i])) return i; } return (bCur + 1) % BC2.length; }
-      // from the console: mwalk.bento() rests every card and stops the tour, mwalk.bento(i, u) shows card i at u seconds (or pass a list of nine times), mwalk.bento('play') starts it again
-      var bFroze = false;
-      function bentoShow(i, u) { bFroze = i !== 'play'; if (!bFroze) return; BC2.forEach(function (c, k) { bRest(k); }); bCur = -1; bPlace(); if (i && i.length) i.forEach(function (v, k) { BC2[k][0](v); }); else if (i >= 0) BC2[i][0](u == null ? BC2[i][1] : u); }
-      function bentoTick(dt) {
-        if (bFroze) return;
-        bT += dt;
-        if (bCur < 0) bGo(bSeen(bEls[0]) ? 0 : bNext());
-        bU += dt; var d = BC2[bCur][1];
-        if (bU >= d) {
-          if (bCur === 5 && bT < hUntil) bU = d;               // a chip you picked stays up
-          else if (bHov === bCur) { if (bU >= d + 1.4) bU = 0; }   // under the pointer: play it again
-          else bGo(bNext());
-        }
-        BC2[bCur][0](Math.min(bU, BC2[bCur][1]));
+      function fBar(v) { fBars[bCur].style.transform = 'scaleY(' + v + ')'; }
+      function fSel(i) {
+        bEls.forEach(function (el, k) { on(el, k === i); });
+        fBtns.forEach(function (b, k) { on(b, k === i); b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
       }
-      bEls.forEach(function (el, i) {
-        el.addEventListener('pointerenter', function () { bHov = i; if (!reduce && i !== bCur && bT >= hUntil) bGo(i); });
-        el.addEventListener('pointerleave', function () { if (bHov === i) bHov = -1; });
-      });
-      hChips.forEach(function (b, i) { b.addEventListener('click', function () { if (bCur !== 5) bGo(5); hSel = i; hUntil = bT + 12; bU = BC2[5][1]; cardH(bU); }); });
-      BC2.forEach(function (c, i) { bRest(i); }); bPlace();
-      addEventListener('resize', bPlace);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(bPlace);
-      // The orbit and the bento move from the film's frame loop, only while they're on screen.
+      function bGo(i) { if (bCur !== i) bRest(bCur); bCur = i; bU = 0; fSel(i); fBar(0); bPlace(); if (reduce) bRest(i); }
+      // the stage draws at 563px wide and scales up to its tile; a tile narrower than that (phones) lays out at its own width
+      function fFit() { var w = fTile.clientWidth, s = Math.max(1, w / 563); fView.style.width = (w / s) + 'px'; fView.style.transform = s > 1 ? 'scale(' + s + ')' : ''; fTile.style.height = (232 * s) + 'px'; bPlace(); }
+      // from the console: mwalk.bento() rests every card and stops the tour, mwalk.bento(i, u) opens card i at u seconds, mwalk.bento('play') starts it again
+      var bFroze = false;
+      function bentoShow(i, u) { bFroze = i !== 'play'; if (!bFroze) return; BC2.forEach(function (c, k) { bRest(k); }); bPlace();
+        if (i >= 0) { bCur = i; fSel(i); BC2[i][0](u == null ? BC2[i][1] : u); fBar(u == null ? 1 : Math.min(1, u / BC2[i][1])); } }
+      function bentoTick(dt) {
+        if (bFroze || !bSeen(fTile)) return;                        // only while the stage itself is on screen
+        if (!bBegun) { bBegun = true; bU = 0; }
+        bT += dt; bU += dt; var d = BC2[bCur][1];
+        if (bU >= d) {
+          if (bCur === HI && bT < hUntil) bU = d;                    // a chip you picked stays up
+          else if (bHov) { if (bU >= d + 1.4) bU = 0; }              // the pointer is on the section: stay on this one and play it again
+          else bGo((bCur + 1) % BC2.length);
+        }
+        var u = Math.min(bU, BC2[bCur][1]);
+        BC2[bCur][0](u); fBar(u / BC2[bCur][1]);
+      }
+      bento.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') bHov = true; });
+      bento.addEventListener('pointerleave', function () { bHov = false; });
+      fBtns.forEach(function (b, i) { b.addEventListener('click', function () { bFroze = false; bBegun = true; hUntil = -1; bGo(i); }); });
+      hChips.forEach(function (b, i) { b.addEventListener('click', function () { if (bCur !== HI) bGo(HI); hSel = i; hUntil = bT + 12; bU = BC2[HI][1]; cardH(bU); fBar(1); }); });
+      BC2.forEach(function (c, i) { bRest(i); }); fSel(0); fFit();
+      addEventListener('resize', fFit);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fFit);
+      // The orbit and the features move from the film's frame loop, only while they're on screen.
       function inView(e) { var r = e.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
       var oframeEl = $('#oframe');
       function sideTick(dt) {
