@@ -731,7 +731,7 @@
     .mw .bs-i { width: 28px; height: 28px; border-radius: 8px; background: #efede7; display: grid; place-items: center; flex: none; } .mw .bs-i svg { width: 17px; height: 17px; display: block; }
     .mw .bs-r .tx { flex: 1; min-width: 0; } .mw .bs-r b { display: block; font-weight: 500; font-size: 13px; line-height: 1.25; } .mw .bs-r small { display: block; color: #75726b; font-size: 11.5px; line-height: 1.3; }
     .mw .bs-r .spin { color: #75726b; }
-    .mw .bs-r .ok { width: 15px; height: 15px; display: none; } .mw .bs-r.done .ok { display: block; } .mw .bs-r.done .spin { display: none; }
+    .mw .bs-r .ok { width: 15px; height: 15px; display: none; color: #1f9b45; } .mw .bs-r.done .ok { display: block; } .mw .bs-r.done .spin { display: none; }
 
     /* waits for you: the tutorial in the browser, held at the gate */
     .mw .bw-url { flex: 1; min-width: 0; height: 17px; margin: 0 24px 0 12px; border-radius: 5px; background: #e7e4dc; color: #75726b; font-size: 10.5px; line-height: 17px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
@@ -752,22 +752,46 @@
     .mw .bt .ecaret { height: 14px; }
 
     /* helps when you're stuck: the Not yet card over the code */
-    .mw .bny { position: absolute; right: 26px; bottom: 14px; width: 420px; max-width: calc(100% - 28px); display: flex; gap: 12px; padding: 12px 13px; border-radius: 13px; background: #fff; color: #1c1b19;
+    .mw .bny { position: absolute; right: 26px; bottom: 8px; width: 420px; max-width: calc(100% - 28px); display: flex; gap: 12px; padding: 10px 13px; border-radius: 13px; background: #fff; color: #1c1b19;
       box-shadow: 0 0 0 1px rgba(20, 20, 20, .05), 0 22px 44px -18px rgba(0, 0, 0, .65); transition: opacity .35s, transform .5s var(--spring); }
     .mw .bny:not(.on) { opacity: 0; transform: translateY(12px) scale(.97); pointer-events: none; }
-    .mw .bny .cl { flex: 1; min-width: 0; } .mw .bny .cr { width: 118px; flex: none; display: flex; flex-direction: column; gap: 6px; }
+    .mw .bny .cl { flex: 1; min-width: 0; } .mw .bny .cr { position: relative; width: 132px; flex: none; }
     .mw .bny .ch { display: flex; gap: 7px; align-items: center; font-size: 11.5px; line-height: 15px; color: #75726b; font-weight: 500; }
     .mw .bny .ch i { width: 10px; height: 10px; border-radius: 50%; border: 1.7px solid #1c1b19; }
-    .mw .bny .cl > b { display: block; font-size: 14.5px; line-height: 20px; font-weight: 600; letter-spacing: -.01em; margin: 4px 0 2px; white-space: nowrap; }
-    .mw .bny p { margin: 0; color: #75726b; font-size: 12px; line-height: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .mw .bny .chips { margin-top: 9px; gap: 5px; flex-wrap: nowrap; }
+    .mw .bny .cl > b { display: block; font-size: 14.5px; line-height: 20px; font-weight: 600; letter-spacing: -.01em; margin: 3px 0 1px; white-space: nowrap; }
+    .mw .bny p { margin: 0; color: #75726b; font-size: 12px; line-height: 16px; height: 32px; overflow: hidden; }
+    .mw .bny .chips { margin-top: 8px; gap: 5px; flex-wrap: nowrap; }
     .mw .bny .chips button { font-size: 11.5px; line-height: 16px; padding: 5px 8px; border-radius: 7px; color: #1b1b1b; white-space: nowrap; transition: transform .2s, box-shadow .2s; }
     .mw .bny .chips button.sky { background: var(--sky); } .mw .bny .chips button.mint { background: var(--mint); } .mw .bny .chips button.lilac { background: var(--lilac); } .mw .bny .chips button.pink { background: var(--pink); }
     .mw .bny .chips button.on { box-shadow: 0 0 0 2px #1c1b19; } .mw .bny .chips button:hover { transform: translateY(-1px); }
     .mw .bny .cmp { flex: 1; border-radius: 8px; background: #f3f1ec; padding: 6px 9px; display: flex; flex-direction: column; justify-content: center; }
     .mw .bny .cmp small { display: block; font-size: 10.5px; color: #75726b; } .mw .bny .cmp code { font: 11.5px var(--mono); color: #1c1b19; white-space: nowrap; }
     /* Phones: the card is as wide as the window, so the lines it would cut through are left out. */
-    @media (max-width: 560px) { .mw .bny { right: 14px; } .mw .bny .cr { display: none; } .mw #bH .bw-src > div:nth-child(n+3) { visibility: hidden; } }
+    /* what each chip does (data-v on the card: -1 none, 0 Explain, 1 Diagram, 2 Show me, 3 Hint). The right side is the answer: the comparison, the drawing, or the lesson's code */
+    .mw .bny .hp { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 6px; opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s; }
+    .mw .bny[data-v="-1"] .hp-cmp, .mw .bny[data-v="3"] .hp-cmp, .mw .bny[data-v="1"] .hp-dg, .mw .bny[data-v="2"] .hp-sm { opacity: 1; visibility: visible; transition: opacity .25s; }
+    .mw .bny[data-v="0"] .cr { display: none; }                 /* Explain: the words take the whole card */
+    .mw .bny .hp-dg, .mw .bny .hp-sm { border-radius: 8px; background: #f3f1ec; }
+    .mw .bny .hp-dg { padding: 5px 4px; align-items: center; }
+    .mw .hdg { display: block; height: 100%; max-width: 100%; overflow: visible; }
+    .mw .hdg .e { fill: none; stroke: #1c1b19; stroke-opacity: .42; stroke-width: 1.2; stroke-dasharray: 46; stroke-dashoffset: 46; }
+    .mw .hdg .n { opacity: 0; }
+    .mw .hdg .n rect, .mw .hdg .n circle { fill: #fff; stroke: #1c1b19; stroke-width: 1.3; }
+    .mw .hdg text { font: 500 10.5px var(--font); fill: #1c1b19; text-anchor: middle; }
+    .mw .bny[data-v="1"] .hdg .n { opacity: 1; transition: opacity .3s; }
+    .mw .bny[data-v="1"] .hdg .n.h { transition-delay: .4s; } .mw .bny[data-v="1"] .hdg .n.o { transition-delay: 1s; }
+    .mw .bny[data-v="1"] .hdg .e { stroke-dashoffset: 0; transition: stroke-dashoffset .45s ease-out .1s; }
+    .mw .bny[data-v="1"] .hdg .e.b { transition-delay: .65s; }
+    .mw .bny .hp-sm { padding: 8px 10px; justify-content: center; gap: 5px; }
+    .mw .bny .hp-sm small { display: block; font-size: 10.5px; color: #75726b; } .mw .bny .hp-sm code { font: 11.5px/16px var(--mono); color: #1c1b19; white-space: pre; }
+    /* Phones: the card is as wide as the window, so the lines it would cut through are left out. The comparison goes; the drawing takes the words' place */
+    @media (max-width: 560px) {
+      .mw .bny { right: 14px; flex-direction: column; gap: 0; } .mw .bny .cl { display: contents; }
+      .mw .bny .ch { order: 1; } .mw .bny .cl > b { order: 2; } .mw .bny p { order: 3; } .mw .bny .cr { order: 4; display: none; width: 100%; height: 96px; margin-top: 4px; } .mw .bny .chips { order: 5; }
+      .mw .bny[data-v="1"] .cr { display: block; } .mw .bny[data-v="1"] p { display: none; }
+      .mw #bH .bw-src > div:nth-child(n+3) { visibility: hidden; }
+    }
+    @media (prefers-reduced-motion: reduce) { .mw .bny .hp, .mw .bny[data-v] .hdg .n, .mw .bny[data-v] .hdg .e { transition: none; } }
 
     /* grows your skills: the Skills map */
     .mw .bkt { display: block; width: 100%; max-width: 253px; margin: 7px auto 0; overflow: visible; }
@@ -1480,10 +1504,11 @@
               <div><span class="n">12</span><span></span></div>
               <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
             </div><div class="bring bsp" id="hRing"></div></div>
-            <div class="bny on" id="hNy">
+            <div class="bny on" id="hNy" data-v="-1">
               <div class="cl"><div class="ch"><i></i>Not yet</div><b>Your hidden layer never learns</b><p id="hTx"></p>
                 <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>
-              <div class="cr"><div class="cmp"><small>Yours</small><code>acc 0.11</code></div><div class="cmp"><small>Expected</small><code>acc above 0.80</code></div></div>
+              <div class="cr"><div class="hp hp-cmp"><div class="cmp"><small>Yours</small><code>acc 0.11</code></div><div class="cmp"><small>Expected</small><code>acc above 0.80</code></div></div><div class="hp hp-dg"><svg class="hdg" id="hDg" viewBox="0 0 132 105" aria-hidden="true"></svg></div><div class="hp hp-sm"><small>The lesson's W1</small><code>np.random.rand(
+  10, 784) - 0.5</code></div></div>
             </div></div>
         </div>
         <div class="fcard" id="bQ">
@@ -2351,13 +2376,21 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         on($('#cSt0'), st === 0); on($('#cSt1'), st === 1); on($('#cSt2'), st === 2);
         if ($('#cPt').textContent !== tx) $('#cPt').textContent = tx;
       }
-      // helps when you're stuck: each chip is a different nudge (they take clicks)
-      var H0 = 'W1 starts at zero, so every unit outputs 0.',
-        HT = ["Zeros in, zeros out. The layer can't learn.", 'Draws your layer: four units, all the same.', 'Circled above: where W1 starts at zero.', 'Start W1 small and random, like W2.'];
-      var hSel = -1, hUntil = -1, hChips = $$('#hChips button');
+      // helps when you're stuck: each chip does its own thing, and they take clicks. Explain types the why, Diagram draws the layer,
+      // Show me circles the line and brings the lesson's code, Hint nudges. Left alone, it presses Diagram and then Show me.
+      var H0 = 'If every unit starts the same, can they ever become different?',
+        HT = ['All ten units start the same and get the same update, so they stay copies of each other.', 'Your hidden layer, drawn. Every unit is a copy.',
+          "Circled above. Swap the zeros for the lesson's line.", 'W2, two lines down, already starts the right way.'];
+      var hSel = -1, hUntil = -1, hAt = 0, hV = null, hChips = $$('#hChips button'), hNy = $('#hNy'), HCY = [14.5, 39.8, 65.2, 90.5];
+      $('#hDg').innerHTML = HCY.map(function (y) { return '<path class="e" d="M35 52.5L56 ' + y + '"/>'; }).join('') + HCY.map(function (y) { return '<path class="e b" d="M76 ' + y + 'L97 52.5"/>'; }).join('') +
+        '<g class="n"><rect x="1" y="40.5" width="34" height="24" rx="7"/><text x="18" y="56.3">784</text></g>' +
+        HCY.map(function (y) { return '<g class="n h"><circle cx="66" cy="' + y + '" r="10"/><text x="66" y="' + (y + 3.7) + '">0</text></g>'; }).join('') +
+        '<g class="n o"><rect x="97" y="40.5" width="34" height="24" rx="12"/><text x="114" y="56.3">out</text></g>';
       function cardH(u) {
-        var s = bT < hUntil ? hSel : u > 2.2 ? 2 : -1, tx = s < 0 ? H0 : HT[s];
-        on($('#hNy'), u > .3 || bT < hUntil); hChips.forEach(function (b, k) { on(b, k === s); });
+        var held = bT < hUntil, s = held ? hSel : u > 4 ? 2 : u > 1.5 ? 1 : -1, t = held ? (reduce ? 9 : bT - hAt) : u - (s === 2 ? 4 : 1.5),
+          tx = s < 0 ? H0 : s === 0 ? typed(HT[0], 0, 1.4, t) : HT[s];
+        on(hNy, u > .3 || held); hChips.forEach(function (b, k) { on(b, k === s); });
+        if (hV !== s) { hV = s; hNy.setAttribute('data-v', s); }
         if ($('#hTx').textContent !== tx) $('#hTx').textContent = tx;
         on($('#hRing'), s === 2);
       }
@@ -2403,7 +2436,7 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       }
 
       // list order: starting (ask, any app, setup), learning (guide, wait, check), keeping going (stuck, ask, skills)
-      var BC2 = [[cardA, 5], [cardP, 4.4], [cardS, 4.8], [cardG, 5], [cardW, 4.8], [cardC, 5], [cardH, 5.2], [cardQ, 5], [cardK, 4.4]], HI = 6,
+      var BC2 = [[cardA, 5], [cardP, 4.4], [cardS, 4.8], [cardG, 5], [cardW, 4.8], [cardC, 5], [cardH, 6.6], [cardQ, 5], [cardK, 4.4]], HI = 6,
         bEls = $$('#fView > .fcard'), fBtns = $$('#fList .fname'), fBars = $$('#fList .fprog > i'), fTile = $('#fTile'), fView = $('#fView'),
         bCur = 0, bU = 0, bHov = false, bBegun = false;
       function bRest(i) { BC2[i][0](BC2[i][1]); }
@@ -2435,7 +2468,7 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       bento.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') bHov = true; });
       bento.addEventListener('pointerleave', function () { bHov = false; });
       fBtns.forEach(function (b, i) { b.addEventListener('click', function () { bFroze = false; bBegun = true; hUntil = -1; bGo(i); }); });
-      hChips.forEach(function (b, i) { b.addEventListener('click', function () { if (bCur !== HI) bGo(HI); hSel = i; hUntil = bT + 12; bU = BC2[HI][1]; cardH(bU); fBar(1); }); });
+      hChips.forEach(function (b, i) { b.addEventListener('click', function () { if (bCur !== HI) bGo(HI); hSel = i; hAt = bT; hUntil = bT + 12; bU = BC2[HI][1]; cardH(bU); fBar(1); }); });
       BC2.forEach(function (c, i) { bRest(i); }); fSel(0); fFit();
       addEventListener('resize', fFit);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(fFit);
