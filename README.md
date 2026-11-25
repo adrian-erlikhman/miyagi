@@ -38,6 +38,14 @@ The code keeps casual visitors out. It doesn't lock the files themselves: the re
 - Mac: release `mac`, asset `Miyagi-Mac.zip` (Apple silicon, macOS 13+), from CI's `mac-zip` artifact, posted by the Windows sync agent. `var MAC_READY = true` keeps the button on; set it to `false` only to pull the Mac build.
 - Windows: release `windows`, asset `Miyagi-Windows-Setup.exe` (Windows 10 and 11), rebuilt and re-uploaded by the Windows sync agent when the app changes.
 
+## Search engines
+
+What a search engine reads is in the `<head>` of `index.html`: the title, the description, the canonical link, and one JSON-LD block (site name, the app, and the questions). `robots.txt` allows every crawler and points to `sitemap.xml`, which lists the three pages.
+
+- The JSON-LD questions must match the "questions." section word for word. Change both together.
+- Add a new page to `sitemap.xml` and give it its own `<link rel="canonical">`.
+- Don't link the GitHub releases from here: downloads are behind a code.
+
 ## DNS (at Porkbun, the registrar)
 
 | Type | Host | Value |

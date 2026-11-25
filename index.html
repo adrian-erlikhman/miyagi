@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>miyagi</title>
-  <meta name="description" content="miyagi pauses the video at every step and waits until you've done it.">
+  <title>miyagi · turn any tutorial into a lesson you do</title>
+  <meta name="description" content="learn by doing. miyagi turns any tutorial into a lesson. the video pauses at every step, waits until you've done it, and checks your work. for mac.">
+  <link rel="canonical" href="https://miyagi.study/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#f6f6f3">
+  <meta property="og:site_name" content="miyagi">
   <meta property="og:title" content="miyagi">
   <meta property="og:description" content="learn by doing.">
   <meta property="og:url" content="https://miyagi.study/">
@@ -16,6 +19,79 @@
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://miyagi.study/og-image.png?v=5">
+  <!-- What search engines read about miyagi: the site's name, what the app is, and the questions from the page.
+       The FAQPage answers must stay word for word the same as the "questions." section below. Change both together. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://miyagi.study/#website",
+        "url": "https://miyagi.study/",
+        "name": "miyagi",
+        "alternateName": ["miyagi.study", "miyagi app"],
+        "description": "miyagi turns any tutorial into a lesson you do.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://miyagi.study/#org" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://miyagi.study/#org",
+        "name": "miyagi",
+        "url": "https://miyagi.study/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://miyagi.study/apple-touch-icon.png"
+        },
+        "email": "support@miyagi.study",
+        "sameAs": ["https://devpost.com/software/miyagi-x5cw4g"]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://miyagi.study/#app",
+        "name": "miyagi",
+        "url": "https://miyagi.study/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "macOS 13 or later, Apple silicon",
+        "description": "An app that turns any tutorial into a lesson you do. The video waits until you've done each step, and miyagi checks it.",
+        "image": "https://miyagi.study/og-image.png?v=5",
+        "publisher": { "@id": "https://miyagi.study/#org" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://miyagi.study/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "what is miyagi?",
+            "acceptedAnswer": { "@type": "Answer", "text": "an app that turns any tutorial into a lesson you do. the video waits until you've done each step, and miyagi checks it." }
+          },
+          {
+            "@type": "Question",
+            "name": "which apps does it work with?",
+            "acceptedAnswer": { "@type": "Answer", "text": "anything on your screen. vs code, jupyter and your terminal get deeper checks, since miyagi can run your code." }
+          },
+          {
+            "@type": "Question",
+            "name": "is it watching my screen all the time?",
+            "acceptedAnswer": { "@type": "Answer", "text": "no. it only looks during a lesson, to check your step. those screenshots go to anthropic's claude, the ai that checks your work, so close private apps first." }
+          },
+          {
+            "@type": "Question",
+            "name": "what do i need?",
+            "acceptedAnswer": { "@type": "Answer", "text": "a mac with apple silicon on macos 13 or later, for now. windows comes later." }
+          },
+          {
+            "@type": "Question",
+            "name": "how do i get it?",
+            "acceptedAnswer": { "@type": "Answer", "text": "it's coming soon for public access. join the waitlist and we'll email you when it opens. have a code? enter it at the top of the page." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
