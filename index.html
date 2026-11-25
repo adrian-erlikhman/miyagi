@@ -984,6 +984,15 @@
     .mw .ologo .termtile svg { width: 25px; height: 25px; }
     .mw .ologo.nm { width: auto; height: 40px; padding: 0 15px; border-radius: 13px; white-space: nowrap; font-size: 15px; font-weight: 500; letter-spacing: -.015em; color: var(--muted); }
     .mw .ologo.nm.tap { height: 46px; color: var(--ink); font-weight: 600; }
+    /* An owner's own logo file anywhere else on the page: the same file, with the mark its owner asks for beside it. */
+    .mw .ownm { position: relative; display: block; line-height: 0; }
+    .mw .ownm img { display: block; object-fit: contain; }
+    .mw .ownm sup { position: absolute; left: 100%; top: -3px; font-size: 10px; line-height: 1; color: var(--muted); transform: scale(.6); transform-origin: 0 0; }
+    .mw .sc .lg .ownm img { width: 18px; height: 18px; }
+    .mw .bs-i .ownm img { width: 17px; height: 17px; }
+    .mw .bp > span > .ownm { width: 52%; height: 52%; } .mw .bp .ownm img { width: 100%; height: 100%; }
+    .mw .cc .lg .ownm img { width: 30px; height: 30px; } .mw .cstage.pt .cc .lg .ownm img { width: 26px; height: 26px; }
+    .mw .cpanel .srow .sic .ownm img { width: 16px; height: 16px; }
     .mw .ocard { position: absolute; z-index: 2; left: 410px; top: 120px; width: 380px; height: 520px; background: #fff; border-radius: 18px; overflow: hidden;
       box-shadow: 0 30px 70px -30px rgba(20, 16, 10, .45), 0 0 0 1px rgba(20, 20, 20, .06); }
     .mw .ocard canvas { display: block; width: 100%; height: 124px; }
@@ -2114,11 +2123,16 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         davinciresolve: '#233A51', overleaf: '#47A141', googlesheets: '#34A853', adobephotoshop: '#31A8FF', canva: '#00C4CC', swift: '#F05138', apple: '#000000' };
       function icon(n) { return '<svg viewBox="0 0 24 24" ' + S + ' aria-hidden="true">' + ICO[n] + '</svg>'; }
       function brand(n) { return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="' + BC[n] + '" d="' + SI[n] + '"/></svg>'; }
-      function tool(n) {
+      // These four owners let their logo say "works with" if it is their own file, unaltered. So wherever the page shows one of them
+      // (outside the redrawn app windows) it is the file from /logos/ as its owner publishes it: [file, the mark the owner asks for beside it].
+      // Credits are in /terms/ (section 8). Do not redraw or recolor them.
+      var OWN = { python: ['/logos/python.svg', '\u2122'], jupyter: ['/logos/jupyter.svg', '\u00ae'], godotengine: ['/logos/godot.svg'], tensorflow: ['/logos/tensorflow.svg'] };
+      function glyph(n) {
         if (n === 'vscode') return VSCODE.replace('<svg ', '<svg aria-hidden="true" ');
         if (n === 'terminal') return '<span class="termtile">' + icon('term') + '</span>';
         return brand(n);
       }
+      function tool(n) { return OWN[n] ? '<span class="ownm"><img src="' + OWN[n][0] + '" alt="">' + (OWN[n][1] ? '<sup>' + OWN[n][1] + '</sup>' : '') + '</span>' : glyph(n); }
       var treeN = 0;
       function tree() { treeN++; return TREE.replace(/-w"/g, '-w' + treeN + '"').replace(/-w\)/g, '-w' + treeN + ')'); }
       // The site's own logo (the bonsai from the top bar), drawn once as two symbols and used everywhere.
@@ -2133,7 +2147,8 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       root.insertBefore(sprite, root.firstChild);
       function logo(dark) { return '<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mw-logo-' + (dark ? 'd' : 'l') + '"/></svg>'; }
       $$('[data-ico]').forEach(function (el) { el.innerHTML = icon(el.getAttribute('data-ico')); });
-      $$('[data-tool]').forEach(function (el) { el.innerHTML = tool(el.getAttribute('data-tool')); });
+      // inside the redrawn app windows the small file and tab marks stay glyphs
+      $$('[data-tool]').forEach(function (el) { var n = el.getAttribute('data-tool'); el.innerHTML = el.closest('#oscr') ? glyph(n) : tool(n); });
       $$('[data-kc]').forEach(function (el) { el.textContent = KC; });
       $$('[data-tree]').forEach(function (el) { el.outerHTML = tree(); });
       var wstage = $('#wstage');
@@ -2427,16 +2442,14 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       var NAMES = { blender: 'Blender', googlesheets: 'Google Sheets', vscode: 'VS Code', figma: 'Figma', adobephotoshop: 'Adobe Photoshop', jupyter: 'Jupyter', terminal: 'Terminal', xcode: 'Xcode',
         davinciresolve: 'DaVinci Resolve', unity: 'Unity', python: 'Python', github: 'GitHub', pytorch: 'PyTorch', canva: 'Canva', rstudioide: 'RStudio', godotengine: 'Godot', arduino: 'Arduino',
         androidstudio: 'Android Studio', obsidian: 'Obsidian', unrealengine: 'Unreal Engine', docker: 'Docker', overleaf: 'Overleaf', kicad: 'KiCad', tensorflow: 'TensorFlow', youtube: 'YouTube', googlecolab: 'Google Colab' };
-      // These four owners let their logo say "works with" if it is their own file, unaltered: it sits upright, in its colors, at full strength.
-      // The files are in /logos/ as their owners publish them; credits are in /terms/ (section 8). Do not redraw or recolor them.
-      var OWN = { python: ['/logos/python.svg', '\u2122'], jupyter: ['/logos/jupyter.svg', '\u00ae'], godotengine: ['/logos/godot.svg'], tensorflow: ['/logos/tensorflow.svg'] };
+      // A tile in OWN (see tool() above) is its owner's own file: it sits upright, in its colors, at full strength.
       // To show an app as its plain name instead of a logo (if its owner asks), add its key here.
       var AS_NAME = [];
       $('#ologos').innerHTML = RING.map(function (n, i) {
         var c = 'ologo' + (i < OPEN.length ? ' tap' : ''), t = ' title="' + NAMES[n] + '"';
         if (AS_NAME.indexOf(n) >= 0) return '<span class="' + c + ' nm">' + NAMES[n] + '</span>';
         if (OWN[n]) return '<span class="' + c + ' own"' + t + '><img src="' + OWN[n][0] + '" alt="' + NAMES[n] + '" width="26" height="26">' + (OWN[n][1] ? '<sup>' + OWN[n][1] + '</sup>' : '') + '</span>';
-        return '<span class="' + c + '"' + t + '>' + tool(n) + '</span>';
+        return '<span class="' + c + '"' + t + '>' + glyph(n) + '</span>';
       }).join('');
       var logos = $$('#ologos .ologo'), orbT = 0, orbOn = false, orbLast = 0, hot = null, ORX = [540, 478], ORY = [344, 276], oSlim = false;
       var own = logos.map(function (el) { return el.classList.contains('own'); });
