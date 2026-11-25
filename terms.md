@@ -1,6 +1,6 @@
 # miyagi terms of service
 
-**beta** · last updated Nov 21, 2026
+**beta** · last updated Nov 24, 2026
 
 These are the terms for the beta of miyagi. They may change before our public launch, and when they do, the date above will change too.
 
@@ -76,6 +76,8 @@ You keep all rights to your code, your files and anything else that's yours. You
 The videos miyagi builds lessons from belong to their creators and play from YouTube. miyagi isn't affiliated with, endorsed by or sponsored by YouTube, Google or the tutorial creators. A lesson is a study guide that follows the video.
 
 miyagi uses YouTube API Services to play videos. When you watch a video in miyagi, you agree to the [YouTube Terms of Service](https://www.youtube.com/t/terms), and [Google's Privacy Policy](https://policies.google.com/privacy) applies to what YouTube collects.
+
+The app names and logos on this site belong to their owners. They show which apps miyagi works in, and miyagi isn't affiliated with, endorsed by or sponsored by any of those owners. Python and the Python logo are trademarks of the Python Software Foundation. Jupyter and the Jupyter logo are trademarks of LF Charities. TensorFlow and the TensorFlow logo are trademarks of Google LLC. Godot is a trademark of the Godot Foundation, and the Godot logo is by Andrea Calabró, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## 9. Your own API key
 
