@@ -45,6 +45,7 @@ What a search engine reads is in the `<head>` of `index.html`: the title, the de
 - The JSON-LD questions must match the "questions." section word for word. Change both together.
 - Add a new page to `sitemap.xml` and give it its own `<link rel="canonical">`.
 - Don't link the GitHub releases from here: downloads are behind a code.
+- `google2a9593ca4bc38729.html` proves to Google Search Console that we own the site. Don't delete it, or the site drops out of Search Console.
 
 ## DNS (at Porkbun, the registrar)
 
