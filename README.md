@@ -42,7 +42,7 @@ The code keeps casual visitors out. It doesn't lock the files themselves: the re
 
 What a search engine reads is in the `<head>` of `index.html`: the title, the description, the canonical link, and one JSON-LD block (site name, the app, and the questions). `robots.txt` allows every crawler and points to `sitemap.xml`, which lists every page.
 
-- The pages under `learn/` (one per search, such as "learn python by doing") are drafts. Each shows one lesson plan: its lessons, what passes each one, and the project at the end. They have no scripts and send people to the waitlist on the home page.
+- The pages under `learn/` (one per search, such as "learn python by doing") are drafts. Each opens with a short lesson the visitor does in the page (`learn/lab.js`: a small Python, one NumPy line, a pretend Git repository), then lists the plan's lessons, what passes each one, and the project at the end. Nothing loads from another host. The waitlist field posts to the same Loops form as the home page, with the page as its source.
 - The JSON-LD questions must match the "questions." section word for word. Change both together.
 - Add a new page to `sitemap.xml` and give it its own `<link rel="canonical">`.
 - Don't link the GitHub releases from here: downloads are behind a code.
