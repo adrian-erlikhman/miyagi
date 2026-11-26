@@ -339,31 +339,31 @@
     html.gl .frame .hx form, html.gl .frame .hx input, html.gl .frame .hx .hx-sub { pointer-events: auto; }
     .hx [hidden] { display: none !important; }
     .hx-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; }
-    .hx-pb { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 999px; border: 0; cursor: pointer;
-      background: var(--m-ink); color: var(--m-paper); font: 500 15px/1 var(--m-font-brand); letter-spacing: -.005em; text-decoration: none;
-      transition: background-color .2s ease, transform .2s var(--settle); }
-    .hx-pb:hover { background: #2e2e2c; }
+    .hx-pb { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 10px; border: 0; cursor: pointer;
+      background: #1c1c1b; color: #f4f4f1; box-shadow: inset 0 0 0 1px #45453f; font: 500 14px/1 var(--m-font-brand); letter-spacing: -.005em; text-decoration: none;
+      transition: background-color .15s ease, transform .1s ease; }
+    .hx-pb:hover { background: #2c2c2a; }
     .hx-pb:active { transform: scale(.98); }
-    .hx-pb svg { width: 15px; height: 15px; flex: none; }
-    .hx-pb[data-dl] svg { width: 16px; height: 16px; margin-top: -2px; }
-    .hx-field { display: flex; align-items: center; width: min(420px, calc(100vw - 32px)); height: 54px; padding: 0 7px 0 22px; border-radius: 999px; background: #fff;
-      box-shadow: 0 0 0 1px rgba(20, 20, 20, .09), 0 1px 2px rgba(20, 20, 20, .04), 0 12px 30px -16px rgba(20, 20, 20, .3); transition: box-shadow .2s ease; }
-    .hx-field:focus-within { box-shadow: 0 0 0 1px rgba(20, 20, 20, .5), 0 1px 2px rgba(20, 20, 20, .04), 0 12px 30px -16px rgba(20, 20, 20, .3); }
-    .hx-field input { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: none; outline: none; color: var(--m-ink); font: 400 16px/1 var(--m-font-brand); letter-spacing: -.005em; }
+    .hx-pb svg { width: 14px; height: 14px; flex: none; }
+    .hx-pb[data-dl] svg { width: 15px; height: 15px; margin-top: -2px; }
+    .hx-field { display: flex; align-items: center; gap: 6px; width: min(380px, calc(100vw - 32px)); height: 44px; padding: 0 4px 0 14px; border-radius: 12px; background: #fff;
+      box-shadow: inset 0 0 0 1px #d9d8d2, 0 1px 2px rgba(20, 20, 20, .04); transition: box-shadow .15s ease; }
+    .hx-field:focus-within { box-shadow: inset 0 0 0 1px #8f8f88, 0 0 0 3px rgba(20, 20, 20, .06); }
+    .hx-field input { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: none; outline: none; color: var(--m-ink); font: 400 15px/1 var(--m-font-brand); letter-spacing: -.005em; }
     .hx-field input::placeholder { color: var(--m-ink-faint); }
-    .hx-field button { flex: none; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
-      background: var(--m-ink); color: var(--m-paper); transition: transform .2s var(--settle), opacity .2s ease; }
-    .hx-field button svg { width: 17px; height: 17px; }
-    .hx-field button:hover { transform: translateX(2px); }
+    .hx-field button { flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 9px; display: grid; place-items: center; cursor: pointer;
+      background: #1c1c1b; color: #f4f4f1; box-shadow: inset 0 0 0 1px #45453f; transition: background-color .15s ease, opacity .2s ease; }
+    .hx-field button svg { width: 15px; height: 15px; }
+    .hx-field button:hover { background: #2c2c2a; }
     .hx-field button[disabled] { opacity: .45; cursor: default; transform: none; }
     .hx-field.bad { animation: hxno .34s ease; }
     @keyframes hxno { 20% { transform: translateX(-6px); } 50% { transform: translateX(5px); } 80% { transform: translateX(-2px); } }
-    .hx-tabs { display: flex; gap: 24px; margin-bottom: 2px; }
-    .hx-tabs button { appearance: none; border: 0; background: none; padding: 6px 0; cursor: pointer; color: var(--m-ink-faint); font: 500 15px/1 var(--m-font-brand); letter-spacing: -.005em;
-      box-shadow: inset 0 -2px 0 transparent; transition: color .2s ease, box-shadow .2s ease; }
-    .hx-tabs button:hover { color: var(--m-ink); }
-    .hx-tabs button.on { color: var(--m-ink); box-shadow: inset 0 -2px 0 var(--m-ink); }
-    .hx-tabs button:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 4px; border-radius: 2px; }
+    .hx-tabs { display: flex; gap: 2px; margin-bottom: 2px; }
+    .hx-tabs button { appearance: none; border: 0; background: none; height: 32px; padding: 0 11px; border-radius: 8px; cursor: pointer; color: var(--m-ink-muted); font: 500 14px/1 var(--m-font-brand); letter-spacing: -.005em;
+      box-shadow: none; transition: color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+    .hx-tabs button:hover { color: var(--m-ink); background: rgba(20, 20, 20, .04); }
+    .hx-tabs button.on { color: var(--m-ink); background: #fff; box-shadow: inset 0 0 0 1px #d9d8d2, 0 1px 2px rgba(20, 20, 20, .05); }
+    .hx-tabs button:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 2px; }
     .hx-sub { margin: 0; min-height: 1.45em; font-size: 14px; line-height: 1.45; color: var(--m-ink-faint); letter-spacing: -.005em; text-wrap: balance; max-width: 420px; }
     /* Short screens (a phone on its side): the tree, the big wordmark and the form can't all fit under the top bar, so the wordmark
        (the bar already shows the logo) steps out and the hero tightens; the 3D layout then fits the tree between the bar and the headline. */
@@ -393,9 +393,9 @@
     .mnav nav { display: flex; gap: 22px; }
     .mnav nav a { color: #66665f; text-decoration: none; transition: color .2s; }
     .mnav nav a:hover { color: #141414; }
-    .mnav .go { margin-left: auto; height: 34px; padding: 0 16px; border-radius: 999px; background: #141414; color: #f6f6f3; font-weight: 600; font-size: 14px;
-      display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: transform .2s; }
-    .mnav .go:hover { background: #2e2e2c; }
+    .mnav .go { margin-left: auto; height: 36px; padding: 0 12px; border-radius: 10px; background: #1c1c1b; color: #f4f4f1; box-shadow: inset 0 0 0 1px #45453f; font-weight: 500; font-size: 14px; letter-spacing: -.005em;
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: background-color .15s; }
+    .mnav .go:hover { background: #2c2c2a; }
     @media (max-width: 640px) { .mnav nav { display: none; } .mnav { gap: 12px; } }
     /* Touch screens, iPads included: every control gets a hit area of at least 44 pt. Where a bigger box would change the
        look, a transparent ::before carries the extra area instead. The app dots under the window stay small: the logos on the
@@ -405,7 +405,8 @@
       .mnav nav a { padding: 15px 12px; margin: -15px -12px; }
       .mnav .go { height: 44px; }
       .hx-tabs button, .mw .bny .chips button { position: relative; }
-      .hx-tabs button::before { content: ""; position: absolute; inset: -9px -12px; }
+      .hx-tabs button::before { content: ""; position: absolute; inset: -6px -1px; }
+      .hx-field { height: 52px; }
       .hx-field button { width: 44px; height: 44px; }
       .mw .pause::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; }
       .mw .replay::before { content: ""; position: absolute; inset: -12px -10px; }
@@ -892,33 +893,77 @@
     /* ---------- bon:start (meet bon: site-mock/notion/bon, apply with patch_bon.py) */
     .mw .bn { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .9fr); gap: clamp(24px, 3.4vw, 48px); align-items: center; max-width: 1180px; margin: 44px auto 0; }
     .mw .bn-stage { min-width: 0; background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05); }
-    .mw .bn-tile { border-radius: 13px; background: #efede8; padding: clamp(12px, 3vw, 34px); }
-    .mw .bn-win { position: relative; background: #1e1e1e; border-radius: 10px; min-height: 304px; box-shadow: 0 18px 34px -22px rgba(0, 0, 0, .55); }
+    .mw .bn-tile { position: relative; border-radius: 13px; background: #efede8; padding: 50px clamp(12px, 3vw, 34px) clamp(14px, 3vw, 30px); overflow: hidden; }
+    .mw .bn-isl { position: absolute; left: 50%; top: 10px; z-index: 5; display: flex; align-items: center; justify-content: center; gap: 7px; height: 28px; min-width: 118px; padding: 0 14px; border-radius: 14px; background: #000; color: #f6f6f3; font-size: 12.5px; white-space: nowrap; transform: translateX(-50%); }
+    .mw .bn-isl b { display: none; }
+    .mw .bn-isl b.on { display: inline-flex; align-items: center; color: inherit; }
+    .mw .bn-isl b.pass { display: block; width: 8px; height: 8px; border-radius: 50%; background: #30D158; }
+    .mw .bn-win { position: relative; background: #1e1e1e; border-radius: 10px; box-shadow: 0 18px 34px -22px rgba(0, 0, 0, .55); }
     .mw .bn-bar { display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-bottom: 1px solid rgba(255, 255, 255, .07); }
     .mw .bn-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3a3a3a; }
     .mw .bn-bar span { margin-left: 8px; font: 12px/1 var(--mono); color: #9a9a94; }
-    .mw .bn-code { padding: 12px 0 0; }
-    .mw .bn .bn-ln { display: flex; align-items: center; width: 100%; height: 28px; text-align: left; font: 13px/28px var(--mono); color: #d4d4d4; white-space: pre; border-radius: 0; }
+    .mw .bn-code { padding: 10px 0 8px; }
+    .mw .bn .bn-ln { display: flex; align-items: center; width: 100%; height: 27px; text-align: left; font: 13px/27px var(--mono); color: #d4d4d4; white-space: pre; border-radius: 0; }
     .mw .bn .bn-ln:hover { background: rgba(255, 255, 255, .05); }
     .mw .bn .bn-ln:focus-visible { outline: 2px solid #f6f6f3; outline-offset: -2px; }
+    .mw .bn .bn-ln[disabled] { cursor: default; background: none; }
     .mw .bn-ln em { flex: none; width: 34px; padding-right: 12px; text-align: right; font-style: normal; color: #6a6a66; }
     .mw .bn-ln .k { color: #c586c0; } .mw .bn-ln .f { color: #dcdcaa; } .mw .bn-ln .n { color: #b5cea8; }
-    .mw .bn-loop { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .mw .bn-ln .tx.typing::after, .mw .bn-tl span.typing::after { content: ""; display: inline-block; width: 2px; height: 1.1em; margin-left: 1px; vertical-align: -.2em; background: #f6f6f3; }
+    .mw .bn-term { padding: 8px 0 10px; border-top: 1px solid rgba(255, 255, 255, .07); font: 12.5px/22px var(--mono); color: #9a9a94; }
+    .mw .bn-tl { display: flex; height: 22px; padding-left: 46px; white-space: pre; }
+    .mw .bn-tl s { text-decoration: none; color: #6a6a66; margin-right: 8px; }
+    .mw .bn-tl span { color: #d4d4d4; }
+    .mw .bn-tl + .bn-tl span { color: #9a9a94; }
+    .mw .bn-loop { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 2; }
     .mw .bn-loop path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
     .mw .bn-loop .k { stroke: #141414; stroke-width: 5.5; opacity: .7; }
     .mw .bn-loop .s { stroke-width: 2.6; }
     .mw .bn-loop.on path { stroke-dashoffset: 0; transition: stroke-dashoffset .5s var(--settle); }
-    .mw .bn-char { position: absolute; left: 0; top: 0; width: 64px; height: 64px; pointer-events: none; transition: transform .55s var(--spring); will-change: transform; }
+    .mw .bn-nums { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .mw .bn-num { position: absolute; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #141414; font-size: 10.5px; font-weight: 600; line-height: 15px; text-align: center; color: #141414; }
+    .mw .bn-cur { position: absolute; left: 0; top: 0; width: 16px; height: 22px; z-index: 5; pointer-events: none; opacity: 0; transition: opacity .2s; }
+    .mw .bn-cur.on { opacity: 1; }
+    .mw .bn-char { position: absolute; left: 0; top: 0; z-index: 4; width: 60px; height: 60px; pointer-events: none; will-change: transform; }
     .mw .bn-hop { width: 100%; height: 100%; }
     .mw .bn-hop.hop { animation: bnHop .5s var(--settle); }
     .mw .bn-char svg { display: block; width: 100%; height: 100%; overflow: visible; animation: bnBob 3.2s ease-in-out infinite; }
+    .mw .bn-char.fly svg { animation: none; }
+    .mw .bn-char.fly .bn-lf { animation: bnFlap .16s ease-in-out infinite alternate; }
+    .mw .bn-lf { transform-box: view-box; }
     .mw .bn-eye { transform-box: fill-box; transform-origin: center; animation: bnBlink 4.6s infinite; }
+    .mw .bn-talk { transform-box: fill-box; transform-origin: center; animation: bnTalk .24s ease-in-out infinite alternate; }
     .mw .bn-face { transition: transform .18s ease-out; }
     .mw .bn-top { transform-origin: 24px 14px; }
     .mw .bn-char.grew .bn-top { animation: bnGrow .7s var(--spring); }
-    .mw .bn-say { position: absolute; left: 0; top: 0; max-width: 230px; padding: 9px 12px; border-radius: 12px; background: #000; border: 1px solid rgba(255, 255, 255, .16); color: #f6f6f3; font-size: 13px; line-height: 1.38; opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .2s; pointer-events: none; }
+    .mw .bn-say { position: absolute; left: 0; top: 0; z-index: 6; max-width: 240px; padding: 9px 12px; border-radius: 12px; background: #000; border: 1px solid rgba(255, 255, 255, .16); color: #f6f6f3; font-size: 13px; line-height: 1.38; opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .2s; pointer-events: none; }
     .mw .bn-say.on { opacity: 1; transform: none; }
-    .mw .bn-tip { margin: 10px 0 2px; text-align: center; font-size: 13px; color: var(--faint); }
+    .mw .bn-say.on.act { pointer-events: auto; }
+    .mw .bn-say .heard { white-space: nowrap; }
+    .mw .bn-say em { display: none; margin-bottom: 2px; font-style: normal; font-size: 11.5px; color: #9a9a94; }
+    .mw .bn-say em.on { display: block; }
+    .mw .bn .dots, .mw .bn .bars { display: inline-flex; align-items: center; gap: 4px; height: 18px; vertical-align: middle; }
+    .mw .bn .bars { gap: 3px; margin-right: 8px; }
+    .mw .bn-isl .bars { margin-right: 0; }
+    .mw .bn .dots i { display: block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .35; animation: bnDot 1s ease-in-out infinite; }
+    .mw .bn .dots i:nth-child(2) { animation-delay: .16s; } .mw .bn .dots i:nth-child(3) { animation-delay: .32s; }
+    .mw .bn .bars i { display: block; width: 3px; height: 14px; border-radius: 2px; background: currentColor; animation: bnBar .62s ease-in-out infinite alternate; }
+    .mw .bn .bars i:nth-child(2) { animation-delay: -.2s; } .mw .bn .bars i:nth-child(3) { animation-delay: -.42s; } .mw .bn .bars i:nth-child(4) { animation-delay: -.1s; }
+    .mw .bn-isl .bars i { height: 11px; }
+    .mw .bn-sayb { display: none; gap: 6px; margin-top: 8px; }
+    .mw .bn-sayb.on { display: flex; }
+    .mw .bn .bn-sayb button { height: 26px; padding: 0 12px; border-radius: 13px; font-size: 12.5px; font-weight: 500; color: #f6f6f3; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .12s, background .15s; }
+    .mw .bn .bn-sayb button.main { background: #f6f6f3; color: #141414; box-shadow: none; }
+    .mw .bn .bn-sayb button:hover { background: rgba(255, 255, 255, .12); }
+    .mw .bn .bn-sayb button.main:hover { background: #fff; }
+    .mw .bn .bn-sayb button.press { transform: scale(.9); }
+    .mw .bn .bn-sayb button:focus-visible { outline: 2px solid #f6f6f3; outline-offset: 2px; }
+    .mw .bn-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; margin: 12px 0 0; }
+    .mw .bn .bn-act { height: 32px; padding: 0 11px; border-radius: 8px; color: var(--muted); font-size: 14px; font-weight: 500; letter-spacing: -.005em; transition: background-color .15s, color .15s, box-shadow .15s; }
+    .mw .bn .bn-act:hover { color: var(--ink); background: rgba(20, 20, 20, .04); }
+    .mw .bn .bn-act[aria-pressed="true"] { color: var(--ink); background: #f4f3ef; box-shadow: inset 0 0 0 1px #d9d8d2, 0 1px 2px rgba(20, 20, 20, .05); }
+    .mw .bn .bn-act:focus-visible { outline: 2px solid #141414; outline-offset: 2px; }
+    .mw .bn-tip { margin: 8px 0 2px; text-align: center; font-size: 13px; color: var(--faint); }
     .mw .bn-side { min-width: 0; }
     .mw .bn-blk + .bn-blk { margin-top: 26px; padding-top: 26px; border-top: 1px solid rgba(20, 20, 20, .1); }
     .mw .bn-blk h3 { margin: 0 0 14px; font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
@@ -940,29 +985,37 @@
     .mw .bn-rail { height: 4px; margin-top: 8px; border-radius: 2px; background: rgba(20, 20, 20, .1); overflow: hidden; }
     .mw .bn-rail i { display: block; height: 100%; width: 0; border-radius: 2px; background: #1f9b45; transition: width .35s var(--settle); }
     .mw .bn-go { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
-    .mw .bn .bn-pass { height: 38px; padding: 0 18px; border-radius: 19px; background: #141414; color: #f6f6f3; font-size: 15px; font-weight: 500; transition: transform .12s; }
-    .mw .bn .bn-pass:active { transform: scale(.96); }
+    .mw .bn .bn-pass { height: 36px; padding: 0 12px; border-radius: 10px; background: #1c1c1b; color: #f4f4f1; box-shadow: inset 0 0 0 1px #45453f; font-size: 14px; font-weight: 500; letter-spacing: -.005em; transition: background-color .15s, transform .1s; }
+    .mw .bn .bn-pass:hover { background: #2c2c2a; }
+    .mw .bn .bn-pass:active { transform: scale(.98); }
     .mw .bn .bn-pass:focus-visible { outline: 2px solid #141414; outline-offset: 3px; }
     .mw .bn-go span { font-size: 13px; color: var(--faint); }
     @keyframes bnBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
     @keyframes bnBlink { 0%, 93%, 100% { transform: scaleY(1); } 96.5% { transform: scaleY(.1); } }
     @keyframes bnHop { 0% { transform: translateY(0); } 40% { transform: translateY(-9px); } 100% { transform: translateY(0); } }
     @keyframes bnGrow { 0% { transform: scale(.55); } 100% { transform: scale(1); } }
+    @keyframes bnTalk { from { transform: scaleY(.45); } to { transform: scaleY(1.1); } }
+    @keyframes bnFlap { from { transform: rotate(0); } to { transform: rotate(var(--fl, -18deg)); } }
+    @keyframes bnDot { 0%, 100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
+    @keyframes bnBar { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
     @media (max-width: 900px) {
       .mw .bn { grid-template-columns: minmax(0, 1fr); gap: 26px; }
     }
     @media (max-width: 560px) {
-      .mw .bn .bn-ln { font-size: 11px; height: 25px; line-height: 25px; }
+      .mw .bn .bn-ln { font-size: 10.5px; height: 24px; line-height: 24px; }
       .mw .bn-ln em { width: 24px; padding-right: 8px; }
-      .mw .bn-char { width: 48px; height: 48px; }
-      .mw .bn-win { min-height: 286px; }
-      .mw .bn-say { max-width: 200px; font-size: 12.5px; }
+      .mw .bn-term { font-size: 10.5px; line-height: 20px; }
+      .mw .bn-tl { height: 20px; padding-left: 32px; }
+      .mw .bn-char { width: 46px; height: 46px; }
+      .mw .bn-say { max-width: 210px; font-size: 12.5px; }
+      .mw .bn .bn-act { padding: 0 7px; font-size: 12.5px; }
+      .mw .bn-acts { flex-wrap: nowrap; gap: 0; }
       .mw .bn-blk h3 { font-size: 20px; }
       .mw .bn .bn-lv { font-size: 10px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .mw .bn-char, .mw .bn-face, .mw .bn-say, .mw .bn-loop.on path, .mw .bn-rail i { transition: none; }
-      .mw .bn-char svg, .mw .bn-eye, .mw .bn-hop.hop, .mw .bn-char.grew .bn-top { animation: none; }
+      .mw .bn-face, .mw .bn-say, .mw .bn-loop.on path, .mw .bn-rail i, .mw .bn-cur { transition: none; }
+      .mw .bn-char svg, .mw .bn-eye, .mw .bn-talk, .mw .bn-hop.hop, .mw .bn-char.grew .bn-top, .mw .bn .dots i, .mw .bn .bars i, .mw .bn-char.fly .bn-lf { animation: none; }
     }
     /* ---------- bon:end */
     /* ---------- any app: miyagi's card with the apps around it ---------- */
@@ -1711,6 +1764,12 @@
 
 
 
+
+
+
+
+
+
 <!-- bon:start -->
 <section class="mw-sec" id="bon" aria-labelledby="bon-h">
   <div class="mw-hold">
@@ -1718,16 +1777,25 @@
     <p class="mw-sub">your guide on screen. it points, answers, and grows with you.</p>
     <div class="bn" id="bnRoot">
       <div class="bn-stage">
-        <div class="bn-tile">
+        <div class="bn-tile" id="bnTile">
+          <div class="bn-isl" id="bnIsl" aria-hidden="true"><b id="bnIslI"></b><span id="bnIslT">miyagi</span></div>
           <div class="bn-win" id="bnWin">
-            <div class="bn-bar" aria-hidden="true"><i></i><i></i><i></i><span>nn.py</span></div>
+            <div class="bn-bar" aria-hidden="true"><i></i><i></i><i></i><span>nn.py — digits</span></div>
             <div class="bn-code" id="bnCode"></div>
-            <svg class="bn-loop" id="bnLoop" aria-hidden="true"><path class="k" pathLength="1"></path><path class="s" pathLength="1"></path></svg>
-            <div class="bn-char" id="bnChar" aria-hidden="true"><div class="bn-hop" id="bnHop"></div></div>
-            <div class="bn-say" id="bnSay" aria-live="polite"></div>
+            <div class="bn-term" id="bnTerm" aria-hidden="true"><div class="bn-tl"><s>$</s><span></span></div><div class="bn-tl"><span></span></div></div>
           </div>
+          <svg class="bn-loop" id="bnLoop" aria-hidden="true"><path class="k" pathLength="1"></path><path class="s" pathLength="1"></path></svg>
+          <div class="bn-nums" id="bnNums" aria-hidden="true"></div>
+          <svg class="bn-cur" id="bnCur" viewBox="0 0 16 22" aria-hidden="true"><path d="M1.5 1.5 L1.5 17.2 L5.6 13.4 L8.4 19.8 L11.2 18.6 L8.5 12.3 L14 12.1 Z" fill="#fff" stroke="#141414" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <div class="bn-char" id="bnChar" aria-hidden="true"><div class="bn-hop" id="bnHop"></div></div>
+          <div class="bn-say" id="bnSay" aria-live="polite"><em id="bnSayK"></em><span id="bnSayT"></span><div class="bn-sayb" id="bnSayB"></div></div>
         </div>
-        <p class="bn-tip">click a line</p>
+        <div class="bn-acts" id="bnActs">
+          <button type="button" class="bn-act" data-scene="guide">guides a step</button>
+          <button type="button" class="bn-act" data-scene="listen">hears a question</button>
+          <button type="button" class="bn-act" data-scene="check">checks your run</button>
+        </div>
+        <p class="bn-tip">or click any line</p>
       </div>
       <div class="bn-side">
         <div class="bn-blk">
@@ -2801,11 +2869,15 @@ sam@mac homework % <i class="tm-cur"></i></pre>
   </script>
 
   <script>
-    /* bon:start (meet bon). The drawing, colors and levels mirror the app's features/buddy (Character.tsx, palette.ts, growth.ts). */
+    /* bon:start (meet bon). The drawing, colors and levels mirror the app's features/buddy (Character.tsx, palette.ts, growth.ts).
+       The three scenes are what its Companion does: a tour of marks one at a time ("1 of 3", Next), push to talk (it follows the pointer,
+       shows what it hears, thinks), an answer beside the spot it is about, Explain or Got it, and a passed step that grows it. */
     (function () {
       var root = document.getElementById('bnRoot'); if (!root) return;
       var $ = function (id) { return document.getElementById(id); };
-      var win = $('bnWin'), code = $('bnCode'), loop = $('bnLoop'), chr = $('bnChar'), hop = $('bnHop'), say = $('bnSay');
+      var tile = $('bnTile'), code = $('bnCode'), term = $('bnTerm'), loop = $('bnLoop'), nums = $('bnNums'), cur = $('bnCur');
+      var chr = $('bnChar'), hop = $('bnHop'), say = $('bnSay'), sayK = $('bnSayK'), sayT = $('bnSayT'), sayB = $('bnSayB');
+      var islI = $('bnIslI'), islT = $('bnIslT'), acts = $('bnActs');
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       var INK = '#141414', GLINT = '#fff', PAD = '#30D158', BARK = '#A07A5C', PINK = '#F9C5D5', PINKD = '#F4A7BF';
       var SKINS = [
@@ -2818,15 +2890,9 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         { id: 'mint', body: '#96E4C8', leaf: '#BFE6DA', blush: PINK }
       ];
       var LEVELS = [['Seed', 0], ['Sprout', 3], ['Shoot', 8], ['Sapling', 15], ['Budding', 25], ['In bloom', 40], ['Young tree', 60], ['Bonsai', 90]];
-      var LINES = [
-        ['<span class="k">import</span> numpy <span class="k">as</span> np', 'numpy does the matrix math.'],
-        ['W1 = np.random.randn(<span class="n">10</span>, <span class="n">784</span>)', '784 inputs: one for each pixel of a 28 by 28 digit.'],
-        ['b1 = np.zeros((<span class="n">10</span>, <span class="n">1</span>))', 'one bias for each of the 10 neurons.'],
-        ['<span class="k">def</span> <span class="f">forward</span>(X):', 'forward takes a batch of images.'],
-        ['    Z1 = W1 @ X + b1', 'weights times pixels, plus the bias.'],
-        ['    <span class="k">return</span> np.maximum(Z1, <span class="n">0</span>)', 'relu: keep the positives, zero the rest.']
-      ];
-      var LEAVES = { calm: [0, 0], happy: [14, 14] };
+
+      // ---- the drawing (Character.tsx, sprout)
+      var LEAVES = { calm: [0, 0], happy: [14, 14], curious: [-14, 6], thinking: [22, -6], listening: [-24, -24] };
       var ROUND = 'M24 12.6 C33.6 12.6 40.4 19.6 40.4 29.4 C40.4 37.8 33.8 43.2 24 43.2 C14.2 43.2 7.6 37.8 7.6 29.4 C7.6 19.6 14.4 12.6 24 12.6 Z';
       var TRUNK = 'M24 14 C21.6 10.4 26.8 7.4 24.4 3.4 C23.2 1 24.4 -1.4 24 -3.2';
       var STEM_TOP = [8.2, 8.2, 4.4, 3.2, 3.2, 2.6, 3.8, -3.2];
@@ -2838,15 +2904,16 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       function top(level, mood, sk) {
         var t = LEAVES[mood] || LEAVES.calm, tree = level >= 7, leaf = tree ? PAD : sk.leaf, wood = tree ? BARK : sk.leaf;
         var stem = level === 8 ? TRUNK : 'M24 14 L24 ' + STEM_TOP[level - 1], wide = tree ? 2.4 : 1.5;
-        function part(d) { return '<path d="' + d + '" fill="' + leaf + '" stroke="' + INK + '" stroke-width="1.7" stroke-linejoin="round"/>'; }
+        function part(d, cls) { return '<path' + (cls || '') + ' d="' + d + '" fill="' + leaf + '" stroke="' + INK + '" stroke-width="1.7" stroke-linejoin="round"/>'; }
         var low = level <= 2 ? { y: 8.6, s: 1 } : level === 3 ? { y: 9.4, s: 1 } : level <= 6 ? { y: 9.8, s: 1 } : { y: 10.4, s: .84 };
+        var flap = function (fl) { return ' class="bn-lf" style="transform-origin:24px ' + low.y + 'px;--fl:' + fl + 'deg"'; };
         var h = line(stem, INK, 3.4 + wide) + line(stem, wood, wide);
         if (level === 8) {
           ['M23 10.8 L18.4 9', 'M25.8 6.4 L30.2 5'].forEach(function (d) { h += line(d, INK, 4.8) + line(d, wood, 1.4); });
           h += part(padD(16.6, 9.2, 11, 5.6)) + part(padD(31.6, 5.2, 11, 5.6)) + part(padD(24.2, -2.4, 14, 7));
         }
-        if (level >= 2 && level <= 7) h += '<g transform="rotate(' + (-t[0]) + ' 24 ' + low.y + ')">' + part(leafD(-1, 24, low.y, low.s)) + '</g>';
-        if (level <= 7) h += '<g transform="rotate(' + t[1] + ' 24 ' + low.y + ')">' + part(leafD(1, 24, low.y, low.s)) + '</g>';
+        if (level >= 2 && level <= 7) h += '<g transform="rotate(' + (-t[0]) + ' 24 ' + low.y + ')">' + part(leafD(-1, 24, low.y, low.s), flap(18)) + '</g>';
+        if (level <= 7) h += '<g transform="rotate(' + t[1] + ' 24 ' + low.y + ')">' + part(leafD(1, 24, low.y, low.s), flap(-18)) + '</g>';
         if (level === 3) h += part(upD(24, 4.8, .84));
         if (level >= 4 && level <= 6) h += part(leafD(-1, 24, 3.8, .72)) + part(leafD(1, 24, 3.8, .72));
         if (level === 5) h += '<circle cx="24" cy="0.6" r="2.8" fill="' + PINKD + '" stroke="' + INK + '" stroke-width="1.7"/>';
@@ -2858,93 +2925,402 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         return '<g class="bn-top">' + h + '</g>';
       }
       function eye(x, mood) {
-        if (mood === 'happy') return '<path transform="translate(' + x + ' 27.2)" d="M-2.7 1.2 Q0 -3.2 2.7 1.2" fill="none" stroke="' + INK + '" stroke-width="1.8" stroke-linecap="round"/>';
-        return '<g transform="translate(' + x + ' 27.2)"><g class="bn-eye"><ellipse rx="2.3" ry="3.1" fill="' + INK + '"/><circle cx=".9" cy="-1.2" r=".8" fill="' + GLINT + '"/></g></g>';
+        var h;
+        if (mood === 'happy') h = '<path d="M-2.7 1.2 Q0 -3.2 2.7 1.2" fill="none" stroke="' + INK + '" stroke-width="1.8" stroke-linecap="round"/>';
+        else {
+          var wide = mood === 'curious' || mood === 'listening', rx = wide ? 2.7 : 2.3, ry = wide ? 3.6 : mood === 'thinking' ? 2.6 : 3.1;
+          h = '<g class="bn-eye"><ellipse rx="' + rx + '" ry="' + ry + '" fill="' + INK + '"/><circle cx=".9" cy="-1.2" r="' + (wide ? 1 : .8) + '" fill="' + GLINT + '"/></g>';
+        }
+        return '<g transform="translate(' + x + ' 27.2)">' + h + '</g>';
       }
-      function bonSVG(level, sk, mood, point) {
+      function mouth(mood, talking) {
+        var h;
+        if (talking) h = '<ellipse class="bn-talk" rx="1.9" ry="2.1" fill="' + INK + '"/>';
+        else if (mood === 'happy') h = '<path d="M-3.1 -0.9 Q0 4.2 3.1 -0.9 Z" fill="' + INK + '" stroke="' + INK + '" stroke-width="1" stroke-linejoin="round"/>';
+        else if (mood === 'curious' || mood === 'listening') h = '<ellipse rx="1.25" ry="1.5" fill="' + INK + '"/>';
+        else if (mood === 'thinking') h = '<path d="M-1.6 0.3 L1.9 -0.2" fill="none" stroke="' + INK + '" stroke-width="1.6" stroke-linecap="round"/>';
+        else h = '<path d="M-2.4 -0.4 Q0 2.2 2.4 -0.4" fill="none" stroke="' + INK + '" stroke-width="1.6" stroke-linecap="round"/>';
+        return '<g transform="translate(24 33.2)">' + h + '</g>';
+      }
+      function bonSVG(level, sk, mood, point, talking) {
         mood = mood || 'calm';
         var h = '';
         if (point) h += '<ellipse cx="' + (24 + point * 19) + '" cy="29.5" rx="5.4" ry="3" fill="' + sk.body + '" stroke="' + INK + '" stroke-width="1.7" transform="rotate(' + (point * -20) + ' ' + (24 + point * 15) + ' 30)"/>';
         h += top(level, mood, sk) + '<path d="' + ROUND + '" fill="' + sk.body + '" stroke="' + INK + '" stroke-width="1.7" stroke-linejoin="round"/>';
-        h += '<g class="bn-face"><ellipse cx="14.6" cy="31.8" rx="2.5" ry="1.5" fill="' + sk.blush + '"/><ellipse cx="33.4" cy="31.8" rx="2.5" ry="1.5" fill="' + sk.blush + '"/>' + eye(18.4, mood) + eye(29.6, mood);
-        h += mood === 'happy'
-          ? '<path transform="translate(24 33.2)" d="M-3.1 -0.9 Q0 4.2 3.1 -0.9 Z" fill="' + INK + '" stroke="' + INK + '" stroke-width="1" stroke-linejoin="round"/>'
-          : '<path transform="translate(24 33.2)" d="M-2.4 -0.4 Q0 2.2 2.4 -0.4" fill="none" stroke="' + INK + '" stroke-width="1.6" stroke-linecap="round"/>';
+        h += '<g class="bn-face"><ellipse cx="14.6" cy="31.8" rx="2.5" ry="1.5" fill="' + sk.blush + '"/><ellipse cx="33.4" cy="31.8" rx="2.5" ry="1.5" fill="' + sk.blush + '"/>' + eye(18.4, mood) + eye(29.6, mood) + mouth(mood, talking);
         return '<svg viewBox="0 -8 48 56" xmlns="http://www.w3.org/2000/svg">' + h + '</g></svg>';
       }
 
-      var skin = SKINS[0], steps = 5, at = 1, mood = 'calm', look = [0, 0], moodT = 0, sayT = 0, loopT = 0, touched = false;
+      // ---- bon's state
+      var skin = SKINS[0], steps = 5, st = { mood: 'calm', point: 0, talk: false }, look = [0, 0], pos = { x: 0, y: 0 };
       function levelFor(n) { var l = 1; LEVELS.forEach(function (v, i) { if (n >= v[1]) l = i + 1; }); return l; }
-      function drawChar() {
-        hop.innerHTML = bonSVG(levelFor(steps), skin, mood, -1);
-        setLook();
+      function drawChar() { hop.innerHTML = bonSVG(levelFor(steps), skin, st.mood, st.point, st.talk); setLook(); }
+      function set(o) { var ch = false; for (var k in o) if (st[k] !== o[k]) { st[k] = o[k]; ch = true; } if (ch) drawChar(); }
+      function setLook() {
+        var f = hop.querySelector('.bn-face'); if (!f) return;
+        var l = st.mood === 'thinking' ? [-.55, -.85] : look;
+        f.style.transform = 'translate(' + (l[0] * 2.6).toFixed(2) + 'px,' + (l[1] * 1.7).toFixed(2) + 'px)';
       }
-      function setLook() { var f = hop.querySelector('.bn-face'); if (f) f.style.transform = 'translate(' + (look[0] * 2.6).toFixed(2) + 'px,' + (look[1] * 1.7).toFixed(2) + 'px)'; }
-      function cheer(ms) { mood = 'happy'; drawChar(); clearTimeout(moodT); moodT = setTimeout(function () { mood = 'calm'; drawChar(); }, ms || 1100); }
+      function S() { return chr.offsetWidth; }
+      function place(x, y) { pos = { x: x, y: y }; chr.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)'; if (sayOff) { say.style.left = (x + sayOff[0]).toFixed(1) + 'px'; say.style.top = (y + sayOff[1]).toFixed(1) + 'px'; } }
+      function bounce() { if (reduce) return; hop.classList.remove('hop'); void hop.offsetWidth; hop.classList.add('hop'); }
 
-      // the code
-      LINES.forEach(function (l, i) {
+      // ---- where things are, in the tile
+      function box(el) {
+        var t = tile.getBoundingClientRect(), r = el.getBoundingClientRect();
+        return { x: r.left - t.left, y: r.top - t.top, w: r.width, h: r.height, r: r.right - t.left, b: r.bottom - t.top, cy: r.top - t.top + r.height / 2 };
+      }
+      function home() { var b = box($('bnIsl')), s = S(); return { x: b.r - s * .3, y: b.b - s * .42 }; }
+
+      // ---- one run at a time: a new scene, a line click or a resize cancels what is playing
+      var RUN = 0, wakers = [];
+      function alive(my) { return my === RUN; }
+      function sleep(ms, my) {
+        return new Promise(function (res) {
+          var w = function () { clearTimeout(t); res(false); };
+          var t = setTimeout(function () { wakers.splice(wakers.indexOf(w), 1); res(alive(my)); }, reduce ? Math.min(ms, 900) : ms);
+          wakers.push(w);
+        });
+      }
+      var flyRaf = 0, followRaf = 0, following = false;
+      function stop() {
+        RUN++; var w = wakers; wakers = []; w.forEach(function (f) { f(); });
+        cancelAnimationFrame(flyRaf); cancelAnimationFrame(followRaf); following = false; chr.classList.remove('fly');
+        [].forEach.call(root.querySelectorAll('.typing'), function (e) { e.classList.remove('typing'); });
+      }
+
+      // ---- flying, on an arc that grows with the distance (trip.ts: 0.46 to 1.05 s)
+      function fly(to, my) {
+        return new Promise(function (res) {
+          cancelAnimationFrame(flyRaf);
+          var from = { x: pos.x, y: pos.y }, dx = to.x - from.x, dy = to.y - from.y, d = Math.hypot(dx, dy);
+          if (reduce || d < 2) { place(to.x, to.y); return res(alive(my)); }
+          look = [Math.max(-1, Math.min(1, dx / 80)), Math.max(-1, Math.min(1, dy / 80))]; setLook();
+          var dur = Math.min(1050, Math.max(460, 320 + d * 1.1)), lift = Math.min(64, d * .22), t0 = performance.now();
+          chr.classList.add('fly');
+          var step = function (now) {
+            if (!alive(my)) { chr.classList.remove('fly'); return res(false); }
+            var k = Math.min(1, (now - t0) / dur), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+            place(from.x + dx * e, from.y + dy * e - Math.sin(Math.PI * e) * lift);
+            if (k < 1) flyRaf = requestAnimationFrame(step);
+            else { chr.classList.remove('fly'); look = [0, 0]; setLook(); bounce(); res(true); }
+          };
+          flyRaf = requestAnimationFrame(step);
+        });
+      }
+      // keeping the pointer company while you talk (30 px down and right, catching up each frame)
+      var cp = { x: 0, y: 0 };
+      function curAt(x, y) { cp = { x: x, y: y }; cur.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)'; }
+      function moveCur(to, ms, my) {
+        return new Promise(function (res) {
+          var from = { x: cp.x, y: cp.y }, t0 = performance.now();
+          if (reduce) { curAt(to.x, to.y); return res(alive(my)); }
+          var step = function (now) {
+            if (!alive(my)) return res(false);
+            var k = Math.min(1, (now - t0) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+            curAt(from.x + (to.x - from.x) * e, from.y + (to.y - from.y) * e);
+            if (k < 1) requestAnimationFrame(step); else res(true);
+          };
+          requestAnimationFrame(step);
+        });
+      }
+      function follow(my) {
+        following = true;
+        var step = function () {
+          if (!following || !alive(my)) return;
+          var tx = cp.x + 16, ty = cp.y + 10;
+          place(reduce ? tx : pos.x + (tx - pos.x) * .14, reduce ? ty : pos.y + (ty - pos.y) * .14);
+          followRaf = requestAnimationFrame(step);
+        };
+        followRaf = requestAnimationFrame(step);
+      }
+
+      // ---- the loop round a mark, and the numbers on the marks still to come
+      var paths = loop.querySelectorAll('path');
+      function ring(b, px, py) {
+        var X = b.x - px, Y = b.y - py, W = b.w + 2 * px, H = b.h + 2 * py, R = H / 2;
+        var d = 'M' + (X + W - R) + ' ' + Y + ' A' + R + ' ' + R + ' 0 0 1 ' + (X + W - R) + ' ' + (Y + H) + ' H' + (X + R) + ' A' + R + ' ' + R + ' 0 0 1 ' + (X + R) + ' ' + Y + ' Z';
+        paths[0].setAttribute('d', d); paths[1].setAttribute('d', d); paths[1].style.stroke = skin.body;
+        loop.classList.remove('on'); void loop.getBoundingClientRect(); loop.classList.add('on');
+      }
+      function unring() { loop.classList.remove('on'); }
+      function marks(list) {
+        nums.innerHTML = list.map(function (m) { var b = box(m[1]); return '<i class="bn-num" style="left:' + (b.x - 24).toFixed(1) + 'px;top:' + (b.cy - 9).toFixed(1) + 'px;background:' + skin.body + '">' + m[0] + '</i>'; }).join('');
+      }
+
+      // ---- the bubble: words typed out beside bon, then its buttons
+      var sayOff = null;
+      function hideSay() { say.classList.remove('on', 'act'); sayOff = null; }
+      function putSay() {
+        var s = S(), W = tile.clientWidth, H = tile.clientHeight, x, y;
+        say.style.width = ''; say.style.minHeight = ''; say.style.maxWidth = '';
+        var room = W - (pos.x + s + 6) - 8;
+        if (room >= 170) { say.style.maxWidth = Math.min(240, room) + 'px'; x = pos.x + s + 4; y = pos.y + s * .52 - say.offsetHeight / 2; }
+        else {
+          x = Math.min(Math.max(8, pos.x + s / 2 - say.offsetWidth / 2), W - say.offsetWidth - 8); y = pos.y + s + 2;
+          if (y + say.offsetHeight > H - 6) y = pos.y + s * .15 - say.offsetHeight;
+        }
+        y = Math.max(6, Math.min(y, H - say.offsetHeight - 6));
+        var sb = say.getBoundingClientRect(); say.style.width = Math.ceil(sb.width + 1) + 'px'; say.style.minHeight = Math.ceil(sb.height) + 'px';
+        sayOff = [x - pos.x, y - pos.y]; say.style.left = x.toFixed(1) + 'px'; say.style.top = y.toFixed(1) + 'px';
+      }
+      function content(k, html, btns) {
+        sayK.textContent = k || ''; sayK.classList.toggle('on', !!k);
+        sayB.innerHTML = (btns || []).map(function (b) { return '<button type="button" data-id="' + b[0] + '"' + (b[2] ? ' class="main"' : '') + '>' + b[1] + '</button>'; }).join('');
+        sayB.classList.toggle('on', !!(btns && btns.length));
+        sayT.innerHTML = html;
+      }
+      function speak(text, my, k, btns) {
+        content(k, '', btns); sayT.textContent = text; putSay(); say.classList.add('on');
+        if (reduce) return Promise.resolve(alive(my));
+        sayB.style.visibility = 'hidden'; sayT.textContent = ''; set({ talk: true });
+        var i = 0;
+        return (function next() {
+          return sleep(17, my).then(function (ok) {
+            if (!ok) { set({ talk: false }); return false; }
+            sayT.textContent = text.slice(0, ++i);
+            if (i < text.length) return next();
+            set({ talk: false }); sayB.style.visibility = ''; return true;
+          });
+        })();
+      }
+      function think(my, ms) { set({ mood: 'thinking', point: 0 }); content('', '<span class="dots"><i></i><i></i><i></i></span>'); putSay(); say.classList.add('on'); return sleep(ms || 1000, my); }
+      // the learner answers back: a click, or left alone, bon takes the default after a while
+      function pick(def, ms, my) {
+        return new Promise(function (res) {
+          if (!alive(my)) return res(null);
+          say.classList.add('act');
+          var done = false, t, btns = [].slice.call(sayB.querySelectorAll('button'));
+          var fin = function (v) { if (done) return; done = true; clearTimeout(t); btns.forEach(function (b) { b.onclick = null; }); say.classList.remove('act'); res(alive(my) ? v : null); };
+          btns.forEach(function (b) { b.onclick = function () { auto = false; fin(b.dataset.id); }; });
+          t = setTimeout(function () {
+            var b = btns.filter(function (x) { return x.dataset.id === def; })[0];
+            if (b && !reduce) { b.classList.add('press'); setTimeout(function () { fin(def); }, 180); } else fin(def);
+          }, manual ? ms * 1.6 : ms);
+          wakers.push(function () { fin(null); });
+        });
+      }
+
+      // ---- the island at the top of the screen, where bon lives
+      function island(kind, text) {
+        islI.className = kind === 'pass' ? 'pass' : kind ? 'on' : '';
+        islI.innerHTML = kind === 'bars' ? '<span class="bars"><i></i><i></i><i></i><i></i></span>' : kind === 'dots' ? '<span class="dots"><i></i><i></i><i></i></span>' : '';
+        islI.style.color = kind === 'bars' ? skin.body : '';
+        islT.textContent = text;
+      }
+
+      // ---- the code and the terminal
+      function hl(s) { return s.replace(/<(k|f|n)>/g, '<span class="$1">').replace(/<\/(k|f|n)>/g, '</span>'); }
+      var W1_OK = 'W1 = np.random.rand(<n>10</n>, <n>784</n>) - <n>0.5</n>', W1_BAD = 'W1 = np.zeros((<n>10</n>, <n>784</n>))';
+      var CODE = [
+        [6, 0, '<k>def</k> <f>init_params</f>():', 'makes the numbers the network starts from.'],
+        [7, 1, W1_OK, '10 neurons, each with a weight for all 784 pixels.'],
+        [8, 1, 'b1 = np.zeros((<n>10</n>, <n>1</n>))', 'one bias for each of the 10 neurons.'],
+        [9, 1, 'W2 = np.random.rand(<n>10</n>, <n>10</n>) - <n>0.5</n>', 'layer two: 10 neurons in, 10 digits out.'],
+        [10, 1, 'b2 = np.zeros((<n>10</n>, <n>1</n>))', 'a bias for each of the 10 digits.'],
+        [11, 1, '<k>return</k> W1, b1, W2, b2', 'hands all four back for training.'],
+        [12, 0, '', ''],
+        [13, 0, '<k>def</k> <f>relu</f>(Z):', 'relu decides what each neuron passes on.'],
+        [14, 1, '<k>return</k> np.maximum(Z, <n>0</n>)', 'keep the positives, zero the rest.']
+      ];
+      var BAD_TIP = 'zeros: all 10 neurons start the same, so they learn the same.';
+      CODE.forEach(function (l, i) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'bn-ln';
-        b.innerHTML = '<em>' + (i + 1) + '</em><span>' + l[0] + '</span>';
-        b.setAttribute('aria-label', 'line ' + (i + 1) + ': ask bon');
-        b.addEventListener('click', function () { touched = true; go(i); });
+        b.innerHTML = '<em>' + l[0] + '</em><span class="ind">' + '    '.repeat(l[1]) + '</span><span class="tx">' + hl(l[2]) + '</span>';
+        if (l[3]) { b.setAttribute('aria-label', 'line ' + l[0] + ': ask bon'); b.addEventListener('click', function () { askLine(i); }); }
+        else { b.disabled = true; b.setAttribute('aria-hidden', 'true'); }
         code.appendChild(b);
       });
-      var lns = code.querySelectorAll('.bn-ln');
+      var tx = [].map.call(code.querySelectorAll('.tx'), function (e) { return e; });
+      var w1Bad = false;
+      function setW1(bad) { w1Bad = bad; tx[1].innerHTML = hl(bad ? W1_BAD : W1_OK); }
+      function tok784() { return tx[1].querySelectorAll('.n')[1]; }
+      var tl = term.querySelectorAll('.bn-tl span'), dollar = term.querySelector('s');
+      function termSet(cmd, out) { tl[0].textContent = cmd; tl[1].textContent = out; }
+      function typeInto(el, text, ms, my, keep) {
+        el.classList.add('typing'); if (!keep) el.textContent = '';
+        var base = el.textContent, i = 0;
+        if (reduce) { el.textContent = base + text; el.classList.remove('typing'); return Promise.resolve(alive(my)); }
+        return (function next() {
+          return sleep(ms, my).then(function (ok) {
+            if (!ok) return false;
+            el.textContent = base + text.slice(0, ++i);
+            if (i < text.length) return next();
+            el.classList.remove('typing'); return true;
+          });
+        })();
+      }
+      function erase(el, keep, ms, my) {
+        el.textContent = el.textContent; el.classList.add('typing');
+        if (reduce) { el.textContent = keep; return Promise.resolve(alive(my)); }
+        return (function next() {
+          return sleep(ms, my).then(function (ok) {
+            if (!ok) return false;
+            el.textContent = el.textContent.slice(0, -1);
+            return el.textContent.length > keep.length ? next() : true;
+          });
+        })();
+      }
+      function codeEnd() { var m = 0; tx.forEach(function (s) { m = Math.max(m, box(s).r); }); return m; }
 
-      // where bon sits for line i, and the loop round it
-      function spot(i) {
-        var w = win.getBoundingClientRect(), r = lns[i].querySelector('span').getBoundingClientRect();
-        var S = chr.offsetWidth, X = r.left - w.left - 7, Y = r.top - w.top + 2, W = r.width + 14, H = r.height - 4, R = H / 2;
-        var far = 0; [].forEach.call(lns, function (b) { far = Math.max(far, b.querySelector('span').getBoundingClientRect().right - w.left); });
-        var bx = Math.min(far + 12, w.width - S - 6), by = Y + H / 2 - S * .64;
-        return { w: w.width, S: S, floor: code.getBoundingClientRect().bottom - w.top + 8, bx: bx, by: by,
-          d: 'M' + (X + W - R) + ' ' + Y + ' A' + R + ' ' + R + ' 0 0 1 ' + (X + W - R) + ' ' + (Y + H) + ' H' + (X + R) + ' A' + R + ' ' + R + ' 0 0 1 ' + (X + R) + ' ' + Y + ' Z' };
+      // ---- going to a mark: fly beside it, loop it, point at it
+      function goTo(el, kind, my) {
+        var b = box(el), s = S(), W = tile.clientWidth;
+        var end = kind === 'term' ? Math.max(box(tl[0]).r, box(tl[1]).r, box(dollar).r) : codeEnd();
+        hideSay(); unring(); set({ point: 0 });
+        return fly({ x: Math.min(end + 16, W - s - 6), y: b.cy - s * .64 }, my).then(function (ok) {
+          if (!ok) return false;
+          set({ point: -1 });
+          if (kind === 'tok') ring(b, 5, 3); else if (kind === 'term') ring(b, 8, -1); else ring(b, 7, -2);
+          return sleep(380, my);
+        });
       }
-      function putSay(text, p) {
-        say.textContent = text; say.style.maxWidth = '';
-        var room = p.w - (p.bx + p.S + 8) - 10, x, y;
-        if (room >= 170) { say.style.maxWidth = Math.min(230, room) + 'px'; x = p.bx + p.S + 8; y = p.by + p.S * .5 - say.offsetHeight / 2; }
-        else { x = Math.max(8, p.w - say.offsetWidth - 8); y = Math.max(p.by + p.S + 4, p.floor); }
-        say.style.left = x.toFixed(1) + 'px'; say.style.top = Math.max(38, y).toFixed(1) + 'px';
+      function goHome(my) { hideSay(); unring(); set({ point: 0, mood: 'calm' }); var h = home(); return fly(h, my); }
+
+      // ---- the scenes
+      var auto = true, manual = false, playing = null;
+      function guide(my) {
+        setW1(false); termSet('', '');
+        island('', 'your turn · set up layer 1');
+        var T = [[tx[1], 'code', 'W1: a weight from every pixel to each of 10 neurons.'], [tx[2], 'code', 'b1: one bias for each neuron.'], [dollar, 'term', 'then run it here.']];
+        var i = 0;
+        return (function next() {
+          var last = i === T.length - 1, m = T[i];
+          marks(T.slice(i + 1).map(function (t, j) { return [i + j + 2, t[0]]; }));
+          return goTo(m[0], m[1], my)
+            .then(function (ok) { return ok && speak(m[2], my, (i + 1) + ' of 3', [[last ? 'done' : 'next', last ? 'Done' : 'Next', true]]); })
+            .then(function (ok) { return ok ? pick(last ? 'done' : 'next', 2900, my) : null; })
+            .then(function (v) {
+              if (v === null) return false;
+              unring(); i++;
+              if (!last) return next();
+              set({ mood: 'happy' }); bounce(); nums.innerHTML = '';
+              return sleep(600, my).then(function (ok) { return ok && goHome(my); });
+            });
+        })();
       }
-      function go(i, quiet) {
-        at = i; var p = spot(i), paths = loop.querySelectorAll('path');
-        clearTimeout(sayT); clearTimeout(loopT);
-        say.classList.remove('on'); loop.classList.remove('on');
-        chr.style.transform = 'translate(' + p.bx.toFixed(1) + 'px,' + p.by.toFixed(1) + 'px)';
-        paths[0].setAttribute('d', p.d); paths[1].setAttribute('d', p.d); paths[1].style.stroke = skin.body;
-        var wait = quiet || reduce ? 0 : 420;
-        if (!quiet && !reduce) { hop.classList.remove('hop'); void hop.offsetWidth; hop.classList.add('hop'); }
-        loopT = setTimeout(function () { loop.classList.add('on'); }, wait);
-        sayT = setTimeout(function () { putSay(LINES[i][1], p); say.classList.add('on'); }, wait + (reduce ? 0 : 380));
+      function listen(my) {
+        setW1(false); termSet('', '');
+        island('', 'miyagi');
+        var c0 = box(tx[5]), t = box(tok784());
+        curAt(c0.r + 20, c0.cy); cur.classList.add('on');
+        return sleep(500, my)
+          .then(function (ok) { if (!ok) return false; island('bars', 'listening'); set({ mood: 'listening', point: 0 }); hideSay(); return fly({ x: cp.x + 16, y: cp.y + 10 }, my); })
+          .then(function (ok) {
+            if (!ok) return false;
+            follow(my);
+            content('', '<span class="bars" style="color:' + skin.body + '"><i></i><i></i><i></i><i></i></span><span class="heard"></span>');
+            sayT.querySelector('.heard').textContent = 'why 784?'; putSay(); sayT.querySelector('.heard').textContent = ''; say.classList.add('on');
+            return Promise.all([moveCur({ x: t.x + t.w * .6, y: t.b - 2 }, 1500, my), sleep(350, my).then(function (ok) { return ok && typeInto(sayT.querySelector('.heard'), 'why 784?', 70, my); })]);
+          })
+          .then(function (r) { return r && r[0] && r[1] && sleep(450, my); })
+          .then(function (ok) { if (!ok) return false; following = false; island('dots', 'thinking'); return think(my, 1100); })
+          .then(function (ok) { if (!ok) return false; island('', 'miyagi'); set({ mood: 'calm' }); return goTo(tok784(), 'tok', my); })
+          .then(function (ok) { return ok && speak('each digit is 28 by 28 pixels, and 28 × 28 is 784.', my, '', [['explain', 'Explain'], ['got', 'Got it', true]]); })
+          .then(function (ok) { return ok ? pick('explain', 3400, my) : null; })
+          .then(function (v) {
+            if (v !== 'explain') return v;
+            return think(my, 900)
+              .then(function (ok) { set({ mood: 'calm', point: -1 }); return ok && speak('the image is flattened into one long column, one number per pixel, so W1 needs a weight for each.', my, '', [['got', 'Got it', true]]); })
+              .then(function (ok) { return ok ? pick('got', 3800, my) : null; });
+          })
+          .then(function (v) {
+            if (v === null) return false;
+            cur.classList.remove('on'); set({ mood: 'happy', point: 0 }); bounce(); unring(); hideSay();
+            return sleep(700, my).then(function (ok) { return ok && goHome(my); });
+          });
+      }
+      function check(my) {
+        setW1(true); termSet('', ''); island('', 'your turn · run it');
+        return sleep(600, my)
+          .then(function (ok) { return ok && typeInto(tl[0], 'python nn.py', 45, my); })
+          .then(function (ok) { if (!ok) return false; island('dots', 'checking'); return sleep(1000, my); })
+          .then(function (ok) {
+            if (!ok) return false;
+            tl[1].textContent = 'epoch 50 · acc 0.11'; island('', 'not yet');
+            marks([[2, tx[1]]]);
+            return sleep(500, my).then(function (ok) { return ok && goTo(tl[1], 'term', my); });
+          })
+          .then(function (ok) { return ok && speak('0.11. a pass is above 0.80.', my, '1 of 2', [['next', 'Next', true]]); })
+          .then(function (ok) { return ok ? pick('next', 2700, my) : null; })
+          .then(function (v) { if (v === null) return false; nums.innerHTML = ''; return goTo(tx[1], 'code', my); })
+          .then(function (ok) { return ok && speak(BAD_TIP, my, '2 of 2', [['explain', 'Explain'], ['got', 'Got it', true]]); })
+          .then(function (ok) { return ok ? pick('got', 3600, my) : null; })
+          .then(function (v) {
+            if (v !== 'explain') return v;
+            return think(my, 900)
+              .then(function (ok) { set({ mood: 'calm', point: -1 }); return ok && speak('every neuron gets the same push each step, so they never become different. random starts break the tie.', my, '', [['got', 'Got it', true]]); })
+              .then(function (ok) { return ok ? pick('got', 3800, my) : null; });
+          })
+          .then(function (v) {
+            if (v === null) return false;
+            set({ mood: 'happy', point: 0 }); bounce(); unring(); hideSay();
+            return sleep(500, my).then(function (ok) { return ok && goHome(my); });
+          })
+          // the learner fixes it and runs it again
+          .then(function (ok) { if (!ok) return false; island('', 'your turn · fix W1'); tx[1].textContent = 'W1 = np.zeros((10, 784))'; return sleep(400, my); })
+          .then(function (ok) { return ok && erase(tx[1], 'W1 = ', 28, my); })
+          .then(function (ok) { return ok && typeInto(tx[1], 'np.random.rand(10, 784) - 0.5', 40, my, true); })
+          .then(function (ok) { if (!ok) return false; setW1(false); tl[1].textContent = ''; island('dots', 'checking'); return sleep(1000, my); })
+          .then(function (ok) {
+            if (!ok) return false;
+            tl[1].textContent = 'epoch 50 · acc 0.86'; island('pass', 'step passed'); setSteps(steps + 1);
+            return sleep(2400, my);
+          })
+          .then(function (ok) { if (ok) island('', 'miyagi'); return ok; });
+      }
+      var SCENES = { guide: guide, listen: listen, check: check }, ORDER = ['guide', 'listen', 'check'];
+      var actBtns = [].slice.call(acts.querySelectorAll('.bn-act'));
+      function pressed(name) { actBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.scene === name ? 'true' : 'false'); }); }
+      function reset() {
+        stop(); hideSay(); unring(); nums.innerHTML = ''; cur.classList.remove('on');
+        set({ mood: 'calm', point: 0, talk: false }); island('', 'miyagi');
+      }
+      function play(name, byUser) {
+        reset(); var my = RUN; playing = name; manual = !!byUser; pressed(name);
+        SCENES[name](my).then(function (ok) {
+          if (!alive(my)) return;
+          playing = null; pressed(null);
+          if (ok && auto && !byUser) sleep(1500, my).then(function (go) { if (go && auto && inView) play(ORDER[(ORDER.indexOf(name) + 1) % ORDER.length]); });
+        });
+      }
+      actBtns.forEach(function (b) { b.addEventListener('click', function () { auto = false; play(b.dataset.scene, true); }); });
+
+      // ---- ask about any line
+      function askLine(i) {
+        auto = false; reset(); playing = null; pressed(null); var my = RUN;
+        goTo(tx[i], 'code', my).then(function (ok) { return ok && speak(i === 1 && w1Bad ? BAD_TIP : CODE[i][3], my); });
       }
 
-      // its color
+      // ---- its color
       var picks = $('bnPicks');
       SKINS.forEach(function (s, i) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'bn-pick'; b.style.background = s.body;
         b.setAttribute('role', 'radio'); b.setAttribute('aria-label', s.id); b.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
         b.addEventListener('click', function () {
-          touched = true; skin = s;
+          skin = s;
           [].forEach.call(picks.children, function (c) { c.setAttribute('aria-checked', c === b ? 'true' : 'false'); });
-          loop.querySelector('.s').style.stroke = s.body; drawLad(); cheer(900);
+          paths[1].style.stroke = s.body;
+          [].forEach.call(root.querySelectorAll('.bn-num'), function (n) { n.style.background = s.body; });
+          [].forEach.call(root.querySelectorAll('.bars'), function (n) { n.style.color = s.body; });
+          if (islI.className === 'on' && islI.querySelector('.bars')) islI.style.color = s.body;
+          drawChar(); drawLad(); bounce();
         });
         picks.appendChild(b);
       });
 
-      // its level
+      // ---- its level
       var lad = $('bnLad'), lv = $('bnLv'), nx = $('bnNext'), fill = $('bnFill');
       LEVELS.forEach(function (v, i) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'bn-lv';
         b.setAttribute('aria-label', 'level ' + (i + 1) + ', ' + v[0]);
-        b.addEventListener('click', function () { touched = true; setSteps(v[1]); });
+        b.addEventListener('click', function () { setSteps(v[1]); });
         lad.appendChild(b);
       });
       function drawLad() {
         var L = levelFor(steps);
         [].forEach.call(lad.children, function (b, i) {
-          b.innerHTML = bonSVG(i + 1, skin, 'calm', 0).replace('class="bn-eye"', '') + (i + 1);
+          b.innerHTML = bonSVG(i + 1, skin, 'calm', 0).replace('class="bn-eye"', '').replace(/ class="bn-lf"/g, '') + (i + 1);
           b.className = 'bn-lv' + (i + 1 === L ? ' on' : i + 1 > L ? ' off' : '');
         });
         var here = LEVELS[L - 1], next = LEVELS[L];
@@ -2952,37 +3328,51 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         nx.textContent = next ? (next[1] - steps) + (next[1] - steps === 1 ? ' step to ' : ' steps to ') + next[0] : steps + ' steps passed';
         fill.style.width = (next ? (steps - here[1]) / (next[1] - here[1]) * 100 : 100) + '%';
       }
+      var grewT = 0;
       function setSteps(n) {
         var was = levelFor(steps); steps = Math.max(0, n); var now = levelFor(steps);
-        drawLad();
-        if (now !== was) {
-          cheer(1500);
-          chr.classList.remove('grew'); void chr.offsetWidth; chr.classList.add('grew');
-          if (now > was) {
-            clearTimeout(sayT); var p = spot(at);
-            putSay('bon grew to level ' + now + ': ' + LEVELS[now - 1][0] + '.', p); say.classList.add('on');
-          }
-        } else drawChar();
+        drawLad(); drawChar();
+        if (now === was) return;
+        chr.classList.remove('grew'); void chr.offsetWidth; chr.classList.add('grew');
+        set({ mood: 'happy' }); bounce();
+        clearTimeout(grewT);
+        if (now > was) { content('', ''); sayT.textContent = 'bon grew to level ' + now + ': ' + LEVELS[now - 1][0] + '.'; putSay(); say.classList.add('on'); }
+        grewT = setTimeout(function () { if (!playing) hideSay(); set({ mood: 'calm' }); }, 2200);
       }
-      $('bnPass').addEventListener('click', function () { touched = true; setSteps(steps + 1); });
+      $('bnPass').addEventListener('click', function () { setSteps(steps + 1); });
 
-      // it looks at the pointer
+      // ---- it looks at the pointer
       root.addEventListener('pointermove', function (e) {
+        if (following || chr.classList.contains('fly')) return;
         var r = chr.getBoundingClientRect(), dx = (e.clientX - (r.left + r.width / 2)) / 160, dy = (e.clientY - (r.top + r.height / 2)) / 160;
         look = [Math.max(-1, Math.min(1, dx)), Math.max(-1, Math.min(1, dy))]; setLook();
       });
       root.addEventListener('pointerleave', function () { look = [0, 0]; setLook(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.contains(document.activeElement)) { auto = false; reset(); playing = null; pressed(null); goHome(RUN); } });
 
-      drawChar(); drawLad(); go(at, true);
-      var rz = 0; function refit() { clearTimeout(rz); rz = setTimeout(function () { go(at, true); }, 120); }
-      window.addEventListener('resize', refit); window.addEventListener('load', refit);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
-      // left alone, it walks the lines while the section is on screen
-      if (!reduce) setInterval(function () {
-        if (touched || document.hidden) return;
-        var r = win.getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight - 80) return;
-        go((at + 1) % LINES.length);
-      }, 4600);
+      // ---- start: bon at home under the island; left alone, the scenes play in turn while the section is on screen
+      drawChar(); drawLad(); var h0 = home(); place(h0.x, h0.y);
+      var inView = false, started = false;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          inView = es[0].isIntersecting;
+          if (inView && auto && !playing && !reduce) { started = true; play(ORDER[0]); }
+          else if (!inView && auto && playing) { reset(); playing = null; pressed(null); var h = home(); place(h.x, h.y); }
+        }, { threshold: .45 }).observe(tile);
+      }
+      var rz = 0;
+      function refit() {
+        clearTimeout(rz);
+        rz = setTimeout(function () {
+          var again = playing; reset(); playing = null; pressed(null);
+          var h = home(); place(h.x, h.y);
+          if (again) play(again, manual);
+        }, 160);
+      }
+      var lastW = innerWidth;
+      window.addEventListener('resize', function () { if (innerWidth !== lastW) { lastW = innerWidth; refit(); } });
+      window.addEventListener('load', function () { if (!playing) { var h = home(); place(h.x, h.y); } });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!playing) { var h = home(); place(h.x, h.y); } });
     })();
     /* bon:end */
   </script>
