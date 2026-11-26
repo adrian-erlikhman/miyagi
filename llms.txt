@@ -1,0 +1,18 @@
+# miyagi
+
+> miyagi is a Mac app that turns any tutorial into a lesson you do. The video waits until you've done each step, and miyagi checks it.
+
+miyagi works with anything on your screen. VS Code, Jupyter and the terminal get deeper checks, since miyagi can run your code. It needs macOS 13 or later on Apple silicon. It's coming soon for public access; the waitlist is on the home page. miyagi won Best Overall Hack at SanD Hacks 2026.
+
+## Pages
+
+- [miyagi](https://miyagi.study/): what the app does, how a lesson works, the apps it works with, questions
+- [Learn Python by doing](https://miyagi.study/learn/python/): a short Python lesson you do in the page
+- [Build a neural network from scratch](https://miyagi.study/learn/neural-networks/): a neuron you write and run in the page
+- [Learn Git by doing](https://miyagi.study/learn/git/): status, add and commit in a practice repository
+- [Privacy](https://miyagi.study/privacy/)
+- [Terms](https://miyagi.study/terms/)
+
+## Contact
+
+support@miyagi.study
