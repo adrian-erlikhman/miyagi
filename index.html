@@ -698,9 +698,8 @@
     .mw .skill .rev { display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--ln); font-size: 12.5px; color: var(--mu); transition: opacity .35s; }
     .mw .skill .rev:not(.on) { opacity: 0; } .mw .skill .rev b { color: var(--tx); font-weight: 500; }
 
-    /* ---------- everything it does: nine names in a side list, one screen playing at a time ---------- */
-    .mw .bento { display: grid; grid-template-columns: minmax(280px, 370px) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 44px); align-items: center; max-width: 1180px; margin: 44px auto 0; }
-    /* the list is the typography: every feature by name, in three clusters. The open one is ink and carries its line; a rail beside it fills as its screen plays */
+    /* ---------- everything it does: nine names in a side list and one stage. Each name plays a short scene on a small Mac screen: the notch island says what miyagi is doing, a cursor does what you would do ---------- */
+    .mw .bento { display: grid; grid-template-columns: minmax(270px, 350px) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 44px); align-items: center; max-width: 1240px; margin: 44px auto 0; }
     .mw .flist { display: grid; gap: 20px; min-width: 0; }
     .mw .fgrp { display: grid; align-content: start; min-width: 0; }
     .mw .fname { position: relative; display: block; width: 100%; min-width: 0; text-align: left; padding: 5px 0 5px 20px; font-size: clamp(19px, 1.9vw, 24px); line-height: 1.25; letter-spacing: -.025em; color: var(--faint); transition: color .2s; }
@@ -713,19 +712,17 @@
     .mw .fname.on > span { display: block; margin-top: 4px; max-width: 24em; font-size: 15px; line-height: 1.4; letter-spacing: 0; color: var(--muted); min-height: 2.8em; }
     .mw .fname.on .fprog { display: block; position: absolute; left: 0; top: 7px; bottom: 11px; width: 2px; border-radius: 1px; background: rgba(20, 20, 20, .08); overflow: hidden; }
     .mw .fprog i { display: block; width: 100%; height: 100%; background: var(--ink); transform: scaleY(0); transform-origin: 0 0; }
-    /* the stage: one card's screen at a time, laid out at its design width (563px) and scaled up to fit; narrower than that it lays out at its real width */
+    /* the stage: a 600 x 400 screen, scaled to its tile */
     .mw .fstage { min-width: 0; background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05); }
-    /* every tile is the same quiet paper; the colour comes from what is on the screen. The script sets the height: 232px times the scale */
-    .mw .ftile { position: relative; height: 232px; border-radius: 13px; background: #efede8; overflow: hidden; }
-    .mw .fview { position: absolute; left: 0; top: 0; width: 100%; height: 232px; transform-origin: 0 0; }
+    .mw .ftile { position: relative; cursor: pointer; height: 400px; border-radius: 13px; background: #efede8; overflow: hidden; }
+    .mw .fview { position: absolute; left: 0; top: 0; width: 600px; height: 400px; transform-origin: 0 0; }
     .mw .fcard { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s; }
     .mw .fcard.on { opacity: 1; visibility: visible; transition: opacity .35s; }
-    .mw .vg { position: absolute; inset: 0; overflow: hidden; font-size: 13px; line-height: 1.35; color: #1c1b19; }
-    .mw .vg .lg svg { width: 100%; height: 100%; display: block; }
-    /* tablets: the stage on top, the three clusters side by side under it. Phones: one list, and the stage stays pinned while the list scrolls */
+    .mw .vg { position: absolute; inset: 0; overflow: hidden; font-size: 12px; line-height: 1.35; color: #1c1b19; }
+    .mw .vg svg { display: block; }
     @media (max-width: 900px) {
       .mw .bento { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-      .mw .fstage { order: -1; position: sticky; top: 66px; z-index: 2; }
+      .mw .fstage { order: -1; position: sticky; top: 66px; z-index: 2; padding: 6px; border-radius: 16px; }
       .mw .flist { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
       .mw .fname { font-size: 18px; }
     }
@@ -733,123 +730,261 @@
     @media (pointer: coarse) { .mw .fname { padding-top: 9px; padding-bottom: 9px; } .mw .fname.on { padding-bottom: 12px; } .mw .fname.on .fprog { top: 11px; bottom: 14px; } }
     @media (prefers-reduced-motion: reduce) { .mw .fname.on .fprog { display: none; } .mw .fcard, .mw .fcard.on { transition: none; } }
 
-    /* a window on the screen: it starts inside the tile and runs off its edge, like a zoomed screenshot */
-    .mw .bw { position: absolute; left: 14px; top: 14px; right: 14px; bottom: -40px; border-radius: 10px; overflow: hidden; background: #fff;
-      box-shadow: 0 0 0 1px rgba(20, 20, 20, .07), 0 18px 34px -20px rgba(20, 16, 10, .5); }
-    .mw .bw.off { right: -90px; }
-    .mw .bw.dk { background: #1e1e1e; color: #d4d4d4; box-shadow: 0 18px 34px -20px rgba(20, 16, 10, .65); }
-    .mw .bw-tb { position: relative; height: 26px; display: flex; align-items: center; padding: 0 10px; background: #f3f1ec; font-size: 11px; color: #8f8c84; white-space: nowrap; }
-    .mw .bw.dk .bw-tb { background: #2b2b2b; color: #9a9a9a; }
-    .mw .bw .tl { gap: 6px; flex: none; } .mw .bw .tl i { width: 9px; height: 9px; }
-    .mw .bw.dk .tl i { background: rgba(255, 255, 255, .16); }
-    .mw .bw-tb .tt { position: absolute; left: 0; right: 0; text-align: center; pointer-events: none; }
-    .mw .bw.off .bw-tb .tt { position: static; margin-left: 14px; }
-    .mw .bw-src { font: 12px/21px var(--mono); padding: 8px 0; }
-    .mw .bw-src > div { display: flex; }
-    .mw .bw-src > div > span { white-space: pre; }
-    .mw .bw-src .n { width: 34px; padding-right: 12px; text-align: right; color: #5a5a5a; flex: none; }
-    .mw .bw-src .act { background: rgba(255, 255, 255, .04); } .mw .bw-src .act .n { color: #c6c6c6; }
-    .mw .bw-src .ecaret { height: 15px; }
+    /* the Mac: menu bar, notch island, cursor */
+    .mw .fs-mb { position: absolute; left: 0; right: 0; top: 0; height: 22px; display: flex; align-items: center; gap: 14px; padding: 0 12px; font-size: 11px; color: #1c1b19; background: rgba(250, 249, 246, .7); z-index: 20; }
+    .mw .fs-mb .ap { width: 12px; height: 12px; margin-top: -2px; } .mw .fs-mb .ap svg { width: 100%; height: 100%; } .mw .fs-mb .ap path { fill: #1c1b19 !important; }
+    .mw .fs-mb b { font-weight: 600; } .mw .fs-mb .rt { margin-left: auto; color: #4b4a45; }
+    .mw .fs-isl { position: absolute; left: 50%; top: 0; transform: translateX(-50%); height: 26px; padding: 0 13px 0 8px; border-radius: 0 0 14px 14px; background: #000; color: #fff; z-index: 30;
+      display: flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 500; white-space: nowrap; overflow: hidden; transition: width .45s var(--settle); box-sizing: border-box; }
+    .mw .fs-isl .il { width: 16px; height: 16px; flex: none; } .mw .fs-isl .il svg { width: 100%; height: 100%; }
+    .mw .fs-isl .is { display: inline-flex; align-items: center; flex: none; } .mw .fs-isl .is:empty { display: none; }
+    .mw .fs-isl .is svg { width: 12px; height: 12px; display: block; }
+    .mw .fs-isl .spin { width: 10px; height: 10px; border-width: 1.5px; }
+    .mw .fs-isl .gd { width: 8px; height: 8px; border-radius: 50%; background: #30d158; display: block; }
+    .mw .fs-isl .rng { width: 9px; height: 9px; border-radius: 50%; border: 1.6px solid #fff; display: block; box-sizing: border-box; }
+    .mw .fs-isl .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 10px; }
+    .mw .fs-isl .bars i { width: 2.5px; background: #fff; border-radius: 1px; animation: mw-eq 1s ease-in-out infinite; } .mw .fs-isl .bars i:nth-child(2) { animation-delay: -.3s; } .mw .fs-isl .bars i:nth-child(3) { animation-delay: -.6s; }
+    .mw .fs-isl .ip { color: rgba(255, 255, 255, .55); } .mw .fs-isl .ip:empty { display: none; }
+    .mw .fs-cur { position: absolute; left: 0; top: 0; width: 15px; height: 22px; z-index: 40; pointer-events: none; transition: opacity .3s; will-change: transform; }
+    .mw .fs-cur svg { width: 15px; height: 22px; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .3)); transition: transform .12s; transform-origin: 2px 2px; }
+    .mw .fs-cur.dn svg { transform: scale(.86); }
+    .mw .fs-cur i { position: absolute; left: -13px; top: -13px; width: 28px; height: 28px; border-radius: 50%; background: rgba(20, 20, 20, .18); opacity: 0; }
+    .mw .fs-cur.dn i { animation: fs-ck .45s ease-out; }
+    .mw .fs-cur.off { opacity: 0; }
+    @keyframes fs-ck { from { opacity: 1; transform: scale(.3); } to { opacity: 0; transform: scale(1.2); } }
 
-    /* miyagi on top of the screen: the ring, the callout, the pill, the ask field */
-    .mw .bring { position: absolute; border-radius: 7px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .3); pointer-events: none; transition: opacity .3s; }
-    .mw .bring:not(.on) { opacity: 0; }
-    /* show me: the rest of the window dims, like the app's spotlight */
-    .mw .bring.bsp { box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 2000px rgba(10, 10, 10, .52); transition: opacity .45s; }
-    .mw .bcall { position: absolute; padding: 8px 11px 9px; border-radius: 10px; background: #0b0b0b; color: #fff; font-size: 12.5px; line-height: 1.35; white-space: nowrap;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 12px 26px -10px rgba(0, 0, 0, .6); transition: opacity .3s, transform .45s var(--spring); }
-    .mw .bcall b { display: flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .6); margin-bottom: 1px; }
-    .mw .bcall .glg { width: 12px; height: 12px; }
-    .mw .bcall:not(.on) { opacity: 0; transform: translateY(6px); }
-    .mw .bcall::after { content: ""; position: absolute; top: -5px; left: var(--nx, 20px); width: 10px; height: 10px; background: #0b0b0b; border-radius: 2px; transform: rotate(45deg); box-shadow: -1px -1px 0 rgba(255, 255, 255, .14); }
-    .mw .bpill { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); height: 30px; padding: 0 12px 0 7px; border-radius: 15px; background: #0b0b0b; color: #fff;
-      display: flex; align-items: center; gap: 7px; font-size: 12.5px; white-space: nowrap; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .55); }
-    .mw .bpill .lg { width: 18px; height: 18px; }
-    .mw .bpill .st { display: none; align-items: center; } .mw .bpill .st.on { display: inline-flex; }
-    .mw .bpill .gd { width: 8px; height: 8px; border-radius: 50%; background: #30d158; }
-    .mw .bpill .ring { width: 9px; height: 9px; border-radius: 50%; border: 1.6px solid #fff; }
-    .mw .bpill .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 10px; }
-    .mw .bpill .bars i { width: 2.5px; background: #fff; border-radius: 1px; animation: mw-eq 1s ease-in-out infinite; }
-    .mw .bpill .bars i:nth-child(2) { animation-delay: -.3s; } .mw .bpill .bars i:nth-child(3) { animation-delay: -.6s; }
-    .mw .bask { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); min-width: 236px; height: 38px; padding: 0 8px 0 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px;
-      background: rgba(250, 249, 246, .95); color: #75726b; font-size: 13px; white-space: nowrap; box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), 0 16px 34px -14px rgba(0, 0, 0, .65); transition: background .2s, box-shadow .2s, color .2s; }
-    .mw .bask .lg { width: 17px; height: 17px; flex: none; } .mw .bask .tx { flex: 1; }
-    .mw .bask .kc { font-size: 11px; background: #efede7; border-radius: 5px; padding: 2px 6px; color: #75726b; }
-    .mw .bask.typing { background: #fff; color: #1c1b19; box-shadow: 0 0 0 1.5px #1c1b19, 0 16px 34px -14px rgba(0, 0, 0, .65); }
+    /* windows */
+    .mw .fs-w { position: absolute; border-radius: 9px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .08), 0 20px 40px -22px rgba(20, 16, 10, .55); transition: opacity .4s, transform .55s var(--settle); }
+    .mw .fs-w.dk { background: #1e1e1e; color: #d4d4d4; box-shadow: 0 0 0 1px rgba(0, 0, 0, .3), 0 20px 40px -20px rgba(20, 16, 10, .7); }
+    .mw .fs-tb { position: relative; height: 24px; display: flex; align-items: center; gap: 6px; padding: 0 9px; background: #f1efea; color: #8f8c84; font-size: 10.5px; white-space: nowrap; flex: none; }
+    .mw .fs-tb > i { width: 9px; height: 9px; border-radius: 50%; background: rgba(0, 0, 0, .14); flex: none; }
+    .mw .fs-tb > span { position: absolute; left: 50px; right: 50px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
+    .mw .fs-w.dk .fs-tb { background: #2b2b2b; color: #9a9a9a; } .mw .fs-w.dk .fs-tb > i { background: rgba(255, 255, 255, .16); }
+    .mw .fs-w.hide { opacity: 0; transform: translateY(26px) scale(.97); }
+    /* VS Code */
+    .mw .fs-vb { position: absolute; left: 0; right: 0; top: 24px; bottom: 0; display: flex; }
+    .mw .fs-act { width: 28px; flex: none; background: #2c2c2c; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 10px; }
+    .mw .fs-act i { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid #858585; box-sizing: border-box; } .mw .fs-act i:first-child { border-color: #e4e4e4; }
+    .mw .fs-exp { width: 104px; flex: none; background: #252526; padding: 7px 0; font-size: 10.5px; color: #bbb; }
+    .mw .fs-exp b { display: block; padding: 0 10px 6px; font-size: 9.5px; font-weight: 600; letter-spacing: .04em; color: #9a9a9a; }
+    .mw .fs-exp span { display: flex; align-items: center; gap: 6px; padding: 2px 10px 2px 16px; } .mw .fs-exp span.on { background: #37373d; color: #fff; }
+    .mw .fs-exp [data-t] { width: 11px; height: 11px; flex: none; } .mw .fs-exp [data-t] svg, .mw .fs-tabs [data-t] svg { width: 100%; height: 100%; }
+    .mw .fs-exp .db { width: 9px; height: 9px; border-radius: 2px; background: #6a9955; margin: 0 1px; flex: none; }
+    .mw .fs-ed { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .mw .fs-tabs { height: 26px; display: flex; background: #252526; flex: none; }
+    .mw .fs-tabs span { display: flex; align-items: center; gap: 6px; padding: 0 12px; font-size: 10.5px; color: #8f8f8f; border-right: 1px solid #1e1e1e; }
+    .mw .fs-tabs span.on { background: #1e1e1e; color: #fff; } .mw .fs-tabs [data-t] { width: 11px; height: 11px; }
+    .mw .fs-code { position: relative; flex: 1; padding: 6px 0; font: 11px/18px var(--mono); }
+    .mw .fs-ln { display: flex; white-space: pre; transition: background .3s; } .mw .fs-ln .n { width: 30px; padding-right: 12px; text-align: right; color: #5a5a5a; flex: none; }
+    .mw .fs-ln.act { background: rgba(255, 255, 255, .05); } .mw .fs-ln.act .n { color: #c6c6c6; }
+    .mw .fs-ln .ok { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #30d158; margin: 0 0 0 10px; align-self: center; opacity: 0; transition: opacity .3s; } .mw .fs-ln.pass .ok { opacity: 1; }
+    .mw .fs-code .ecaret { height: 14px; vertical-align: -2px; }
+    .mw .fs-term { flex: none; border-top: 1px solid #333; background: #1e1e1e; font: 10.5px/16px var(--mono); padding: 4px 12px 6px; color: #ccc; white-space: pre; }
+    .mw .fs-term .th { display: flex; gap: 14px; font: 600 9px/18px var(--font); letter-spacing: .05em; color: #8f8f8f; } .mw .fs-term .th span:first-child { color: #e4e4e4; }
+    /* terminal window */
+    .mw .fs-sh { font: 10.5px/17px var(--mono); padding: 7px 11px; color: #d6d6d6; white-space: pre; margin: 0; }
+    .mw .fs-sh .pr { color: #8b8b8b; } .mw .fs-sh .g { color: #30d158; } .mw .fs-sh .d { color: #8b8b8b; } .mw .fs-sh .ecaret { height: 13px; vertical-align: -2px; }
 
-    /* ask for anything: miyagi's own window */
-    .mw .ba { display: flex; background: #f3f1ec; }
-    .mw .ba-side { width: 142px; flex: none; background: #ebe8e1; padding: 9px 9px; display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; }
-    .mw .ba-side .tl { margin: 0 1px 12px; }
-    .mw .ba-side .brand { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 13px; margin: 0 5px 8px; }
-    .mw .ba-side .brand .lg { width: 18px; height: 18px; }
-    .mw .ba-side .nv { display: flex; align-items: center; gap: 8px; padding: 5px 7px; border-radius: 7px; color: #75726b; }
-    .mw .ba-side .nv .ico { width: 14px; height: 14px; }
-    .mw .ba-side .nv.sel { background: #fff; color: #1c1b19; box-shadow: 0 6px 14px -8px rgba(20, 16, 10, .3); }
-    .mw .ba-main { flex: 1; min-width: 0; padding: 14px 16px; }
-    .mw .ba-lab { display: block; font-size: 11.5px; line-height: 16px; color: #75726b; margin-bottom: 6px; }
-    .mw .ba-field { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 11px; border-radius: 10px; background: #fff; box-shadow: 0 0 0 1.5px #1c1b19, 0 0 0 5px rgba(20, 20, 20, .05); font-size: 13.5px; white-space: nowrap; overflow: hidden; }
-    .mw .ba-field .lg { width: 16px; height: 16px; flex: none; }
-    .mw .ba-field .caret { height: 16px; margin-left: -6px; }
-    .mw .ba-res { margin-top: 9px; padding: 5px; border-radius: 11px; background: #fff; box-shadow: 0 14px 30px -16px rgba(20, 16, 10, .35), 0 0 0 1px rgba(20, 20, 20, .05); transition: opacity .3s; }
-    .mw .ba-res:not(.on) { opacity: 0; }
-    .mw .ba-r { display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 6px; border-radius: 8px; transition: opacity .3s, transform .4s var(--spring), background .2s; }
-    .mw .ba-r:not(.on) { opacity: 0; transform: translateY(6px); }
-    .mw .ba-r.sel { background: #efede7; }
-    .mw .ba-r img, .mw .ba-r .bk { width: 68px; height: 38px; border-radius: 5px; object-fit: cover; flex: none; }
-    .mw .ba-r .bk { display: grid; place-items: center; background: #efede7; color: #75726b; } .mw .ba-r .bk .ico { width: 15px; height: 15px; }
-    .mw .ba-r.sel .bk { background: #e4e1d9; }
-    .mw .ba-r .tx { flex: 1; min-width: 0; }
-    .mw .ba-r b { display: block; font-weight: 500; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .ba-r small { display: block; color: #75726b; font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    @media (max-width: 560px) { .mw .ba-side { display: none; } }
+    /* miyagi on the screen: ring, callout, bar, ask field, cards */
+    .mw .fs-ring { position: absolute; border-radius: 6px; box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .3); pointer-events: none; transition: opacity .3s, left .5s var(--settle), top .5s var(--settle), width .5s var(--settle), height .5s var(--settle); z-index: 12; }
+    .mw .fs-ring:not(.on) { opacity: 0; }
+    .mw .fs-ring.sp { box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 2000px rgba(10, 10, 10, .5); transition: opacity .45s; }
+    .mw .fs-call { position: absolute; padding: 7px 10px 8px; border-radius: 9px; background: #0b0b0b; color: #fff; font-size: 11.5px; line-height: 1.35; white-space: nowrap; z-index: 14;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 12px 26px -10px rgba(0, 0, 0, .6); transition: opacity .3s, transform .45s var(--spring), left .5s var(--settle), top .5s var(--settle); }
+    .mw .fs-call b { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: rgba(255, 255, 255, .6); margin-bottom: 1px; }
+    .mw .fs-call b em { font-style: normal; } .mw .fs-call b span { width: 11px; height: 11px; } .mw .fs-call b svg { width: 100%; height: 100%; }
+    .mw .fs-call:not(.on) { opacity: 0; transform: translateY(6px); }
+    .mw .fs-call::after { content: ""; position: absolute; top: -4px; left: var(--nx, 18px); width: 9px; height: 9px; background: #0b0b0b; border-radius: 2px; transform: rotate(45deg); box-shadow: -1px -1px 0 rgba(255, 255, 255, .14); }
+    .mw .fs-bar { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(250, 249, 246, .94); z-index: 16;
+      box-shadow: 0 0 0 1px rgba(20, 20, 20, .07), 0 16px 32px -14px rgba(0, 0, 0, .5); white-space: nowrap; }
+    .mw .fs-bar .it { display: flex; align-items: center; gap: 4px; height: 24px; padding: 0 7px; border-radius: 8px; font-size: 10.5px; font-weight: 500; color: #1b1b1b; transition: box-shadow .2s, transform .2s; }
+    .mw .fs-bar .it svg { width: 11px; height: 11px; }
+    .mw .fs-bar .it.on { box-shadow: 0 0 0 1.8px #1c1b19; transform: translateY(-1px); }
+    .mw .fs-bar .ask { min-width: 112px; background: #fff; color: #75726b; box-shadow: 0 0 0 1px rgba(20, 20, 20, .08); }
+    .mw .fs-bar .ask .lg { width: 13px; height: 13px; } .mw .fs-bar .ask .kc { margin-left: auto; font-size: 9.5px; background: #efede7; border-radius: 4px; padding: 1px 4px; }
+    .mw .fs-ask { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); width: 280px; height: 36px; padding: 0 7px 0 11px; border-radius: 12px; display: flex; align-items: center; gap: 8px; z-index: 16;
+      background: rgba(250, 249, 246, .96); color: #75726b; font-size: 12px; white-space: nowrap; box-shadow: 0 0 0 1px rgba(20, 20, 20, .07), 0 16px 34px -14px rgba(0, 0, 0, .65); transition: opacity .3s, transform .45s var(--spring), box-shadow .2s, background .2s, color .2s; }
+    .mw .fs-ask .lg { width: 16px; height: 16px; flex: none; } .mw .fs-ask .tx { flex: 1; overflow: hidden; } .mw .fs-ask .kc { font-size: 10px; background: #efede7; border-radius: 5px; padding: 2px 6px; transition: background .15s, color .15s; }
+    .mw .fs-ask.typing { background: #fff; color: #1c1b19; box-shadow: 0 0 0 1.5px #1c1b19, 0 16px 34px -14px rgba(0, 0, 0, .65); }
+    .mw .fs-ask.press .kc { background: #1c1b19; color: #fff; }
+    .mw .fs-ask:not(.on) { opacity: 0; transform: translate(-50%, 12px); }
+    .mw .fs-card { position: absolute; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), 0 22px 44px -20px rgba(0, 0, 0, .55); transition: opacity .4s, transform .5s var(--spring); }
+    .mw .fs-card.hide { opacity: 0; transform: translateY(14px) scale(.97); }
+    .mw .fs-lab { display: block; font-size: 10.5px; color: #75726b; font-weight: 500; }
+    .mw .fs-pri { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 8px; background: #1c1b19; color: #fff; font-size: 11.5px; font-weight: 500; transition: opacity .3s, transform .2s; }
+    .mw .fs-pri svg { width: 11px; height: 11px; } .mw .fs-pri.dn { transform: scale(.95); } .mw .fs-pri:not(.on) { opacity: 0; }
+    .mw .fs-chk { width: 15px; height: 15px; border-radius: 50%; background: #1f9b45; color: #fff; display: grid; place-items: center; flex: none; } .mw .fs-chk svg { width: 9px; height: 9px; }
+    /* fades in when on */
+    .mw .fs-in { transition: opacity .35s, transform .45s var(--spring); } .mw .fs-in:not(.on) { opacity: 0; transform: translateY(7px); }
 
-    /* sets up your computer */
-    .mw .bs { position: absolute; left: 14px; right: 14px; top: 14px; display: flex; flex-direction: column; gap: 7px; }
-    .mw .bs-r { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px 0 9px; border-radius: 11px; background: #fff; box-shadow: 0 10px 22px -16px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .04); transition: opacity .3s, transform .45s var(--spring); }
-    .mw .bs-r:not(.on) { opacity: 0; transform: translateY(8px); }
-    .mw .bs-i { width: 28px; height: 28px; border-radius: 8px; background: #efede7; display: grid; place-items: center; flex: none; } .mw .bs-i svg { width: 17px; height: 17px; display: block; }
-    .mw .bs-r .tx { flex: 1; min-width: 0; } .mw .bs-r b { display: block; font-weight: 500; font-size: 13px; line-height: 1.25; } .mw .bs-r small { display: block; color: #75726b; font-size: 11.5px; line-height: 1.3; }
-    .mw .bs-r .spin { color: #75726b; }
-    .mw .bs-r .ok { width: 15px; height: 15px; display: none; color: #1f9b45; } .mw .bs-r.done .ok { display: block; } .mw .bs-r.done .spin { display: none; }
+    /* 1. ask for anything: miyagi's Home, then the lesson it writes */
+    .mw .fs-home { display: flex; background: #f6f5f1; }
+    .mw .fs-side { width: 124px; flex: none; background: #edebe5; padding: 9px; display: flex; flex-direction: column; gap: 2px; font-size: 11.5px; }
+    .mw .fs-side .tl3 { display: flex; gap: 6px; margin: 0 1px 12px; } .mw .fs-side .tl3 i { width: 9px; height: 9px; border-radius: 50%; background: rgba(0, 0, 0, .14); }
+    .mw .fs-side .br { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 12.5px; margin: 0 4px 9px; } .mw .fs-side .br .lg { width: 17px; height: 17px; }
+    .mw .fs-side .nv { display: flex; align-items: center; gap: 7px; padding: 5px 7px; border-radius: 7px; color: #75726b; } .mw .fs-side .nv svg { width: 13px; height: 13px; }
+    .mw .fs-side .nv.sel { background: #fff; color: #1c1b19; box-shadow: 0 5px 12px -8px rgba(20, 16, 10, .3); }
+    .mw .fs-side .me { margin-top: auto; display: flex; align-items: center; gap: 7px; padding: 4px; font-size: 11px; } .mw .fs-side .me .av { width: 20px; height: 20px; border-radius: 50%; background: #dcd7cb; display: grid; place-items: center; font-size: 10px; font-weight: 600; }
+    .mw .fs-main { position: relative; flex: 1; min-width: 0; }
+    .mw .fs-pg { position: absolute; inset: 0; padding: 14px 16px; transition: opacity .35s, transform .45s var(--settle); }
+    .mw .fs-pg:not(.on) { opacity: 0; transform: translateX(-14px); pointer-events: none; } .mw .fs-pg.fs-plan:not(.on) { transform: translateX(14px); }
+    .mw .fs-pg h4 { margin: 0 0 10px; font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+    .mw .fs-field { display: flex; align-items: center; gap: 8px; height: 36px; margin-top: 5px; padding: 0 11px; border-radius: 10px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .1); font-size: 12.5px; white-space: nowrap; overflow: hidden; transition: box-shadow .2s; }
+    .mw .fs-field.focus { box-shadow: 0 0 0 1.5px #1c1b19, 0 0 0 5px rgba(20, 20, 20, .05); }
+    .mw .fs-field .lg { width: 15px; height: 15px; flex: none; } .mw .fs-field .ph { color: #8f8c84; } .mw .fs-field .caret { height: 15px; margin-left: -6px; }
+    .mw .fs-field:not(.focus) .caret { visibility: hidden; }
+    .mw .fs-field em { margin-left: auto; font-style: normal; font-size: 10.5px; color: #a6a39b; }
+    .mw .fs-chips { display: flex; gap: 6px; margin-top: 9px; } .mw .fs-chips span { font-size: 10.5px; padding: 4px 8px; border-radius: 7px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .07); color: #4b4a45; }
+    .mw .fs-res { margin-top: 9px; padding: 4px; border-radius: 11px; background: #fff; box-shadow: 0 14px 30px -16px rgba(20, 16, 10, .35), 0 0 0 1px rgba(20, 20, 20, .05); transition: opacity .3s; }
+    .mw .fs-res:not(.on) { opacity: 0; }
+    .mw .fs-r { display: flex; align-items: center; gap: 9px; height: 46px; padding: 0 6px; border-radius: 8px; transition: opacity .3s, transform .4s var(--spring), background .2s; }
+    .mw .fs-r:not(.on) { opacity: 0; transform: translateY(6px); } .mw .fs-r.sel { background: #efede7; }
+    .mw .fs-r img, .mw .fs-r .bk { width: 60px; height: 34px; border-radius: 5px; object-fit: cover; flex: none; }
+    .mw .fs-r .bk { display: grid; place-items: center; background: #efede7; color: #75726b; } .mw .fs-r .bk svg { width: 14px; height: 14px; }
+    .mw .fs-r .tx { flex: 1; min-width: 0; } .mw .fs-r b, .mw .fs-r small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mw .fs-r b { font-weight: 500; font-size: 11.5px; } .mw .fs-r small { color: #75726b; font-size: 10.5px; }
+    .mw .fs-cont { margin-top: 12px; padding: 10px 12px; border-radius: 11px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .06); transition: opacity .3s; }
+    .mw .fs-cont b { display: block; font-size: 12.5px; font-weight: 600; margin-top: 2px; } .mw .fs-cont small { color: #75726b; font-size: 10.5px; }
+    .mw .fs-cont.dim { opacity: 0; }
+    .mw .fs-ph { display: flex; gap: 10px; align-items: center; } .mw .fs-ph img { width: 72px; height: 40px; border-radius: 6px; object-fit: cover; }
+    .mw .fs-ph b { display: block; font-size: 13.5px; font-weight: 600; letter-spacing: -.01em; } .mw .fs-ph small { color: #75726b; font-size: 10.5px; }
+    .mw .fs-of { display: block; margin: 11px 0 5px; font-size: 10.5px; color: #75726b; }
+    .mw .fs-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+    .mw .fs-steps li { display: flex; align-items: center; gap: 9px; height: 29px; padding: 0 9px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .05); font-size: 11.5px; transition: opacity .3s, transform .4s var(--spring); }
+    .mw .fs-steps li:not(.on) { opacity: 0; transform: translateY(6px); }
+    .mw .fs-steps .k { width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; font-size: 9.5px; font-weight: 600; background: #efede7; color: #75726b; flex: none; }
+    .mw .fs-steps b { font-weight: 500; } .mw .fs-steps small { color: #8f8c84; font-size: 10.5px; margin-left: auto; }
+    .mw .fs-steps .tag { font-size: 9.5px; padding: 3px 5px; }
+    .mw .fs-plan .fs-pri { position: absolute; right: 16px; bottom: 12px; }
 
-    /* waits for you: the tutorial in the browser, held at the gate */
-    .mw .bw-url { flex: 1; min-width: 0; height: 17px; margin: 0 24px 0 12px; border-radius: 5px; background: #e7e4dc; color: #75726b; font-size: 10.5px; line-height: 17px; text-align: center; overflow: hidden; text-overflow: ellipsis; }
-    .mw .bv { position: relative; height: 146px; background: #000; overflow: hidden; }
-    .mw .bv img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .5s; }
-    .mw .bv img:not(.on) { opacity: 0; }
-    .mw .bv-gate { position: absolute; inset: 0; background: rgba(10, 10, 10, .64); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: opacity .35s; }
-    .mw .bv-gate:not(.on) { opacity: 0; }
-    .mw .bv-gate .ico { width: 17px; height: 17px; margin-bottom: 3px; } .mw .bv-gate b { font-weight: 600; font-size: 14px; } .mw .bv-gate small { color: rgba(255, 255, 255, .78); font-size: 11.5px; }
-    .mw .bv-bar { position: absolute; left: 9px; right: 9px; bottom: 8px; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .32); }
-    .mw .bv-bar i { display: block; height: 100%; width: 46%; border-radius: 2px; background: #f00; }
-    .mw .bv-t { padding: 8px 11px; } .mw .bv-t b { display: block; font-weight: 600; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .bv-t small { color: #606060; font-size: 11.5px; }
+    /* 2. any app: one window that turns into four apps, the island naming the step in each */
+    .mw .fs-apw { left: 62px; top: 40px; width: 476px; height: 286px; }
+    .mw .fs-pn { position: absolute; left: 0; right: 0; top: 24px; bottom: 0; overflow: hidden; transition: opacity .35s; }
+    .mw .fs-pn:not(.on) { opacity: 0; }
+    .mw .fs-logos { position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; gap: 9px; }
+    .mw .fs-logos span { width: 30px; height: 30px; border-radius: 9px; background: #fff; display: grid; place-items: center; box-shadow: 0 6px 14px -9px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05); transition: transform .35s var(--spring), box-shadow .3s; }
+    .mw .fs-logos span > svg { width: 16px; height: 16px; }
+    .mw .fs-logos span.on { transform: translateY(-4px) scale(1.12); box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .25); }
+    .mw .fs-logos .termtile { width: 18px; height: 18px; border-radius: 5px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .fs-logos .termtile svg { width: 13px; height: 13px; }
+    /* Blender */
+    .mw .fs-bl { background: #303030; color: #ccc; font-size: 10px; }
+    .mw .fs-bl .hd { height: 20px; background: #232323; display: flex; align-items: center; gap: 11px; padding: 0 9px; color: #b8b8b8; } .mw .fs-bl .hd .on { background: #3f3f3f; border-radius: 4px; padding: 1px 6px; color: #fff; }
+    .mw .fs-bl .tool { position: absolute; left: 0; top: 20px; bottom: 0; width: 24px; background: #2a2a2a; display: flex; flex-direction: column; gap: 6px; align-items: center; padding-top: 8px; }
+    .mw .fs-bl .tool i { width: 13px; height: 13px; border-radius: 3px; background: #4a4a4a; } .mw .fs-bl .tool i:first-child { background: #4772b3; }
+    .mw .fs-bl .vp { position: absolute; left: 24px; right: 142px; top: 20px; bottom: 0; background: #3d3d3d; overflow: hidden; }
+    .mw .fs-bl .vp svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .mw .fs-bl .pr { position: absolute; right: 0; top: 20px; bottom: 0; width: 142px; background: #2b2b2b; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .mw .fs-bl .pr .ob { color: #fff; font-weight: 500; } .mw .fs-bl .pr .sec { color: #9a9a9a; font-size: 9.5px; margin-top: 2px; }
+    .mw .fs-bl .pr .btn { height: 20px; white-space: nowrap; font-size: 9.5px; border-radius: 4px; background: #545454; color: #e6e6e6; display: flex; align-items: center; justify-content: center; }
+    .mw .fs-bl .pr .mod { border-radius: 5px; background: #3d3d3d; padding: 6px 7px; display: grid; gap: 4px; transition: opacity .3s, transform .4s var(--spring); }
+    .mw .fs-bl .pr .mod:not(.on) { opacity: 0; transform: translateY(-5px); }
+    .mw .fs-bl .pr .mod b { color: #fff; font-weight: 500; } .mw .fs-bl .pr .mod span { display: flex; justify-content: space-between; color: #aaa; } .mw .fs-bl .pr .mod em { font-style: normal; background: #545454; border-radius: 3px; padding: 0 6px; color: #fff; }
+    .mw .fs-bl .lo, .mw .fs-bl .sm { transition: opacity .5s; } .mw .fs-bl.smooth .lo, .mw .fs-bl:not(.smooth) .sm { opacity: 0; }
+    /* Figma */
+    .mw .fs-fg { background: #f5f5f5; font-size: 10px; color: #333; }
+    .mw .fs-fg .hd { height: 26px; background: #fff; border-bottom: 1px solid #e6e6e6; display: flex; align-items: center; gap: 10px; padding: 0 10px; }
+    .mw .fs-fg .hd i { width: 13px; height: 13px; border-radius: 3px; background: #e6e6e6; } .mw .fs-fg .hd i.on { background: #0d99ff; }
+    .mw .fs-fg .ly { position: absolute; left: 0; top: 26px; bottom: 0; width: 104px; background: #fff; border-right: 1px solid #e6e6e6; padding: 8px 0; }
+    .mw .fs-fg .ly span { display: block; padding: 3px 10px; } .mw .fs-fg .ly span.on { background: #e5f4ff; } .mw .fs-fg .ly .s { padding-left: 22px; color: #555; }
+    .mw .fs-fg .rp { position: absolute; right: 0; top: 26px; bottom: 0; width: 118px; background: #fff; border-left: 1px solid #e6e6e6; padding: 8px 10px; display: flex; flex-direction: column; gap: 7px; }
+    .mw .fs-fg .rp .row { display: flex; justify-content: space-between; align-items: center; font-weight: 600; } .mw .fs-fg .rp .row em { font-style: normal; font-weight: 400; font-size: 14px; line-height: 1; color: #333; }
+    .mw .fs-fg .rp .al { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; transition: opacity .3s; } .mw .fs-fg .rp .al span { background: #f5f5f5; border-radius: 4px; padding: 3px 5px; color: #555; }
+    .mw .fs-fg .rp .al:not(.on) { opacity: 0; }
+    .mw .fs-fg .cv { position: absolute; left: 104px; right: 118px; top: 26px; bottom: 0; }
+    .mw .fs-fg .fr { position: absolute; left: 50%; top: 28px; width: 150px; height: 170px; margin-left: -75px; background: #fff; box-shadow: 0 0 0 1px #0d99ff; }
+    .mw .fs-fg .fr::before { content: "Card"; position: absolute; left: 0; top: -14px; font-size: 9px; color: #0d99ff; }
+    .mw .fs-fg .fr > i { position: absolute; display: block; border-radius: 4px; transition: left .55s var(--spring), top .55s var(--spring), width .55s var(--settle); }
+    .mw .fs-fg .fr .im { background: #ffd8c4; } .mw .fs-fg .fr .t1 { background: #2c2c2c; height: 9px; } .mw .fs-fg .fr .t2 { background: #c9c9c9; height: 6px; } .mw .fs-fg .fr .bt { background: #0d99ff; height: 20px; border-radius: 6px; }
+    /* Google Sheets */
+    .mw .fs-gs { background: #fff; font-size: 10px; color: #222; }
+    .mw .fs-gs .hd { height: 28px; display: flex; align-items: center; gap: 8px; padding: 0 9px; } .mw .fs-gs .hd [data-t] { width: 15px; height: 15px; } .mw .fs-gs .hd [data-t] svg { width: 100%; height: 100%; }
+    .mw .fs-gs .hd b { font-weight: 500; font-size: 11px; } .mw .fs-gs .hd span { color: #555; }
+    .mw .fs-gs .fb { height: 22px; display: flex; align-items: center; gap: 8px; padding: 0 9px; border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; font: 10px var(--mono); }
+    .mw .fs-gs .fb i { font: italic 10px var(--font); color: #777; } .mw .fs-gs .fb em { font-style: normal; color: #444; width: 26px; }
+    .mw .fs-gs table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+    .mw .fs-gs td { border: 1px solid #e3e3e3; height: 17px; padding: 0 6px; white-space: nowrap; overflow: hidden; }
+    .mw .fs-gs td:first-child { width: 22px; background: #f8f9fa; color: #666; text-align: center; padding: 0; } .mw .fs-gs tr:first-child td { background: #f8f9fa; color: #666; text-align: center; }
+    .mw .fs-gs td.n { text-align: right; font-variant-numeric: tabular-nums; } .mw .fs-gs tr.h td:not(:first-child) { font-weight: 600; }
+    .mw .fs-gs td.cel { box-shadow: inset 0 0 0 2px #1a73e8; text-align: right; }
+    /* Jupyter */
+    .mw .fs-jp { background: #fff; font-size: 10px; color: #222; }
+    .mw .fs-jp .hd { height: 28px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-bottom: 1px solid #e0e0e0; } .mw .fs-jp .hd [data-t] { width: 16px; height: 16px; } .mw .fs-jp .hd [data-t] svg { width: 100%; height: 100%; }
+    .mw .fs-jp .hd b { font-weight: 500; font-size: 11.5px; } .mw .fs-jp .hd span { margin-left: auto; color: #777; }
+    .mw .fs-jp .cell { display: flex; gap: 6px; margin: 7px 10px 0; } .mw .fs-jp .cell > em { width: 38px; flex: none; font: 10px/22px var(--mono); color: #307fc1; text-align: right; font-style: normal; }
+    .mw .fs-jp .cell > div { flex: 1; min-width: 0; border-radius: 4px; background: #f5f5f5; border: 1px solid #e0e0e0; font: 10.5px/20px var(--mono); padding: 0 7px; white-space: pre; }
+    .mw .fs-jp .out { margin: 3px 10px 0 54px; font: 10px/15px var(--mono); color: #333; white-space: pre; }
+    .mw .fs-jp .jk { color: #008000; font-weight: 600; } .mw .fs-jp .js { color: #ba2121; } .mw .fs-jp .nan { color: #b3261e; }
+    .mw .fs-jp .cell.cur > div { border-color: #307fc1; background: #fff; }
 
-    /* checks your work: the terminal under the pill */
-    .mw .bw.bt { top: 54px; }
-    .mw .bt pre { margin: 0; padding: 9px 12px; font: 12px/20px var(--mono); color: #d6d6d6; white-space: pre; }
-    .mw .bt .pr { color: #8b8b8b; }
-    .mw .bt .ecaret { height: 14px; }
+    /* 3. sets up your computer */
+    .mw .fs-setc { right: 22px; top: 52px; width: 236px; padding: 12px; }
+    .mw .fs-setc h5 { margin: 0 0 2px; font-size: 12.5px; font-weight: 600; } .mw .fs-setc > small { color: #75726b; font-size: 10.5px; }
+    .mw .fs-sr { display: flex; align-items: center; gap: 9px; height: 40px; border-top: 1px solid #f0eee9; } .mw .fs-sr:first-of-type { margin-top: 8px; }
+    .mw .fs-sr .i { width: 24px; height: 24px; border-radius: 7px; background: #efede7; display: grid; place-items: center; flex: none; } .mw .fs-sr .i svg { width: 14px; height: 14px; }
+    .mw .fs-sr .i .termtile { width: 14px; height: 14px; border-radius: 4px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .fs-sr .i .termtile svg { width: 10px; height: 10px; }
+    .mw .fs-sr .tx { flex: 1; min-width: 0; } .mw .fs-sr b { display: block; font-weight: 500; font-size: 11.5px; } .mw .fs-sr small { display: block; color: #75726b; font-size: 10.5px; }
+    .mw .fs-sr .spin { color: #75726b; } .mw .fs-sr .fs-chk { display: none; } .mw .fs-sr.done .fs-chk { display: grid; } .mw .fs-sr.done .spin, .mw .fs-sr:not(.go) .spin { display: none; }
+    .mw .fs-sr:not(.go) { color: #a6a39b; } .mw .fs-sr:not(.go) .i { opacity: .5; }
+    .mw .fs-pb { height: 4px; border-radius: 2px; background: #efede7; margin-top: 8px; overflow: hidden; } .mw .fs-pb i { display: block; height: 100%; background: #1c1b19; border-radius: 2px; transition: width .4s var(--settle); }
 
-    /* helps when you're stuck: the Not yet card over the code */
-    .mw .bny { position: absolute; right: 26px; bottom: 8px; width: 420px; max-width: calc(100% - 28px); display: flex; gap: 12px; padding: 10px 13px; border-radius: 13px; background: #fff; color: #1c1b19;
+    /* 4. guides every step: the lesson panel */
+    .mw .fs-lp { right: 14px; top: 46px; width: 170px; padding: 11px 12px; }
+    .mw .fs-lp b.t { display: block; font-size: 12.5px; font-weight: 600; margin: 2px 0 1px; } .mw .fs-lp > small { display: block; color: #75726b; font-size: 10.5px; line-height: 1.35; }
+    .mw .fs-lp ol { list-style: none; margin: 9px 0 0; padding: 0; display: grid; gap: 2px; }
+    .mw .fs-lp li { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: #8f8c84; height: 19px; }
+    .mw .fs-lp li .k { width: 13px; height: 13px; border-radius: 50%; border: 1.4px solid #cfcbc1; flex: none; box-sizing: border-box; display: grid; place-items: center; }
+    .mw .fs-lp li.ok { color: #1c1b19; } .mw .fs-lp li.ok .k { border: 0; background: #1f9b45; } .mw .fs-lp li.ok .k::after { content: ""; width: 5px; height: 3px; border: solid #fff; border-width: 0 0 1.4px 1.4px; transform: translateY(-1px) rotate(-45deg); }
+    .mw .fs-lp li.cur { color: #1c1b19; font-weight: 600; } .mw .fs-lp li.cur .k { border-color: #1c1b19; }
+    .mw .fs-lp li.sub { height: auto; } .mw .fs-lp .sub { display: grid; gap: 3px; margin: 2px 0 4px 20px; } .mw .fs-lp .sub span { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #8f8c84; transition: color .3s; }
+    .mw .fs-lp .sub span i { width: 6px; height: 6px; border-radius: 50%; background: #dcd8ce; transition: background .3s; } .mw .fs-lp .sub span.ok { color: #1c1b19; } .mw .fs-lp .sub span.ok i { background: #1f9b45; }
+
+    /* 5. waits for you: the video, held at the step */
+    .mw .fs-yt { right: 14px; top: 54px; width: 262px; }
+    .mw .fs-vid { position: relative; height: 147px; background: #000; overflow: hidden; }
+    .mw .fs-vid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .5s, filter .4s; }
+    .mw .fs-vid img:not(.on) { opacity: 0; }
+    .mw .fs-vid .gate { position: absolute; inset: 0; background: rgba(10, 10, 10, .62); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: opacity .35s; }
+    .mw .fs-vid .gate:not(.on) { opacity: 0; } .mw .fs-vid .gate svg { width: 16px; height: 16px; margin-bottom: 3px; } .mw .fs-vid .gate b { font-size: 13px; font-weight: 600; } .mw .fs-vid .gate small { color: rgba(255, 255, 255, .78); font-size: 10.5px; }
+    .mw .fs-vid .ctl { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 8px 5px; display: flex; align-items: center; gap: 7px; color: #fff; font-size: 9.5px; font-variant-numeric: tabular-nums; }
+    .mw .fs-vid .ctl svg { width: 11px; height: 11px; } .mw .fs-vid .ctl span { display: flex; align-items: center; height: 16px; padding: 0 5px; border-radius: 4px; background: rgba(0, 0, 0, .62); }
+    .mw .fs-vid .trk { position: absolute; left: 8px; right: 8px; bottom: 23px; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); }
+    .mw .fs-vid .trk > i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: #f00; }
+    .mw .fs-vid .trk > b { position: absolute; top: -2px; width: 3px; height: 7px; border-radius: 1px; background: #fff; margin-left: -1.5px; transition: background .3s; }
+    .mw .fs-vid .trk > b.ok { background: #30d158; }
+    .mw .fs-vt { padding: 7px 10px 9px; } .mw .fs-vt b { display: block; font-weight: 600; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .mw .fs-vt small { color: #606060; font-size: 10px; }
+
+    /* 6. checks your work: the run and the check */
+    .mw .fs-ckc { right: 12px; top: 46px; width: 222px; padding: 12px; }
+    .mw .fs-ckc .hd { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 500; color: #75726b; height: 16px; }
+    .mw .fs-ckc .hd .spin { width: 10px; height: 10px; } .mw .fs-ckc .hd.ok { color: #1f9b45; }
+    .mw .fs-ckc h5 { margin: 4px 0 8px; font-size: 13px; font-weight: 600; }
+    .mw .fs-ckc > svg { width: 198px; height: 104px; overflow: visible; }
+    .mw .fs-ckc .ax { stroke: #e4e1d9; stroke-width: 1; } .mw .fs-ckc .th { stroke: #1c1b19; stroke-width: 1; stroke-dasharray: 3 3; } .mw .fs-ckc .ln { fill: none; stroke: #1c1b19; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+    .mw .fs-ckc .ln.ok { stroke: #1f9b45; } .mw .fs-ckc text { font: 9.5px var(--font); fill: #75726b; } .mw .fs-ckc .dt { fill: #1c1b19; } .mw .fs-ckc .dt.ok { fill: #1f9b45; }
+    .mw .fs-ckc .cmp { display: flex; gap: 6px; margin-top: 8px; } .mw .fs-ckc .cmp div { flex: 1; border-radius: 8px; background: #f3f1ec; padding: 5px 8px; } .mw .fs-ckc .cmp small { display: block; font-size: 9.5px; color: #75726b; }
+    .mw .fs-ckc .cmp code { font: 600 12px var(--mono); color: #1c1b19; transition: color .3s; } .mw .fs-ckc .cmp code.ok { color: #1f9b45; }
+    .mw .fs-ckc .nx { display: flex; align-items: center; gap: 7px; margin-top: 9px; padding-top: 9px; border-top: 1px solid #f0eee9; font-size: 11px; }
+    .mw .fs-ckc .nx small { color: #75726b; margin-left: auto; font-size: 10px; }
+
+    /* 7. helps when you're stuck: the Not yet card */
+    .mw .bny { position: absolute; left: 60px; right: 60px; top: 196px; display: flex; gap: 12px; padding: 11px 13px; border-radius: 13px; background: #fff; color: #1c1b19; z-index: 15;
       box-shadow: 0 0 0 1px rgba(20, 20, 20, .05), 0 22px 44px -18px rgba(0, 0, 0, .65); transition: opacity .35s, transform .5s var(--spring); }
     .mw .bny:not(.on) { opacity: 0; transform: translateY(12px) scale(.97); pointer-events: none; }
-    .mw .bny .cl { flex: 1; min-width: 0; } .mw .bny .cr { position: relative; width: 132px; flex: none; }
-    .mw .bny .ch { display: flex; gap: 7px; align-items: center; font-size: 11.5px; line-height: 15px; color: #75726b; font-weight: 500; }
+    .mw .bny .cl { flex: 1; min-width: 0; } .mw .bny .cr { position: relative; width: 150px; flex: none; }
+    .mw .bny .ch { display: flex; gap: 7px; align-items: center; font-size: 11px; line-height: 15px; color: #75726b; font-weight: 500; }
     .mw .bny .ch i { width: 10px; height: 10px; border-radius: 50%; border: 1.7px solid #1c1b19; }
-    .mw .bny .cl > b { display: block; font-size: 14.5px; line-height: 20px; font-weight: 600; letter-spacing: -.01em; margin: 3px 0 1px; white-space: nowrap; }
-    .mw .bny p { margin: 0; color: #75726b; font-size: 12px; line-height: 16px; height: 32px; overflow: hidden; }
-    .mw .bny .chips { margin-top: 8px; gap: 5px; flex-wrap: nowrap; }
-    .mw .bny .chips button { font-size: 11.5px; line-height: 16px; padding: 5px 8px; border-radius: 7px; color: #1b1b1b; white-space: nowrap; transition: transform .2s, box-shadow .2s; }
+    .mw .bny .cl > b { display: block; font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: -.01em; margin: 3px 0 2px; white-space: nowrap; }
+    .mw .bny p { margin: 0; color: #75726b; font-size: 11.5px; line-height: 16px; height: 48px; overflow: hidden; }
+    .mw .bny .chips { display: flex; margin-top: 8px; gap: 5px; flex-wrap: nowrap; }
+    .mw .bny .chips button { position: relative; font-size: 11px; line-height: 16px; padding: 5px 8px; border-radius: 7px; color: #1b1b1b; white-space: nowrap; cursor: pointer; transition: transform .2s, box-shadow .2s; }
     .mw .bny .chips button.sky { background: var(--sky); } .mw .bny .chips button.mint { background: var(--mint); } .mw .bny .chips button.lilac { background: var(--lilac); } .mw .bny .chips button.pink { background: var(--pink); }
     .mw .bny .chips button.on { box-shadow: 0 0 0 2px #1c1b19; } .mw .bny .chips button:hover { transform: translateY(-1px); }
+    .mw .bny .chips button:focus-visible { outline: 2px solid #1c1b19; outline-offset: 2px; }
     .mw .bny .cmp { flex: 1; border-radius: 8px; background: #f3f1ec; padding: 6px 9px; display: flex; flex-direction: column; justify-content: center; }
-    .mw .bny .cmp small { display: block; font-size: 10.5px; color: #75726b; } .mw .bny .cmp code { font: 11.5px var(--mono); color: #1c1b19; white-space: nowrap; }
-    /* Phones: the card is as wide as the window, so the lines it would cut through are left out. */
-    /* what each chip does (data-v on the card: -1 none, 0 Explain, 1 Diagram, 2 Show me, 3 Hint). The right side is the answer: the comparison, the drawing, or the lesson's code */
+    .mw .bny .cmp small { display: block; font-size: 10px; color: #75726b; } .mw .bny .cmp code { font: 11px var(--mono); color: #1c1b19; white-space: nowrap; }
     .mw .bny .hp { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 6px; opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s; }
     .mw .bny[data-v="-1"] .hp-cmp, .mw .bny[data-v="3"] .hp-cmp, .mw .bny[data-v="1"] .hp-dg, .mw .bny[data-v="2"] .hp-sm { opacity: 1; visibility: visible; transition: opacity .25s; }
-    .mw .bny[data-v="0"] .cr { display: none; }                 /* Explain: the words take the whole card */
+    .mw .bny[data-v="0"] .cr { display: none; }
     .mw .bny .hp-dg, .mw .bny .hp-sm { border-radius: 8px; background: #f3f1ec; }
     .mw .bny .hp-dg { padding: 5px 4px; align-items: center; }
     .mw .hdg { display: block; height: 100%; max-width: 100%; overflow: visible; }
@@ -862,162 +997,118 @@
     .mw .bny[data-v="1"] .hdg .e { stroke-dashoffset: 0; transition: stroke-dashoffset .45s ease-out .1s; }
     .mw .bny[data-v="1"] .hdg .e.b { transition-delay: .65s; }
     .mw .bny .hp-sm { padding: 8px 10px; justify-content: center; gap: 5px; }
-    .mw .bny .hp-sm small { display: block; font-size: 10.5px; color: #75726b; } .mw .bny .hp-sm code { font: 11.5px/16px var(--mono); color: #1c1b19; white-space: pre; }
-    /* Phones: the card is as wide as the window, so the lines it would cut through are left out. The comparison goes; the drawing takes the words' place */
-    @media (max-width: 560px) {
-      .mw .bny { right: 14px; flex-direction: column; gap: 0; } .mw .bny .cl { display: contents; }
-      .mw .bny .ch { order: 1; } .mw .bny .cl > b { order: 2; } .mw .bny p { order: 3; } .mw .bny .cr { order: 4; display: none; width: 100%; height: 96px; margin-top: 4px; } .mw .bny .chips { order: 5; }
-      .mw .bny[data-v="1"] .cr { display: block; } .mw .bny[data-v="1"] p { display: none; }
-      .mw #bH .bw-src > div:nth-child(n+3) { visibility: hidden; }
-    }
+    .mw .bny .hp-sm small { display: block; font-size: 10px; color: #75726b; } .mw .bny .hp-sm code { font: 11px/16px var(--mono); color: #1c1b19; white-space: pre; }
+    .mw .fs-ln .fx0 { transition: color .3s; } .mw .fs-ln.fixed .fx0 { color: #30d158; }
     @media (prefers-reduced-motion: reduce) { .mw .bny .hp, .mw .bny[data-v] .hdg .n, .mw .bny[data-v] .hdg .e { transition: none; } }
 
-    /* grows your skills: the Skills map */
-    .mw .bkt { display: block; width: 100%; max-width: 253px; margin: 7px auto 0; overflow: visible; }
-    .mw .bkt .ed { fill: none; stroke: #dcd8ce; stroke-width: 1.5; transition: stroke .4s; } .mw .bkt .ed.m { stroke: #1f9b45; }
-    .mw .bkt .nd > rect { fill: #fff; stroke: #dcd8ce; stroke-width: 1; transition: fill .4s, stroke .4s; }
-    .mw .bkt .nd text { font: 500 11.5px var(--font); fill: #1c1b19; transition: fill .4s; }
-    .mw .bkt .nd .i { display: none; }
-    .mw .bkt .nd.m .i.m, .mw .bkt .nd.p .i.p, .mw .bkt .nd.o .i.o, .mw .bkt .nd.l .i.l { display: block; }
-    .mw .bkt .nd.p > rect { stroke: #1c1b19; stroke-width: 1.5; }
-    .mw .bkt .nd.l > rect { fill: #f1efe9; stroke: #f1efe9; } .mw .bkt .nd.l text { fill: #a6a39b; }
+    /* 8. ask about your screen: the digit, flattened */
+    .mw .fs-dg { right: 16px; top: 50px; width: 196px; height: 236px; }
+    .mw .fs-dg svg { shape-rendering: crispEdges; position: absolute; left: 0; top: 24px; width: 196px; height: 212px; overflow: visible; }
+    .mw .fs-dg .px { transition: transform .9s var(--settle); }
+    .mw .fs-dg text { font: 10px var(--font); fill: #75726b; } .mw .fs-dg .lb { transition: opacity .4s; } .mw .fs-dg .lb:not(.on) { opacity: 0; }
 
-    /* any app on your screen */
-    .mw .bp { position: absolute; inset: 0; padding: 0 18px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px 13px; align-content: center; justify-items: center; }
-    .mw .bp > span { width: 100%; max-width: 50px; aspect-ratio: 1; border-radius: 13px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 18px -12px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .04); transition: transform .4s var(--spring), box-shadow .3s; }
-    .mw .bp > span > svg { width: 52%; height: 52%; display: block; }
-    .mw .bp > span.on { transform: scale(1.1); box-shadow: 0 0 0 2.5px var(--lilac), 0 0 0 4px rgba(0, 0, 0, .25); }
-    .mw .bp .termtile { width: 60%; height: 60%; border-radius: 7px; background: #141414; color: #fff; display: grid; place-items: center; } .mw .bp .termtile svg { width: 66%; height: 66%; display: block; }
-    @media (max-width: 560px) { .mw .bp { grid-template-columns: repeat(4, 1fr); gap: 13px; } }
+    /* 9. grows your skills: the map and the reviews */
+    .mw .fs-sk { left: 26px; top: 38px; width: 548px; height: 340px; display: flex; flex-direction: column; background: #f6f5f1; }
+    .mw .fs-sk .bd { flex: 1; display: flex; gap: 12px; padding: 12px 14px; min-height: 0; }
+    .mw .fs-sk .mp { flex: 1; min-width: 0; border-radius: 11px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .05); padding: 10px 12px; }
+    .mw .fs-sk .mp svg { width: 100%; height: 252px; margin-top: 6px; overflow: visible; }
+    .mw .fs-sk .rv { width: 186px; flex: none; display: flex; flex-direction: column; gap: 6px; position: relative; }
+    .mw .fs-sk .rr { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; border-radius: 9px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .05); font-size: 11.5px; transition: opacity .35s, transform .45s var(--spring), box-shadow .2s; }
+    .mw .fs-sk .rr small { margin-left: auto; color: #75726b; font-size: 10px; } .mw .fs-sk .rr.due small { color: #1c1b19; font-weight: 600; }
+    .mw .fs-sk .rr.new:not(.on) { opacity: 0; transform: translateY(-8px); height: 0; margin-top: -6px; overflow: hidden; }
+    .mw .fs-sk .rr.pk { box-shadow: 0 0 0 1.5px #1c1b19; }
+    .mw .fs-sk .qz { position: absolute; left: 0; right: 0; top: 0; padding: 11px; border-radius: 11px; background: #fff; box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), 0 18px 36px -16px rgba(0, 0, 0, .45); transition: opacity .35s, transform .45s var(--spring); }
+    .mw .fs-sk .qz:not(.on) { opacity: 0; transform: translateY(10px) scale(.97); }
+    .mw .fs-sk .qz p { margin: 4px 0 8px; font-size: 11.5px; line-height: 1.4; } .mw .fs-sk .qz code { font: 10.5px var(--mono); background: #f3f1ec; border-radius: 4px; padding: 0 3px; }
+    .mw .fs-sk .qz .op { display: flex; align-items: center; gap: 7px; height: 28px; padding: 0 9px; margin-top: 4px; border-radius: 8px; background: #f3f1ec; font: 11px var(--mono); transition: background .3s, box-shadow .3s; }
+    .mw .fs-sk .qz .op.ok { background: #fff; box-shadow: 0 0 0 1.5px #1f9b45; } .mw .fs-sk .qz .op .fs-chk { margin-left: auto; transition: opacity .3s; } .mw .fs-sk .qz .op:not(.ok) .fs-chk { opacity: 0; }
+    .mw .fs-sk .qz .nx { margin-top: 8px; font-size: 10.5px; color: #1f9b45; font-weight: 500; transition: opacity .3s; } .mw .fs-sk .qz .nx:not(.on) { opacity: 0; }
+    .mw .fs-kt .ed { fill: none; stroke: #dcd8ce; stroke-width: 1.6; } .mw .fs-kt .ed.m { stroke: #1f9b45; }
+    .mw .fs-kt .eg { fill: none; stroke: #1f9b45; stroke-width: 1.6; stroke-dasharray: 80; stroke-dashoffset: 80; transition: stroke-dashoffset .6s ease-out; } .mw .fs-kt .eg.on { stroke-dashoffset: 0; }
+    .mw .fs-kt .nd > rect { fill: #fff; stroke: #dcd8ce; stroke-width: 1; transition: fill .4s, stroke .4s; }
+    .mw .fs-kt .nd text { font: 500 11.5px var(--font); fill: #1c1b19; transition: fill .4s; }
+    .mw .fs-kt .nd .i { display: none; }
+    .mw .fs-kt .nd.m .i.m, .mw .fs-kt .nd.p .i.p, .mw .fs-kt .nd.o .i.o, .mw .fs-kt .nd.l .i.l { display: block; }
+    .mw .fs-kt .nd.p > rect, .mw .fs-kt .nd.o > rect { stroke: #1c1b19; stroke-width: 1.5; }
+    .mw .fs-kt .nd.l > rect { fill: #f1efe9; stroke: #f1efe9; } .mw .fs-kt .nd.l text { fill: #a6a39b; }
+    .mw .fs-kt .nd.pop > rect { animation: fs-pop .6s var(--spring); transform-box: fill-box; transform-origin: center; }
+    @keyframes fs-pop { 40% { transform: scale(1.08); } }
+    .mw .fs-fly { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: #1f9b45; color: #fff; display: grid; place-items: center; z-index: 35; transition: opacity .2s; box-shadow: 0 6px 14px -4px rgba(0, 0, 0, .4); }
+    .mw .fs-fly svg { width: 10px; height: 10px; } .mw .fs-fly:not(.on) { opacity: 0; }
+    /* the owners' own logo files (Python, Jupyter) fill the box they sit in */
+    .mw .vg .ownm { width: 100%; height: 100%; } .mw .vg .ownm img { width: 100%; height: 100%; }
+    .mw .fs-logos span > .ownm { width: 16px; height: 16px; } .mw .fs-sr .i > .ownm { width: 14px; height: 14px; } .mw .fs-isl .is > .ownm { width: 12px; height: 12px; }
 
-    /* ---------- bon:start (meet bon: site-mock/notion/bon, apply with patch_bon.py) */
-    .mw .bn { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .9fr); gap: clamp(24px, 3.4vw, 48px); align-items: center; max-width: 1180px; margin: 44px auto 0; }
-    .mw .bn-stage { min-width: 0; background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 1px 0 #fff inset, 0 20px 44px -30px rgba(20, 16, 10, .4), 0 0 0 1px rgba(20, 20, 20, .05); }
-    .mw .bn-tile { position: relative; border-radius: 13px; background: #efede8; padding: 50px clamp(12px, 3vw, 34px) clamp(14px, 3vw, 30px); overflow: hidden; }
-    .mw .bn-isl { position: absolute; left: 50%; top: 10px; z-index: 5; display: flex; align-items: center; justify-content: center; gap: 7px; height: 28px; min-width: 118px; padding: 0 14px; border-radius: 14px; background: #000; color: #f6f6f3; font-size: 12.5px; white-space: nowrap; transform: translateX(-50%); }
-    .mw .bn-isl b { display: none; }
-    .mw .bn-isl b.on { display: inline-flex; align-items: center; color: inherit; }
-    .mw .bn-isl b.pass { display: block; width: 8px; height: 8px; border-radius: 50%; background: #30D158; }
-    .mw .bn-win { position: relative; background: #1e1e1e; border-radius: 10px; box-shadow: 0 18px 34px -22px rgba(0, 0, 0, .55); }
-    .mw .bn-bar { display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-bottom: 1px solid rgba(255, 255, 255, .07); }
-    .mw .bn-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3a3a3a; }
-    .mw .bn-bar span { margin-left: 8px; font: 12px/1 var(--mono); color: #9a9a94; }
-    .mw .bn-code { padding: 10px 0 8px; }
-    .mw .bn .bn-ln { display: flex; align-items: center; width: 100%; height: 27px; text-align: left; font: 13px/27px var(--mono); color: #d4d4d4; white-space: pre; border-radius: 0; }
-    .mw .bn .bn-ln:hover { background: rgba(255, 255, 255, .05); }
-    .mw .bn .bn-ln:focus-visible { outline: 2px solid #f6f6f3; outline-offset: -2px; }
-    .mw .bn .bn-ln[disabled] { cursor: default; background: none; }
-    .mw .bn-ln em { flex: none; width: 34px; padding-right: 12px; text-align: right; font-style: normal; color: #6a6a66; }
-    .mw .bn-ln .k { color: #c586c0; } .mw .bn-ln .f { color: #dcdcaa; } .mw .bn-ln .n { color: #b5cea8; }
-    .mw .bn-ln .tx.typing::after, .mw .bn-tl span.typing::after { content: ""; display: inline-block; width: 2px; height: 1.1em; margin-left: 1px; vertical-align: -.2em; background: #f6f6f3; }
-    .mw .bn-term { padding: 8px 0 10px; border-top: 1px solid rgba(255, 255, 255, .07); font: 12.5px/22px var(--mono); color: #9a9a94; }
-    .mw .bn-tl { display: flex; height: 22px; padding-left: 46px; white-space: pre; }
-    .mw .bn-tl s { text-decoration: none; color: #6a6a66; margin-right: 8px; }
-    .mw .bn-tl span { color: #d4d4d4; }
-    .mw .bn-tl + .bn-tl span { color: #9a9a94; }
-    .mw .bn-loop { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 2; }
-    .mw .bn-loop path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-    .mw .bn-loop .k { stroke: #141414; stroke-width: 5.5; opacity: .7; }
-    .mw .bn-loop .s { stroke-width: 2.6; }
-    .mw .bn-loop.on path { stroke-dashoffset: 0; transition: stroke-dashoffset .5s var(--settle); }
-    .mw .bn-nums { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-    .mw .bn-num { position: absolute; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #141414; font-size: 10.5px; font-weight: 600; line-height: 15px; text-align: center; color: #141414; }
-    .mw .bn-cur { position: absolute; left: 0; top: 0; width: 16px; height: 22px; z-index: 5; pointer-events: none; opacity: 0; transition: opacity .2s; }
-    .mw .bn-cur.on { opacity: 1; }
-    .mw .bn-char { position: absolute; left: 0; top: 0; z-index: 4; width: 60px; height: 60px; pointer-events: none; will-change: transform; }
-    .mw .bn-hop { width: 100%; height: 100%; }
-    .mw .bn-hop.hop { animation: bnHop .5s var(--settle); }
-    .mw .bn-char svg { display: block; width: 100%; height: 100%; overflow: visible; animation: bnBob 3.2s ease-in-out infinite; }
-    .mw .bn-char.fly svg { animation: none; }
-    .mw .bn-char.fly .bn-lf { animation: bnFlap .16s ease-in-out infinite alternate; }
-    .mw .bn-lf { transform-box: view-box; }
-    .mw .bn-eye { transform-box: fill-box; transform-origin: center; animation: bnBlink 4.6s infinite; }
-    .mw .bn-talk { transform-box: fill-box; transform-origin: center; animation: bnTalk .24s ease-in-out infinite alternate; }
-    .mw .bn-face { transition: transform .18s ease-out; }
-    .mw .bn-top { transform-origin: 24px 14px; }
-    .mw .bn-char.grew .bn-top { animation: bnGrow .7s var(--spring); }
-    .mw .bn-say { position: absolute; left: 0; top: 0; z-index: 6; max-width: 240px; padding: 9px 12px; border-radius: 12px; background: #000; border: 1px solid rgba(255, 255, 255, .16); color: #f6f6f3; font-size: 13px; line-height: 1.38; opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .2s; pointer-events: none; }
-    .mw .bn-say.on { opacity: 1; transform: none; }
-    .mw .bn-say.on.act { pointer-events: auto; }
-    .mw .bn-say .heard { white-space: nowrap; }
-    .mw .bn-say em { display: none; margin-bottom: 2px; font-style: normal; font-size: 11.5px; color: #9a9a94; }
-    .mw .bn-say em.on { display: block; }
-    .mw .bn .dots, .mw .bn .bars { display: inline-flex; align-items: center; gap: 4px; height: 18px; vertical-align: middle; }
-    .mw .bn .bars { gap: 3px; margin-right: 8px; }
-    .mw .bn-isl .bars { margin-right: 0; }
-    .mw .bn .dots i { display: block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .35; animation: bnDot 1s ease-in-out infinite; }
-    .mw .bn .dots i:nth-child(2) { animation-delay: .16s; } .mw .bn .dots i:nth-child(3) { animation-delay: .32s; }
-    .mw .bn .bars i { display: block; width: 3px; height: 14px; border-radius: 2px; background: currentColor; animation: bnBar .62s ease-in-out infinite alternate; }
-    .mw .bn .bars i:nth-child(2) { animation-delay: -.2s; } .mw .bn .bars i:nth-child(3) { animation-delay: -.42s; } .mw .bn .bars i:nth-child(4) { animation-delay: -.1s; }
-    .mw .bn-isl .bars i { height: 11px; }
-    .mw .bn-sayb { display: none; gap: 6px; margin-top: 8px; }
-    .mw .bn-sayb.on { display: flex; }
-    .mw .bn .bn-sayb button { height: 26px; padding: 0 12px; border-radius: 13px; font-size: 12.5px; font-weight: 500; color: #f6f6f3; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .12s, background .15s; }
-    .mw .bn .bn-sayb button.main { background: #f6f6f3; color: #141414; box-shadow: none; }
-    .mw .bn .bn-sayb button:hover { background: rgba(255, 255, 255, .12); }
-    .mw .bn .bn-sayb button.main:hover { background: #fff; }
-    .mw .bn .bn-sayb button.press { transform: scale(.9); }
-    .mw .bn .bn-sayb button:focus-visible { outline: 2px solid #f6f6f3; outline-offset: 2px; }
-    .mw .bn-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; margin: 12px 0 0; }
-    .mw .bn .bn-act { height: 32px; padding: 0 11px; border-radius: 8px; color: var(--muted); font-size: 14px; font-weight: 500; letter-spacing: -.005em; transition: background-color .15s, color .15s, box-shadow .15s; }
-    .mw .bn .bn-act:hover { color: var(--ink); background: rgba(20, 20, 20, .04); }
-    .mw .bn .bn-act[aria-pressed="true"] { color: var(--ink); background: #f4f3ef; box-shadow: inset 0 0 0 1px #d9d8d2, 0 1px 2px rgba(20, 20, 20, .05); }
-    .mw .bn .bn-act:focus-visible { outline: 2px solid #141414; outline-offset: 2px; }
-    .mw .bn-tip { margin: 8px 0 2px; text-align: center; font-size: 13px; color: var(--faint); }
-    .mw .bn-side { min-width: 0; }
-    .mw .bn-blk + .bn-blk { margin-top: 26px; padding-top: 26px; border-top: 1px solid rgba(20, 20, 20, .1); }
-    .mw .bn-blk h3 { margin: 0 0 14px; font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
-    .mw .bn-picks { display: flex; flex-wrap: wrap; gap: 12px; }
-    .mw .bn .bn-pick { width: 34px; height: 34px; border-radius: 50%; border: 1.7px solid #141414; transition: box-shadow .15s, transform .15s var(--spring); }
-    .mw .bn .bn-pick:hover { transform: scale(1.08); }
-    .mw .bn .bn-pick[aria-checked="true"] { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px #141414; }
-    .mw .bn .bn-pick:focus-visible { outline: 2px solid #141414; outline-offset: 6px; }
-    .mw .bn-lad { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 2px; }
-    .mw .bn .bn-lv { display: block; padding: 4px 0 6px; border-radius: 10px; text-align: center; font-size: 11px; color: var(--faint); transition: background .15s, opacity .2s; }
-    .mw .bn .bn-lv svg { display: block; width: 100%; max-width: 46px; height: auto; margin: 0 auto 2px; overflow: visible; }
-    .mw .bn .bn-lv.off svg { opacity: .32; }
-    .mw .bn .bn-lv:hover { background: rgba(20, 20, 20, .05); }
-    .mw .bn .bn-lv.on { background: #fff; color: var(--ink); box-shadow: 0 0 0 1px rgba(20, 20, 20, .08); }
-    .mw .bn .bn-lv:focus-visible { outline: 2px solid #141414; outline-offset: 1px; }
-    .mw .bn-prog { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 16px; font-size: 15px; }
-    .mw .bn-prog b { font-weight: 600; }
-    .mw .bn-prog span { color: var(--muted); font-size: 14px; }
-    .mw .bn-rail { height: 4px; margin-top: 8px; border-radius: 2px; background: rgba(20, 20, 20, .1); overflow: hidden; }
-    .mw .bn-rail i { display: block; height: 100%; width: 0; border-radius: 2px; background: #1f9b45; transition: width .35s var(--settle); }
-    .mw .bn-go { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
-    .mw .bn .bn-pass { height: 36px; padding: 0 12px; border-radius: 10px; background: #1c1c1b; color: #f4f4f1; box-shadow: inset 0 0 0 1px #45453f; font-size: 14px; font-weight: 500; letter-spacing: -.005em; transition: background-color .15s, transform .1s; }
-    .mw .bn .bn-pass:hover { background: #2c2c2a; }
-    .mw .bn .bn-pass:active { transform: scale(.98); }
-    .mw .bn .bn-pass:focus-visible { outline: 2px solid #141414; outline-offset: 3px; }
-    .mw .bn-go span { font-size: 13px; color: var(--faint); }
-    @keyframes bnBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
-    @keyframes bnBlink { 0%, 93%, 100% { transform: scaleY(1); } 96.5% { transform: scaleY(.1); } }
-    @keyframes bnHop { 0% { transform: translateY(0); } 40% { transform: translateY(-9px); } 100% { transform: translateY(0); } }
-    @keyframes bnGrow { 0% { transform: scale(.55); } 100% { transform: scale(1); } }
-    @keyframes bnTalk { from { transform: scaleY(.45); } to { transform: scaleY(1.1); } }
-    @keyframes bnFlap { from { transform: rotate(0); } to { transform: rotate(var(--fl, -18deg)); } }
-    @keyframes bnDot { 0%, 100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
-    @keyframes bnBar { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
-    @media (max-width: 900px) {
-      .mw .bn { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-    }
-    @media (max-width: 560px) {
-      .mw .bn .bn-ln { font-size: 10.5px; height: 24px; line-height: 24px; }
-      .mw .bn-ln em { width: 24px; padding-right: 8px; }
-      .mw .bn-term { font-size: 10.5px; line-height: 20px; }
-      .mw .bn-tl { height: 20px; padding-left: 32px; }
-      .mw .bn-char { width: 46px; height: 46px; }
-      .mw .bn-say { max-width: 210px; font-size: 12.5px; }
-      .mw .bn .bn-act { padding: 0 7px; font-size: 12.5px; }
-      .mw .bn-acts { flex-wrap: nowrap; gap: 0; }
-      .mw .bn-blk h3 { font-size: 20px; }
-      .mw .bn .bn-lv { font-size: 10px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .mw .bn-face, .mw .bn-say, .mw .bn-loop.on path, .mw .bn-rail i, .mw .bn-cur { transition: none; }
-      .mw .bn-char svg, .mw .bn-eye, .mw .bn-talk, .mw .bn-hop.hop, .mw .bn-char.grew .bn-top, .mw .bn .dots i, .mw .bn .bars i, .mw .bn-char.fly .bn-lf { animation: none; }
-    }
-    /* ---------- bon:end */
+    /* round 2: each feature in its own app */
+    .mw .fs-code .cs { color: #d7ba7d; }
+    .mw .fs-steps.sm { gap: 2px; } .mw .fs-steps.sm li { height: 24px; font-size: 11px; }
+    .mw .fs-sh .u { color: #7cc4ff; text-decoration: underline; }
+    /* Chrome */
+    .mw .fs-chw .fs-tb > .fs-url { left: 64px; right: 24px; top: 4px; height: 16px; line-height: 16px; border-radius: 5px; background: #e7e4dc; color: #75726b; font-size: 10px; }
+    .mw .fs-vite { position: absolute; left: 0; right: 0; top: 24px; bottom: 0; background: #242424; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+    .mw .fs-vite .rl { width: 62px; height: 62px; animation: fs-spin 20s linear infinite; } .mw .fs-vite .rl svg { width: 100%; height: 100%; }
+    .mw .fs-vite b { font-size: 26px; font-weight: 700; letter-spacing: -.02em; }
+    .mw .fs-vite .cnt { padding: 7px 14px; border-radius: 8px; background: #1a1a1a; font-size: 12px; font-weight: 500; box-shadow: 0 0 0 1px #333; }
+    .mw .fs-vite small { color: #888; font-size: 11px; } .mw .fs-vite code { font: 10.5px var(--mono); color: #bbb; }
+    @keyframes fs-spin { to { transform: rotate(1turn); } }
+    .mw .fs-login { position: absolute; left: 0; right: 0; top: 24px; bottom: 0; background: #fafafa; padding: 12px 18px; display: flex; flex-direction: column; justify-content: center; gap: 7px; }
+    .mw .fs-login b { font-size: 13px; } .mw .fs-login i { height: 19px; border-radius: 5px; background: #fff; box-shadow: inset 0 0 0 1px #ddd; }
+    .mw .fs-login span { align-self: flex-start; width: 72px; padding: 5px 0; border-radius: 6px; background: #1c1b19; color: #fff; font-size: 10.5px; text-align: center; }
+    /* Figma, guided */
+    .mw .fs-fgw .fs-fg .ly { width: 88px; } .mw .fs-fgw .fs-fg .rp { width: 104px; } .mw .fs-fgw .fs-fg .cv { left: 88px; right: 104px; }
+    .mw .fs-fg .hd.tools { gap: 4px; } .mw .fs-fg .hd.tools span { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: #333; transition: background .2s, color .2s; }
+    .mw .fs-fg .hd.tools svg { width: 14px; height: 14px; } .mw .fs-fg .hd.tools span.sel { background: #0d99ff; color: #fff; }
+    .mw .fs-fg .gfr { position: absolute; background: #fff; box-shadow: 0 0 0 1px #0d99ff; }
+    .mw .fs-fg .gfr em { position: absolute; left: 0; top: -13px; font-style: normal; font-size: 8.5px; color: #0d99ff; white-space: nowrap; transition: opacity .3s; } .mw .fs-fg .gfr em:not(.on) { opacity: 0; }
+    .mw .fs-fg .gfr i { position: absolute; left: 12px; top: 64px; height: 16px; background: #f5f5f5; box-shadow: inset 0 0 0 1px #b9b9b9; transition: border-radius .3s; }
+    .mw .fs-fg .rp .kv { display: grid; grid-template-columns: 10px 1fr 10px 1fr; gap: 4px; align-items: center; background: #f5f5f5; border-radius: 4px; padding: 3px 5px; color: #888; }
+    .mw .fs-fg .rp .kv b { font-weight: 400; color: #333; transition: box-shadow .2s; } .mw .fs-fg .rp .kv b.edit { box-shadow: 0 0 0 1.5px #0d99ff; border-radius: 2px; }
+    .mw .fs-fg .rp .kv .sw { width: 10px; height: 10px; background: #fff; box-shadow: inset 0 0 0 1px #ccc; border-radius: 2px; }
+    /* Blender, waiting */
+    .mw .fs-bl.nopr .vp { right: 0; }
+    .mw .fs-bl .bmenu { position: absolute; left: 40px; top: 0; width: 94px; padding: 4px; border-radius: 6px; background: #181818; box-shadow: 0 0 0 1px #3a3a3a, 0 10px 20px -6px rgba(0, 0, 0, .6); display: flex; flex-direction: column; font-size: 10px; color: #ddd; transition: opacity .15s; z-index: 3; }
+    .mw .fs-bl .bmenu:not(.on) { opacity: 0; } .mw .fs-bl .bmenu span { display: flex; justify-content: space-between; padding: 3px 7px; border-radius: 4px; } .mw .fs-bl .bmenu span.hi { background: #4772b3; color: #fff; }
+    .mw .fs-bl .bmenu i { font-style: normal; color: #888; } .mw .fs-bl .bmenu.sub { left: 136px; }
+    .mw .fs-bl .bop { position: absolute; left: 8px; bottom: 8px; width: 150px; padding: 6px 8px; border-radius: 6px; background: rgba(24, 24, 24, .92); font-size: 9.5px; color: #ccc; display: grid; gap: 3px; transition: opacity .3s; }
+    .mw .fs-bl .bop:not(.on) { opacity: 0; } .mw .fs-bl .bop b { color: #fff; font-weight: 500; } .mw .fs-bl .bop span { display: flex; justify-content: space-between; } .mw .fs-bl .bop em { font-style: normal; background: #545454; color: #fff; border-radius: 3px; padding: 0 5px; }
+    .mw #wTor { transition: opacity .3s; } .mw #wTor:not(.on) { opacity: 0; }
+    .mw .fs-vid img { transform-origin: 50% 40%; } .mw .fs-vid.run img.on { transform: scale(1.05); transition: opacity .5s, transform 2.4s linear; }
+    /* Sheets, checked */
+    .mw .fs-ckc .cks { display: grid; gap: 5px; margin-bottom: 4px; }
+    .mw .fs-ckc .ck { display: flex; align-items: center; gap: 7px; height: 18px; font-size: 11px; color: #a6a39b; } .mw .fs-ckc .ck.go { color: #1c1b19; }
+    .mw .fs-ckc .ck .spin { width: 10px; height: 10px; color: #75726b; } .mw .fs-ckc .ck:not(.go) .spin, .mw .fs-ckc .ck.done .spin { display: none; }
+    .mw .fs-ckc .ck .fs-chk { width: 13px; height: 13px; display: none; } .mw .fs-ckc .ck .fs-chk svg { width: 8px; height: 8px; } .mw .fs-ckc .ck.done .fs-chk { display: grid; }
+    .mw .fs-ckc .ck:not(.go)::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 1.4px solid #dcd8ce; box-sizing: border-box; }
+    /* the stuck card: two little layouts, and the axes */
+    .mw .bny .cmp.mini { flex-direction: row; align-items: center; justify-content: space-between; } .mw .bny .cmp.mini svg { width: 44px; height: 24px; }
+    .mw .bny .cmp.mini rect { fill: #fff; stroke: #cfcbc1; } .mw .bny .cmp.mini .b { fill: #1c1b19; stroke: none; }
+    .mw #hDg .e { stroke-dasharray: 80; stroke-dashoffset: 80; } .mw .bny[data-v="1"] #hDg .e { stroke-dashoffset: 0; }
+    .mw #hDg .bx { fill: #fff; stroke: #1c1b19; stroke-width: 1.2; } .mw #hDg .n rect { fill: #e2ded4; stroke: none; } .mw #hDg text { font-size: 9.5px; }
+    /* Photoshop */
+    .mw .fs-ps { background: #282828; }
+    .mw .fs-ps .pso { position: absolute; left: 0; right: 0; top: 24px; height: 24px; background: #323232; border-bottom: 1px solid #1e1e1e; display: flex; align-items: center; gap: 12px; padding: 0 10px; font-size: 10px; color: #bbb; }
+    .mw .fs-ps .pso svg { width: 12px; height: 12px; } .mw .fs-ps .pso .sp { flex: 1; }
+    .mw .fs-ps .pst { position: absolute; left: 0; top: 48px; bottom: 0; width: 30px; background: #323232; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 10px; color: #bbb; }
+    .mw .fs-ps .pst svg { width: 13px; height: 13px; }
+    .mw .fs-ps .psc { position: absolute; left: 30px; right: 170px; top: 48px; bottom: 0; display: grid; place-items: center; } .mw .fs-ps .psc svg { width: 300px; height: 200px; box-shadow: 0 0 0 1px #111; }
+    .mw .fs-ps .psl { position: absolute; right: 0; top: 48px; bottom: 0; width: 170px; background: #323232; border-left: 1px solid #1e1e1e; padding-top: 7px; font-size: 10.5px; color: #ddd; }
+    .mw .fs-ps .psl .lt { display: block; padding: 0 10px 6px; font-weight: 600; font-size: 10px; color: #bbb; border-bottom: 1px solid #262626; }
+    .mw .fs-ps .lr { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 8px; border-bottom: 1px solid #2a2a2a; } .mw .fs-ps .lr.on { background: #474747; } .mw .fs-ps .lr b { font-weight: 400; }
+    .mw .fs-ps .lr .ey { width: 9px; height: 6px; border-radius: 50%; border: 1.3px solid #aaa; flex: none; }
+    .mw .fs-ps .lr .tt { width: 24px; height: 24px; display: grid; place-items: center; font-weight: 600; color: #ccc; flex: none; }
+    .mw .fs-ps .lr .th { width: 24px; height: 24px; background: #fff; padding: 3px; box-sizing: border-box; flex: none; } .mw .fs-ps .lr .th i { display: block; width: 100%; height: 100%; }
+    .mw .fs-ps .lr .mk { position: relative; width: 24px; height: 24px; display: flex; flex: none; box-shadow: 0 0 0 1px #ccc; } .mw .fs-ps .mk i { flex: 1; background: #000; } .mw .fs-ps .mk em { flex: 1; background: #fff; }
+    .mw .fs-ps .mk::before, .mw .fs-ps .mk::after { content: ""; position: absolute; left: -2px; right: -2px; top: 11px; height: 2px; background: #e5484d; opacity: 0; transition: opacity .2s; transform: rotate(45deg); } .mw .fs-ps .mk::after { transform: rotate(-45deg); }
+    .mw .fs-ps .mk.off::before, .mw .fs-ps .mk.off::after { opacity: 1; }
+    .mw .fs-ps .lr .lk { margin-left: auto; width: 10px; height: 10px; color: #999; } .mw .fs-ps .lr .lk svg { width: 100%; height: 100%; }
+    .mw #qFull { transition: opacity .45s; } .mw #qFull:not(.on) { opacity: 0; }
+    /* skills across subjects */
+    .mw .fs-sk .sbj { display: flex; gap: 3px; } .mw .fs-sk .sbj span { font-size: 10.5px; padding: 3px 8px; border-radius: 6px; color: #75726b; }
+    .mw .fs-sk .sbj span.on { background: #efede7; color: #1c1b19; font-weight: 500; } .mw .fs-sk .sbj em { font-style: normal; color: #a6a39b; margin-left: 2px; }
+    .mw .fs-sk .mp svg { height: 240px; }
+    .mw .fs-sk .rr > span { display: flex; flex-direction: column; line-height: 1.2; } .mw .fs-sk .rr > span em { font-style: normal; font-size: 9.5px; color: #8f8c84; }
+    .mw .fs-sk .qz .op { font: 11px var(--font); }
+    .mw .fs-vite .rl path { fill: #61dafb !important; }
     /* ---------- any app: miyagi's card with the apps around it ---------- */
     .mw .oframe { position: relative; width: 100%; max-width: 1040px; aspect-ratio: 1200 / 760; margin: 30px auto 0; overflow: hidden; }
     .mw .ostage { position: absolute; left: 0; top: 0; width: 1200px; height: 760px; transform-origin: 0 0; }
@@ -1660,7 +1751,7 @@
         <div class="fgrp">
           <button type="button" class="fname" aria-pressed="false"><b>guides every step</b><span>it says what to do next and circles where to do it.</span><i class="fprog"><i></i></i></button>
           <button type="button" class="fname" aria-pressed="false"><b>waits for you</b><span>every step waits until you've done it, and the video pauses with it.</span><i class="fprog"><i></i></i></button>
-          <button type="button" class="fname" aria-pressed="false"><b>checks your work</b><span>it watches every run and tells you when a step passes.</span><i class="fprog"><i></i></i></button>
+          <button type="button" class="fname" aria-pressed="false"><b>checks your work</b><span>it checks what you made and tells you when a step passes.</span><i class="fprog"><i></i></i></button>
         </div>
         <div class="fgrp">
           <button type="button" class="fname" aria-pressed="false"><b>helps when you're stuck</b><span>explain, diagram, show me or hint. nudges, not the answer.</span><i class="fprog"><i></i></i></button>
@@ -1669,147 +1760,16 @@
         </div>
       </div>
       <div class="fstage"><div class="ftile" id="fTile"><div class="fview" id="fView">
-        <div class="fcard on" id="bA">
-          <div class="vg"><div class="bw ba">
-            <div class="ba-side"><div class="tl"><i></i><i></i><i></i></div><div class="brand"><span class="lg" data-logo></span>miyagi</div>
-              <span class="nv sel"><span class="ico" data-ico="home"></span>Home</span><span class="nv"><span class="ico" data-ico="book"></span>Lessons</span><span class="nv"><span class="ico" data-ico="skills"></span>Skills</span><span class="nv"><span class="ico" data-ico="progress"></span>Progress</span></div>
-            <div class="ba-main"><span class="ba-lab">Learn something new</span>
-              <div class="ba-field"><span class="lg" data-logo></span><span id="aTx"></span><i class="caret"></i></div>
-              <div class="ba-res" id="aRes">
-                <div class="ba-r"><span class="bk"><span class="ico" data-ico="book"></span></span><span class="tx"><b>Just teach me first</b><small>A short lesson before any video</small></span></div>
-                <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/mqdefault.jpg"><span class="tx"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang · 31:28 · 3M views</small></span><em class="tag pink">Best</em></div>
-                <div class="ba-r"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/aircAruvnKk/mqdefault.jpg"><span class="tx"><b>But what is a neural network? | Deep learning chapter 1</b><small>3Blue1Brown · 18:40 · 25M views</small></span></div>
-              </div>
-            </div>
-          </div></div>
-        </div>
-        <div class="fcard" id="bP">
-          <div class="vg"><div class="bp" id="pApps"></div></div>
-        </div>
-        <div class="fcard" id="bS">
-          <div class="vg"><div class="bs">
-            <div class="bs-r"><span class="bs-i" data-tool="python"></span><span class="tx"><b>Python</b><small data-a="Looking for Python…" data-b="3.12 found"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-            <div class="bs-r"><span class="bs-i" data-tool="numpy"></span><span class="tx"><b>numpy</b><small data-a="Installing…" data-b="Installed"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-            <div class="bs-r"><span class="bs-i" data-tool="vscode"></span><span class="tx"><b>VS Code</b><small data-a="Opening the project…" data-b="nn.py open"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-            <div class="bs-r"><span class="bs-i" data-tool="jupyter"></span><span class="tx"><b>Jupyter</b><small data-a="Starting a kernel…" data-b="Kernel ready"></small></span><i class="spin"></i><span class="ico ok" data-ico="check"></span></div>
-          </div></div>
-        </div>
-        <div class="fcard" id="bG">
-          <div class="vg"><div class="bw dk off"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
-            <div class="bw-src">
-              <div><span class="n">3</span><span>data = np.load(<span class="hs">"digits.npz"</span>)</span></div>
-              <div><span class="n">4</span><span>X, Y = data[<span class="hs">"x"</span>] / <span class="hm">255</span>, data[<span class="hs">"y"</span>]</span></div>
-              <div><span class="n">5</span><span></span></div>
-              <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
-              <div class="act"><span class="n">7</span><span>    W1 = <span id="gTyp"></span><i class="ecaret"></i></span></div>
-            </div></div>
-            <div class="bring" id="gRing"></div>
-            <div class="bcall" id="gCall"><b><span class="glg" data-logo="dark"></span>Your turn</b>Set up W1 on this line.</div></div>
-        </div>
-        <div class="fcard" id="bW">
-          <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="bw-url">youtube.com/watch?v=w8yWXqWQYmU</span></div>
-            <div class="bv"><img id="wF0" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq1.jpg"><img class="on" id="wF1" alt="" loading="lazy" src="https://i.ytimg.com/vi/w8yWXqWQYmU/hq2.jpg">
-              <div class="bv-gate on" id="wGate"><span class="ico" data-ico="lock"></span><b>Your turn</b><small>The video waits for you.</small></div>
-              <div class="bv-bar"><i id="wBar"></i></div></div>
-            <div class="bv-t"><b>Building a neural network FROM SCRATCH (no Tensorflow/Pytorch, just numpy &amp; math)</b><small>Samson Zhang</small></div>
-          </div></div>
-        </div>
-        <div class="fcard" id="bC">
-          <div class="vg"><div class="bpill"><span class="lg" data-logo="dark"></span><span class="st" id="cSt0"><i class="ring"></i></span><span class="st" id="cSt1"><span class="bars"><i></i><i></i><i></i></span></span><span class="st on" id="cSt2"><i class="gd"></i></span><span id="cPt">Step passed</span></div>
-            <div class="bw dk off bt"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">digits — -zsh</span></div><pre id="cTerm"></pre></div></div>
-        </div>
-        <div class="fcard" id="bH">
-          <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
-            <div class="bw-src">
-              <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
-              <div class="act"><span class="n">7</span><span>    <span id="hCode">W1 = np.zeros((<span class="hm">10</span>, <span class="hm">784</span>))</span></span></div>
-              <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-              <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
-              <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-              <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
-              <div><span class="n">12</span><span></span></div>
-              <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
-            </div><div class="bring bsp" id="hRing"></div></div>
-            <div class="bny on" id="hNy" data-v="-1">
-              <div class="cl"><div class="ch"><i></i>Not yet</div><b>Your hidden layer never learns</b><p id="hTx"></p>
-                <div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>
-              <div class="cr"><div class="hp hp-cmp"><div class="cmp"><small>Yours</small><code>acc 0.11</code></div><div class="cmp"><small>Expected</small><code>acc above 0.80</code></div></div><div class="hp hp-dg"><svg class="hdg" id="hDg" viewBox="0 0 132 105" aria-hidden="true"></svg></div><div class="hp hp-sm"><small>The lesson's W1</small><code>np.random.rand(
-  10, 784) - 0.5</code></div></div>
-            </div></div>
-        </div>
-        <div class="fcard" id="bQ">
-          <div class="vg"><div class="bw dk"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">nn.py — digits</span></div>
-            <div class="bw-src">
-              <div><span class="n">6</span><span><span class="hk">def</span> <span class="hf">init_params</span>():</span></div>
-              <div class="act"><span class="n">7</span><span>    W1 = np.random.rand(<span class="hm">10</span>, <span class="hm" id="qTok">784</span>) - <span class="hm">0.5</span></span></div>
-              <div><span class="n">8</span><span>    b1 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-              <div><span class="n">9</span><span>    W2 = np.random.rand(<span class="hm">10</span>, <span class="hm">10</span>) - <span class="hm">0.5</span></span></div>
-              <div><span class="n">10</span><span>    b2 = np.zeros((<span class="hm">10</span>, <span class="hm">1</span>))</span></div>
-              <div><span class="n">11</span><span>    <span class="hk">return</span> W1, b1, W2, b2</span></div>
-              <div><span class="n">12</span><span></span></div>
-              <div><span class="n">13</span><span><span class="hk">def</span> <span class="hf">relu</span>(Z):</span></div>
-            </div></div>
-            <div class="bring" id="qRing"></div>
-            <div class="bcall" id="qCall"><b><span class="glg" data-logo="dark"></span>Why 784?</b>Each digit is 28 × 28 pixels, flattened.</div>
-            <div class="bask" id="qAsk"><span class="lg" data-logo></span><span class="tx" id="qTx">ask miyagi</span><span class="kc" data-kc></span></div></div>
-        </div>
-        <div class="fcard" id="bK">
-          <div class="vg"><div class="bw"><div class="bw-tb"><div class="tl"><i></i><i></i><i></i></div><span class="tt">Skills</span></div><svg class="bkt" id="kTree" viewBox="0 0 253 172" aria-hidden="true"></svg></div></div>
-        </div>
+        <div class="fcard on" id="bA"><div class="vg"></div></div>
+        <div class="fcard" id="bP"><div class="vg"></div></div>
+        <div class="fcard" id="bS"><div class="vg"></div></div>
+        <div class="fcard" id="bG"><div class="vg"></div></div>
+        <div class="fcard" id="bW"><div class="vg"></div></div>
+        <div class="fcard" id="bC"><div class="vg"></div></div>
+        <div class="fcard" id="bH"><div class="vg"></div></div>
+        <div class="fcard" id="bQ"><div class="vg"></div></div>
+        <div class="fcard" id="bK"><div class="vg"></div></div>
       </div></div></div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-<!-- bon:start -->
-<section class="mw-sec" id="bon" aria-labelledby="bon-h">
-  <div class="mw-hold">
-    <h2 class="mw-h" id="bon-h">meet bon.</h2>
-    <p class="mw-sub">your guide on screen. it points, answers, and grows with you.</p>
-    <div class="bn" id="bnRoot">
-      <div class="bn-stage">
-        <div class="bn-tile" id="bnTile">
-          <div class="bn-isl" id="bnIsl" aria-hidden="true"><b id="bnIslI"></b><span id="bnIslT">miyagi</span></div>
-          <div class="bn-win" id="bnWin">
-            <div class="bn-bar" aria-hidden="true"><i></i><i></i><i></i><span>nn.py — digits</span></div>
-            <div class="bn-code" id="bnCode"></div>
-            <div class="bn-term" id="bnTerm" aria-hidden="true"><div class="bn-tl"><s>$</s><span></span></div><div class="bn-tl"><span></span></div></div>
-          </div>
-          <svg class="bn-loop" id="bnLoop" aria-hidden="true"><path class="k" pathLength="1"></path><path class="s" pathLength="1"></path></svg>
-          <div class="bn-nums" id="bnNums" aria-hidden="true"></div>
-          <svg class="bn-cur" id="bnCur" viewBox="0 0 16 22" aria-hidden="true"><path d="M1.5 1.5 L1.5 17.2 L5.6 13.4 L8.4 19.8 L11.2 18.6 L8.5 12.3 L14 12.1 Z" fill="#fff" stroke="#141414" stroke-width="1.5" stroke-linejoin="round"/></svg>
-          <div class="bn-char" id="bnChar" aria-hidden="true"><div class="bn-hop" id="bnHop"></div></div>
-          <div class="bn-say" id="bnSay" aria-live="polite"><em id="bnSayK"></em><span id="bnSayT"></span><div class="bn-sayb" id="bnSayB"></div></div>
-        </div>
-        <div class="bn-acts" id="bnActs">
-          <button type="button" class="bn-act" data-scene="guide">guides a step</button>
-          <button type="button" class="bn-act" data-scene="listen">hears a question</button>
-          <button type="button" class="bn-act" data-scene="check">checks your run</button>
-        </div>
-        <p class="bn-tip">or click any line</p>
-      </div>
-      <div class="bn-side">
-        <div class="bn-blk">
-          <h3>pick its color.</h3>
-          <div class="bn-picks" id="bnPicks" role="radiogroup" aria-label="bon's color"></div>
-        </div>
-        <div class="bn-blk">
-          <h3>pass a step, bon grows.</h3>
-          <div class="bn-lad" id="bnLad"></div>
-          <div class="bn-prog"><b id="bnLv"></b><span id="bnNext"></span></div>
-          <div class="bn-rail" aria-hidden="true"><i id="bnFill"></i></div>
-          <div class="bn-go"><button type="button" class="bn-pass" id="bnPass">pass a step</button><span>skipped steps don't count</span></div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -2637,124 +2597,415 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showEx(k, true); } });
       });
 
-      /* ---------- everything it does: nine names in a side list and one stage. The open name's screen plays, then the next one opens; a click opens any of them ---------- */
+      /* ---------- everything it does: nine names in a side list and one stage. Each name plays a short scene on a small Mac screen (600 x 400, scaled to fit): the notch island says what miyagi is doing, a cursor does what you would do. The open name's scene plays, then the next one opens; a click opens any ---------- */
+      // four more Simple Icons (CC0) for the setup scene
+      if (!SI.nodedotjs) SI.nodedotjs = "M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"; if (!SI.react) SI.react = "M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"; if (!SI.javascript) SI.javascript = "M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"; if (!SI.googlechrome) SI.googlechrome = "M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z";
       var bento = $('#bento'), bT = 0;
-      // where a piece sits inside its tile (the tile is the first positioned box above the window)
-      function bIn(el, vg) { var x = 0, y = 0, e = el; while (e && e !== vg) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y, el.offsetWidth, el.offsetHeight]; }
+      // where a piece sits on the 600 x 400 screen, whatever the scale
+      function bIn(el, top) { var x = 0, y = 0, e = el; while (e && e !== top) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y, el.offsetWidth, el.offsetHeight]; }
+      // the same for SVG pieces, which have no offsets: measured on screen, then divided by the stage's scale
+      function fsRect(el, top) { var r = el.getBoundingClientRect(), v = top.getBoundingClientRect(), s = v.width / 600 || 1; return [(r.left - v.left) / s, (r.top - v.top) / s, r.width / s, r.height / s]; }
+      function fsMid(el, top) { var r = bIn(el, top); return [r[0] + r[2] / 2, r[1] + r[3] / 2]; }
+      function sT(el, s) { if (el.textContent !== s) el.textContent = s; }
+      function sH(el, s) { if (el._h !== s) { el._h = s; el.innerHTML = s; } }
+      function sS(el, s) { if (el._s !== s) { el._s = s; el.style.cssText = s; } }
+      function fsEase(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+      function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
       var ECAR = '<i class="ecaret"></i>';
+      // typing that turns into highlighted code once the line is done
+      function typeHL(el, plain, hl, t0, t1, u) { sH(el, u >= t1 ? hl : esc(typed(plain, t0, t1, u)) + (u > t0 - .4 ? ECAR : '')); }
 
-      // ask for anything
-      var aRows = $$('#aRes .ba-r'), GOAL = 'Build a neural network from scratch';
+      // the Mac around every scene: menu bar, notch island, cursor
+      var IST = { '': '', spin: '<i class="spin"></i>', bars: '<span class="bars"><i></i><i></i><i></i></span>', lock: icon('lock'), ring: '<i class="rng"></i>', pass: '<i class="gd"></i>', play: icon('play') };
+      var CURSOR = '<div class="fs-cur off"><i></i><svg viewBox="0 0 15 22" aria-hidden="true"><path d="M1.5 1.5v16.2l4-3.9 2.7 6.3 2.6-1.1-2.7-6.2h5.6z" fill="#111" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/></svg></div>';
+      function scene(id, app, html) {
+        var vg = $('#' + id + ' .vg');
+        vg.innerHTML = '<div class="fs-mb"><span class="ap">' + tool('apple') + '</span><b class="mbn">' + app + '</b><span>File</span><span>Edit</span><span>View</span><span class="rt">Thu 9:41 AM</span></div>' +
+          '<div class="fs-isl"><span class="il">' + logo(true) + '</span><span class="is"></span><span class="it"></span><span class="ip"></span></div>' + html + CURSOR;
+        var S = { vg: vg, isl: $('.fs-isl', vg), cur: $('.fs-cur', vg), mbn: $('.mbn', vg) };
+        S.is = $('.is', S.isl); S.it = $('.it', S.isl); S.ip = $('.ip', S.isl);
+        S.q = function (s) { return $(s, vg); };
+        return S;
+      }
+      // the island grows and shrinks to fit what it says
+      function isl(S, st, tx, sub) {
+        var k = st + '|' + tx + '|' + (sub || ''); if (S.ik === k) return; S.ik = k;
+        var el = S.isl, w0 = el.offsetWidth;
+        sH(S.is, st.indexOf('app:') === 0 ? tool(st.slice(4)) : IST[st]); sT(S.it, tx); sT(S.ip, sub || '');
+        el.style.width = 'auto'; var w1 = el.offsetWidth;
+        if (w0 && !reduce) { el.style.width = w0 + 'px'; void el.offsetWidth; } el.style.width = w1 + 'px';
+      }
+      // the cursor: K is a list of [time, x, y, click]; it rests, then glides to the next point and arrives on time
+      function cur(S, K, u) {
+        var el = S.cur; if (!K) { on(el, true, 'off'); return; }
+        var i = 0, x, y; while (i < K.length && K[i][0] <= u) i++;
+        if (i === 0) { x = K[0][1]; y = K[0][2]; } else if (i >= K.length) { x = K[i - 1][1]; y = K[i - 1][2]; }
+        else { var a = K[i - 1], b = K[i], d = Math.min(.75, b[0] - a[0]), e = fsEase(clamp((u - (b[0] - d)) / d)); x = a[1] + (b[1] - a[1]) * e; y = a[2] + (b[2] - a[2]) * e; }
+        sS(el, 'transform:translate(' + (x - 2).toFixed(1) + 'px,' + (y - 2).toFixed(1) + 'px)');
+        var dn = false; K.forEach(function (k) { if (k[3] && u >= k[0] && u < k[0] + .3) dn = true; });
+        on(el, dn, 'dn'); on(el, u < .15 || u > K.end, 'off');
+      }
+      function ringAt(el, r, px, py) { sS(el, 'left:' + (r[0] - px) + 'px;top:' + (r[1] - py) + 'px;width:' + (r[2] + 2 * px) + 'px;height:' + (r[3] + 2 * py) + 'px'); }
+      function callAt(el, x, y, nx) { el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.setProperty('--nx', (nx || 16) + 'px'); }
+      function callout(id, t, x) { return '<div class="fs-call" id="' + id + '"><b><span>' + logo(true) + '</span><em class="ct">' + t + '</em></b><span class="cx">' + x + '</span></div>'; }
+      function setCall(el, t, x) { var a = $('.ct', el), b = $('.cx', el); if (a._h !== t || b._h !== x) { a._h = t; b._h = x; a.innerHTML = t; b.innerHTML = x; } }
+
+      // an editor window: src is the file's lines (HTML, already highlighted), rep swaps a line, side shows the explorer
+      var PY = '<span data-t>' + tool('python') + '</span>', CSSI = '<i class="db" style="background:#42a5f5"></i>', JSXI = '<span data-t>' + tool('react') + '</span>';
+      function vsc(o) {
+        var src = o.src, L = '';
+        for (var n = o.from || 1; n <= Math.min(o.to || 99, src.length); n++) L += '<div class="fs-ln" data-n="' + n + '"><span class="n">' + n + '</span><span class="c">' + (o.rep && o.rep[n] != null ? o.rep[n] : src[n - 1]) + '</span><i class="ok"></i></div>';
+        return '<div class="fs-w dk ' + (o.cls || '') + '"' + (o.id ? ' id="' + o.id + '"' : '') + ' style="left:' + o.x + 'px;top:' + o.y + 'px;width:' + o.w + 'px;height:' + o.h + 'px"><div class="fs-tb"><i></i><i></i><i></i><span>' + o.title + '</span></div>' +
+          '<div class="fs-vb"><div class="fs-act"><i></i><i></i><i></i><i></i></div>' + (o.side || '') +
+          '<div class="fs-ed"><div class="fs-tabs">' + o.tabs + '</div><div class="fs-code">' + L + '</div></div></div></div>';
+      }
+      function fsTerm(t, title) { return '<div class="fs-w dk" style="' + t + '"><div class="fs-tb"><i></i><i></i><i></i><span>' + title + '</span></div><pre class="fs-sh"></pre></div>'; }
+      function chromeW(id, st, url, body, cls) { return '<div class="fs-w fs-chw ' + (cls || '') + '" id="' + id + '" style="' + st + '"><div class="fs-tb"><i></i><i></i><i></i><span class="fs-url">' + url + '</span></div>' + body + '</div>'; }
+      var BAR_TILES = [['q', 'Explain', 'sky'], ['diagram', 'Diagram', 'mint'], ['eye', 'Show me', 'lilac'], ['bulb', 'Hint', 'pink'], ['check', 'Check my work', 'peach']];
+      function fsBar() {
+        return '<div class="fs-bar"><span class="it ask"><span class="lg">' + logo() + '</span>ask miyagi<span class="kc">' + KC + '</span></span>' +
+          BAR_TILES.map(function (b) { return '<span class="it" style="background:var(--' + b[2] + ')">' + icon(b[0]) + b[1] + '</span>'; }).join('') + '</div>';
+      }
+      // Blender Guru's 2026 beginner course (the donut), one video with eight parts
+      var BG = 'https://i.ytimg.com/vi/z-Xl9tGqH14/', BG_T = 'Beginner Blender Tutorial (2026)';
+      var DSTEPS = [['The basics', '28 min'], ['Model the donut', '31 min'], ['Shape the icing', '31 min'], ['Materials', '34 min'], ['Texturing', '32 min'], ['UV unwrapping', '34 min'], ['Scatter the sprinkles', '37 min'], ['Light and render', '33 min']];
+      function lessonList(steps, cur, subs) {
+        return '<ol>' + steps.map(function (s, i) { return '<li class="' + (i < cur ? 'ok' : i === cur ? 'cur' : '') + '"><i class="k"></i>' + s + '</li>' + (i === cur ? '<li class="sub">' + subs + '</li>' : ''); }).join('') + '</ol>';
+      }
+      // small glyphs for app toolbars
+      var GL = {
+        move: '<path d="M5 3l14 7-6 2-2 6z"/>', frame: '<path d="M8 3v18M16 3v18M3 8h18M3 16h18"/>', rect: '<rect x="4" y="5" width="16" height="14" rx="1"/>',
+        pen: '<path d="M4 20l3-1 11-11-2-2L5 17zM14 6l2 2"/>', text: '<path d="M5 6V4h14v2M12 4v16M9 20h6"/>', brush: '<path d="M14 4l6 6-8 8-6-6zM6 12l-2 8 8-2"/>', crop: '<path d="M6 2v16h16M2 6h16v16"/>', wand: '<path d="M4 20L16 8M15 3v3M21 9h-3M19 4l-2 2"/>'
+      };
+      function gl(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GL[n] + '</svg>'; }
+
+      /* 1. ask for anything: paste a YouTube link; it reads the video and writes the lesson from its chapters */
+      var fzA = scene('bA', 'miyagi', '<div class="fs-w fs-home" style="left:30px;top:38px;width:540px;height:346px">' +
+        '<div class="fs-side"><div class="tl3"><i></i><i></i><i></i></div><div class="br"><span class="lg">' + logo() + '</span>miyagi</div>' +
+        [['home', 'Home'], ['book', 'Lessons'], ['skills', 'Skills'], ['progress', 'Progress'], ['gear', 'Settings']].map(function (n, i) { return '<span class="nv' + (i ? '' : ' sel') + '">' + icon(n[0]) + n[1] + '</span>'; }).join('') +
+        '<div class="me"><span class="av">S</span>Sam Rivera</div></div>' +
+        '<div class="fs-main"><div class="fs-pg on" id="aHome"><h4>Home</h4><span class="fs-lab">Learn something new</span>' +
+        '<div class="fs-field" id="aFld"><span class="lg">' + logo() + '</span><span id="aTx"></span><i class="caret"></i><em>a goal or a YouTube link</em></div>' +
+        '<div id="aMore"><div class="fs-chips"><span>Build a website with React</span><span>Design a login screen</span><span>Learn git</span></div>' +
+        '<div class="fs-cont"><span class="fs-lab">Continue</span><b>Totals with SUMIF</b><small>Step 3 of 6 · Google Sheets</small></div>' +
+        '<div class="fs-cont"><span class="fs-lab">Continue</span><b>Design a login screen</b><small>Step 3 of 7 · Figma</small></div></div>' +
+        '<div class="fs-res" id="aRes" style="position:absolute;left:16px;right:16px;top:106px">' +
+        '<div class="fs-r on" id="aVid"><img alt="" loading="lazy" src="' + BG + 'mqdefault.jpg"><span class="tx"><b>' + BG_T + '</b><small>Blender Guru · 4:19:10 · 3M views</small></span><em class="tag peach" id="aRd">8 parts</em></div></div></div>' +
+        '<div class="fs-pg fs-plan" id="aPlan"><div class="fs-ph"><img alt="" loading="lazy" src="' + BG + 'mqdefault.jpg"><div><b>Make a donut in Blender</b><small>From Blender Guru\'s 2026 course · Blender</small></div></div>' +
+        '<span class="fs-of" id="aOf"></span><ol class="fs-steps sm">' + DSTEPS.map(function (s, i) { return '<li><span class="k">' + (i + 1) + '</span><b>' + s[0] + '</b><small>' + s[1] + ' of video</small></li>'; }).join('') + '</ol>' +
+        '<span class="fs-pri" id="aGo">' + icon('play') + 'Start lesson</span></div></div></div>');
+      var aSteps = $$('#aPlan li'), LINK = 'youtube.com/watch?v=z-Xl9tGqH14';
       function cardA(u) {
-        $('#aTx').textContent = typed(GOAL, .2, 1.6, u);
-        on($('#aRes'), u > 1.8); aRows.forEach(function (r, i) { on(r, u > 1.85 + i * .18); });
-        on(aRows[1], u > 3, 'sel');
+        on($('#aFld'), u > .75, 'focus');
+        var t = u > 1.05 ? LINK : '', tx = $('#aTx'); sT(tx, t || 'ask miyagi anything'); on(tx, !t, 'ph');
+        on($('#aRes'), u > 1.35); $('#aMore').style.opacity = u > 1.35 ? '0' : '';
+        on($('#aHome'), u < 3.1); on($('#aPlan'), u >= 3.1);
+        aSteps.forEach(function (r, i) { on(r, u > 3.4 + i * .2); });
+        sT($('#aOf'), u < 5.1 ? 'Writing the steps from the video…' : '8 steps · the video pauses at each one while you do it in Blender');
+        on($('#aGo'), u > 5.3); on($('#aGo'), u > 6.9 && u < 7.2, 'dn');
+        if (u < 1.5) isl(fzA, '', 'ask miyagi'); else if (u < 5.1) isl(fzA, 'spin', 'Reading the video', u < 3.1 ? '4 h 19 min' : '8 parts'); else isl(fzA, '', 'Lesson ready', '8 steps');
+        cur(fzA, fzA.K, u);
       }
-      // sets up your computer
-      var sRows = $$('#bS .bs-r');
+
+      /* 2. any app on your screen: one window becomes four apps; in each, the island names the step and the ring marks the spot */
+      function fsPoly(r, n, cx, cy) { var p = []; for (var i = 0; i < n; i++) { var a = (i + .5) / n * Math.PI * 2; p.push((cx + Math.cos(a) * r[0]).toFixed(1) + ',' + (cy + Math.sin(a) * r[1]).toFixed(1)); } return p.join(' '); }
+      var DONUT = '<g class="lo"><polygon points="' + fsPoly([82, 46], 8, 143, 128) + '" fill="#b9814c" stroke="#262626" stroke-width=".8"/><polygon points="' + fsPoly([74, 39], 8, 143, 121) + '" fill="#e79ab0" stroke="#262626" stroke-width=".8"/>' +
+        '<polygon points="' + fsPoly([26, 13], 8, 143, 119) + '" fill="#3d3d3d" stroke="#262626" stroke-width=".8"/></g>' +
+        '<g class="sm"><ellipse cx="143" cy="128" rx="82" ry="46" fill="#c58e57"/><ellipse cx="143" cy="121" rx="74" ry="39" fill="#f0a9bd"/><ellipse cx="143" cy="119" rx="26" ry="13" fill="#3d3d3d"/>' +
+        '<g fill="#fff" opacity=".9"><rect x="104" y="104" width="7" height="2.4" rx="1.2" transform="rotate(30 107 105)"/><rect x="178" y="108" width="7" height="2.4" rx="1.2" transform="rotate(-40 181 109)"/><rect x="132" y="94" width="7" height="2.4" rx="1.2"/><rect x="160" y="140" width="7" height="2.4" rx="1.2" transform="rotate(70 163 141)"/><rect x="99" y="132" width="7" height="2.4" rx="1.2" transform="rotate(-20 102 133)"/></g></g>';
+      var FSALES = [['Jan', 3820, 'West'], ['Feb', 4105, 'East'], ['Mar', 3990, 'West'], ['Apr', 4480, 'North'], ['May', 4310, 'East'], ['Jun', 4620, 'West'], ['Jul', 4275, 'North'], ['Aug', 4096, 'East']];
+      var fzP = scene('bP', 'Blender', '<div class="fs-w fs-apw" id="pW"><div class="fs-tb"><i></i><i></i><i></i><span id="pTt"></span></div>' +
+        '<div class="fs-pn fs-bl"><div class="hd"><span>File</span><span>Edit</span><span>Add</span><span>Object</span><span class="on">Layout</span><span>Modeling</span><span>Sculpting</span></div><div class="tool"><i></i><i></i><i></i><i></i><i></i></div>' +
+        '<div class="vp"><svg viewBox="0 0 310 242" preserveAspectRatio="xMidYMid slice"><g stroke="#474747" stroke-width="1">' + [150, 170, 194, 222].map(function (y) { return '<path d="M0 ' + y + 'H310"/>'; }).join('') + [-300, -120, 0, 120, 300].map(function (x) { return '<path d="M' + (155 + x * .25) + ' 138L' + (155 + x) + ' 242"/>'; }).join('') + '</g><path d="M0 176H310" stroke="#8b3a3a" stroke-width="1.2"/><path d="M150 138L120 242" stroke="#5b7a2a" stroke-width="1.2"/>' + DONUT + '</svg></div>' +
+        '<div class="pr"><span class="ob">Donut</span><span class="sec">Modifiers</span><span class="btn" id="pAdd">Add Modifier ▾</span><div class="mod" id="pMod"><b>Subdivision Surface</b><span>Levels Viewport<em>2</em></span><span>Render<em>2</em></span></div></div></div>' +
+        '<div class="fs-pn fs-fg"><div class="hd"><i class="on"></i><i></i><i></i><i></i><i></i></div><div class="ly"><span class="on">Card</span><span class="s">Photo</span><span class="s">Title</span><span class="s">Price</span><span class="s">Button</span></div>' +
+        '<div class="cv"><div class="fr" id="pFr"><i class="im"></i><i class="t1"></i><i class="t2"></i><i class="bt"></i></div></div>' +
+        '<div class="rp"><span class="row">Frame<em></em></span><span class="row">Auto layout<em id="pAl">+</em></span><div class="al" id="pAlv"><span>↓ Vertical</span><span>Gap 12</span><span>Pad 14</span><span>Hug</span></div></div></div>' +
+        '<div class="fs-pn fs-gs"><div class="hd"><span data-t>' + tool('googlesheets') + '</span><b>Sales 2026</b><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Data</span></div>' +
+        '<div class="fb"><em>B10</em><i>fx</i><span id="pFx"></span></div><table><tr><td></td><td>A</td><td>B</td><td>C</td></tr><tr class="h"><td>1</td><td>Month</td><td>Sales</td><td>Region</td></tr>' +
+        FSALES.map(function (r, i) { return '<tr><td>' + (i + 2) + '</td><td>' + r[0] + '</td><td class="n">' + r[1].toLocaleString('en-US') + '</td><td>' + r[2] + '</td></tr>'; }).join('') +
+        '<tr class="h"><td>10</td><td>Average</td><td class="cel" id="pCel"></td><td></td></tr></table></div>' +
+        '<div class="fs-pn fs-jp"><div class="hd"><span data-t>' + tool('jupyter') + '</span><b>clean.ipynb</b><span>Python 3 (ipykernel)</span></div>' +
+        '<div class="cell"><em>[1]:</em><div><span class="jk">import</span> pandas <span class="jk">as</span> pd</div></div>' +
+        '<div class="cell"><em>[2]:</em><div>df = pd.read_csv(<span class="js">"sales.csv"</span>)\ndf.head(3)</div></div>' +
+        '<div class="out">   month   sales   region\n0  Jan     3820    West\n1  Feb     <span class="nan">NaN</span>     East\n2  Mar     3990    <span class="nan">NaN</span></div>' +
+        '<div class="cell cur" id="pCell"><em id="pIn">[ ]:</em><div><span id="pJx"></span>\nlen(df)</div></div><div class="out" id="pOut"></div></div></div>' +
+        '<div class="fs-logos" id="pLg">' + ['blender', 'figma', 'googlesheets', 'jupyter', 'vscode', 'adobephotoshop', 'xcode', 'davinciresolve', 'unity', 'terminal', 'github', 'canva'].map(function (n) { return '<span>' + tool(n) + '</span>'; }).join('') + '</div>' +
+        '<div class="fs-ring" id="pRing"></div>');
+      var pPn = $$('#pW .fs-pn'), pLg = $$('#pLg > span'), PAPPS = [['blender', 'Add a Subdivision modifier', 'Blender', 'donut.blend'], ['figma', 'Turn on auto layout', 'Figma', 'Card — Figma'],
+        ['googlesheets', 'Average column B', 'Google Chrome', 'Sales 2026 — Google Sheets'], ['jupyter', 'Drop the empty rows', 'Google Chrome', 'clean.ipynb — JupyterLab']], PD = 2.5, PT = [];
+      var FR_A = [[10, 12, 118, 60], [24, 82, 90], [8, 102, 70], [44, 136, 80]], FR_B = [[14, 14, 122, 60], [14, 86, 122], [14, 107, 80], [14, 125, 122]];
+      function cardP(u) {
+        var k = Math.min(3, Math.floor(u / PD)), v = u - k * PD, a = PAPPS[k];
+        pPn.forEach(function (p, i) { on(p, i === k); }); pLg.forEach(function (s, i) { on(s, i === k); });
+        sT(fzP.mbn, a[2]); sT($('#pTt'), a[3]); isl(fzP, 'app:' + a[0], a[1]);
+        on($('#pRing'), v > .25 && v < 1.9); if (PT[k]) ringAt($('#pRing'), PT[k], 4, 3);
+        // Blender: the modifier smooths the donut
+        var bl = k > 0 || v > 1.15; on(pPn[0], bl, 'smooth'); on($('#pMod'), bl);
+        // Figma: auto layout lines the card up
+        var fg = k > 1 || (k === 1 && v > 1.15); on($('#pAlv'), fg);
+        $$('#pFr > i').forEach(function (el, i) { var f = (fg ? FR_B : FR_A)[i]; sS(el, 'left:' + f[0] + 'px;top:' + f[1] + 'px;width:' + f[2] + 'px' + (f[3] ? ';height:' + f[3] + 'px' : '')); });
+        // Sheets: the formula, then the answer
+        var gv = k > 2 ? 9 : k === 2 ? v : -1, F = '=AVERAGE(B2:B9)', ft = gv > 1.75 ? F : typed(F, .8, 1.6, gv);
+        sT($('#pFx'), ft); sT($('#pCel'), gv > 1.75 ? '4,212' : ft);
+        // Jupyter: the cell runs
+        var jv = k === 3 ? v : -1; typeHL($('#pJx'), 'df = df.dropna()', 'df = df.dropna()', .75, 1.45, jv);
+        sT($('#pIn'), jv > 1.75 ? '[3]:' : jv > 1.55 ? '[*]:' : '[ ]:'); sH($('#pOut'), jv > 1.75 ? 'Out[3]: 398' : '');
+        cur(fzP, fzP.K, u);
+      }
+
+
+      /* 3. sets up your computer: a React website. miyagi runs the installs itself, then opens the site */
+      var SROWS = [['nodedotjs', 'Node.js', 'Looking for Node…', '22.11 found', .3, .85], ['react', 'React + Vite', 'Creating the project…', 'my-site ready', 1.0, 2.1], ['javascript', 'Packages', 'Installing…', '214 added', 2.3, 4.0], ['googlechrome', 'Dev server', 'Starting…', 'localhost:5173', 4.2, 4.95]];
+      var fzS = scene('bS', 'Terminal', fsTerm('left:22px;top:38px;width:336px;height:262px', 'my-site — zsh') +
+        '<div class="fs-card fs-setc"><h5>Setting up</h5><small>Build a website with React</small>' +
+        SROWS.map(function (r) { return '<div class="fs-sr"><span class="i">' + tool(r[0]) + '</span><span class="tx"><b>' + r[1] + '</b><small></small></span><i class="spin"></i><span class="fs-chk">' + icon('check') + '</span></div>'; }).join('') +
+        '<div class="fs-pb"><i id="sPb"></i></div></div>' +
+        chromeW('sCh', 'left:96px;top:118px;width:440px;height:268px', 'localhost:5173', '<div class="fs-vite"><span class="rl">' + tool('react') + '</span><b>Vite + React</b><span class="cnt">count is 0</span><small>Edit <code>src/App.jsx</code> and save to test HMR</small></div>', 'hide'));
+      var sSh = $('#bS .fs-sh'), sRows = $$('#bS .fs-sr'), SPR = '<span class="pr">~ %</span> ';
       function cardS(u) {
-        sRows.forEach(function (r, i) {
-          var d = u > .9 + i * .75, s = $('small', r), tx = s.getAttribute(d ? 'data-b' : 'data-a');
-          on(r, u > .15 + i * .2); on(r, d, 'done'); if (s.textContent !== tx) s.textContent = tx;
-        });
+        var L = [], c = function (t0, s, t1) { if (u > t0) L.push(SPR + esc(typed(s, t0, t1, u))); };
+        c(.3, 'node --version', .7); if (u > .8) L.push('v22.11.0');
+        c(1.0, 'npm create vite@latest my-site -- -t react', 1.8); if (u > 1.9) L.push('  Scaffolding project in ~/my-site…'); if (u > 2.1) L.push('  Done.');
+        c(2.3, 'cd my-site && npm install', 2.8);
+        if (u > 2.9) { var n = Math.round(clamp((u - 2.9) / 1) * 24); L.push('  <span class="g">' + '━'.repeat(n) + '</span><span class="d">' + '━'.repeat(24 - n) + '</span> ' + Math.round(n / 24 * 214) + '/214'); }
+        if (u > 4) L.push('added 214 packages in 6s');
+        c(4.2, 'npm run dev', 4.5); if (u > 4.7) L.push('  <span class="g">VITE v6.0.3</span>  ready in 312 ms'); if (u > 4.9) L.push('  ➜  Local:   <span class="u">http://localhost:5173/</span>');
+        if (L.length) L[L.length - 1] += ECAR; sH(sSh, L.join('\n'));
+        var done = 0;
+        sRows.forEach(function (r, i) { var R = SROWS[i], d = u > R[5]; if (d) done++; on(r, u > R[4], 'go'); on(r, d, 'done'); sT($('small', r), d ? R[3] : u > R[4] ? R[2] : 'Waiting'); });
+        $('#sPb').style.width = done * 25 + '%';
+        on($('#sCh'), u < 5.4, 'hide');
+        if (u < 5.1) isl(fzS, 'spin', 'Setting up', Math.min(4, done + 1) + ' of 4'); else isl(fzS, '', 'All set', 'localhost:5173');
+        cur(fzS, null, u);
       }
-      // guides every step
-      function cardG(u) { on($('#gRing'), u > .3); on($('#gCall'), u > .5); $('#gTyp').textContent = typed('np.random.rand(10, 784) - 0.5', 1.6, 3.2, u); }
-      // waits for you: the video runs, then holds at the gate
+
+      /* 4. guides every step: Figma, a login screen. The lesson panel, a ring on the tool, a callout, the bar of help */
+      var fzG = scene('bG', 'Figma', '<div class="fs-w fs-fgw" style="left:16px;top:36px;width:404px;height:352px"><div class="fs-tb"><i></i><i></i><i></i><span>Login — Figma</span></div>' +
+        '<div class="fs-pn fs-fg on"><div class="hd tools"><span>' + gl('move') + '</span><span id="gFt">' + gl('frame') + '</span><span id="gRt">' + gl('rect') + '</span><span>' + gl('pen') + '</span><span>' + gl('text') + '</span></div>' +
+        '<div class="ly"><span class="on">Login</span><span class="s fs-in" id="gLy1">Phone</span><span class="s fs-in" id="gLy2" style="padding-left:34px">Email</span></div>' +
+        '<div class="cv" id="gCv"><div class="gfr" id="gFr"><em id="gFl">iPhone 16 · 393 × 852</em><i id="gEm"></i></div></div>' +
+        '<div class="rp"><span class="row" id="gKind">Design</span><div class="kv"><span>W</span><b id="gW">—</b><span>H</span><b id="gH">—</b></div><span class="row">Corner radius</span><div class="kv"><span>R</span><b id="gR">0</b></div><span class="row">Fill</span><div class="kv"><span class="sw"></span><b>FFFFFF</b></div></div></div></div>' +
+        '<div class="fs-card fs-lp"><span class="fs-lab">Step 3 of 7</span><b class="t">Lay out the form</b><small>A phone frame, an email field, soft corners.</small>' +
+        lessonList(['Set up the file', 'Pick the type', 'Lay out the form', 'Add the password', 'Make the button', 'Link the tap', 'Share for review'], 2,
+          '<span id="gS1"><i></i>Phone frame</span><span id="gS2"><i></i>Email field, 48 tall</span><span id="gS3"><i></i>Corners at 8</span>') + '</div>' +
+        '<div class="fs-ring" id="gRing"></div>' + callout('gCall', 'Your turn', '') + fsBar());
+      var gTiles = $$('#bG .fs-bar .it'), GP = {};
+      function cardG(u) {
+        var b = u < 3 ? 0 : u < 5.2 ? 1 : 2;
+        // the frame grows with the drag, then the field inside it, then its corners round
+        var f = fsEase(clamp((u - 1.75) / .75)), e = fsEase(clamp((u - 4) / .7)), fr = $('#gFr'), em = $('#gEm');
+        sS(fr, 'width:' + (f * 120).toFixed(1) + 'px;height:' + (f * 214).toFixed(1) + 'px;opacity:' + (u > 1.5 ? 1 : 0));
+        on($('#gFl'), u > 2.5);
+        sS(em, 'width:' + (e * 96).toFixed(1) + 'px;opacity:' + (u > 4 ? 1 : 0) + ';border-radius:' + (u > 6.3 ? 8 : 1) + 'px');
+        var ed = u > 4;
+        sT($('#gKind'), ed ? 'Rectangle' : u > 1.5 ? 'Frame' : 'Design');
+        sT($('#gW'), ed ? String(Math.round(e * 313)) : u > 1.5 ? String(Math.round(f * 393)) : '—');
+        sT($('#gH'), ed ? (u > 4.6 ? '48' : String(Math.round(e * 48))) : u > 1.5 ? String(Math.round(f * 852)) : '—');
+        sT($('#gR'), u > 6.15 ? '8' : '0'); on($('#gR'), u > 5.85 && u < 6.4, 'edit');
+        on($('#gLy1'), u > 2.6); on($('#gLy2'), u > 4.8);
+        on($('#gS1'), u > 2.7, 'ok'); on($('#gS2'), u > 4.9, 'ok'); on($('#gS3'), u > 6.5, 'ok');
+        on($('#gFt'), u > 1.1 && u < 2.6, 'sel'); on($('#gRt'), u > 3.6 && u < 4.8, 'sel');
+        var r = GP[b]; if (r) { ringAt($('#gRing'), r, 3, 3); callAt($('#gCall'), b === 2 ? r[0] - 150 : r[0] - 6, r[1] + r[3] + 11, b === 2 ? 156 : 14); }
+        on($('#gRing'), u > .3 && u < 6.7 && !(u > 2.4 && u < 3) && !(u > 4.8 && u < 5.2)); on($('#gCall'), u > .5 && u < 6.7);
+        setCall($('#gCall'), b ? 'Next' : 'Your turn', ['Press F, then drag out the phone screen.', 'Now the email field inside it.', 'Round its corners to 8.'][b]);
+        on(gTiles[5], u > 7);
+        if (u < 7.3) isl(fzG, 'ring', 'Lay out the form', 'step 3 of 7'); else isl(fzG, 'bars', 'Checking your design');
+        cur(fzG, fzG.K, u);
+      }
+
+      /* 5. waits for you: Blender Guru's donut course runs to the step, holds while you add the torus, and moves on once it passes */
+      var VLEN = 15550;
+      var fzW = scene('bW', 'Blender', '<div class="fs-w dk fs-blw" style="left:16px;top:36px;width:380px;height:352px"><div class="fs-tb"><i></i><i></i><i></i><span>donut.blend</span></div>' +
+        '<div class="fs-pn fs-bl on nopr"><div class="hd"><span>File</span><span>Edit</span><span id="wAdd">Add</span><span>Object</span><span class="on">Layout</span><span>Modeling</span></div><div class="tool"><i></i><i></i><i></i><i></i><i></i></div>' +
+        '<div class="vp"><svg viewBox="0 0 356 308" preserveAspectRatio="xMidYMid slice"><g stroke="#474747" stroke-width="1">' + [170, 192, 220, 256, 300].map(function (y) { return '<path d="M0 ' + y + 'H356"/>'; }).join('') + [-400, -160, 0, 160, 400].map(function (x) { return '<path d="M' + (178 + x * .22) + ' 150L' + (178 + x) + ' 308"/>'; }).join('') + '</g><path d="M0 206H356" stroke="#8b3a3a" stroke-width="1.2"/><path d="M175 150L150 308" stroke="#5b7a2a" stroke-width="1.2"/>' +
+        '<g id="wTor"><ellipse cx="178" cy="196" rx="76" ry="38" fill="#8f8f8f" stroke="#ff9a2e" stroke-width="2"/><ellipse cx="178" cy="189" rx="66" ry="30" fill="#b3b3b3"/><ellipse cx="178" cy="187" rx="25" ry="11" fill="#3d3d3d"/><circle cx="178" cy="196" r="3" fill="#ff9a2e"/></g></svg>' +
+        '<div class="bmenu" id="wMenu"><span class="hi" id="wMesh">Mesh<i>▸</i></span><span>Curve<i>▸</i></span><span>Surface<i>▸</i></span><span>Light<i>▸</i></span><span>Camera</span></div>' +
+        '<div class="bmenu sub" id="wSub"><span>Plane</span><span>Cube</span><span>Circle</span><span>UV Sphere</span><span>Ico Sphere</span><span>Cylinder</span><span>Cone</span><span id="wTorI">Torus</span></div>' +
+        '<div class="bop" id="wOp"><b>▾ Add Torus</b><span>Major Radius<em>1 m</em></span><span>Minor Radius<em>0.25 m</em></span></div></div></div></div>' +
+        '<div class="fs-w fs-yt"><div class="fs-tb"><i></i><i></i><i></i><span>youtube.com/watch?v=z-Xl9tGqH14</span></div>' +
+        '<div class="fs-vid"><img class="on" alt="" loading="lazy" src="' + BG + 'hq2.jpg"><img alt="" loading="lazy" src="' + BG + 'hq3.jpg">' +
+        '<div class="gate" id="wGate">' + icon('lock') + '<b>Your turn</b><small>The video waits for you.</small></div>' +
+        '<div class="trk"><i id="wBar"></i><b class="ok" style="left:10.9%"></b><b id="wMk" style="left:12.2%"></b><b style="left:13.6%"></b><b style="left:22.8%"></b></div>' +
+        '<div class="ctl"><span id="wPl"></span><span id="wTm"></span></div></div>' +
+        '<div class="fs-vt"><b>' + BG_T + '</b><small>Blender Guru · 3M views</small></div></div>' +
+        '<div class="fs-ring" id="wRing"></div>');
+      var wF = $$('#bW .fs-vid img');
+      function mmss(s) { s = Math.round(s); var h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, x = ('0' + s % 60).slice(-2); return h ? h + ':' + ('0' + m).slice(-2) + ':' + x : m + ':' + x; }
       function cardW(u) {
-        var run = u < 2.4;
-        on($('#wGate'), !run); on($('#wF0'), u < 1.4); on($('#wF1'), u >= 1.4);
-        $('#wBar').style.width = (run ? 30 + u / 2.4 * 16 : 46) + '%';
+        var play = u < 2.2 || u > 5.8, p = u < 2.2 ? .115 + u / 2.2 * .007 : u < 5.8 ? .122 : .122 + (u - 5.8) / 3.4 * .006;
+        $('#wBar').style.width = (p * 100).toFixed(2) + '%'; sT($('#wTm'), mmss(p * VLEN) + ' / 4:19:10'); sH($('#wPl'), icon(play ? 'pause' : 'play'));
+        wF.forEach(function (im, i) { on(im, i === (u < 5.8 ? 0 : 1)); }); on($('#bW .fs-vid'), play && u < 2.2, 'run');
+        on($('#wGate'), !play); on($('#wMk'), u > 5.3, 'ok');
+        on($('#wMenu'), u > 2.9 && u < 3.95); on($('#wSub'), u > 3.35 && u < 3.95); on($('#wTorI'), u > 3.7, 'hi');
+        on($('#wTor'), u > 3.95); on($('#wOp'), u > 4.1);
+        on($('#wRing'), u > 2.4 && u < 2.95);
+        if (u < 2.2) isl(fzW, 'play', 'Watching', 'next step at 31:38');
+        else if (u < 4.5) isl(fzW, 'lock', 'Your turn', 'add a torus');
+        else if (u < 5.3) isl(fzW, 'bars', 'Checking your scene');
+        else if (u < 6.1) isl(fzW, 'pass', 'Step passed');
+        else isl(fzW, 'play', 'Watching', 'next step at 35:20');
+        cur(fzW, fzW.K, u);
       }
-      // checks your work
-      var cTerm = $('#cTerm'), cLast = null, PR = '<span class="pr">sam@mac digits %</span> ';
+
+      /* 6. checks your work: Google Sheets. It reads what you made and ticks each thing the step needs */
+      var REG = [['West', 3820], ['East', 4105], ['West', 3990], ['North', 4480], ['East', 4310], ['West', 4620], ['North', 4275], ['East', 4096]];
+      var fzC = scene('bC', 'Google Chrome', '<div class="fs-w fs-gsw" style="left:16px;top:36px;width:340px;height:300px"><div class="fs-tb"><i></i><i></i><i></i><span>Sales — Google Sheets</span></div>' +
+        '<div class="fs-pn fs-gs on"><div class="hd"><span data-t>' + tool('googlesheets') + '</span><b>Sales</b><span>File</span><span>Edit</span><span>Insert</span><span>Data</span></div>' +
+        '<div class="fb"><em>E2</em><i>fx</i><span id="cFx"></span></div><table><tr><td></td><td style="width:54px">A</td><td style="width:54px">B</td><td style="width:6px"></td><td style="width:52px">D</td><td>E</td></tr><tr class="h"><td>1</td><td>Region</td><td>Sales</td><td></td><td>Region</td><td>Total</td></tr>' +
+        REG.map(function (r, i) { return '<tr><td>' + (i + 2) + '</td><td>' + r[0] + '</td><td class="n">' + r[1].toLocaleString('en-US') + '</td><td></td>' + (i < 3 ? '<td>' + ['West', 'East', 'North'][i] + '</td><td class="n' + (i ? '' : ' cel') + '"' + (i ? '' : ' id="cE2"') + '></td>' : '<td></td><td></td>') + '</tr>'; }).join('') + '</table></div></div>' +
+        '<div class="fs-card fs-ckc"><div class="hd" id="cHd"></div><h5>Total sales for West</h5><div class="cks">' +
+        ['Adds up column B', 'Only the rows marked West', 'Same total as the lesson'].map(function (t) { return '<div class="ck"><i class="spin"></i><span class="fs-chk">' + icon('check') + '</span>' + t + '</div>'; }).join('') + '</div>' +
+        '<div class="cmp"><div><small>Yours</small><code id="cY">—</code></div><div><small>Expected</small><code>12,430</code></div></div>' +
+        '<div class="nx fs-in" id="cNx"><span class="fs-chk">' + icon('check') + '</span>Step 3 of 6 passed<small>next: East and North</small></div></div>' +
+        '<div class="fs-ring" id="cRing"></div>');
+      var cCks = $$('#bC .ck'), CF = '=SUMIF(A2:A9, "West", B2:B9)';
       function cardC(u) {
-        var L = [PR + typed('python nn.py', .3, 1, u) + (u < 1.2 ? ECAR : '')];
-        if (u > 1.4) L.push('iter 100    acc 0.47');
-        if (u > 2) L.push('iter 200    acc 0.76');
-        if (u > 2.6) L.push('iter 300    acc 0.84');
-        if (u > 2.9) L.push(PR + ECAR);
-        var h = L.join('\n'); if (h !== cLast) { cLast = h; cTerm.innerHTML = h; }
-        var st = u > 3 ? 2 : u > 1.2 ? 1 : 0, tx = ['Your turn', 'Checking your run', 'Step passed'][st];
-        on($('#cSt0'), st === 0); on($('#cSt1'), st === 1); on($('#cSt2'), st === 2);
-        if ($('#cPt').textContent !== tx) $('#cPt').textContent = tx;
+        var ft = u > 2.8 ? CF : typed(CF, 1, 2.6, u), ok = u > 4.9;
+        sT($('#cFx'), ft); sT($('#cE2'), u > 2.8 ? '12,430' : ft); on($('#cE2'), u > .8, 'cel');
+        on($('#cRing'), u > .3 && u < 2.8);
+        cCks.forEach(function (k, i) { on(k, u > 3.0, 'go'); on(k, u > 3.4 + i * .5, 'done'); });
+        sT($('#cY'), u > 4.4 ? '12,430' : '—'); on($('#cY'), ok, 'ok');
+        sH($('#cHd'), u < 2.9 ? '<i class="rng" style="border-color:#1c1b19"></i><span>Waiting for your formula</span>' : !ok ? '<i class="spin"></i><span>Checking your sheet</span>' : '<span class="fs-chk">' + icon('check') + '</span><span>Step passed</span>');
+        on($('#cHd'), ok, 'ok'); on($('#cNx'), u > 5.2);
+        if (u < 2.9) isl(fzC, 'ring', 'Total for West', 'in E2'); else if (!ok) isl(fzC, 'bars', 'Checking your sheet'); else isl(fzC, 'pass', 'Step passed', '3 of 6');
+        cur(fzC, fzC.K, u);
       }
-      // helps when you're stuck: each chip does its own thing, and they take clicks. Explain types the why, Diagram draws the layer,
-      // Show me circles the line and brings the lesson's code, Hint nudges. Left alone, it presses Diagram and then Show me.
-      var H0 = 'If every unit starts the same, can they ever become different?',
-        HT = ['All ten units start the same and get the same update, so they stay copies of each other.', 'Your hidden layer, drawn. Every unit is a copy.',
-          "Circled above. Swap the zeros for the lesson's line.", 'W2, two lines down, already starts the right way.'];
-      var hSel = -1, hUntil = -1, hAt = 0, hV = null, hChips = $$('#hChips button'), hNy = $('#hNy'), HCY = [14.5, 39.8, 65.2, 90.5];
-      $('#hDg').innerHTML = HCY.map(function (y) { return '<path class="e" d="M35 52.5L56 ' + y + '"/>'; }).join('') + HCY.map(function (y) { return '<path class="e b" d="M76 ' + y + 'L97 52.5"/>'; }).join('') +
-        '<g class="n"><rect x="1" y="40.5" width="34" height="24" rx="7"/><text x="18" y="56.3">784</text></g>' +
-        HCY.map(function (y) { return '<g class="n h"><circle cx="66" cy="' + y + '" r="10"/><text x="66" y="' + (y + 3.7) + '">0</text></g>'; }).join('') +
-        '<g class="n o"><rect x="97" y="40.5" width="34" height="24" rx="12"/><text x="114" y="56.3">out</text></g>';
+
+      /* 7. helps when you're stuck: a React page whose button won't center. Each chip does its own thing, and they take clicks.
+         Explain types the why, Diagram draws the axes, Show me circles the line and brings the lesson's, Hint nudges. Left alone, the cursor presses Diagram and then Show me */
+      var CSSRC = ['<span class="cs">.login</span> {', '  <span class="hv">display</span>: <span class="hs">flex</span>;', '  <span class="hv">flex-direction</span>: <span class="hs">column</span>;',
+        '  <span class="hv">justify-content</span>: <span class="hs">center</span>;', '  <span class="hv">gap</span>: <span class="hm">12px</span>;', '  <span class="hv">padding</span>: <span class="hm">24px</span>;', '}', '',
+        '<span class="cs">.login button</span> {', '  <span class="hv">width</span>: <span class="hm">96px</span>;', '}'];
+      var fzH = scene('bH', 'Code', vsc({ x: 16, y: 36, w: 330, h: 352, src: CSSRC, title: 'App.css — my-site', tabs: '<span>' + JSXI + 'App.jsx</span><span class="on">' + CSSI + 'App.css</span>',
+          rep: { 4: '  <span id="hCode"><span class="hv">justify-content</span>: <span class="hs">center</span>;</span>' } }) +
+        chromeW('hCh', 'left:330px;top:48px;width:254px;height:180px', 'localhost:5173', '<div class="fs-login"><b>Log in</b><i></i><i></i><span>Log in</span></div>') +
+        '<div class="fs-ring sp" id="hRing"></div>' +
+        '<div class="bny" id="hNy" data-v="-1"><div class="cl"><div class="ch"><i></i>Not yet</div><b>Your button isn\'t centered</b><p id="hTx"></p>' +
+        '<div class="chips" id="hChips"><button type="button" class="sky">Explain</button><button type="button" class="mint">Diagram</button><button type="button" class="lilac">Show me</button><button type="button" class="pink">Hint</button></div></div>' +
+        '<div class="cr"><div class="hp hp-cmp"><div class="cmp mini"><small>Yours</small><svg viewBox="0 0 40 22"><rect x=".5" y=".5" width="39" height="21" rx="3"/><rect class="b" x="4" y="13" width="14" height="5" rx="1.5"/></svg></div><div class="cmp mini"><small>Expected</small><svg viewBox="0 0 40 22"><rect x=".5" y=".5" width="39" height="21" rx="3"/><rect class="b" x="13" y="13" width="14" height="5" rx="1.5"/></svg></div></div>' +
+        '<div class="hp hp-dg"><svg class="hdg" id="hDg" viewBox="0 0 132 105" aria-hidden="true"></svg></div><div class="hp hp-sm"><small>The lesson\'s line</small><code>align-items: center;</code></div></div></div>');
+      var H0 = 'In a column, which way does justify-content push?',
+        HT = ['In a column the main axis runs down, so justify-content moves things up and down. Across is align-items.', 'Your form, drawn. Down is justify-content, across is align-items.',
+          "Circled above. The lesson centers it across with align-items.", 'Across a column is the cross axis.'];
+      var hSel = -1, hUntil = -1, hAt = 0, hV = null, hChips = $$('#hChips button'), hNy = $('#hNy');
+      $('#hDg').innerHTML = '<rect class="bx" x="30" y="8" width="72" height="90" rx="6"/><g class="n"><rect x="46" y="22" width="40" height="9" rx="2"/><rect x="46" y="38" width="40" height="9" rx="2"/><rect x="46" y="54" width="22" height="9" rx="2"/></g>' +
+        '<path class="e" d="M18 14V92"/><path class="e" d="M14 86l4 6 4-6"/><path class="e b" d="M38 104H96"/><path class="e b" d="M90 100l6 4-6 4"/>' +
+        '<g class="n h"><text x="9" y="54" transform="rotate(-90 9 54)">justify</text></g><g class="n o"><text x="114" y="107">align</text></g>';
       function cardH(u) {
         var held = bT < hUntil, s = held ? hSel : u > 4 ? 2 : u > 1.5 ? 1 : -1, t = held ? (reduce ? 9 : bT - hAt) : u - (s === 2 ? 4 : 1.5),
           tx = s < 0 ? H0 : s === 0 ? typed(HT[0], 0, 1.4, t) : HT[s];
         on(hNy, u > .3 || held); hChips.forEach(function (b, k) { on(b, k === s); });
         if (hV !== s) { hV = s; hNy.setAttribute('data-v', s); }
-        if ($('#hTx').textContent !== tx) $('#hTx').textContent = tx;
-        on($('#hRing'), s === 2);
+        sT($('#hTx'), tx); on($('#hRing'), s === 2);
+        on($('#bH .fs-ln[data-n="4"]'), true, 'act');
+        isl(fzH, 'ring', 'Not yet', 'step 4 of 7');
+        if (held) on(fzH.cur, true, 'off'); else cur(fzH, fzH.K, u);
       }
-      // ask about your screen
-      function cardQ(u) {
-        on($('#qAsk'), u > .3, 'typing');
-        var tx = u > .3 ? typed('why 784 inputs?', .4, 1.5, u) : 'ask miyagi'; if ($('#qTx').textContent !== tx) $('#qTx').textContent = tx;
-        on($('#qRing'), u > 1.9); on($('#qCall'), u > 2.1);
-      }
-      // grows your skills: the map fills in from the bottom; a line turns green once both ends are mastered
-      var KN = [['Arrays', 8, 138], ['Vectors', 139, 138], ['Weight init', 8, 94], ['Dot product', 139, 94], ['Forward pass', 73.5, 50], ['Backprop', 73.5, 6]],
-        KE = [[0, 2, 'M61 138V122'], [1, 3, 'M192 138V122'], [2, 4, 'M61 94v-4q0-4 4-4h57.5q4 0 4-4v-4'], [3, 4, 'M192 94v-4q0-4-4-4h-57.5q-4 0-4-4v-4'], [4, 5, 'M126.5 50V34']];
-      $('#kTree').innerHTML = KE.map(function (e) { return '<path class="ed" d="' + e[2] + '"/>'; }).join('') + KN.map(function (n) {
-        var x = n[1], y = n[2], cx = x + 15, cy = y + 14;
-        return '<g class="nd"><rect x="' + x + '" y="' + y + '" width="106" height="28" rx="7"/>' +
-          '<g class="i m"><circle cx="' + cx + '" cy="' + cy + '" r="6.2" fill="#1f9b45"/><path d="M' + (cx - 2.9) + ' ' + (cy + .2) + 'l2 2 3.8-4.1" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>' +
-          '<circle class="i p" cx="' + cx + '" cy="' + cy + '" r="5.2" fill="none" stroke="#1c1b19" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="21 12" transform="rotate(-90 ' + cx + ' ' + cy + ')"/>' +
-          '<circle class="i o" cx="' + cx + '" cy="' + cy + '" r="5.2" fill="none" stroke="#1c1b19" stroke-width="1.6"/>' +
-          '<g class="i l" fill="none" stroke="#a6a39b" stroke-width="1.4" stroke-linecap="round"><rect x="' + (cx - 4) + '" y="' + (cy - 1) + '" width="8" height="6.4" rx="1.6" fill="#a6a39b"/><path d="M' + (cx - 2.4) + ' ' + (cy - 1) + 'v-1.8a2.4 2.4 0 0 1 4.8 0v1.8"/></g>' +
-          '<text x="' + (x + 28) + '" y="' + (y + 18.2) + '">' + n[0] + '</text></g>';
-      }).join('');
-      var kN = $$('#kTree .nd'), kE = $$('#kTree .ed');
-      function cardK(u) {
-        var st = u < .9 ? 'mmpoll' : u < 2.1 ? 'mmmpll' : 'mmmmpl';
-        kN.forEach(function (g, i) { var c = 'nd ' + st.charAt(i); if (g.getAttribute('class') !== c) g.setAttribute('class', c); });
-        kE.forEach(function (p, i) { var c = 'ed' + (st.charAt(KE[i][0]) === 'm' && st.charAt(KE[i][1]) === 'm' ? ' m' : ''); if (p.getAttribute('class') !== c) p.setAttribute('class', c); });
-      }
-      // any app on your screen
-      $('#pApps').innerHTML = ['blender', 'figma', 'googlesheets', 'vscode', 'jupyter', 'adobephotoshop', 'xcode', 'youtube', 'davinciresolve', 'terminal', 'github', 'unity'].map(function (n) { return '<span>' + tool(n) + '</span>'; }).join('');
-      var pI = $$('#pApps > span'), PSEQ = [0, 2, 5, 8];
-      function cardP(u) { var k = u < .3 ? -1 : Math.floor((u - .3) / .9); pI.forEach(function (s, i) { on(s, k >= 0 && k < PSEQ.length && PSEQ[k] === i); }); }
 
-      // rings and callouts that follow the text they point at, whatever the font and the card's width
+      /* 8. ask about your screen: Photoshop. A question in your own words; it rings the spot, answers, and shows it */
+      var fzQ = scene('bQ', 'Photoshop', '<div class="fs-w dk fs-ps" style="left:16px;top:36px;width:568px;height:352px"><div class="fs-tb"><i></i><i></i><i></i><span>lake.psd @ 50% (Mountains, Layer Mask/8)</span></div>' +
+        '<div class="pso"><span>' + gl('move') + '</span><span>Auto-Select</span><span>Layer</span><span class="sp"></span><span>3D Mode</span></div>' +
+        '<div class="pst">' + ['move', 'rect', 'wand', 'crop', 'brush', 'pen', 'text'].map(function (n) { return '<span>' + gl(n) + '</span>'; }).join('') + '</div>' +
+        '<div class="psc"><svg id="qImg" viewBox="0 0 300 200" aria-hidden="true"><defs><clipPath id="fsMask"><rect id="qClip" x="150" y="0" width="150" height="200"/></clipPath></defs>' +
+        '<rect width="300" height="200" fill="#a9cfe8"/><circle cx="222" cy="58" r="22" fill="#f6d989"/><path d="M0 132L52 84 96 118 150 70 214 122 262 92 300 116V200H0z" fill="#7f9db3"/>' +
+        '<path d="M0 156L44 116 88 146 136 104 190 150 244 112 300 148V200H0z" fill="#3f5d4a" clip-path="url(#fsMask)"/><path id="qFull" d="M0 156L44 116 88 146 136 104 190 150 244 112 300 148V200H0z" fill="#3f5d4a"/><rect y="176" width="300" height="24" fill="#5d84a0"/></svg></div>' +
+        '<div class="psl"><span class="lt">Layers</span>' +
+        '<div class="lr"><span class="ey"></span><span class="tt">T</span><b>Title</b></div>' +
+        '<div class="lr on"><span class="ey"></span><span class="th"><i style="background:#3f5d4a"></i></span><span class="mk" id="qMask"><i></i><em></em></span><b>Mountains</b></div>' +
+        '<div class="lr"><span class="ey"></span><span class="th"><i style="background:#7f9db3"></i></span><b>Hills</b></div>' +
+        '<div class="lr"><span class="ey"></span><span class="th"><i style="background:#a9cfe8"></i></span><b>Sky</b><span class="lk">' + icon('lock') + '</span></div></div></div>' +
+        '<div class="fs-ring" id="qR1"></div><div class="fs-ring" id="qR2"></div>' + callout('qCall', 'Layer mask', 'Black hides this layer, white shows it.<br>Here it hides the left half of Mountains.') +
+        '<div class="fs-ask" id="qAsk"><span class="lg">' + logo() + '</span><span class="tx" id="qTx">ask miyagi</span><span class="kc">' + KC + '</span></div>');
+      function cardQ(u) {
+        var off = u > 4.4 && u < 5.9;
+        on($('#qFull'), off); on($('#qMask'), off, 'off');
+        on($('#qAsk'), u > .3 && u < 2.8); on($('#qAsk'), u > .3 && u < .6, 'press'); on($('#qAsk'), u > .55 && u < 2.1, 'typing');
+        sT($('#qTx'), u > .55 ? typed("what's the black and white box?", .65, 1.9, u) || ' ' : 'ask miyagi');
+        on($('#qR1'), u > 2.6); on($('#qR2'), u > 2.8); on($('#qCall'), u > 2.85);
+        if (u < 2.1) isl(fzQ, '', 'ask miyagi'); else if (u < 2.6) isl(fzQ, 'spin', 'Looking at your screen');
+        else if (u < 4.4) isl(fzQ, 'ring', 'Layer mask'); else if (off) isl(fzQ, '', 'Showing you', 'mask off'); else isl(fzQ, 'ring', 'Layer mask', 'back on');
+        cur(fzQ, null, u);
+      }
+
+      /* 9. grows your skills: the passed step lands on its subject's map, and reviews from every subject come back when they're due */
+      var KN = [['Navigate', 14, 214], ['Add objects', 166, 214], ['Modifiers', 14, 144], ['Edit mode', 166, 144], ['Sculpting', 90, 74], ['Materials', 90, 6]],
+        KE = [[0, 2, 'M74 214V174'], [1, 3, 'M226 214V174'], [2, 4, 'M74 144v-21q0-4 4-4h68q4 0 4-4v-11'], [3, 4, 'M226 144v-21q0-4-4-4h-68q-4 0-4-4v-11'], [4, 5, 'M150 74V36']];
+      var fzK = scene('bK', 'miyagi', '<div class="fs-w fs-sk"><div class="fs-tb"><i></i><i></i><i></i><span>miyagi — Skills</span></div><div class="bd">' +
+        '<div class="mp"><div class="sbj"><span class="on">Blender <em id="kN">3/6</em></span><span>Figma <em>3/7</em></span><span>Sheets <em>5/6</em></span><span>React <em>2/8</em></span></div><svg class="fs-kt" id="kT" viewBox="0 0 300 252" aria-hidden="true"></svg></div>' +
+        '<div class="rv"><span class="fs-lab">Reviews</span><div class="rr new" id="kNew"><span>Modifiers<em>Blender</em></span><small>tomorrow</small></div><div class="rr due" id="kDue"><span>Auto layout<em>Figma</em></span><small>today</small></div><div class="rr"><span>SUMIF<em>Sheets</em></span><small>in 3 days</small></div><div class="rr"><span>Layer masks<em>Photoshop</em></span><small>in 6 days</small></div>' +
+        '<div class="qz" id="kQz"><span class="fs-lab">Review · Auto layout</span><p>In auto layout, what does <code>Hug contents</code> do?</p>' +
+        '<div class="op" id="kO1">Shrinks to fit what\'s inside<span class="fs-chk">' + icon('check') + '</span></div><div class="op">Stretches to fill the parent<span class="fs-chk">' + icon('check') + '</span></div><div class="nx" id="kNx">Right. Next review in 9 days.</div></div></div></div></div>' +
+        '<div class="fs-fly" id="kFly">' + icon('check') + '</div>');
+      $('#kT').innerHTML = KE.map(function (e) { return '<path class="ed" d="' + e[2] + '"/>'; }).join('') + '<path class="eg" id="kEg" d="' + KE[0][2] + '"/>' + KN.map(function (n) {
+        var x = n[1], y = n[2], cx = x + 16, cy = y + 15;
+        return '<g class="nd"><rect x="' + x + '" y="' + y + '" width="120" height="30" rx="8"/>' +
+          '<g class="i m"><circle cx="' + cx + '" cy="' + cy + '" r="6.5" fill="#1f9b45"/><path d="M' + (cx - 3) + ' ' + (cy + .2) + 'l2.1 2.1 3.9-4.2" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>' +
+          '<circle class="i p" cx="' + cx + '" cy="' + cy + '" r="5.4" fill="none" stroke="#1c1b19" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="21 13" transform="rotate(-90 ' + cx + ' ' + cy + ')"/>' +
+          '<circle class="i o" cx="' + cx + '" cy="' + cy + '" r="5.4" fill="none" stroke="#1c1b19" stroke-width="1.6"/>' +
+          '<g class="i l" fill="none" stroke="#a6a39b" stroke-width="1.4" stroke-linecap="round"><rect x="' + (cx - 4) + '" y="' + (cy - 1) + '" width="8" height="6.4" rx="1.6" fill="#a6a39b"/><path d="M' + (cx - 2.4) + ' ' + (cy - 1) + 'v-1.8a2.4 2.4 0 0 1 4.8 0v1.8"/></g>' +
+          '<text x="' + (x + 30) + '" y="' + (y + 19.2) + '">' + n[0] + '</text></g>';
+      }).join('');
+      var kN = $$('#kT .nd'), kE = $$('#kT .ed'), KF = null;
+      function cardK(u) {
+        var st = u < 1.4 ? 'mmomll' : u < 2.1 ? 'mmmmll' : 'mmmmpl';
+        kN.forEach(function (g, i) { var c = 'nd ' + st.charAt(i) + (i === 2 && u > 1.4 && u < 2.2 ? ' pop' : ''); if (g.getAttribute('class') !== c) g.setAttribute('class', c); });
+        kE.forEach(function (p, i) { var c = 'ed' + (st.charAt(KE[i][0]) === 'm' && st.charAt(KE[i][1]) === 'm' && i !== 0 ? ' m' : ''); if (p.getAttribute('class') !== c) p.setAttribute('class', c); });
+        var eg = $('#kEg'), ec = 'eg' + (u > 1.5 ? ' on' : ''); if (eg.getAttribute('class') !== ec) eg.setAttribute('class', ec);
+        sT($('#kN'), (u < 1.4 ? 3 : 4) + '/6');
+        var fl = $('#kFly'), fu = fsEase(clamp((u - .5) / .9)); on(fl, u > .45 && u < 1.45);
+        if (KF) sS(fl, 'left:' + (300 + (KF[0] - 300) * fu).toFixed(1) + 'px;top:' + (14 + (KF[1] - 14) * fu - Math.sin(fu * Math.PI) * 30).toFixed(1) + 'px');
+        on($('#kNew'), u > 2.6); on($('#kDue'), u > 3.8 && u < 4.2, 'pk'); on($('#kQz'), u > 4.1);
+        on($('#kO1'), u > 6.1, 'ok'); on($('#kNx'), u > 6.35);
+        if (u < 2.4) isl(fzK, 'pass', 'Step passed', 'Blender · Modifiers'); else if (u < 4.1) isl(fzK, '', 'A review is due', 'Figma · Auto layout'); else if (u < 6.1) isl(fzK, '', 'Reviewing', 'Auto layout'); else isl(fzK, 'pass', 'Remembered', 'Auto layout');
+        cur(fzK, fzK.K, u);
+      }
+
+      // rings, callouts and cursor paths follow the pieces they point at, whatever the font
       function bPlace() {
-        var r = bIn($('#hCode'), $('#bH .bw'));
-        $('#hRing').style.cssText = 'left:' + (r[0] - 6) + 'px;top:' + (r[1] - 3) + 'px;width:' + (r[2] + 12) + 'px;height:' + (r[3] + 6) + 'px';
-        var gv = $('#bG .vg'), g = bIn($('#gTyp'), gv), gc = $('#gCall');
-        $('#gRing').style.cssText = 'left:' + (g[0] - 40) + 'px;top:' + (g[1] - 3) + 'px;right:-20px;height:' + (g[3] + 6) + 'px';
-        gc.style.left = (g[0] - 34) + 'px'; gc.style.top = (g[1] + g[3] + 14) + 'px';
-        var qv = $('#bQ .vg'), k = bIn($('#qTok'), qv), qc = $('#qCall'), cw = qc.offsetWidth, lx = clamp(k[0] + k[2] / 2 - 30, 10, qv.clientWidth - cw - 10);
-        $('#qRing').style.cssText = 'left:' + (k[0] - 5) + 'px;top:' + (k[1] - 2) + 'px;width:' + (k[2] + 10) + 'px;height:' + (k[3] + 4) + 'px';
-        qc.style.left = lx + 'px'; qc.style.top = (k[1] + k[3] + 13) + 'px'; qc.style.setProperty('--nx', clamp(k[0] + k[2] / 2 - lx - 5, 12, cw - 22) + 'px');
+        var v, r;
+        v = fzA.vg; fzA.K = [[0, 470, 330], [.7].concat(fsMid($('#aFld'), v), 1), [6.9].concat(fsMid($('#aGo'), v), 1)]; fzA.K.end = 8;
+        // any app: where each app's spot is, and the cursor visits each one
+        v = fzP.vg; PT = [bIn($('#pAdd'), v), bIn($('#pAl'), v), bIn($('#pCel'), v), bIn($('#pJx').parentNode, v)];
+        fzP.K = [[0, 300, 360]]; PT.forEach(function (r, k) { fzP.K.push([k * PD + .95, r[0] + r[2] / 2, r[1] + r[3] / 2, 1]); }); fzP.K.end = 99;
+        // guide: the frame tool, the rect tool, the radius field; the drags run inside the canvas
+        v = fzG.vg; GP = [bIn($('#gFt'), v), bIn($('#gRt'), v), bIn($('#gR').parentNode, v)];
+        var cv = bIn($('#gCv'), v), fx = cv[0] + Math.round((cv[2] - 120) / 2), fy = cv[1] + 34; $('#gFr').style.left = (fx - cv[0]) + 'px'; $('#gFr').style.top = (fy - cv[1]) + 'px';
+        var tile = fsMid(gTiles[5], v), ft = fsMid($('#gFt'), v), rt = fsMid($('#gRt'), v), rr = fsMid($('#gR'), v);
+        fzG.K = [[0, 300, 300], [1.1].concat(ft, 1), [1.5, fx, fy, 1], [2.5, fx + 120, fy + 214], [3.6].concat(rt, 1), [4, fx + 12, fy + 64, 1], [4.7, fx + 108, fy + 80], [5.85].concat(rr, 1), [7.3].concat(tile, 1)]; fzG.K.end = 99;
+        v = fzW.vg; var ad = bIn($('#wAdd'), v); ringAt($('#wRing'), ad, 4, 2);
+        fzW.K = [[0, 230, 340], [2.9, ad[0] + ad[2] / 2, ad[1] + ad[3] / 2, 1], [3.35].concat(fsMid($('#wMesh'), v)), [3.9].concat(fsMid($('#wTorI'), v), 1), [5.2, 250, 330]]; fzW.K.end = 99;
+        v = fzC.vg; var e2 = bIn($('#cE2'), v); ringAt($('#cRing'), e2, 2, 1);
+        fzC.K = [[0, 200, 360], [.8, e2[0] + e2[2] / 2, e2[1] + e2[3] / 2, 1], [3.2, 230, 370]]; fzC.K.end = 99;
+        v = fzH.vg; ringAt($('#hRing'), bIn($('#hCode'), v), 6, 3);
+        fzH.K = [[0, 430, 380], [1.5].concat(fsMid(hChips[1], v), 1), [4].concat(fsMid(hChips[2], v), 1)]; fzH.K.end = 99;
+        v = fzQ.vg; var mk = bIn($('#qMask'), v), im = bIn($('#bQ .psc'), v), qc = $('#qCall');
+        ringAt($('#qR1'), mk, 3, 3); var ir = fsRect($('#qImg'), v); ringAt($('#qR2'), [ir[0], ir[1], ir[2] / 2, ir[3]], 2, 2);
+        callAt(qc, 584 - 6 - qc.offsetWidth, mk[1] + mk[3] + 84, clamp(mk[0] + mk[2] / 2 - (584 - 6 - qc.offsetWidth) - 5, 12, qc.offsetWidth - 22));
+        v = fzK.vg; var svg = fsRect($('#kT'), v), sc = svg[2] / 300; KF = [svg[0] + (KN[2][1] + 16) * sc, svg[1] + (KN[2][2] + 15) * sc];
+        fzK.K = [[0, 300, 384], [3.8].concat(fsMid($('#kDue'), v), 1), [5.9].concat(fsMid($('#kO1'), v), 1)]; fzK.K.end = 99;
       }
 
       // list order: starting (ask, any app, setup), learning (guide, wait, check), keeping going (stuck, ask, skills)
-      var BC2 = [[cardA, 5], [cardP, 4.4], [cardS, 4.8], [cardG, 5], [cardW, 4.8], [cardC, 5], [cardH, 6.6], [cardQ, 5], [cardK, 4.4]], HI = 6,
+      var BC2 = [[cardA, 8], [cardP, 4 * PD], [cardS, 7.6], [cardG, 8.6], [cardW, 9.2], [cardC, 7.6], [cardH, 7.6], [cardQ, 7.6], [cardK, 8.2]], HI = 6,
         bEls = $$('#fView > .fcard'), fBtns = $$('#fList .fname'), fBars = $$('#fList .fprog > i'), fTile = $('#fTile'), fView = $('#fView'),
         bCur = 0, bU = 0, bHov = false, bBegun = false;
       function bRest(i) { BC2[i][0](BC2[i][1]); }
-      function bSeen(el) { var r = el.getBoundingClientRect(), m = (r.top + r.bottom) / 2; return m > 0 && m < innerHeight; }
+      // plays while at least a third of the stage is on screen
+      function bSeen(el) { var r = el.getBoundingClientRect(), vis = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0); return r.height > 0 && vis / r.height > .33; }
       function fBar(v) { fBars[bCur].style.transform = 'scaleY(' + v + ')'; }
       function fSel(i) {
         bEls.forEach(function (el, k) { on(el, k === i); });
         fBtns.forEach(function (b, k) { on(b, k === i); b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
       }
-      function bGo(i) { if (bCur !== i) bRest(bCur); bCur = i; bU = 0; fSel(i); fBar(0); bPlace(); if (reduce) bRest(i); }
-      // the stage draws at 563px wide and scales up to its tile; a tile narrower than that (phones) lays out at its own width
-      function fFit() { var w = fTile.clientWidth, s = Math.max(1, w / 563); fView.style.width = (w / s) + 'px'; fView.style.transform = s > 1 ? 'scale(' + s + ')' : ''; fTile.style.height = (232 * s) + 'px'; bPlace(); }
+      function bGo(i) { if (bCur !== i) bRest(bCur); bCur = i; bU = 0; fSel(i); fBar(0); BC2[i][0](reduce ? BC2[i][1] : 0); }
+      // the stage draws at 600 x 400 and scales to its tile
+      var SCN = [fzA, fzP, fzS, fzG, fzW, fzC, fzH, fzQ, fzK];
+      function islFit() { SCN.forEach(function (S) { var el = S.isl; el.style.width = 'auto'; el.style.width = el.offsetWidth + 'px'; }); }
+      function fFit() { islFit(); var s = fTile.clientWidth / 600; fView.style.transform = 'scale(' + s + ')'; fTile.style.height = (400 * s) + 'px'; bPlace(); }
       // from the console: mwalk.bento() rests every card and stops the tour, mwalk.bento(i, u) opens card i at u seconds, mwalk.bento('play') starts it again
       var bFroze = false;
-      function bentoShow(i, u) { bFroze = i !== 'play'; if (!bFroze) return; BC2.forEach(function (c, k) { bRest(k); }); bPlace();
+      function bentoShow(i, u) { bFroze = i !== 'play'; if (!bFroze) return; BC2.forEach(function (c, k) { bRest(k); });
         if (i >= 0) { bCur = i; fSel(i); BC2[i][0](u == null ? BC2[i][1] : u); fBar(u == null ? 1 : Math.min(1, u / BC2[i][1])); } }
       function bentoTick(dt) {
         if (bFroze || !bSeen(fTile)) return;                        // only while the stage itself is on screen
@@ -2762,7 +3013,7 @@ sam@mac homework % <i class="tm-cur"></i></pre>
         bT += dt; bU += dt; var d = BC2[bCur][1];
         if (bU >= d) {
           if (bCur === HI && bT < hUntil) bU = d;                    // a chip you picked stays up
-          else if (bHov) { if (bU >= d + 1.4) bU = 0; }              // the pointer is on the section: stay on this one and play it again
+          else if (bHov) { if (bU >= d + 1.6) bU = 0; }              // the pointer is on the section: stay on this one and play it again
           else bGo((bCur + 1) % BC2.length);
         }
         var u = Math.min(bU, BC2[bCur][1]);
@@ -2771,8 +3022,10 @@ sam@mac homework % <i class="tm-cur"></i></pre>
       bento.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') bHov = true; });
       bento.addEventListener('pointerleave', function () { bHov = false; });
       fBtns.forEach(function (b, i) { b.addEventListener('click', function () { bFroze = false; bBegun = true; hUntil = -1; bGo(i); }); });
+      // a click on the screen itself plays the open scene again from the start (the stuck card's chips keep their own clicks)
+      fTile.addEventListener('click', function (e) { if (e.target.closest('button')) return; bFroze = false; bBegun = true; hUntil = -1; bGo(bCur); });
       hChips.forEach(function (b, i) { b.addEventListener('click', function () { if (bCur !== HI) bGo(HI); hSel = i; hAt = bT; hUntil = bT + 12; bU = BC2[HI][1]; cardH(bU); fBar(1); }); });
-      BC2.forEach(function (c, i) { bRest(i); }); fSel(0); fFit();
+      fFit(); BC2.forEach(function (c, i) { bRest(i); }); fSel(0); BC2[0][0](reduce ? BC2[0][1] : 0);
       addEventListener('resize', fFit);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(fFit);
       // The orbit and the features move from the film's frame loop, only while they're on screen.
