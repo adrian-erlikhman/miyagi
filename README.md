@@ -31,11 +31,11 @@ The demo video is gone (Nov 20). Under the downloads, a "see it work" button scr
 
 Mac and Windows are two equal buttons side by side (`a[data-dl="mac"]` and `a[data-dl="win"]`, each with a note in `[data-dl-note]`). There's no OS detection and no "also on" link (Adrian, Sat 7:30 PM).
 
-Since Nov 20 the downloads are behind a code. The first click opens a code field under the buttons (`form[data-code]`). The release links aren't in the page as plain text: each one is sealed with the code (PBKDF2-SHA256, then AES-GCM) in `SEALED` in `index.html`, so a wrong code can't open it. The code is case- and space-insensitive and isn't stored in this repo. A right code is kept in that browser's localStorage (`miyagi-code`), so later clicks download straight away. To change the code or a link, re-seal both links with the seal script (kept outside this public repo) and paste its output into `SEALED`. After a download starts, the button's note shows its first-open tip (right-click › Open on Mac; More info › Run anyway on Windows).
+Since Nov 20 the downloads are behind a code. The first click opens a code field under the buttons (`form[data-code]`). The release links aren't in the page as plain text: each one is sealed with the code (PBKDF2-SHA256, then AES-GCM) in `SEALED` in `index.html`, so a wrong code can't open it. The code is case- and space-insensitive and isn't stored in this repo. A right code is kept in that browser's localStorage (`miyagi-code`), so later clicks download straight away. To change the code or a link, re-seal both links with the seal script (kept outside this public repo) and paste its output into `SEALED`. After a download starts, the button's note shows its first-open tip (Open Anyway in Privacy & Security on Mac; More info › Run anyway on Windows).
 
 The code keeps casual visitors out. It doesn't lock the files themselves: the releases on this public repo can still be reached from GitHub.
 
-- Mac: release `mac`, asset `Miyagi-Mac.zip` (Apple silicon, macOS 13+), from CI's `mac-zip` artifact, posted by the Windows sync agent. `var MAC_READY = true` keeps the button on; set it to `false` only to pull the Mac build.
+- Mac: release `mac`, asset `Miyagi-Mac.dmg` (Apple silicon, macOS 13+). Since Nov 25 the sealed Mac link points at the .dmg, not `Miyagi-Mac.zip`; the release has no zip. `var MAC_READY = true` keeps the button on; set it to `false` only to pull the Mac build.
 - Windows: release `windows`, asset `Miyagi-Windows-Setup.exe` (Windows 10 and 11), rebuilt and re-uploaded by the Windows sync agent when the app changes.
 
 ## Search engines
